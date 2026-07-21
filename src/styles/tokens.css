@@ -1,0 +1,77 @@
+/* Design tokens + base reset. House/tier/row colours live here as custom
+   properties so the whole UI reads as one system. */
+:root {
+  --bg-0: #0b0a12;
+  --bg-1: #14121f;
+  --bg-2: #1d1a2c;
+  --panel: rgba(255, 255, 255, 0.04);
+  --panel-edge: rgba(255, 255, 255, 0.09);
+  --ink: #ece7f5;
+  --ink-dim: #a89fc2;
+  --ink-faint: #6f6790;
+  --gold: #e8b923;
+  --gold-dim: #b9922a;
+
+  --pandava: #4f7cff;
+  --pandava-deep: #16265c;
+  --kaurava: #e0555b;
+  --kaurava-deep: #4a0f14;
+  --neutral: #a081ee;
+
+  --win: #57d38c;
+  --lose: #e0555b;
+
+  --row-ratha: rgba(232, 185, 35, 0.06);
+  --row-gaja: rgba(160, 129, 238, 0.06);
+  --row-padati: rgba(120, 160, 255, 0.05);
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #241f38 0%, var(--bg-0) 60%),
+    var(--bg-0);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--panel-edge);
+  border-radius: 8px;
+}
