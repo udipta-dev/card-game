@@ -84,6 +84,14 @@ export function validateContent(): ContentError[] {
     if (card.rows.length === 0)
       errs.push({ cardId: card.id, message: 'card has no legal rows' });
     card.keywords.forEach((kw) => checkKeyword(card, kw, errs));
+    for (const a of card.knownAstras ?? []) {
+      if (!CARD_DB[a]) errs.push({ cardId: card.id, message: `knownAstras references unknown card '${a}'` });
+      else if (CARD_DB[a].type !== 'astra')
+        errs.push({ cardId: card.id, message: `knownAstras '${a}' is not an astra` });
+    }
+    for (const a of card.counteredBy ?? []) {
+      if (!CARD_DB[a]) errs.push({ cardId: card.id, message: `counteredBy references unknown card '${a}'` });
+    }
     for (const eff of card.effects) {
       checkTarget(card, eff.target, errs);
       if (eff.condition) checkCondition(card, eff.condition, errs);

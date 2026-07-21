@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "sim": "vite-node sim/run.ts",
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {

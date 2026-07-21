@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { getCard } from '@content/cards';
+import { getCard, provisionOf } from '@content/cards';
 import type { DeckList } from '@content/decks';
 import { chooseAction } from '@ai/ai';
 import { createMatch } from '@engine/createMatch';
@@ -332,6 +332,7 @@ function Tooltip({ card, inst, x, y }: { card: Card; inst?: GameState['instances
         {TYPE_LABEL[card.type]}
         {card.tier ? ` · ${TIER_LABEL[card.tier]}` : ''}
         {inst ? ` · Power ${inst.currentPower}` : card.basePower ? ` · Power ${card.basePower}` : ''}
+        {` · Cost ${provisionOf(card)}`}
       </div>
       {rules.map((r, i) => (
         <div key={i} className="tooltip__rule">

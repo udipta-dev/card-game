@@ -22,3 +22,12 @@ export function getCard(id: CardId): Card {
 export function allCards(): Card[] {
   return ALL.slice();
 }
+
+const TIER_PROVISION = { maharathi: 10, atirathi: 7, rathi: 4 } as const;
+
+/** A card's deck-budget cost. Explicit `provision` wins; else derived from tier. */
+export function provisionOf(card: Card): number {
+  if (card.provision != null) return card.provision;
+  if (card.type === 'unit' && card.tier) return TIER_PROVISION[card.tier];
+  return 5;
+}

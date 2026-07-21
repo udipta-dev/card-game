@@ -90,6 +90,11 @@ export function isFinalRound(state: GameState): boolean {
   return Object.values(state.roundWins).some((w) => w >= WINS_NEEDED - 1);
 }
 
+/** Can `seat` invoke this astra? Requires a warrior on board who knows it. */
+export function canInvokeAstra(state: GameState, seat: Seat, astraId: CardId): boolean {
+  return unitsOf(state, seat).some((u) => getCard(u.cardId).knownAstras?.includes(astraId));
+}
+
 export function boonCardIds(state: GameState, unitIid: string): CardId[] {
   const u = state.instances[unitIid];
   if (!u) return [];

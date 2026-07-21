@@ -1,4 +1,12 @@
+import { allCards } from '@content/cards';
 import type { Card, House, Tier } from '@engine/types';
+
+/** Names of the warriors who can invoke a given astra. */
+export function astraWielders(astraId: string): string[] {
+  return allCards()
+    .filter((c) => c.knownAstras?.includes(astraId))
+    .map((c) => c.name);
+}
 
 // The placeholder design system: house palettes, tier accents, and a symbolic
 // glyph per card that stands in for AI art. When `card.art` is set, CardFrame
@@ -100,10 +108,23 @@ export function rulesText(card: Card): string[] {
         lines.push('Slays the mightiest foe.');
       if (a.kind === 'destroy' && eff.target.pick === 'chosen')
         lines.push('Slays a chosen foe.');
+      if (a.kind === 'destroy' && eff.target.pick === 'allEnemyUnits')
+        lines.push('Strikes every foe.');
       if (a.kind === 'damage' && eff.target.pick === 'enemyRowSameAsPlayed')
         lines.push(`Devastates the struck row (−${a.amount}).`);
+      if (a.kind === 'damage' && eff.target.pick === 'allEnemyUnits')
+        lines.push(`Rains −${a.amount} on every foe.`);
     }
   }
+  if (card.type === 'astra') {
+    const wielders = astraWielders(card.id);
+    if (wielders.length)
+      lines.push(`Invoked only while you field: ${wielders.join(', ')}.`);
+    if (card.counteredBy?.length)
+      lines.push(`Answered by: ${card.counteredBy.map(titleize).join(', ')} in the enemy hand.`);
+  }
+  if (card.knownAstras?.length)
+    lines.push(`Knows the astras: ${card.knownAstras.map(titleize).join(', ')}.`);
   if (card.cost?.consequence) lines.push(card.cost.consequence);
   return lines;
 }

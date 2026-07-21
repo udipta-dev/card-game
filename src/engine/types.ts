@@ -45,6 +45,22 @@ export interface Card {
   effects: EffectDef[];
   /** Astra invocation cost/consequence. */
   cost?: InvocationCost;
+  /**
+   * Deck-building power budget cost (Gwent-style provisions). Higher = stronger.
+   * Used to keep decks balanced and to weight the balance lab's readouts.
+   */
+  provision?: number;
+  /**
+   * For warriors: the astras this warrior knows how to invoke. An astra can
+   * only be played while a warrior who knows it stands on your board.
+   */
+  knownAstras?: CardId[];
+  /**
+   * For astras: the astra ids that negate this one. If the defender holds any
+   * of them in hand when this resolves, theirs is spent and this one fizzles
+   * (the canonical counter-web: Naga vs Garuda, Agni vs Varuna, Brahma vs Brahma).
+   */
+  counteredBy?: CardId[];
   /** Path under public/art/cards/. Undefined => placeholder frame. */
   art?: string;
   flavor?: string;
@@ -230,6 +246,7 @@ export type GameEvent =
   | { t: 'destroy'; iid: InstanceId; cardId: CardId }
   | { t: 'preventDestroy'; iid: InstanceId; reason: string }
   | { t: 'redirected'; source: CardId; reason: string }
+  | { t: 'countered'; astra: CardId; by: CardId; seat: Seat }
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }

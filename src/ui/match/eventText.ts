@@ -27,6 +27,8 @@ export function eventText(state: GameState, ev: GameEvent): string | null {
     }
     case 'redirected':
       return `${getCard(ev.source).name} was turned aside by Krishna.`;
+    case 'countered':
+      return `${getCard(ev.astra).name} was answered by ${getCard(ev.by).name}.`;
     case 'setPower':
       return null;
     case 'roundEnd': {

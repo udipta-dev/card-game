@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import type { EffectCtx } from './effects/context';
 import { runCardEffects } from './events';
 import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime } from './keywords';
-import { isFinalRound, opponentOf } from './queries';
+import { canInvokeAstra, isFinalRound, opponentOf } from './queries';
 import { resolveRound } from './rounds';
 import { MULLIGAN_MAX } from './createMatch';
 import type { Action, GameState, Row, Seat } from './types';
@@ -32,7 +32,10 @@ export function isLegalPlay(
   if (!u) return false;
   const card = getCard(u.cardId);
   if (!card.rows.includes(row)) return false;
-  if (card.type === 'astra' && !canPlayAstras(state, seat, isFinalRound(state))) return false;
+  if (card.type === 'astra') {
+    if (!canPlayAstras(state, seat, isFinalRound(state))) return false;
+    if (!canInvokeAstra(state, seat, card.id)) return false; // needs a warrior who knows it
+  }
   return true;
 }
 
@@ -98,9 +101,24 @@ export function reduce(state: GameState, action: Action): GameState {
         }
         runCardEffects(ctx, 'onPlay');
       } else {
-        // astra / curse: resolve, then discard (no board presence).
-        runCardEffects(ctx, 'onPlay');
-        delete s.instances[iid];
+        // astra / curse. First, the counter-web: if the defender holds an astra
+        // that answers this one, theirs is spent and this fizzles.
+        const counterHid =
+          card.type === 'astra' && card.counteredBy?.length
+            ? s.hands[opponentOf(seat)].find((hid) =>
+                card.counteredBy!.includes(getCard(s.instances[hid]!.cardId).id),
+              )
+            : undefined;
+        if (counterHid) {
+          const defender = opponentOf(seat);
+          const counterId = getCard(s.instances[counterHid]!.cardId).id;
+          s.hands[defender].splice(s.hands[defender].indexOf(counterHid), 1);
+          delete s.instances[counterHid];
+          s.log.push({ t: 'countered', astra: card.id, by: counterId, seat: defender });
+        } else {
+          runCardEffects(ctx, 'onPlay');
+        }
+        delete s.instances[iid]; // the astra is spent either way
       }
 
       // A newly played card may disarm an immune enemy (Drona).

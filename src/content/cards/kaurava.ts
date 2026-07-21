@@ -15,6 +15,7 @@ export const KAURAVA_CARDS: Card[] = [
     // until Shikhandi stands on the board.
     keywords: [{ kind: 'icchamrityu', unlessCardOnBoard: 'shikhandi' }],
     effects: [],
+    knownAstras: ['brahmastra'],
     flavor: 'Granted the boon to choose the hour of his own death.',
   },
   {
@@ -29,6 +30,7 @@ export const KAURAVA_CARDS: Card[] = [
     // 'ashwatthama_elephant' deception, makes him lay down his bow (power → 0).
     keywords: [{ kind: 'immuneUntilPlayed', card: 'ashwatthama_elephant', thenSetPower: 0 }],
     effects: [],
+    knownAstras: ['brahmastra', 'agneyastra'],
     flavor: 'The war-guru; unbeatable until grief unstrung his bow.',
   },
   {
@@ -56,6 +58,7 @@ export const KAURAVA_CARDS: Card[] = [
         actions: [{ kind: 'setPower', value: 0 }, { kind: 'addFlag', flag: 'wheel-sunk' }],
       },
     ],
+    knownAstras: ['nagastra', 'agneyastra'],
     flavor: 'Son of the Sun; undone by two curses at the last.',
   },
   {
@@ -64,7 +67,7 @@ export const KAURAVA_CARDS: Card[] = [
     house: 'kaurava',
     type: 'unit',
     tier: 'maharathi',
-    basePower: 8,
+    basePower: 9,
     rows: ['ratha'],
     keywords: [],
     // Gandhari's gaze hardened his body to diamond, except the thighs.
@@ -88,6 +91,7 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     effects: [],
+    knownAstras: ['narayanastra', 'brahmastra', 'agneyastra'],
     flavor: "Drona's son, cursed to wander deathless and unhealing.",
   },
   {

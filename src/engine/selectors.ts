@@ -2,7 +2,7 @@
 // enumerates every action the active seat may take, including target choices.
 import { getCard } from '@content/cards';
 import { canPlayAstras } from './keywords';
-import { isFinalRound, opponentOf, unitsOf } from './queries';
+import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
 import type { Action, Card, GameState, InstanceId, Seat, UnitFilter } from './types';
 
 /** The `chosen` selector filter this card uses, if any. */
@@ -47,7 +47,10 @@ export function legalMoves(state: GameState, seat: Seat): Action[] {
 
   for (const iid of state.hands[seat]) {
     const card = getCard(state.instances[iid]!.cardId);
-    if (card.type === 'astra' && !canPlayAstras(state, seat, final)) continue;
+    if (card.type === 'astra') {
+      if (!canPlayAstras(state, seat, final)) continue;
+      if (!canInvokeAstra(state, seat, card.id)) continue; // no warrior knows it yet
+    }
 
     const need = targetNeed(card);
     const filter = need === 'none' ? null : chosenFilter(card);

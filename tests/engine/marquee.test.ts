@@ -9,7 +9,11 @@ const preventReasons = (s: GameState) =>
 
 describe('Bhishma — icchamrityu', () => {
   it('survives removal while Shikhandi is absent', () => {
-    const s0 = makeState({ playerHand: ['nagastra'], aiBoard: { ratha: ['bhishma'] } });
+    const s0 = makeState({
+      playerHand: ['nagastra'],
+      playerBoard: { padati: ['karna'] }, // Karna lets the player invoke Nagastra
+      aiBoard: { ratha: ['bhishma'] },
+    });
     const bhishma = firstOf(s0, 'ai', 'bhishma');
     const nagastra = firstOf(s0, 'player', 'nagastra');
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: nagastra.iid, row: 'ratha' });
@@ -20,7 +24,7 @@ describe('Bhishma — icchamrityu', () => {
   it('dies once Shikhandi stands on the board', () => {
     const s0 = makeState({
       playerHand: ['nagastra'],
-      playerBoard: { ratha: ['shikhandi'] },
+      playerBoard: { ratha: ['shikhandi', 'karna'] }, // Karna invokes, Shikhandi unlocks Bhishma
       aiBoard: { ratha: ['bhishma'] },
     });
     const bhishma = firstOf(s0, 'ai', 'bhishma');
@@ -33,14 +37,22 @@ describe('Bhishma — icchamrityu', () => {
 
 describe('Nagastra — Krishna redirect', () => {
   it('destroys the highest enemy unit', () => {
-    const s0 = makeState({ playerHand: ['nagastra'], aiBoard: { ratha: ['arjuna'] } });
+    const s0 = makeState({
+      playerHand: ['nagastra'],
+      playerBoard: { padati: ['karna'] },
+      aiBoard: { ratha: ['arjuna'] },
+    });
     const arjuna = firstOf(s0, 'ai', 'arjuna');
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'nagastra').iid, row: 'ratha' });
     expect(s1.instances[arjuna.iid]).toBeUndefined();
   });
 
   it('fizzles against a Krishna-guarded unit', () => {
-    const s0 = makeState({ playerHand: ['nagastra'], aiBoard: { ratha: ['arjuna'] } });
+    const s0 = makeState({
+      playerHand: ['nagastra'],
+      playerBoard: { padati: ['karna'] },
+      aiBoard: { ratha: ['arjuna'] },
+    });
     const arjuna = firstOf(s0, 'ai', 'arjuna');
     attachBoon(s0, arjuna.iid, 'krishna_charioteer');
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'nagastra').iid, row: 'ratha' });
@@ -53,8 +65,9 @@ describe('Brahmastra — row devastation + collateral', () => {
   it('damages the struck enemy row, scorches it, and singes own adjacent row', () => {
     const s0 = makeState({
       playerHand: ['brahmastra'],
-      playerBoard: { gaja: ['bhima'] }, // gaja is adjacent to ratha -> collateral
-      aiBoard: { ratha: ['arjuna', 'dhrishtadyumna'] },
+      // gaja is adjacent to ratha -> collateral. Dhrishtadyumna invokes Brahmastra.
+      playerBoard: { gaja: ['bhima'], padati: ['dhrishtadyumna'] },
+      aiBoard: { ratha: ['arjuna', 'kaurava_infantry'] },
     });
     const arjuna = firstOf(s0, 'ai', 'arjuna');
     const bhima = firstOf(s0, 'player', 'bhima');
@@ -70,7 +83,7 @@ describe('Brahmastra — row devastation + collateral', () => {
 
 describe('Pashupatastra — instant win + self-ban', () => {
   it('ends the battle and bans itself for the run', () => {
-    const s0 = makeState({ playerHand: ['pashupatastra'] });
+    const s0 = makeState({ playerHand: ['pashupatastra'], playerBoard: { ratha: ['arjuna'] } });
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'pashupatastra').iid, row: 'ratha' });
     expect(s1.phase).toBe('battleEnd');
     expect(s1.winner).toBe('player');
@@ -99,6 +112,7 @@ describe('Drona — disarmed only by the elephant deception', () => {
     // ai passed so the player keeps the turn across multiple plays.
     const s0 = makeState({
       playerHand: ['vaishnavastra', 'ashwatthama_elephant'],
+      playerBoard: { padati: ['arjuna'] }, // Arjuna invokes Vaishnavastra
       aiBoard: { ratha: ['drona'] },
       passed: { ai: true },
     });
@@ -120,6 +134,7 @@ describe('Duryodhana — diamond body answered only by Bhima', () => {
   it('is immune to Vaishnavastra but falls to Bhima’s thigh-strike', () => {
     const s0 = makeState({
       playerHand: ['vaishnavastra', 'bhima'],
+      playerBoard: { padati: ['arjuna'] }, // Arjuna invokes Vaishnavastra
       aiBoard: { ratha: ['duryodhana'] },
       passed: { ai: true },
     });

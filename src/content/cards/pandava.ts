@@ -13,6 +13,7 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     effects: [],
+    knownAstras: ['brahmastra', 'pashupatastra', 'vaishnavastra', 'agneyastra', 'varunastra', 'garudastra'],
     flavor: 'The finest archer of the age, wielder of the Gandiva.',
   },
   {
@@ -113,6 +114,7 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     effects: [],
+    knownAstras: ['agneyastra', 'brahmastra'],
     flavor: 'Born of fire to be the slayer of Drona.',
   },
   {
@@ -173,6 +175,7 @@ export const PANDAVA_CARDS: Card[] = [
     house: 'pandava',
     type: 'boon',
     basePower: 0,
+    provision: 10,
     rows: ['ratha'],
     keywords: [],
     // Attaches to a chosen own unit: +3 and the Nagastra-redirect (checked by
