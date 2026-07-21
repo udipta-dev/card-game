@@ -1,5 +1,5 @@
 // ============================================================================
-// Kurukshetra rules engine — core data model.
+// Kurukshetra rules engine, core data model.
 //
 // This file is PURE: no React, no DOM, no network. Everything the engine and
 // the AI operate on is defined here. The central idea: card behaviour is DATA
@@ -51,7 +51,7 @@ export interface Card {
 }
 
 // ---------------------------------------------------------------------------
-// Keywords — sticky, always-on abilities. Generic mechanics, card-specific data.
+// Keywords, sticky, always-on abilities. Generic mechanics, card-specific data.
 // ---------------------------------------------------------------------------
 
 export type Keyword =
@@ -69,7 +69,7 @@ export type Keyword =
 export type KeywordKind = Keyword['kind'];
 
 // ---------------------------------------------------------------------------
-// Effects — data descriptors resolved by the registry.
+// Effects, data descriptors resolved by the registry.
 // ---------------------------------------------------------------------------
 
 export interface EffectDef {
@@ -184,13 +184,13 @@ export interface RowModifier {
 }
 
 // ---------------------------------------------------------------------------
-// Whole-match state — the reducer's value. Fully serializable & deterministic.
+// Whole-match state, the reducer's value. Fully serializable & deterministic.
 // ---------------------------------------------------------------------------
 
 export type Phase = 'mulligan' | 'playing' | 'roundEnd' | 'battleEnd';
 
 export interface GameState {
-  seed: number; // PRNG state — advances deterministically
+  seed: number; // PRNG state, advances deterministically
   phase: Phase;
   activeSeat: Seat;
   round: number; // 1..3

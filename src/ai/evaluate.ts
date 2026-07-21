@@ -2,7 +2,7 @@ import { isFinalRound, opponentOf, seatPower } from '@engine/queries';
 import type { GameState, Seat } from '@engine/types';
 import { BIG, WEIGHTS } from './policy';
 
-/** Cards still in reserve (hand + deck) — the resource the banking game is over. */
+/** Cards still in reserve (hand + deck), the resource the banking game is over. */
 export function cardCount(state: GameState, seat: Seat): number {
   return state.hands[seat].length + state.decks[seat].length;
 }

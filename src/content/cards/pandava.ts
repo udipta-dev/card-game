@@ -45,7 +45,7 @@ export const PANDAVA_CARDS: Card[] = [
     basePower: 7,
     rows: ['ratha'],
     keywords: [],
-    // Dharmaraja: steadies the line — buff own infantry row.
+    // Dharmaraja: steadies the line, buff own infantry row.
     effects: [
       {
         on: 'onPlay',
@@ -60,7 +60,7 @@ export const PANDAVA_CARDS: Card[] = [
         ],
       },
     ],
-    flavor: 'The king of righteousness; his word never broke — but once.',
+    flavor: 'The king of righteousness; his word never broke, but once.',
   },
   {
     id: 'abhimanyu',
@@ -70,8 +70,7 @@ export const PANDAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 8,
     rows: ['ratha'],
-    // Knows how to enter the Chakravyuha, but not to leave it: if Jayadratha —
-    // who sealed the formation — stands on the enemy board, Abhimanyu is lost
+    // Knows how to enter the Chakravyuha, but not to leave it: if Jayadratha,     // who sealed the formation, stands on the enemy board, Abhimanyu is lost
     // at round's end (before scoring).
     keywords: [],
     effects: [
@@ -102,7 +101,7 @@ export const PANDAVA_CARDS: Card[] = [
         actions: [{ kind: 'buff', amount: 2 }],
       },
     ],
-    flavor: 'The rakshasa son of Bhima — Karna spent his one arrow on him.',
+    flavor: 'The rakshasa son of Bhima, Karna spent his one arrow on him.',
   },
   {
     id: 'dhrishtadyumna',
@@ -149,7 +148,7 @@ export const PANDAVA_CARDS: Card[] = [
     basePower: 5,
     rows: ['ratha'],
     keywords: [],
-    // Presence alone answers Bhishma's icchamrityu — handled by that keyword's
+    // Presence alone answers Bhishma's icchamrityu, handled by that keyword's
     // `unlessCardOnBoard` check. No effect needed here.
     effects: [],
     flavor: 'Amba reborn; before whom Bhishma would not raise his bow.',
@@ -185,6 +184,6 @@ export const PANDAVA_CARDS: Card[] = [
         actions: [{ kind: 'buff', amount: 3 }, { kind: 'addFlag', flag: 'krishna-guarded' }],
       },
     ],
-    flavor: 'He would not fight — he would only drive, and counsel.',
+    flavor: 'He would not fight, he would only drive, and counsel.',
   },
 ];

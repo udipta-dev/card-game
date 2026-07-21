@@ -501,6 +501,102 @@
   margin: 16px 0 20px;
 }
 
+/* How to play */
+.howto {
+  max-width: 640px;
+  text-align: left;
+}
+.howto h2,
+.howto .panel__sub {
+  text-align: center;
+}
+.howto__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 18px 0 22px;
+}
+.howto__rule {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-sm);
+  padding: 12px 13px;
+}
+.howto__icon {
+  font-size: 22px;
+  line-height: 1.2;
+  flex: 0 0 auto;
+}
+.howto__title {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  color: var(--gold);
+  margin-bottom: 3px;
+}
+.howto__body {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+.howto .btn {
+  display: block;
+  margin: 0 auto;
+  min-width: 200px;
+}
+@media (max-width: 620px) {
+  .howto__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Turn banner + help button */
+.turn-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.turn-flag__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+.turn-flag--you .turn-flag__dot {
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+}
+.turn-flag--you {
+  color: var(--gold);
+}
+.help-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+  font-size: 15px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.help-btn:hover {
+  border-color: var(--gold-dim);
+}
+.hint--coach {
+  border: 1px dashed var(--panel-edge);
+  border-radius: 999px;
+  padding: 5px 14px;
+  display: inline-block;
+  background: rgba(232, 185, 35, 0.06);
+}
+
 /* toast log of recent events */
 .eventlog {
   position: fixed;

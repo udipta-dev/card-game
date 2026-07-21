@@ -2,7 +2,7 @@ import type { Card, House, Tier } from '@engine/types';
 
 // The placeholder design system: house palettes, tier accents, and a symbolic
 // glyph per card that stands in for AI art. When `card.art` is set, CardFrame
-// shows the image instead — this is the swappable slot.
+// shows the image instead, this is the swappable slot.
 
 export interface HousePalette {
   base: string;
@@ -31,7 +31,7 @@ export function tierMark(tier?: Tier): string {
   return '';
 }
 
-// Signature glyphs — a light touch of character for the placeholder art.
+// Signature glyphs, a light touch of character for the placeholder art.
 const GLYPHS: Record<string, string> = {
   // Pandavas
   arjuna: '🏹',

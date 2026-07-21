@@ -11,6 +11,7 @@ import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, InstanceId, Row, Seat } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
 import { HOUSE_PALETTE, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
+import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
 
 const ROW_LABEL: Record<Row, string> = { ratha: 'Ratha', gaja: 'Gaja', padati: 'Padati' };
@@ -36,6 +37,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
   );
   const [selected, setSelected] = useState<InstanceId | null>(null);
   const [mSel, setMSel] = useState<InstanceId[]>([]);
+  const [showHelp, setShowHelp] = useState(false);
   const [tip, setTip] = useState<{ card: Card; inst?: GameState['instances'][string]; x: number; y: number } | null>(null);
   const [banner, setBanner] = useState<string | null>(null);
   const roundEndsSeen = useRef(0);
@@ -173,7 +175,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
 
   return (
     <div className="match">
-      <Topbar state={state} onExit={onExit} />
+      <Topbar state={state} onExit={onExit} onHelp={() => setShowHelp(true)} />
 
       <div className="board">
         <div className="board__group">{ROWS.slice().reverse().map((r) => renderRow('ai', r))}</div>
@@ -187,7 +189,16 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
 
       <div className="hand-tray">
         <div className="hint">
-          {hintText(state, myTurn, plan, selectedCard)}
+          {state.phase === 'playing' && (
+            <>
+              <span className={'turn-flag' + (myTurn ? ' turn-flag--you' : '')}>
+                <span className="turn-flag__dot" />
+                {myTurn ? 'Your turn' : "Enemy's turn"}
+              </span>
+              <span style={{ opacity: 0.35 }}>{'   ·   '}</span>
+            </>
+          )}
+          <span className={myTurn ? 'hint--act' : ''}>{hintText(state, myTurn, plan, selectedCard)}</span>
         </div>
         <div className="hand">
           {state.hands.player.map((iid) => {
@@ -216,8 +227,13 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
               Invoke {selectedCard?.name}
             </button>
           )}
-          <button className="btn btn--sm" disabled={!myTurn} onClick={() => dispatch({ type: 'PASS', seat: 'player' })}>
-            Pass{state.passed.ai ? ' (opponent passed)' : ''}
+          <button
+            className="btn btn--sm"
+            disabled={!myTurn}
+            title="Stop playing and save your remaining cards for later rounds"
+            onClick={() => dispatch({ type: 'PASS', seat: 'player' })}
+          >
+            Pass &amp; bank{state.passed.ai ? ' (enemy passed)' : ''}
           </button>
         </div>
       </div>
@@ -229,6 +245,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
           <div className="banner">{banner}</div>
         </div>
       )}
+      {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
       {state.phase === 'mulligan' && (
         <MulliganOverlay
           state={state}
@@ -251,7 +268,15 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
 
 // ============================================================ sub-components
 
-function Topbar({ state, onExit }: { state: GameState; onExit: () => void }) {
+function Topbar({
+  state,
+  onExit,
+  onHelp,
+}: {
+  state: GameState;
+  onExit: () => void;
+  onHelp: () => void;
+}) {
   return (
     <div className="topbar">
       <div className="topbar__side">
@@ -275,6 +300,9 @@ function Topbar({ state, onExit }: { state: GameState; onExit: () => void }) {
           Pandavas
           <span className="seat-tag__house" style={{ background: HOUSE_PALETTE.pandava.edge }} />
         </div>
+        <button className="help-btn" onClick={onHelp} title="How to play" aria-label="How to play">
+          ?
+        </button>
         <button className="btn btn--ghost btn--sm" onClick={onExit}>
           Flee
         </button>
@@ -445,7 +473,7 @@ function hintText(state: GameState, myTurn: boolean, plan: Plan | null, card: Ca
   if (state.phase === 'battleEnd') return '';
   if (state.phase === 'mulligan') return '';
   if (!myTurn) return 'The enemy deliberates…';
-  if (!plan) return 'Your move. Choose a card, or pass to bank your hand.';
+  if (!plan) return 'Click a card to play it, or pass to bank your hand for later rounds.';
   switch (plan.mode) {
     case 'drop-own':
       return `Choose a row to deploy ${card?.name}.`;

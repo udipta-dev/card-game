@@ -1,5 +1,5 @@
 // Seedable PRNG + instance id generation. Keeping randomness inside GameState
-// (the `seed` field) makes every match deterministic and replayable — critical
+// (the `seed` field) makes every match deterministic and replayable, critical
 // for testing the engine and for scripted Campaign set-pieces.
 
 /** mulberry32: fast, seedable, good-enough distribution for a card game. */
@@ -41,7 +41,7 @@ export function newInstanceId(cardId: string): string {
   return `${cardId}#${instanceCounter}`;
 }
 
-/** Reset the instance counter — used only in tests for reproducibility. */
+/** Reset the instance counter, used only in tests for reproducibility. */
 export function resetInstanceCounter(): void {
   instanceCounter = 0;
 }

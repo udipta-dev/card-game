@@ -1,6 +1,6 @@
 // Keyword mechanics. The important one is the destroy-attempt interception:
 // icchamrityu, immuneUntilPlayed, armor and the diamond-body flag all express
-// "you cannot remove me (yet)" through ONE generic gate — no card-specific
+// "you cannot remove me (yet)" through ONE generic gate, no card-specific
 // branch in the engine. Removal always goes through attemptDestroy().
 import { getCard } from '@content/cards';
 import { cardOnBoard } from './queries';

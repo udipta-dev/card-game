@@ -18,7 +18,7 @@ export function eventText(state: GameState, ev: GameEvent): string | null {
       return `${getCard(ev.cardId).name} was slain.`;
     case 'preventDestroy': {
       const reasons: Record<string, string> = {
-        icchamrityu: `${nameOf(state, ev.iid)} cannot yet be slain — Icchamrityu.`,
+        icchamrityu: `${nameOf(state, ev.iid)} cannot yet be slain, Icchamrityu.`,
         immuneUntilPlayed: `${nameOf(state, ev.iid)} stands immune.`,
         armor: `${nameOf(state, ev.iid)}'s armour held.`,
         'diamond-body': `${nameOf(state, ev.iid)}'s diamond body turned the blow.`,

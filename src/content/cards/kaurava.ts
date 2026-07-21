@@ -25,8 +25,8 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 9,
     rows: ['ratha'],
-    // Immune while armed. Only the false news of Ashwatthama's death — the
-    // 'ashwatthama_elephant' deception — makes him lay down his bow (power → 0).
+    // Immune while armed. Only the false news of Ashwatthama's death, the
+    // 'ashwatthama_elephant' deception, makes him lay down his bow (power → 0).
     keywords: [{ kind: 'immuneUntilPlayed', card: 'ashwatthama_elephant', thenSetPower: 0 }],
     effects: [],
     flavor: 'The war-guru; unbeatable until grief unstrung his bow.',
@@ -46,7 +46,7 @@ export const KAURAVA_CARDS: Card[] = [
       { kind: 'noAstrasInFinalRound' },
     ],
     // Bhoomi's curse: if he is deployed in the deciding round, his chariot
-    // wheel sinks — power collapses to 0. (Strategic tension: play the armoured
+    // wheel sinks, power collapses to 0. (Strategic tension: play the armoured
     // Karna early, or risk the decider.)
     effects: [
       {
@@ -67,7 +67,7 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 8,
     rows: ['ratha'],
     keywords: [],
-    // Gandhari's gaze hardened his body to diamond — except the thighs.
+    // Gandhari's gaze hardened his body to diamond, except the thighs.
     // The 'diamond-body' flag makes him immune to removal until Bhima strikes.
     effects: [
       {

@@ -26,7 +26,7 @@ function greedy(state: GameState, seat: Seat, moves: Action[]): Action {
   return best;
 }
 
-/** The opponent has already passed — this round is a closed book we can read. */
+/** The opponent has already passed, this round is a closed book we can read. */
 function chooseWhenOppPassed(state: GameState, seat: Seat, plays: Action[]): Action {
   const opp = opponentOf(seat);
   const myPower = seatPower(state, seat);

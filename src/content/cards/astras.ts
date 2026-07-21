@@ -12,7 +12,7 @@ export const ASTRA_CARDS: Card[] = [
     basePower: 0,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'The serpent-arrow flies true — unless Krishna drives the chariot.' },
+    cost: { consequence: 'The serpent-arrow flies true, unless Krishna drives the chariot.' },
     // Destroy the highest-power enemy unit, UNLESS Krishna-as-charioteer is
     // attached to it (the arrow strikes the crown, not the head).
     effects: [
@@ -34,7 +34,7 @@ export const ASTRA_CARDS: Card[] = [
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     cost: {
-      consequence: 'Scorches the land where it falls — and singes your own adjacent ranks.',
+      consequence: 'Scorches the land where it falls, and singes your own adjacent ranks.',
     },
     // Devastate the enemy row it lands in, scorch it for the rest of the battle,
     // and take collateral damage on your own adjacent rows.
@@ -73,7 +73,7 @@ export const ASTRA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     cost: {
-      consequence: 'Wins the battle outright — then burns from your grasp for the rest of the run.',
+      consequence: 'Wins the battle outright, then burns from your grasp for the rest of the run.',
     },
     // Shiva's ultimate. Instant battle win, then self-bans for the run. Never
     // to be loosed upon a lesser foe.
@@ -97,7 +97,7 @@ export const ASTRA_CARDS: Card[] = [
     cost: { consequence: 'Never misses its mark.' },
     // Vishnu's weapon: destroy one chosen enemy unit, ignoring armour/immunity
     // is intentionally NOT granted here (icchamrityu/immuneUntilPlayed still
-    // intercept) — canon fidelity: even this bows to a greater boon.
+    // intercept), canon fidelity: even this bows to a greater boon.
     effects: [
       {
         on: 'onPlay',
@@ -127,6 +127,6 @@ export const ASTRA_CARDS: Card[] = [
         actions: [],
       },
     ],
-    flavor: 'Naro va kunjaro va — the man, or the elephant.',
+    flavor: 'Naro va kunjaro va, the man, or the elephant.',
   },
 ];
