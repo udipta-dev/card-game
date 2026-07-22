@@ -75,8 +75,9 @@ export function resolveRound(state: GameState): void {
   drawCards(state, 'player', ROUND_DRAW);
   drawCards(state, 'ai', ROUND_DRAW);
 
-  // Loser of the round leads the next (Gwent rule); tie → player leads.
-  state.activeSeat = roundWinner === 'player' ? 'ai' : 'player';
+  // Winner of the round leads the next: they commit first, so the loser gets
+  // "last say" and a chance to rubber-band back. Tie leaves the first mover leading.
+  state.activeSeat = roundWinner === 'ai' ? 'ai' : 'player';
   state.phase = 'playing';
   state.log.push({ t: 'roundStart', round: state.round });
   runBoardTrigger(state, 'onRoundStart');

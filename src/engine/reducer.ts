@@ -16,7 +16,7 @@ function clone(state: GameState): GameState {
 
 function beginPlaying(s: GameState): void {
   s.phase = 'playing';
-  s.activeSeat = 'player';
+  s.activeSeat = s.firstMover;
 }
 
 /** Is this a legal PLAY_CARD for the active seat? Cheap structural check. */

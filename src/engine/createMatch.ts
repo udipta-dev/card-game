@@ -31,6 +31,7 @@ export function createMatch(
   seed: number,
   playerDeck: DeckList,
   aiDeck: DeckList,
+  firstMover: Seat = 'player',
 ): GameState {
   const instances: Record<InstanceId, CardInstance> = {};
   let s = seed >>> 0;
@@ -55,7 +56,8 @@ export function createMatch(
   return {
     seed: s,
     phase: 'mulligan',
-    activeSeat: 'player',
+    activeSeat: firstMover,
+    firstMover,
     round: 1,
     totalRounds: 3,
     roundWins: { player: 0, ai: 0 },

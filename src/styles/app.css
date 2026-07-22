@@ -88,42 +88,76 @@
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 8px;
-  padding: 10px clamp(8px, 2vw, 24px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  padding: calc(6px + env(safe-area-inset-top)) clamp(6px, 2vw, 24px)
+    calc(6px + env(safe-area-inset-bottom));
   min-height: 0;
+  overflow: hidden;
+  max-width: 100vw;
 }
 
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-}
-.topbar__side {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 6px;
   min-width: 0;
 }
-.seat-tag {
+.topbar__right {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 6px;
+  min-width: 0;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
   border-radius: 999px;
   border: 1px solid var(--panel-edge);
   background: var(--panel);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12.5px;
+  min-width: 0;
 }
-.seat-tag--active {
+.chip--active {
   border-color: var(--gold);
-  box-shadow: 0 0 0 1px var(--gold), 0 0 18px rgba(232, 185, 35, 0.25);
+  box-shadow: 0 0 0 1px var(--gold), 0 0 16px rgba(232, 185, 35, 0.25);
 }
-.seat-tag__house {
-  width: 10px;
-  height: 10px;
+.chip__dot {
+  width: 9px;
+  height: 9px;
   border-radius: 3px;
+  flex: 0 0 auto;
+}
+.chip__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chip__hand {
+  font-size: 11px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+  font-size: 14px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--ink);
+}
+.icon-btn:hover {
+  border-color: var(--gold-dim);
 }
 .gems {
   display: inline-flex;
@@ -144,6 +178,8 @@
 .round-pill {
   text-align: center;
   font-family: var(--font-display);
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 .round-pill__n {
   font-size: 15px;
@@ -209,6 +245,7 @@
   border-radius: var(--radius-sm);
   border: 1px solid var(--panel-edge);
   background: var(--bg-1);
+  flex: 1 1 0;
   min-height: 0;
   overflow: hidden;
 }
@@ -258,6 +295,16 @@
   padding: 3px 0;
   flex: 1;
 }
+/* Board cards scale to the row height (which flexes with the viewport) so they
+   never clip, regardless of screen size. Hand/mulligan cards keep fixed sizes. */
+.row__cards .card {
+  height: 100%;
+  max-height: 128px;
+  width: auto;
+  aspect-ratio: 5 / 7;
+  min-height: 0;
+  flex: 0 0 auto;
+}
 .row__power {
   flex: 0 0 auto;
   font-family: var(--font-display);
@@ -277,11 +324,24 @@
 .hand {
   display: flex;
   gap: 8px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-end;
   overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  max-width: 100%;
   padding: 6px 2px 2px;
   min-height: 0;
+  scroll-snap-type: x proximity;
+}
+.hand > * {
+  scroll-snap-align: center;
+}
+/* Centre a small hand, but let a full hand scroll from the left. */
+.hand::before,
+.hand::after {
+  content: '';
+  margin: auto;
 }
 .controls {
   display: flex;
@@ -294,6 +354,10 @@
   font-size: 13px;
   text-align: center;
   min-height: 18px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  padding: 0 8px;
 }
 .hint--act {
   color: var(--gold);
@@ -657,19 +721,196 @@
   line-height: 1.4;
 }
 
-@media (max-width: 620px) {
+/* Tap-to-inspect card sheet (the touch-friendly replacement for hover) */
+.sheet {
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  width: min(470px, 92vw);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.sheet__card {
+  flex: 0 0 auto;
+}
+.sheet__info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.sheet__name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+.sheet__meta {
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+}
+.sheet__rule {
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.45;
+  margin: 5px 0;
+}
+.sheet__flavor {
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 8px;
+  line-height: 1.45;
+}
+.sheet__close {
+  margin-top: 14px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .match {
+    gap: 4px;
+  }
+
+  /* Compact top bar */
+  .chip {
+    padding: 5px 9px;
+    font-size: 11.5px;
+    gap: 5px;
+  }
+  .chip__name {
+    display: none;
+  }
+  .chip__dot {
+    width: 11px;
+    height: 11px;
+  }
+  .round-pill__n {
+    font-size: 13px;
+  }
+  .round-pill__sub {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Board rows sized to fit six of them plus the hand in portrait */
+  .board {
+    gap: 4px;
+  }
+  .board__group {
+    gap: 4px;
+  }
+  .row {
+    padding: 2px 6px 2px 20px;
+    min-height: 0;
+  }
+  .row__label {
+    left: 5px;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .row__cards {
+    gap: 4px;
+    align-items: center;
+  }
+  .row__power {
+    font-size: 15px;
+    min-width: 22px;
+  }
+
+  /* Hand cards: a touch bigger than board cards for tapping */
   .card {
-    --card-w: 78px;
-    --card-h: 112px;
+    --card-w: 72px;
+    --card-h: 100px;
     padding: 5px;
+    border-radius: 8px;
+  }
+  .card--mini {
+    --card-w: 50px;
+    --card-h: 72px;
+    padding: 4px;
   }
   .card__art {
-    font-size: 28px;
+    font-size: 26px;
+  }
+  .card--mini .card__art {
+    font-size: 20px;
   }
   .card__name {
     font-size: 10px;
   }
-  .row {
-    padding-left: 34px;
+  .card--mini .card__name {
+    font-size: 8.5px;
+  }
+  .card__power {
+    width: 24px;
+    height: 24px;
+    font-size: 13px;
+    left: 4px;
+    bottom: 4px;
+  }
+
+  .score-num {
+    font-size: 22px;
+    width: 44px;
+  }
+  .score-vs {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .hand {
+    gap: 6px;
+    padding: 4px 2px 0;
+  }
+  .hint {
+    font-size: 12px;
+    line-height: 1.3;
+    padding: 0 6px;
+  }
+  .controls .btn--sm {
+    padding: 11px 18px;
+    font-size: 14px;
+  }
+
+  .eventlog {
+    right: 8px;
+    top: 52px;
+    max-width: 190px;
+  }
+  .eventlog__item {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+}
+
+/* On touch devices the hover tooltip has no place; tap-to-inspect replaces it. */
+@media (hover: none) {
+  .tooltip {
+    display: none !important;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .chip__name {
+    display: none;
+  }
+  .card {
+    --card-w: 64px;
+    --card-h: 92px;
+  }
+  .card--mini {
+    --card-w: 46px;
+    --card-h: 66px;
   }
 }

@@ -43,6 +43,11 @@ body,
   margin: 0;
 }
 
+#root {
+  height: 100vh;
+  height: 100dvh;
+}
+
 body {
   background:
     radial-gradient(1200px 700px at 50% -10%, #241f38 0%, var(--bg-0) 60%),
@@ -51,6 +56,23 @@ body {
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Never allow the page itself to scroll sideways. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Comfortable tap targets on touch devices. */
+@media (pointer: coarse) {
+  button {
+    min-height: 40px;
+  }
 }
 
 button {

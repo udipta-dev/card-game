@@ -10,7 +10,7 @@ import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, InstanceId, Row, Seat } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
-import { HOUSE_PALETTE, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
+import { TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
 import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
 
@@ -32,12 +32,15 @@ interface Props {
 }
 
 export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
+  // The AI opens (firstMover 'ai') so the human plays second and gets the
+  // last-say edge, which keeps a single-player match feeling fair.
   const [state, dispatch] = useReducer(reduce, undefined, () =>
-    createMatch(seed, playerDeck, aiDeck),
+    createMatch(seed, playerDeck, aiDeck, 'ai'),
   );
   const [selected, setSelected] = useState<InstanceId | null>(null);
   const [mSel, setMSel] = useState<InstanceId[]>([]);
   const [showHelp, setShowHelp] = useState(false);
+  const [inspect, setInspect] = useState<{ card: Card; inst?: GameState['instances'][string] } | null>(null);
   const [tip, setTip] = useState<{ card: Card; inst?: GameState['instances'][string]; x: number; y: number } | null>(null);
   const [banner, setBanner] = useState<string | null>(null);
   const roundEndsSeen = useRef(0);
@@ -94,10 +97,13 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
     setSelected(null);
   }
   function onHandClick(iid: InstanceId) {
-    if (!myTurn) return;
-    const canPlay = myMoves.some((m) => m.type === 'PLAY_CARD' && m.iid === iid);
-    if (!canPlay) return;
-    setSelected((cur) => (cur === iid ? null : iid));
+    const canPlay = myTurn && myMoves.some((m) => m.type === 'PLAY_CARD' && m.iid === iid);
+    if (canPlay) {
+      setSelected((cur) => (cur === iid ? null : iid));
+    } else {
+      // Not playable (locked astra, or not your turn): show its details instead.
+      setInspect({ card: getCard(state.instances[iid]!.cardId), inst: state.instances[iid] });
+    }
   }
   function onRowClick(seat: Seat, row: Row) {
     if (!plan || !selected) return;
@@ -161,7 +167,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
                 instance={u}
                 dead={u.currentPower <= 0}
                 targetable={isTargetable}
-                onClick={isTargetable ? () => onUnitClick(iid) : undefined}
+                onClick={() => (isTargetable ? onUnitClick(iid) : setInspect({ card, inst: u }))}
                 onEnter={showTip(card, u)}
                 onLeave={hideTip}
               />
@@ -210,7 +216,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
                 card={card}
                 instance={state.instances[iid]}
                 selected={selected === iid}
-                onClick={myTurn ? () => onHandClick(iid) : undefined}
+                onClick={() => onHandClick(iid)}
                 dead={myTurn && !playable}
                 onEnter={showTip(card, state.instances[iid])}
                 onLeave={hideTip}
@@ -246,6 +252,9 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
         </div>
       )}
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
+      {inspect && (
+        <InspectSheet card={inspect.card} inst={inspect.inst} onClose={() => setInspect(null)} />
+      )}
       {state.phase === 'mulligan' && (
         <MulliganOverlay
           state={state}
@@ -279,34 +288,58 @@ function Topbar({
 }) {
   return (
     <div className="topbar">
-      <div className="topbar__side">
-        <div className={'seat-tag' + (state.activeSeat === 'ai' ? ' seat-tag--active' : '')}>
-          <span className="seat-tag__house" style={{ background: HOUSE_PALETTE.kaurava.edge }} />
-          Kauravas
-          <Gems n={state.roundWins.ai} />
-        </div>
-        <span className="round-pill__sub">✋{state.hands.ai.length}</span>
-      </div>
-
+      <SeatChip
+        house="kaurava"
+        name="Kauravas"
+        wins={state.roundWins.ai}
+        hand={state.hands.ai.length}
+        active={state.activeSeat === 'ai'}
+      />
       <div className="round-pill">
-        <div className="round-pill__n">Round {state.round} of 3</div>
-        <div className="round-pill__sub">{isFinalRound(state) ? 'The decider' : 'First to two'}</div>
+        <div className="round-pill__n">Round {state.round}/3</div>
+        <div className="round-pill__sub">{isFinalRound(state) ? 'Decider' : 'First to two'}</div>
       </div>
-
-      <div className="topbar__side">
-        <span className="round-pill__sub">✋{state.hands.player.length}</span>
-        <div className={'seat-tag' + (state.activeSeat === 'player' ? ' seat-tag--active' : '')}>
-          <Gems n={state.roundWins.player} />
-          Pandavas
-          <span className="seat-tag__house" style={{ background: HOUSE_PALETTE.pandava.edge }} />
-        </div>
-        <button className="help-btn" onClick={onHelp} title="How to play" aria-label="How to play">
+      <div className="topbar__right">
+        <SeatChip
+          house="pandava"
+          name="Pandavas"
+          wins={state.roundWins.player}
+          hand={state.hands.player.length}
+          active={state.activeSeat === 'player'}
+        />
+        <button className="icon-btn" onClick={onHelp} title="How to play" aria-label="How to play">
           ?
         </button>
-        <button className="btn btn--ghost btn--sm" onClick={onExit}>
-          Flee
+        <button className="icon-btn" onClick={onExit} title="Leave match" aria-label="Leave match">
+          ✕
         </button>
       </div>
+    </div>
+  );
+}
+
+function SeatChip({
+  house,
+  name,
+  wins,
+  hand,
+  active,
+}: {
+  house: 'pandava' | 'kaurava';
+  name: string;
+  wins: number;
+  hand: number;
+  active: boolean;
+}) {
+  const dot = house === 'kaurava' ? 'var(--kaurava)' : 'var(--pandava)';
+  return (
+    <div className={'chip' + (active ? ' chip--active' : '')}>
+      <span className="chip__dot" style={{ background: dot }} />
+      <span className="chip__name">{name}</span>
+      <Gems n={wins} />
+      <span className="chip__hand" title="cards in hand">
+        🖐{hand}
+      </span>
     </div>
   );
 }
@@ -340,6 +373,45 @@ function Tooltip({ card, inst, x, y }: { card: Card; inst?: GameState['instances
         </div>
       ))}
       {card.flavor && <div className="tooltip__flavor">{card.flavor}</div>}
+    </div>
+  );
+}
+
+function InspectSheet({
+  card,
+  inst,
+  onClose,
+}: {
+  card: Card;
+  inst?: GameState['instances'][string];
+  onClose: () => void;
+}) {
+  const rules = rulesText(card);
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="sheet" onClick={(e) => e.stopPropagation()}>
+        <div className="sheet__card">
+          <CardFrame card={card} instance={inst} />
+        </div>
+        <div className="sheet__info">
+          <div className="sheet__name">{card.name}</div>
+          <div className="sheet__meta">
+            {TYPE_LABEL[card.type]}
+            {card.tier ? ` · ${TIER_LABEL[card.tier]}` : ''}
+            {inst ? ` · Power ${inst.currentPower}` : card.basePower ? ` · Power ${card.basePower}` : ''}
+            {` · Cost ${provisionOf(card)}`}
+          </div>
+          {rules.map((r, i) => (
+            <div key={i} className="sheet__rule">
+              {r}
+            </div>
+          ))}
+          {card.flavor && <div className="sheet__flavor">{card.flavor}</div>}
+          <button className="btn btn--primary btn--sm sheet__close" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

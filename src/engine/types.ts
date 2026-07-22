@@ -209,6 +209,8 @@ export interface GameState {
   seed: number; // PRNG state, advances deterministically
   phase: Phase;
   activeSeat: Seat;
+  /** The seat that moved first in round 1 (gets a catch-up draw). */
+  firstMover: Seat;
   round: number; // 1..3
   totalRounds: number; // best-of, default 3 (win 2)
   roundWins: Record<Seat, number>;
