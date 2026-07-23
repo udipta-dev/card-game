@@ -41,3 +41,22 @@ describe('AI pass/bank policy', () => {
     expect(firstOf(s, 'ai', 'kaurava_infantry')).toBeDefined();
   });
 });
+
+describe('AI imperfect information', () => {
+  it('fires an astra it cannot see will be countered', () => {
+    // A clairvoyant AI would refuse Nagastra into a held Garudastra; a fair AI
+    // does not see the counter, so it takes the kill.
+    const s = makeState({
+      activeSeat: 'ai',
+      aiBoard: { ratha: ['karna'] }, // invoker for Nagastra
+      aiHand: ['nagastra'],
+      playerBoard: { ratha: ['arjuna'] }, // the target
+      playerHand: ['garudastra'], // the counter the AI must not peek at
+    });
+    const action = chooseAction(s, 'ai');
+    expect(action.type).toBe('PLAY_CARD');
+    if (action.type === 'PLAY_CARD') {
+      expect(s.instances[action.iid].cardId).toBe('nagastra');
+    }
+  });
+});

@@ -22,7 +22,9 @@ export function evaluate(state: GameState, seat: Seat): number {
 
   const power = seatPower(state, seat) - seatPower(state, opp);
   const rounds = state.roundWins[seat] - state.roundWins[opp];
-  const cardW = isFinalRound(state) ? 0 : WEIGHTS.card;
+  // Cards are worth nothing in the final round (spend everything), but extra
+  // in round 1, so the AI banks rather than dumping its best cards up front.
+  const cardW = isFinalRound(state) ? 0 : state.round === 1 ? WEIGHTS.card * 1.6 : WEIGHTS.card;
   const cards = cardCount(state, seat) - cardCount(state, opp);
 
   return power * WEIGHTS.power + rounds * WEIGHTS.round + cards * cardW;

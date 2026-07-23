@@ -58,8 +58,24 @@ function chooseWhenOppPassed(state: GameState, seat: Seat, plays: Action[]): Act
   return { type: 'PASS', seat };
 }
 
+/**
+ * Hide the opponent's concealed hand so the AI plans without clairvoyant
+ * knowledge of held counters (imperfect-information determinization). The
+ * opponent's card count is unknown across every candidate, so it cancels in the
+ * argmax and does not distort the choice; only the counter-web stops being
+ * pre-dodged, so astras actually get fired and answered in real games.
+ */
+function hideOpponentHand(realState: GameState, seat: Seat): GameState {
+  const s = structuredClone(realState);
+  s.hands[opponentOf(seat)] = [];
+  return s;
+}
+
 /** Choose the AI's next action. Pure & deterministic given the state. */
-export function chooseAction(state: GameState, seat: Seat): Action {
+export function chooseAction(realState: GameState, seat: Seat): Action {
+  // The returned action references the AI's own card ids, which are unchanged,
+  // so it is valid to apply against the real state.
+  const state = hideOpponentHand(realState, seat);
   const moves = legalMoves(state, seat);
   const plays = moves.filter(isPlay);
   if (plays.length === 0) return { type: 'PASS', seat };
