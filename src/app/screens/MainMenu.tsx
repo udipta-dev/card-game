@@ -3,11 +3,12 @@ import { HowToPlay } from '@ui/HowToPlay';
 
 interface Props {
   onQuickplay: (side: 'pandava' | 'kaurava') => void;
+  onCodex: () => void;
 }
 
 const SEEN_KEY = 'kuru_seen_help';
 
-export function MainMenu({ onQuickplay }: Props) {
+export function MainMenu({ onQuickplay, onCodex }: Props) {
   const [showHelp, setShowHelp] = useState(false);
 
   // First-time visitors get the rules once, automatically.
@@ -33,6 +34,9 @@ export function MainMenu({ onQuickplay }: Props) {
         </button>
         <button className="btn" onClick={() => onQuickplay('kaurava')}>
           Lead the Kauravas
+        </button>
+        <button className="btn btn--ghost" onClick={onCodex}>
+          Codex · browse all cards
         </button>
         <button className="btn btn--ghost" onClick={() => setShowHelp(true)}>
           How to play

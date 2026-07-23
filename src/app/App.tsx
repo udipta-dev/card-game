@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { KAURAVA_DECK, PANDAVA_DECK } from '@content/decks';
 import type { DeckList } from '@content/decks';
 import { MatchView } from '@ui/match/MatchView';
+import { Codex } from './screens/Codex';
 import { MainMenu } from './screens/MainMenu';
 
 interface MatchConfig {
@@ -16,10 +17,12 @@ function makeSeed(): number {
 
 export function App() {
   const [match, setMatch] = useState<MatchConfig | null>(null);
+  const [showCodex, setShowCodex] = useState(false);
 
   const startQuickplay = (side: 'pandava' | 'kaurava') => {
     const playerDeck = side === 'pandava' ? PANDAVA_DECK : KAURAVA_DECK;
     const aiDeck = side === 'pandava' ? KAURAVA_DECK : PANDAVA_DECK;
+    setShowCodex(false);
     setMatch({ seed: makeSeed(), playerDeck, aiDeck });
   };
 
@@ -33,8 +36,10 @@ export function App() {
           aiDeck={match.aiDeck}
           onExit={() => setMatch(null)}
         />
+      ) : showCodex ? (
+        <Codex onBack={() => setShowCodex(false)} />
       ) : (
-        <MainMenu onQuickplay={startQuickplay} />
+        <MainMenu onQuickplay={startQuickplay} onCodex={() => setShowCodex(true)} />
       )}
     </div>
   );

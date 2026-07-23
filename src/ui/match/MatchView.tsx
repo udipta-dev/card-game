@@ -10,6 +10,7 @@ import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, InstanceId, Row, Seat } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
+import { InspectSheet } from '@ui/card/InspectSheet';
 import { TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
 import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
@@ -373,45 +374,6 @@ function Tooltip({ card, inst, x, y }: { card: Card; inst?: GameState['instances
         </div>
       ))}
       {card.flavor && <div className="tooltip__flavor">{card.flavor}</div>}
-    </div>
-  );
-}
-
-function InspectSheet({
-  card,
-  inst,
-  onClose,
-}: {
-  card: Card;
-  inst?: GameState['instances'][string];
-  onClose: () => void;
-}) {
-  const rules = rulesText(card);
-  return (
-    <div className="overlay" onClick={onClose}>
-      <div className="sheet" onClick={(e) => e.stopPropagation()}>
-        <div className="sheet__card">
-          <CardFrame card={card} instance={inst} />
-        </div>
-        <div className="sheet__info">
-          <div className="sheet__name">{card.name}</div>
-          <div className="sheet__meta">
-            {TYPE_LABEL[card.type]}
-            {card.tier ? ` · ${TIER_LABEL[card.tier]}` : ''}
-            {inst ? ` · Power ${inst.currentPower}` : card.basePower ? ` · Power ${card.basePower}` : ''}
-            {` · Cost ${provisionOf(card)}`}
-          </div>
-          {rules.map((r, i) => (
-            <div key={i} className="sheet__rule">
-              {r}
-            </div>
-          ))}
-          {card.flavor && <div className="sheet__flavor">{card.flavor}</div>}
-          <button className="btn btn--primary btn--sm sheet__close" onClick={onClose}>
-            Close
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
