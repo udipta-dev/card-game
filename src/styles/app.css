@@ -656,6 +656,52 @@
   padding: 8px 0 4px;
 }
 
+/* Setup (faction + deck preview picker) */
+.setup__label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+.faction-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.faction-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+  color: var(--ink-dim);
+  font-weight: 600;
+  font-size: 14px;
+}
+.faction-btn:hover {
+  border-color: var(--gold-dim);
+}
+.faction-btn--on {
+  border-color: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--gold), 0 0 16px rgba(232, 185, 35, 0.2);
+}
+.faction-btn__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+}
+.setup__begin {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin: 22px auto 0;
+}
+
 /* How to play */
 .howto {
   max-width: 640px;

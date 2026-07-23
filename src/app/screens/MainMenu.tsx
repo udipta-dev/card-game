@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import type { House } from '@engine/types';
 import { HowToPlay } from '@ui/HowToPlay';
 
 interface Props {
-  onQuickplay: (side: House) => void;
+  onPlay: () => void;
   onCodex: () => void;
 }
 
 const SEEN_KEY = 'kuru_seen_help';
 
-export function MainMenu({ onQuickplay, onCodex }: Props) {
+export function MainMenu({ onPlay, onCodex }: Props) {
   const [showHelp, setShowHelp] = useState(false);
 
   // First-time visitors get the rules once, automatically.
@@ -30,14 +29,8 @@ export function MainMenu({ onQuickplay, onCodex }: Props) {
         vow undoes the mightiest warrior.
       </p>
       <div className="menu__actions">
-        <button className="btn btn--primary" onClick={() => onQuickplay('pandava')}>
-          Lead the Pandavas
-        </button>
-        <button className="btn" onClick={() => onQuickplay('kaurava')}>
-          Lead the Kauravas
-        </button>
-        <button className="btn" onClick={() => onQuickplay('asura')}>
-          Lead the Asuras
+        <button className="btn btn--primary" onClick={onPlay}>
+          Quickplay
         </button>
         <button className="btn btn--ghost" onClick={onCodex}>
           Codex · browse all cards
