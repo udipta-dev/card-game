@@ -514,11 +514,18 @@
   background: rgba(8, 7, 14, 0.72);
   backdrop-filter: blur(4px);
   display: grid;
-  place-items: center;
   z-index: 20;
   padding: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+/* Centre the dialog when it fits; let the overlay scroll when it is taller
+   than the screen so the action buttons are always reachable (mobile fix). */
+.overlay > * {
+  margin: auto;
 }
 .panel {
+  position: relative;
   background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
   border: 1px solid var(--panel-edge);
   border-radius: var(--radius);
@@ -527,6 +534,26 @@
   max-width: 560px;
   width: 100%;
   text-align: center;
+}
+.dialog-x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+  color: var(--ink-dim);
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  z-index: 2;
+}
+.dialog-x:hover {
+  border-color: var(--gold-dim);
+  color: var(--ink);
 }
 .panel h2 {
   margin: 0 0 6px;

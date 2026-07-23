@@ -44,6 +44,9 @@ export function HowToPlay({ onClose }: { onClose: () => void }) {
   return (
     <div className="overlay" onClick={onClose}>
       <div className="panel howto" onClick={(e) => e.stopPropagation()}>
+        <button className="dialog-x" onClick={onClose} aria-label="Close">
+          ✕
+        </button>
         <h2>How to play</h2>
         <p className="panel__sub">Kurukshetra is a duel of two armies. Outthink the enemy, do not just outmuscle them.</p>
         <div className="howto__grid">

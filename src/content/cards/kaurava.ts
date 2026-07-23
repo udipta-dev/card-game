@@ -15,7 +15,8 @@ export const KAURAVA_CARDS: Card[] = [
     // until Shikhandi stands on the board.
     keywords: [{ kind: 'icchamrityu', unlessCardOnBoard: 'shikhandi' }],
     effects: [],
-    knownAstras: ['brahmastra'],
+    // Trained by Parashurama, a grandmaster of the celestial weapons.
+    knownAstras: ['brahmastra', 'agneyastra', 'varunastra'],
     flavor: 'Granted the boon to choose the hour of his own death.',
   },
   {
@@ -150,6 +151,27 @@ export const KAURAVA_CARDS: Card[] = [
       },
     ],
     flavor: 'The gate-keeper who sealed Abhimanyu inside the wheel.',
+  },
+  {
+    id: 'bhagadatta',
+    name: 'Bhagadatta',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 8,
+    rows: ['gaja'], // he fought astride the war-elephant Supratika
+    keywords: [],
+    // Loosed the Vaishnavastra at Arjuna (Krishna took it on his chest).
+    knownAstras: ['vaishnavastra'],
+    effects: [
+      // Supratika's charge: trample the mightiest foe as he enters.
+      {
+        on: 'onPlay',
+        target: { pick: 'highestEnemyUnit' },
+        actions: [{ kind: 'damage', amount: 2 }],
+      },
+    ],
+    flavor: 'The aged lord of Pragjyotisha, astride the great elephant Supratika.',
   },
   {
     id: 'kaurava_infantry',
