@@ -61,7 +61,14 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 8,
     rows: ['ratha'],
     keywords: [],
-    effects: [],
+    // The poison tongue: fielding Shalya saps your own Karna (his secret sabotage).
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'unitByCard', side: 'own', card: 'karna' },
+        actions: [{ kind: 'buff', amount: -3 }],
+      },
+    ],
     flavor: 'The Madra king who steered Karna’s chariot and his ruin.',
   },
 

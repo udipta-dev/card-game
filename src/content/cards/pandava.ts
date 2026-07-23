@@ -90,7 +90,14 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha', 'padati'],
     keywords: [{ kind: 'bond', tag: 'twin', amount: 2 }],
     tags: ['pandava-brother', 'twin'],
-    effects: [],
+    // Sworn to kill Shakuni: cuts down the dice-master on sight.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'unitByCard', side: 'enemy', card: 'shakuni' },
+        actions: [{ kind: 'destroy' }],
+      },
+    ],
     flavor: 'The wisest of the five, who knew what was to come.',
   },
 
@@ -254,7 +261,15 @@ export const PANDAVA_CARDS: Card[] = [
     keywords: [],
     tags: ['panchala'],
     knownAstras: ['agneyastra', 'brahmastra'],
-    effects: [],
+    // Born to slay Drona: strikes him down once he has laid down his bow
+    // (Drona's immunity holds until the "Ashwatthama is dead" deception disarms him).
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'unitByCard', side: 'enemy', card: 'drona' },
+        actions: [{ kind: 'destroy' }],
+      },
+    ],
     flavor: 'Born of fire to be the slayer of Drona.',
   },
   {

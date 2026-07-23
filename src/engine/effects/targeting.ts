@@ -37,6 +37,12 @@ export function resolveTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[
       return adjacentRows(playedRow).flatMap((r) =>
         rowUnits(state, actorOwner, r).map((u) => u.iid),
       );
+    case 'unitByCard': {
+      const side = sel.side === 'own' ? actorOwner : enemy;
+      return unitsOf(state, side)
+        .filter((u) => u.cardId === sel.card)
+        .map((u) => u.iid);
+    }
     case 'chosen':
       return ctx.chosen.filter((iid) => matchesFilter(ctx, iid, sel.filter));
   }

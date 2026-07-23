@@ -150,6 +150,8 @@ export type TargetSelector =
   | { pick: 'enemyRowSameAsPlayed' }
   // Own units in the row(s) adjacent to where this astra was played.
   | { pick: 'ownAdjacentToPlayed' }
+  // A specific named card on a given side (Shalya finds Karna, Dhrishtadyumna finds Drona).
+  | { pick: 'unitByCard'; side: 'own' | 'enemy'; card: CardId }
   | { pick: 'chosen'; filter: UnitFilter };
 
 export interface UnitFilter {

@@ -71,6 +71,7 @@ function checkTarget(card: Card, t: TargetSelector, errs: ContentError[]): void 
         errs.push({ cardId: card.id, message: `chosen.filter references bad row '${r}'` });
     }
   }
+  if (t.pick === 'unitByCard') checkCardRef(card.id, t.card, 'unitByCard.card', errs);
 }
 
 function checkAction(card: Card, a: EffectAction, errs: ContentError[]): void {
