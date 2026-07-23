@@ -61,6 +61,8 @@ export interface Card {
    * (the canonical counter-web: Naga vs Garuda, Agni vs Varuna, Brahma vs Brahma).
    */
   counteredBy?: CardId[];
+  /** Free-form tags for bond/synergy (clan, squad, "rakshasa", "vrishni", ...). */
+  tags?: string[];
   /** Path under public/art/cards/. Undefined => placeholder frame. */
   art?: string;
   flavor?: string;
@@ -80,7 +82,13 @@ export type Keyword =
   // Abhimanyu: once trapped (flag set), cannot be withdrawn and will die.
   | { kind: 'trapped' }
   // Karna's curse: this card cannot invoke astras during the final round.
-  | { kind: 'noAstrasInFinalRound' };
+  | { kind: 'noAstrasInFinalRound' }
+  // Chiranjivi (Ashwatthama, Kripa, Kritavarma, ...): cannot be destroyed at all.
+  | { kind: 'deathless' }
+  // Grows in strength each round it survives (rakshasa night-strength, etc.).
+  | { kind: 'nightGrowth'; amount: number }
+  // +power for each other allied unit sharing a tag (squads, clans).
+  | { kind: 'bond'; tag: string; amount: number };
 
 export type KeywordKind = Keyword['kind'];
 

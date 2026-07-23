@@ -112,7 +112,7 @@ describe('Drona — disarmed only by the elephant deception', () => {
     // ai passed so the player keeps the turn across multiple plays.
     const s0 = makeState({
       playerHand: ['vaishnavastra', 'ashwatthama_elephant'],
-      playerBoard: { padati: ['arjuna'] }, // Arjuna invokes Vaishnavastra
+      playerBoard: { padati: ['bhagadatta'] }, // Bhagadatta invokes Vaishnavastra
       aiBoard: { ratha: ['drona'] },
       passed: { ai: true },
     });
@@ -134,7 +134,7 @@ describe('Duryodhana — diamond body answered only by Bhima', () => {
   it('is immune to Vaishnavastra but falls to Bhima’s thigh-strike', () => {
     const s0 = makeState({
       playerHand: ['vaishnavastra', 'bhima'],
-      playerBoard: { padati: ['arjuna'] }, // Arjuna invokes Vaishnavastra
+      playerBoard: { padati: ['bhagadatta'] }, // Bhagadatta invokes Vaishnavastra
       aiBoard: { ratha: ['duryodhana'] },
       passed: { ai: true },
     });

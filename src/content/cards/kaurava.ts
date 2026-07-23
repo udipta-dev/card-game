@@ -1,8 +1,10 @@
 import type { Card } from '@engine/types';
 
-// The Kaurava host. Identity: overwhelming numbers and top-tier maharathis,
-// each shielded by a canonical boon/curse that must be answered, not out-muscled.
+// The Kaurava host and its allies at Kurukshetra. Top-tier maharathis shielded
+// by canonical boons and curses, the Bahlika elders, allied kings, and the
+// rakshasa night-fighters. Tags drive bond/synergy.
 export const KAURAVA_CARDS: Card[] = [
+  // ---- The four commanders ----
   {
     id: 'bhishma',
     name: 'Bhishma',
@@ -11,11 +13,8 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 10,
     rows: ['ratha'],
-    // Icchamrityu: death only at his own will. Cannot be removed by any effect
-    // until Shikhandi stands on the board.
     keywords: [{ kind: 'icchamrityu', unlessCardOnBoard: 'shikhandi' }],
     effects: [],
-    // Trained by Parashurama, a grandmaster of the celestial weapons.
     knownAstras: ['brahmastra', 'agneyastra', 'varunastra'],
     flavor: 'Granted the boon to choose the hour of his own death.',
   },
@@ -27,12 +26,10 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 9,
     rows: ['ratha'],
-    // Immune while armed. Only the false news of Ashwatthama's death, the
-    // 'ashwatthama_elephant' deception, makes him lay down his bow (power → 0).
     keywords: [{ kind: 'immuneUntilPlayed', card: 'ashwatthama_elephant', thenSetPower: 0 }],
     effects: [],
-    knownAstras: ['brahmastra', 'agneyastra'],
-    flavor: 'The war-guru; unbeatable until grief unstrung his bow.',
+    knownAstras: ['brahmastra', 'agneyastra', 'brahmashirsha'],
+    flavor: 'The war-guru, unbeatable until grief unstrung his bow.',
   },
   {
     id: 'karna',
@@ -42,15 +39,9 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 10,
     rows: ['ratha'],
-    // Kavacha-Kundala: born-armour absorbs the first removal aimed at him.
-    // Parashurama's curse: he cannot invoke astras in the final round.
-    keywords: [
-      { kind: 'armor', amount: 4 },
-      { kind: 'noAstrasInFinalRound' },
-    ],
-    // Bhoomi's curse: if he is deployed in the deciding round, his chariot
-    // wheel sinks, power collapses to 0. (Strategic tension: play the armoured
-    // Karna early, or risk the decider.)
+    keywords: [{ kind: 'armor', amount: 4 }, { kind: 'noAstrasInFinalRound' }],
+    tags: ['sun-line'],
+    knownAstras: ['nagastra', 'agneyastra', 'bhargavastra', 'vasavi_shakti'],
     effects: [
       {
         on: 'onPlay',
@@ -59,9 +50,22 @@ export const KAURAVA_CARDS: Card[] = [
         actions: [{ kind: 'setPower', value: 0 }, { kind: 'addFlag', flag: 'wheel-sunk' }],
       },
     ],
-    knownAstras: ['nagastra', 'agneyastra'],
-    flavor: 'Son of the Sun; undone by two curses at the last.',
+    flavor: 'Son of the Sun, undone by two curses at the last.',
   },
+  {
+    id: 'shalya',
+    name: 'Shalya',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 8,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'The Madra king who steered Karna’s chariot and his ruin.',
+  },
+
+  // ---- The Kuru princes ----
   {
     id: 'duryodhana',
     name: 'Duryodhana',
@@ -71,29 +75,9 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 9,
     rows: ['ratha'],
     keywords: [],
-    // Gandhari's gaze hardened his body to diamond, except the thighs.
-    // The 'diamond-body' flag makes him immune to removal until Bhima strikes.
-    effects: [
-      {
-        on: 'onPlay',
-        target: { pick: 'self' },
-        actions: [{ kind: 'addFlag', flag: 'diamond-body' }],
-      },
-    ],
+    tags: ['kaurava-brother'],
+    effects: [{ on: 'onPlay', target: { pick: 'self' }, actions: [{ kind: 'addFlag', flag: 'diamond-body' }] }],
     flavor: 'Adamantine but for the thighs his mother never saw.',
-  },
-  {
-    id: 'ashwatthama',
-    name: 'Ashwatthama',
-    house: 'kaurava',
-    type: 'unit',
-    tier: 'maharathi',
-    basePower: 8,
-    rows: ['ratha'],
-    keywords: [],
-    effects: [],
-    knownAstras: ['narayanastra', 'brahmastra', 'agneyastra'],
-    flavor: "Drona's son, cursed to wander deathless and unhealing.",
   },
   {
     id: 'dushasana',
@@ -104,8 +88,102 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 6,
     rows: ['ratha', 'gaja'],
     keywords: [],
+    tags: ['kaurava-brother'],
     effects: [],
     flavor: 'Whose hands at the dice-hall sealed the war.',
+  },
+  {
+    id: 'vikarna',
+    name: 'Vikarna',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [],
+    tags: ['kaurava-brother'],
+    effects: [],
+    flavor: 'The only brother who named the wrong a wrong.',
+  },
+  {
+    id: 'chitrasena',
+    name: 'Chitrasena',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 1 }],
+    tags: ['kaurava-brother'],
+    effects: [],
+    flavor: 'One of the hundred, cut down in Bhima’s vow.',
+  },
+  {
+    id: 'vivimsati',
+    name: 'Vivimsati',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 1 }],
+    tags: ['kaurava-brother'],
+    effects: [],
+    flavor: 'A steadier hand than most of his hundred brothers.',
+  },
+  {
+    id: 'durmukha',
+    name: 'Durmukha',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 1 }],
+    tags: ['kaurava-brother'],
+    effects: [],
+    flavor: 'Fierce of face, as his name is read.',
+  },
+
+  // ---- The inner circle (gurus and kin) ----
+  {
+    id: 'ashwatthama',
+    name: 'Ashwatthama',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 8,
+    rows: ['ratha'],
+    keywords: [{ kind: 'deathless' }],
+    knownAstras: ['narayanastra', 'brahmastra', 'agneyastra', 'brahmashirsha'],
+    effects: [],
+    flavor: 'Drona’s son, cursed to wander deathless and unhealing.',
+  },
+  {
+    id: 'kripa',
+    name: 'Kripa',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 7,
+    rows: ['ratha'],
+    keywords: [{ kind: 'deathless' }],
+    knownAstras: ['brahmastra'],
+    effects: [],
+    flavor: 'The deathless teacher who outlived the war he fought.',
+  },
+  {
+    id: 'kritavarma',
+    name: 'Kritavarma',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 7,
+    rows: ['ratha'],
+    keywords: [{ kind: 'nightGrowth', amount: 2 }],
+    tags: ['vrishni'],
+    effects: [],
+    flavor: 'The Yadava who took the army, not the god.',
   },
   {
     id: 'shakuni',
@@ -116,16 +194,61 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 3,
     rows: ['padati'],
     keywords: [],
-    // The loaded dice: weaken the strongest enemy unit.
-    effects: [
-      {
-        on: 'onPlay',
-        target: { pick: 'highestEnemyUnit' },
-        actions: [{ kind: 'damage', amount: 3 }],
-      },
-    ],
+    effects: [{ on: 'onPlay', target: { pick: 'highestEnemyUnit' }, actions: [{ kind: 'damage', amount: 3 }] }],
     flavor: 'His dice never rolled true for anyone but him.',
   },
+  {
+    id: 'uluka',
+    name: 'Uluka',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'He carried the message that made peace impossible.',
+  },
+
+  // ---- The Bahlika line ----
+  {
+    id: 'bahlika',
+    name: 'Bahlika',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'An elder of Shantanu’s own blood, fighting past his years.',
+  },
+  {
+    id: 'somadatta',
+    name: 'Somadatta',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'Heir of Bahlika, marked by an ancient feud.',
+  },
+  {
+    id: 'bhurishravas',
+    name: 'Bhurishravas',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 8,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'He laid down arms to die in prayer, and was struck down at it.',
+  },
+
+  // ---- Allied kings ----
   {
     id: 'jayadratha',
     name: 'Jayadratha',
@@ -135,19 +258,11 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 6,
     rows: ['ratha'],
     keywords: [],
-    // Shiva's boon: for one day he held the whole Pandava host at the gate.
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'none' },
-        actions: [
-          {
-            kind: 'debuffRow',
-            amount: -2,
-            rows: [{ side: 'enemy', row: 'padati' }],
-            duration: 'round',
-          },
-        ],
+        actions: [{ kind: 'debuffRow', amount: -2, rows: [{ side: 'enemy', row: 'padati' }], duration: 'round' }],
       },
     ],
     flavor: 'The gate-keeper who sealed Abhimanyu inside the wheel.',
@@ -159,20 +274,132 @@ export const KAURAVA_CARDS: Card[] = [
     type: 'unit',
     tier: 'maharathi',
     basePower: 8,
-    rows: ['gaja'], // he fought astride the war-elephant Supratika
+    rows: ['gaja'],
     keywords: [],
-    // Loosed the Vaishnavastra at Arjuna (Krishna took it on his chest).
     knownAstras: ['vaishnavastra'],
-    effects: [
-      // Supratika's charge: trample the mightiest foe as he enters.
-      {
-        on: 'onPlay',
-        target: { pick: 'highestEnemyUnit' },
-        actions: [{ kind: 'damage', amount: 2 }],
-      },
-    ],
+    effects: [{ on: 'onPlay', target: { pick: 'highestEnemyUnit' }, actions: [{ kind: 'damage', amount: 2 }] }],
     flavor: 'The aged lord of Pragjyotisha, astride the great elephant Supratika.',
   },
+  {
+    id: 'vinda',
+    name: 'Vinda',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'avanti', amount: 2 }],
+    tags: ['avanti'],
+    effects: [],
+    flavor: 'One half of the Avanti brothers, never seen apart.',
+  },
+  {
+    id: 'anuvinda',
+    name: 'Anuvinda',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'avanti', amount: 2 }],
+    tags: ['avanti'],
+    effects: [],
+    flavor: 'The other half of the Avanti brothers.',
+  },
+  {
+    id: 'susharma',
+    name: 'Susharma',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [],
+    tags: ['samshaptaka'],
+    effects: [],
+    flavor: 'He swore to kill Arjuna or never leave the field.',
+  },
+  {
+    id: 'sudakshina',
+    name: 'Sudakshina',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'The Kamboja king and his tide of northern horse.',
+  },
+  {
+    id: 'srutayudha',
+    name: 'Srutayudha',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [],
+    effects: [],
+    flavor: 'His own boon-mace turned back and slew him.',
+  },
+  {
+    id: 'jalasandha',
+    name: 'Jalasandha',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 6,
+    rows: ['gaja'],
+    keywords: [],
+    effects: [],
+    flavor: 'The Magadha lord who rode into Satyaki’s path.',
+  },
+
+  // ---- The rakshasa night-fighters ----
+  {
+    id: 'alambusha',
+    name: 'Alambusha',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [{ kind: 'nightGrowth', amount: 2 }, { kind: 'bond', tag: 'rakshasa', amount: 1 }],
+    tags: ['rakshasa'],
+    effects: [],
+    flavor: 'The night-demon who killed Arjuna’s serpent-son.',
+  },
+  {
+    id: 'alayudha',
+    name: 'Alayudha',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'maharathi',
+    basePower: 7,
+    rows: ['gaja'],
+    keywords: [{ kind: 'nightGrowth', amount: 3 }, { kind: 'bond', tag: 'rakshasa', amount: 1 }],
+    tags: ['rakshasa'],
+    effects: [],
+    flavor: 'He came to avenge his kin, and lost his head to Bhima’s son.',
+  },
+
+  // ---- Karna's house ----
+  {
+    id: 'vrishasena',
+    name: 'Vrishasena',
+    house: 'kaurava',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 7,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'sun-line', amount: 2 }],
+    tags: ['sun-line'],
+    effects: [],
+    flavor: 'The Sun-son’s son, cut down before his father’s eyes.',
+  },
+
+  // ---- Levy ----
   {
     id: 'kaurava_infantry',
     name: 'Kaurava Footmen',

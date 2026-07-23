@@ -272,8 +272,14 @@ The richest cards are the conditional ones. A shortlist of the strongest hooks:
 
 Built from widely attested Mahabharata canon (the Vyasa epic and its major parvas) and standard Puranic, Ramayana, Devi Mahatmya, and Vedic material. Where retellings diverge, I chose the common version and said so. Specific astra effects, presiding deities, and minor characters can shift between the Critical Edition and regional or modern retellings. Nothing here is a numeric balance decision, those come when we turn entries into cards. If we want a citation-grade version of any section (especially the divyastra table), that is a focused verification pass we can run.
 
-## Suggested next step
+## Implemented (as of the roster build)
 
-1. Pick the v2 roster: I would expand from the current 24 to roughly 40 to 50 by adding the highest-hook figures above (Satyaki, Shalya, Kripa, Bhagadatta, Jayadratha's full kit, Ghatotkacha's night growth, plus a first Deva and Asura mini-faction).
-2. Do the astra rework so a divyastra is invoked by a warrior who knows it, using the wielder columns in Part VII.
-3. Then, and only then, the art pass.
+The fighting roster is now in the game: 31 Pandava-side cards, 30 Kaurava-side, and 15 astras/tricks (76 total). Every combatant above who took the field is a card, including the half-asuras and rakshasas (Ghatotkacha, Anjanaparvan, Iravan, Alambusha, Alayudha), the Upapandavas, the wheel-guards, the Bahlika elders, the Avanti twins, and the allied kings. Traits use these engine keywords: `icchamrityu`, `immuneUntilPlayed`, `armor`, `diamond-body`, `deathless` (chiranjivi: Ashwatthama, Kripa, Yuyutsu), `nightGrowth` (rakshasa night-strength: Ghatotkacha, Alambusha, Alayudha, Kritavarma), and `bond` (squad synergy: twins, Upapandavas, Avanti, wheel-guards, kaurava-brothers, sun-line, rakshasa). Astras are invoked only by a warrior who knows them, with the counter-web (Naga/Garuda, Agni/Varuna, Brahma/Brahma, Brahmashirsha).
+
+Balanced via the sim to Pandava ~50 / Kaurava ~48; the human plays second for a fair edge.
+
+## Next
+
+- Deva and Asura mini-factions (Indra, Agni, Yama; Ravana, Narakasura, Vritra, Mahishasura) as new decks.
+- Smarter AI (bank, hold counters, do not overcommit) and per-character trait polish.
+- The 18-Day Campaign, then the art pass.

@@ -3,7 +3,7 @@ import { createMatch } from '@engine/createMatch';
 import { mulberry32 } from '@engine/ids';
 import { reduce } from '@engine/reducer';
 import { legalMoves } from '@engine/selectors';
-import { KAURAVA_DECK, PANDAVA_DECK, deckProvisions } from '@content/decks';
+import { DECK_BUDGET, KAURAVA_DECK, PANDAVA_DECK, deckProvisions } from '@content/decks';
 import type { DeckList } from '@content/decks';
 import type { GameState } from '@engine/types';
 
@@ -79,7 +79,7 @@ describe('stress: random-legal-move self-play', () => {
 describe('stress: deck sanity', () => {
   it('starter decks stay within the provision budget', () => {
     for (const deck of [PANDAVA_DECK, KAURAVA_DECK]) {
-      expect(deckProvisions(deck), `${deck.id} over budget`).toBeLessThanOrEqual(120);
+      expect(deckProvisions(deck), `${deck.id} over budget`).toBeLessThanOrEqual(DECK_BUDGET);
     }
   });
 });

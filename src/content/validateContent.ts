@@ -32,6 +32,9 @@ function checkKeyword(card: Card, kw: Keyword, errs: ContentError[]): void {
     case 'armor':
     case 'trapped':
     case 'noAstrasInFinalRound':
+    case 'deathless':
+    case 'nightGrowth':
+    case 'bond':
       break;
     default: {
       const _exhaustive: never = kw;

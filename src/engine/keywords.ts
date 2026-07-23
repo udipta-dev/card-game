@@ -34,6 +34,25 @@ export function initInstanceRuntime(state: GameState, iid: InstanceId): void {
   const card = getCard(u.cardId);
   for (const kw of card.keywords) {
     if (kw.kind === 'armor') u.counters.armor = kw.amount;
+    if (kw.kind === 'nightGrowth') {
+      // Grows stronger as the war deepens (proxy for rakshasa night-strength).
+      const bonus = kw.amount * Math.max(0, state.round - 1);
+      if (bonus > 0) {
+        u.currentPower += bonus;
+        state.log.push({ t: 'buff', iid, amount: bonus, power: u.currentPower });
+      }
+    }
+    if (kw.kind === 'bond') {
+      // Rallies: +amount for each allied unit already fielded with the tag.
+      const allies = boardUnits(state, u.owner).filter(
+        (o) => o.iid !== iid && getCard(o.cardId).tags?.includes(kw.tag),
+      );
+      const bonus = kw.amount * allies.length;
+      if (bonus > 0) {
+        u.currentPower += bonus;
+        state.log.push({ t: 'buff', iid, amount: bonus, power: u.currentPower });
+      }
+    }
   }
 }
 
@@ -57,6 +76,11 @@ export function attemptDestroy(
   }
 
   for (const kw of card.keywords) {
+    if (kw.kind === 'deathless') {
+      // Chiranjivi: cannot be destroyed by any means.
+      state.log.push({ t: 'preventDestroy', iid, reason: 'deathless' });
+      return false;
+    }
     if (kw.kind === 'icchamrityu') {
       // Bhishma: unkillable until the counter card is on the board.
       if (!cardOnBoard(state, u.owner, kw.unlessCardOnBoard, 'any')) {

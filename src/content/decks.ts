@@ -10,29 +10,33 @@ export interface DeckList {
 }
 
 /** Deck-building budget. A deck's total provisions must not exceed this. */
-export const DECK_BUDGET = 120;
+export const DECK_BUDGET = 170;
 
-// Starter decks for Quickplay. Each deck only runs astras its own warriors can
-// invoke, plus counter-astras it can hold in reserve.
+// Starter decks for Quickplay, drawn from the full roster. Each deck only runs
+// astras its own warriors can invoke, plus counter-astras it can hold in reserve.
 export const PANDAVA_DECK: DeckList = {
   id: 'pandava_starter',
   name: 'Host of the Pandavas',
   house: 'pandava',
   cards: [
-    'arjuna', // astra-master: knows every Pandava astra
+    'arjuna',
     'bhima',
     'yudhishthira',
+    'dhrishtadyumna',
+    'satyaki',
     'abhimanyu',
     'ghatotkacha',
-    'dhrishtadyumna', // backup astra-knower
     'nakula',
-    'shikhandi', // answers Bhishma
+    'sahadeva',
+    'shikhandi',
     'krishna_charioteer',
+    'drupada',
     'pandava_infantry',
     'brahmastra',
-    'garudastra', // counters Nagastra
+    'garudastra',
     'agneyastra',
-    'varunastra', // counters Agneyastra
+    'varunastra',
+    'aindrastra',
   ],
 };
 
@@ -45,16 +49,20 @@ export const KAURAVA_DECK: DeckList = {
     'drona',
     'karna',
     'duryodhana',
-    'ashwatthama', // knows Narayanastra
+    'ashwatthama',
+    'vikarna',
+    'shalya',
+    'bhagadatta',
     'dushasana',
+    'jayadratha',
     'shakuni',
-    'jayadratha', // seals Abhimanyu
     'kaurava_infantry',
-    'varunastra', // held to quench the enemy Agneyastra (Ashwatthama-elephant is dead vs a Drona-less foe)
+    'kaurava_infantry',
     'nagastra',
     'brahmastra',
     'agneyastra',
     'narayanastra',
+    'bhargavastra',
   ],
 };
 
