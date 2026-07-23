@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { KAURAVA_DECK, PANDAVA_DECK } from '@content/decks';
+import { ASURA_DECK, KAURAVA_DECK, PANDAVA_DECK } from '@content/decks';
 import type { DeckList } from '@content/decks';
+import type { House } from '@engine/types';
 import { MatchView } from '@ui/match/MatchView';
 import { Codex } from './screens/Codex';
 import { MainMenu } from './screens/MainMenu';
@@ -19,11 +20,16 @@ export function App() {
   const [match, setMatch] = useState<MatchConfig | null>(null);
   const [showCodex, setShowCodex] = useState(false);
 
-  const startQuickplay = (side: 'pandava' | 'kaurava') => {
-    const playerDeck = side === 'pandava' ? PANDAVA_DECK : KAURAVA_DECK;
-    const aiDeck = side === 'pandava' ? KAURAVA_DECK : PANDAVA_DECK;
+  const startQuickplay = (side: House) => {
+    const byHouse: Partial<Record<House, DeckList>> = {
+      pandava: PANDAVA_DECK,
+      kaurava: KAURAVA_DECK,
+      asura: ASURA_DECK,
+    };
+    const others = (['pandava', 'kaurava', 'asura'] as House[]).filter((h) => h !== side);
+    const aiHouse = others[Math.floor(Math.random() * others.length)];
     setShowCodex(false);
-    setMatch({ seed: makeSeed(), playerDeck, aiDeck });
+    setMatch({ seed: makeSeed(), playerDeck: byHouse[side]!, aiDeck: byHouse[aiHouse]! });
   };
 
   return (

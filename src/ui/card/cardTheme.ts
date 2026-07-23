@@ -23,6 +23,21 @@ export const HOUSE_PALETTE: Record<House, HousePalette> = {
   pandava: { base: '#16265c', edge: '#e8b923', ink: '#eaf0ff', glow: 'rgba(120,160,255,0.55)' },
   kaurava: { base: '#4a0f14', edge: '#c9a227', ink: '#ffeaea', glow: 'rgba(220,80,80,0.55)' },
   neutral: { base: '#2c1a4d', edge: '#8b7bd8', ink: '#f0eaff', glow: 'rgba(160,120,240,0.55)' },
+  asura: { base: '#152b1c', edge: '#57b06e', ink: '#e6ffe9', glow: 'rgba(90,200,120,0.5)' },
+};
+
+/** Short display name and dot colour per house, for chips and the picker. */
+export const FACTION_NAME: Record<House, string> = {
+  pandava: 'Pandavas',
+  kaurava: 'Kauravas',
+  asura: 'Asuras',
+  neutral: 'Neutral',
+};
+export const FACTION_DOT: Record<House, string> = {
+  pandava: 'var(--pandava)',
+  kaurava: 'var(--kaurava)',
+  asura: 'var(--asura)',
+  neutral: 'var(--neutral)',
 };
 
 export const TIER_LABEL: Record<Tier, string> = {
@@ -121,6 +136,22 @@ const GLYPHS: Record<string, string> = {
   alambusha: '👺',
   alayudha: '👺',
   vrishasena: '☀️',
+  // Asuras
+  ravana: '👺',
+  kumbhakarna: '😴',
+  indrajit: '🏹',
+  hiranyakashipu: '💪',
+  hiranyaksha: '🐗',
+  bali: '👑',
+  prahlada: '🙏',
+  narakasura: '🗡️',
+  mahishasura: '🐃',
+  shumbha: '😈',
+  nishumbha: '😈',
+  raktabija: '🩸',
+  vritra: '🐉',
+  tarakasura: '⭐',
+  asura_horde: '👹',
 };
 
 const TYPE_FALLBACK: Record<Card['type'], string> = {

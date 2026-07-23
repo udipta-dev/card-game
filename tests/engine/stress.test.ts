@@ -3,7 +3,7 @@ import { createMatch } from '@engine/createMatch';
 import { mulberry32 } from '@engine/ids';
 import { reduce } from '@engine/reducer';
 import { legalMoves } from '@engine/selectors';
-import { DECK_BUDGET, KAURAVA_DECK, PANDAVA_DECK, deckProvisions } from '@content/decks';
+import { ASURA_DECK, DECK_BUDGET, DECKS, KAURAVA_DECK, PANDAVA_DECK, deckProvisions } from '@content/decks';
 import type { DeckList } from '@content/decks';
 import type { GameState } from '@engine/types';
 
@@ -67,7 +67,7 @@ describe('stress: random-legal-move self-play', () => {
   });
 
   it('mirror matchups (both sides same deck) are stable', () => {
-    for (const deck of [PANDAVA_DECK, KAURAVA_DECK]) {
+    for (const deck of [PANDAVA_DECK, KAURAVA_DECK, ASURA_DECK]) {
       for (let seed = 1; seed <= 400; seed++) {
         const { s } = randomPlayout(seed * 31 + 7, deck, deck);
         expect(s.phase).toBe('battleEnd');
@@ -78,7 +78,7 @@ describe('stress: random-legal-move self-play', () => {
 
 describe('stress: deck sanity', () => {
   it('starter decks stay within the provision budget', () => {
-    for (const deck of [PANDAVA_DECK, KAURAVA_DECK]) {
+    for (const deck of Object.values(DECKS)) {
       expect(deckProvisions(deck), `${deck.id} over budget`).toBeLessThanOrEqual(DECK_BUDGET);
     }
   });

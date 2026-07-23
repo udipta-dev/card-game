@@ -1,9 +1,10 @@
 import type { Card, CardId } from '@engine/types';
 import { PANDAVA_CARDS } from './pandava';
 import { KAURAVA_CARDS } from './kaurava';
+import { ASURA_CARDS } from './asura';
 import { ASTRA_CARDS } from './astras';
 
-const ALL: Card[] = [...PANDAVA_CARDS, ...KAURAVA_CARDS, ...ASTRA_CARDS];
+const ALL: Card[] = [...PANDAVA_CARDS, ...KAURAVA_CARDS, ...ASURA_CARDS, ...ASTRA_CARDS];
 
 export const CARD_DB: Record<CardId, Card> = Object.freeze(
   ALL.reduce<Record<CardId, Card>>((db, card) => {

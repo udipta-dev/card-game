@@ -66,9 +66,36 @@ export const KAURAVA_DECK: DeckList = {
   ],
 };
 
+export const ASURA_DECK: DeckList = {
+  id: 'asura_starter',
+  name: 'Host of the Asuras',
+  house: 'asura',
+  cards: [
+    'ravana',
+    'indrajit', // astra-master of the host
+    'kumbhakarna',
+    'hiranyakashipu',
+    'mahishasura',
+    'vritra',
+    'bali',
+    'hiranyaksha',
+    'nishumbha',
+    'raktabija',
+    'tarakasura',
+    'prahlada',
+    'asura_horde',
+    'asura_horde',
+    'brahmastra',
+    'nagastra',
+    'garudastra',
+    'agneyastra',
+  ],
+};
+
 export const DECKS: Record<string, DeckList> = {
   [PANDAVA_DECK.id]: PANDAVA_DECK,
   [KAURAVA_DECK.id]: KAURAVA_DECK,
+  [ASURA_DECK.id]: ASURA_DECK,
 };
 
 /** Total provisions a deck spends. */

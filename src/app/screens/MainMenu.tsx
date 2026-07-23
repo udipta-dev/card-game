@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import type { House } from '@engine/types';
 import { HowToPlay } from '@ui/HowToPlay';
 
 interface Props {
-  onQuickplay: (side: 'pandava' | 'kaurava') => void;
+  onQuickplay: (side: House) => void;
   onCodex: () => void;
 }
 
@@ -34,6 +35,9 @@ export function MainMenu({ onQuickplay, onCodex }: Props) {
         </button>
         <button className="btn" onClick={() => onQuickplay('kaurava')}>
           Lead the Kauravas
+        </button>
+        <button className="btn" onClick={() => onQuickplay('asura')}>
+          Lead the Asuras
         </button>
         <button className="btn btn--ghost" onClick={onCodex}>
           Codex · browse all cards

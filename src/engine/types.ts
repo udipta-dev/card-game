@@ -13,7 +13,7 @@ export type Seat = 'player' | 'ai';
 export type Row = 'ratha' | 'gaja' | 'padati';
 export const ROWS: Row[] = ['ratha', 'gaja', 'padati'];
 
-export type House = 'pandava' | 'kaurava' | 'neutral';
+export type House = 'pandava' | 'kaurava' | 'neutral' | 'asura';
 
 /** Canon warrior ranking from the Bhishma Parva. Drives base power tiers. */
 export type Tier = 'rathi' | 'atirathi' | 'maharathi';

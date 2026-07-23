@@ -8,10 +8,10 @@ import { reduce } from '@engine/reducer';
 import { isFinalRound, rowPower, seatPower } from '@engine/queries';
 import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
-import type { Action, Card, GameState, InstanceId, Row, Seat } from '@engine/types';
+import type { Action, Card, GameState, House, InstanceId, Row, Seat } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
-import { TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
+import { FACTION_DOT, FACTION_NAME, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
 import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
 
@@ -182,7 +182,13 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
 
   return (
     <div className="match">
-      <Topbar state={state} onExit={onExit} onHelp={() => setShowHelp(true)} />
+      <Topbar
+        state={state}
+        playerHouse={playerDeck.house}
+        aiHouse={aiDeck.house}
+        onExit={onExit}
+        onHelp={() => setShowHelp(true)}
+      />
 
       <div className="board">
         <div className="board__group">{ROWS.slice().reverse().map((r) => renderRow('ai', r))}</div>
@@ -280,18 +286,22 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
 
 function Topbar({
   state,
+  playerHouse,
+  aiHouse,
   onExit,
   onHelp,
 }: {
   state: GameState;
+  playerHouse: House;
+  aiHouse: House;
   onExit: () => void;
   onHelp: () => void;
 }) {
   return (
     <div className="topbar">
       <SeatChip
-        house="kaurava"
-        name="Kauravas"
+        house={aiHouse}
+        name={FACTION_NAME[aiHouse]}
         wins={state.roundWins.ai}
         hand={state.hands.ai.length}
         active={state.activeSeat === 'ai'}
@@ -302,8 +312,8 @@ function Topbar({
       </div>
       <div className="topbar__right">
         <SeatChip
-          house="pandava"
-          name="Pandavas"
+          house={playerHouse}
+          name={FACTION_NAME[playerHouse]}
           wins={state.roundWins.player}
           hand={state.hands.player.length}
           active={state.activeSeat === 'player'}
@@ -326,16 +336,15 @@ function SeatChip({
   hand,
   active,
 }: {
-  house: 'pandava' | 'kaurava';
+  house: House;
   name: string;
   wins: number;
   hand: number;
   active: boolean;
 }) {
-  const dot = house === 'kaurava' ? 'var(--kaurava)' : 'var(--pandava)';
   return (
     <div className={'chip' + (active ? ' chip--active' : '')}>
-      <span className="chip__dot" style={{ background: dot }} />
+      <span className="chip__dot" style={{ background: FACTION_DOT[house] }} />
       <span className="chip__name">{name}</span>
       <Gems n={wins} />
       <span className="chip__hand" title="cards in hand">

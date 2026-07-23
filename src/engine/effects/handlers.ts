@@ -63,7 +63,8 @@ export function applyTargetAction(
       break;
     }
     case 'buff': {
-      u.currentPower += action.amount;
+      // Floor at 0 so a negative buff (Shalya sapping Karna) never goes below zero.
+      u.currentPower = Math.max(0, u.currentPower + action.amount);
       emit(ctx, { t: 'buff', iid, amount: action.amount, power: u.currentPower });
       break;
     }

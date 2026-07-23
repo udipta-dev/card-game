@@ -2,7 +2,7 @@
 // tell us whether the game is fair and whether every card and astra pulls its
 // weight. Pure and deterministic. Run via `npm run sim`.
 import { getCard } from '@content/cards';
-import { KAURAVA_DECK, PANDAVA_DECK, deckProvisions } from '@content/decks';
+import { ASURA_DECK, KAURAVA_DECK, PANDAVA_DECK, deckProvisions } from '@content/decks';
 import type { DeckList } from '@content/decks';
 import { createMatch } from '@engine/createMatch';
 import { reduce } from '@engine/reducer';
@@ -58,10 +58,10 @@ export interface BalanceReport {
 }
 
 export function runBalance(gamesPerOrientation = 500): BalanceReport {
-  const orientations: Array<{ first: DeckList; second: DeckList }> = [
-    { first: PANDAVA_DECK, second: KAURAVA_DECK },
-    { first: KAURAVA_DECK, second: PANDAVA_DECK },
-  ];
+  // Round-robin over every faction in both seat orders.
+  const rosters = [PANDAVA_DECK, KAURAVA_DECK, ASURA_DECK];
+  const orientations: Array<{ first: DeckList; second: DeckList }> = [];
+  for (const a of rosters) for (const b of rosters) if (a !== b) orientations.push({ first: a, second: b });
 
   let total = 0;
   let firstWins = 0;
@@ -111,6 +111,7 @@ export function runBalance(gamesPerOrientation = 500): BalanceReport {
   const provisionByHouse: Record<string, number> = {
     pandava: deckProvisions(PANDAVA_DECK),
     kaurava: deckProvisions(KAURAVA_DECK),
+    asura: deckProvisions(ASURA_DECK),
   };
   for (const [h, d] of Object.entries(deck)) {
     decks[h] = {
@@ -121,7 +122,7 @@ export function runBalance(gamesPerOrientation = 500): BalanceReport {
     };
   }
 
-  const universe = new Set([...PANDAVA_DECK.cards, ...KAURAVA_DECK.cards]);
+  const universe = new Set([...PANDAVA_DECK.cards, ...KAURAVA_DECK.cards, ...ASURA_DECK.cards]);
   const cards = [...universe]
     .map((cid) => {
       const played = cardPlayed[cid] ?? 0;
