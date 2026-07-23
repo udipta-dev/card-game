@@ -31,7 +31,7 @@ export const PANDAVA_DECK: DeckList = {
     'shikhandi',
     'krishna_charioteer',
     'drupada',
-    'pandava_infantry',
+    'iravan',
     'brahmastra',
     'garudastra',
     'agneyastra',
@@ -61,7 +61,7 @@ export const KAURAVA_DECK: DeckList = {
     'nagastra',
     'brahmastra',
     'agneyastra',
-    'narayanastra',
+    'varunastra',
     'bhargavastra',
   ],
 };

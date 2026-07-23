@@ -15,17 +15,8 @@ export const PANDAVA_CARDS: Card[] = [
     keywords: [],
     effects: [],
     tags: ['pandava-brother'],
-    knownAstras: [
-      'brahmastra',
-      'brahmashirsha',
-      'agneyastra',
-      'varunastra',
-      'aindrastra',
-      'sammohana',
-      'vayavyastra',
-      'garudastra',
-      'pashupatastra',
-    ],
+    astraMastery: 2,
+    knownAstras: ['pashupatastra', 'brahmashirsha'],
     flavor: 'The finest archer of the age, wielder of the Gandiva.',
   },
   {
@@ -131,7 +122,7 @@ export const PANDAVA_CARDS: Card[] = [
     basePower: 8,
     rows: ['ratha'],
     keywords: [],
-    knownAstras: ['brahmastra'],
+    astraMastery: 2,
     effects: [
       {
         on: 'onRoundEnd',
@@ -260,7 +251,7 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     tags: ['panchala'],
-    knownAstras: ['agneyastra', 'brahmastra'],
+    astraMastery: 2,
     // Born to slay Drona: strikes him down once he has laid down his bow
     // (Drona's immunity holds until the "Ashwatthama is dead" deception disarms him).
     effects: [
@@ -390,7 +381,7 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     tags: ['vrishni'],
-    knownAstras: ['brahmastra'],
+    astraMastery: 2,
     effects: [],
     flavor: 'Arjuna’s disciple, the one Vrishni who chose the right side.',
   },

@@ -51,8 +51,21 @@ export interface Card {
    */
   provision?: number;
   /**
-   * For warriors: the astras this warrior knows how to invoke. An astra can
-   * only be played while a warrior who knows it stands on your board.
+   * For astras: the canonical power tier. 1 = elemental (Agneya, Varuna, Naga...),
+   * 2 = the Brahma line and great weapons, 3 = the ultimates (Pashupata,
+   * Narayana, Vaishnava, Brahmashirsha, Vasavi Shakti).
+   */
+  astraTier?: number;
+  /**
+   * For warriors: the highest astra tier they were trained to invoke (0..2).
+   * Rank grants the common weapons (tiers 1 and 2). The tier-3 ultimates are
+   * never granted by rank, only by a named boon in `knownAstras`.
+   */
+  astraMastery?: number;
+  /**
+   * For warriors: specific astras granted by a named boon regardless of rank
+   * (Arjuna's Pashupata, Karna's Vasavi, Ashwatthama's Narayana, Bhagadatta's
+   * Vaishnava). This is how the tier-3 ultimates are unlocked.
    */
   knownAstras?: CardId[];
   /**

@@ -200,14 +200,24 @@ export function rulesText(card: Card): string[] {
     }
   }
   if (card.type === 'astra') {
-    const wielders = astraWielders(card.id);
-    if (wielders.length)
-      lines.push(`Invoked only while you field: ${wielders.join(', ')}.`);
+    const tier = card.astraTier ?? 1;
+    if (tier >= 3) {
+      const holders = astraWielders(card.id);
+      lines.push(
+        `An ultimate astra. Loosed only by ${holders.length ? holders.join(', ') : 'a named boon'}.`,
+      );
+    } else if (tier === 2) {
+      lines.push('A Brahma-line astra. A maharathi astra-master can loose it.');
+    } else {
+      lines.push('An elemental astra. Any astra-adept warrior can loose it.');
+    }
     if (card.counteredBy?.length)
       lines.push(`Answered by: ${card.counteredBy.map(titleize).join(', ')} in the enemy hand.`);
   }
+  if (card.astraMastery)
+    lines.push(`An astra-master, trained to tier ${card.astraMastery}.`);
   if (card.knownAstras?.length)
-    lines.push(`Knows the astras: ${card.knownAstras.map(titleize).join(', ')}.`);
+    lines.push(`Bears the ${card.knownAstras.map(titleize).join(', ')}.`);
   if (card.cost?.consequence) lines.push(card.cost.consequence);
   return lines;
 }

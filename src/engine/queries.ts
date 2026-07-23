@@ -90,9 +90,17 @@ export function isFinalRound(state: GameState): boolean {
   return Object.values(state.roundWins).some((w) => w >= WINS_NEEDED - 1);
 }
 
-/** Can `seat` invoke this astra? Requires a warrior on board who knows it. */
+/**
+ * Can `seat` invoke this astra? Requires a warrior on board who is either
+ * trained to the astra's tier (rank grants the common weapons) or bears it by a
+ * named boon (the tier-3 ultimates).
+ */
 export function canInvokeAstra(state: GameState, seat: Seat, astraId: CardId): boolean {
-  return unitsOf(state, seat).some((u) => getCard(u.cardId).knownAstras?.includes(astraId));
+  const tier = getCard(astraId).astraTier ?? 1;
+  return unitsOf(state, seat).some((u) => {
+    const w = getCard(u.cardId);
+    return (w.astraMastery ?? 0) >= tier || !!w.knownAstras?.includes(astraId);
+  });
 }
 
 export function boonCardIds(state: GameState, unitIid: string): CardId[] {
