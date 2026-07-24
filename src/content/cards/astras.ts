@@ -44,7 +44,7 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 13,
+    provision: 9,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     counteredBy: ['brahmashirsha', 'brahmastra'],
@@ -76,8 +76,6 @@ export const ASTRA_CARDS: Card[] = [
           },
         ],
       },
-      // And the price falls on the one who fired.
-      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'afflict', side: 'own', pool: ADHARMA }] },
     ],
     flavor: 'The four-headed weapon. Brahma warned Drona never to loose it.',
   },
@@ -121,7 +119,10 @@ export const ASTRA_CARDS: Card[] = [
     provision: 13,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'It rains death on every foe. In legend, only surrender survives it.' },
+    cost: {
+      consequence:
+        'It rains death on every foe. In legend only surrender survives it, and the one who looses it is cursed for the act.',
+    },
     effects: [{ on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 5 }] }],
     flavor: 'Vishnu’s storm of weapons, fiercer the harder you fight it.',
   },
@@ -132,10 +133,13 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 10,
+    provision: 12,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'Never misses its chosen mark, save the shield of Krishna.' },
+    cost: {
+      consequence:
+        'Never misses its chosen mark, save the shield of Krishna. Loosing it is an act of adharma: a curse follows you for it.',
+    },
     effects: [
       {
         on: 'onPlay',
@@ -158,7 +162,10 @@ export const ASTRA_CARDS: Card[] = [
     provision: 12,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'Indra’s unerring dart, but it can be loosed only once, then it is gone.' },
+    cost: {
+      consequence:
+        'Indra’s unerring dart. Loosed only once, then gone forever, and a curse follows you for the act. Karna spent it on Ghatotkacha and had nothing left for Arjuna.',
+    },
     effects: [
       {
         on: 'onPlay',

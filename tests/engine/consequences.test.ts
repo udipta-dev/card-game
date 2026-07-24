@@ -4,7 +4,7 @@
 import { describe, expect, it } from 'vitest';
 import { reduce, isLegalPlay } from '@engine/reducer';
 import { unitsOf } from '@engine/queries';
-import { firstOf, hasEvent, makeState } from './helpers';
+import { hasEvent, makeState } from './helpers';
 
 describe('a great astra fires only once', () => {
   it('bans itself for the run and is then unplayable', () => {

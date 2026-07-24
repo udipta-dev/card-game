@@ -2,7 +2,8 @@
 // pure function: it deep-clones the state, applies the action + all triggered
 // effects, and returns the new state. The AI simulates via this exact path.
 import { getCard } from '@content/cards';
-import { resolveClash } from './clash';
+import { ADHARMA_CURSES, resolveClash } from './clash';
+import { afflict } from './curses';
 import type { EffectCtx } from './effects/context';
 import { runCardEffects } from './events';
 import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime } from './keywords';
@@ -136,6 +137,12 @@ export function reduce(state: GameState, action: Action): GameState {
           banForRun(s, counterCard);
         } else {
           runCardEffects(ctx, 'onPlay');
+          // The ultimates ALWAYS cost the one who looses them. Making this a
+          // rule rather than per-card data means no tier-3 weapon can ever be
+          // added as pure upside, however it is written.
+          if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
+            afflict(s, seat, ADHARMA_CURSES);
+          }
         }
         delete s.instances[iid]; // the astra is spent either way
         banForRun(s, card);

@@ -26,17 +26,19 @@ export const PANDAVA_DECK: DeckList = {
     'satyaki',
     'abhimanyu',
     'ghatotkacha',
-    'nakula',
+    'dhrishtaketu',
     'sahadeva',
     'shikhandi',
     'krishna_charioteer',
     'drupada',
-    'iravan',
+    'virata',
     'brahmastra',
     'garudastra',
     'agneyastra',
     'varunastra',
     'aindrastra',
+    // Arjuna alone in this host can loose it, and it takes his own army too.
+    'brahmashirsha',
   ],
 };
 
@@ -57,12 +59,14 @@ export const KAURAVA_DECK: DeckList = {
     'jayadratha',
     'shakuni',
     'kaurava_infantry',
-    'kaurava_infantry',
+    'somadatta',
     'nagastra',
     'brahmastra',
     'agneyastra',
     'varunastra',
     'bhargavastra',
+    // Karna's spear, traded for his armour. One throw, then it is gone.
+    'vasavi_shakti',
   ],
 };
 
@@ -89,6 +93,8 @@ export const ASURA_DECK: DeckList = {
     'nagastra',
     'garudastra',
     'agneyastra',
+    // Indrajit bears it, as he did against Rama's host.
+    'vaishnavastra',
   ],
 };
 

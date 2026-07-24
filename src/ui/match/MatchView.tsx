@@ -6,6 +6,7 @@ import { chooseAction } from '@ai/ai';
 import { createMatch } from '@engine/createMatch';
 import { reduce } from '@engine/reducer';
 import { isFinalRound, rowPower, seatPower } from '@engine/queries';
+import { getCurse } from '@engine/curses';
 import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, House, InstanceId, Row, Seat } from '@engine/types';
@@ -44,7 +45,10 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
   const [inspect, setInspect] = useState<{ card: Card; inst?: GameState['instances'][string] } | null>(null);
   const [tip, setTip] = useState<{ card: Card; inst?: GameState['instances'][string]; x: number; y: number } | null>(null);
   const [banner, setBanner] = useState<string | null>(null);
+  const [awaitingSanction, setAwaitingSanction] = useState<{ action: Action; card: Card } | null>(null);
+  const [omen, setOmen] = useState<{ tone: 'curse' | 'burn' | 'clash'; title: string; text: string } | null>(null);
   const roundEndsSeen = useRef(0);
+  const logSeen = useRef(0);
 
   const myTurn = state.phase === 'playing' && state.activeSeat === 'player';
 
@@ -84,6 +88,46 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
     }
   }, [state]);
 
+  // --- Omens: curses, burnt warriors and clashing weapons announce themselves.
+  // These are the consequences of the great astras, and they are the whole
+  // point of firing one, so they get a beat of their own rather than a log line.
+  useEffect(() => {
+    const fresh = state.log.slice(logSeen.current);
+    logSeen.current = state.log.length;
+    for (const e of fresh) {
+      if (e.t === 'afflict') {
+        setOmen({
+          tone: 'curse',
+          title: e.seat === 'player' ? `You are cursed: ${e.name}` : `The enemy is cursed: ${e.name}`,
+          text: e.text,
+        });
+      } else if (e.t === 'burn') {
+        const names = e.cardIds.map((c) => getCard(c).name).join(', ');
+        setOmen({
+          tone: 'burn',
+          title: e.seat === 'player' ? 'Torn from your host' : 'Torn from the enemy host',
+          text: `${names}. Lost for the rest of the run.`,
+        });
+      } else if (e.t === 'clash') {
+        setOmen({
+          tone: 'clash',
+          title: 'The weapons meet in the air',
+          text:
+            `${getCard(e.astra).name} against ${getCard(e.against).name}. Both hosts are scoured for ${e.blast}.` +
+            (e.unwithdrawn
+              ? ` ${e.unwithdrawn === 'player' ? 'You could not withdraw yours.' : 'The enemy could not withdraw his.'}`
+              : ' Both weapons were recalled in time.'),
+        });
+      }
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (!omen) return;
+    const t = setTimeout(() => setOmen(null), 5200);
+    return () => clearTimeout(t);
+  }, [omen]);
+
   const myMoves = useMemo(() => (myTurn ? legalMoves(state, 'player') : []), [state, myTurn]);
 
   const selectedCard = selected ? getCard(state.instances[selected]!.cardId) : null;
@@ -94,7 +138,23 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
 
   // ---- Actions ----
   function play(action: Action) {
+    // The great weapons do not go off by a stray tap. Anything that unmakes the
+    // field asks once, and says plainly what it will cost you.
+    if (action.type === 'PLAY_CARD') {
+      const card = getCard(state.instances[action.iid]!.cardId);
+      if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
+        setAwaitingSanction({ action, card });
+        return;
+      }
+    }
     dispatch(action);
+    setSelected(null);
+  }
+  /** The player has looked Shiva in the eye and gone ahead anyway. */
+  function confirmSanction() {
+    if (!awaitingSanction) return;
+    dispatch(awaitingSanction.action);
+    setAwaitingSanction(null);
     setSelected(null);
   }
   function onHandClick(iid: InstanceId) {
@@ -259,6 +319,19 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
         </div>
       )}
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
+      {omen && (
+        <div className={`omen omen--${omen.tone}`} role="status" onClick={() => setOmen(null)}>
+          <div className="omen__title">{omen.title}</div>
+          <div className="omen__text">{omen.text}</div>
+        </div>
+      )}
+      {awaitingSanction && (
+        <SanctionGate
+          card={awaitingSanction.card}
+          onConfirm={confirmSanction}
+          onCancel={() => setAwaitingSanction(null)}
+        />
+      )}
       {inspect && (
         <InspectSheet card={inspect.card} inst={inspect.inst} onClose={() => setInspect(null)} />
       )}
@@ -305,6 +378,7 @@ function Topbar({
         wins={state.roundWins.ai}
         hand={state.hands.ai.length}
         active={state.activeSeat === 'ai'}
+        curses={state.curses?.ai}
       />
       <div className="round-pill">
         <div className="round-pill__n">Round {state.round}/3</div>
@@ -317,6 +391,7 @@ function Topbar({
           wins={state.roundWins.player}
           hand={state.hands.player.length}
           active={state.activeSeat === 'player'}
+          curses={state.curses?.player}
         />
         <button className="icon-btn" onClick={onHelp} title="How to play" aria-label="How to play">
           ?
@@ -335,12 +410,14 @@ function SeatChip({
   wins,
   hand,
   active,
+  curses = [],
 }: {
   house: House;
   name: string;
   wins: number;
   hand: number;
   active: boolean;
+  curses?: string[];
 }) {
   return (
     <div className={'chip' + (active ? ' chip--active' : '')}>
@@ -350,6 +427,14 @@ function SeatChip({
       <span className="chip__hand" title="cards in hand">
         🖐{hand}
       </span>
+      {curses.map((id) => {
+        const c = getCurse(id);
+        return (
+          <span key={id} className="curse-chip" title={c?.text ?? id}>
+            ✦ {c?.name ?? id}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -511,6 +596,43 @@ function buildUnitPlay(state: GameState, iid: InstanceId, row: Row): Action {
     }
   }
   return { type: 'PLAY_CARD', iid, row };
+}
+
+/**
+ * Shiva stands in the way. Before an ultimate astra is loosed, the player is
+ * told exactly what it costs and made to say yes. The drama of these weapons
+ * comes from choosing the consequence, not from a dice roll springing it.
+ */
+function SanctionGate({
+  card,
+  onConfirm,
+  onCancel,
+}: {
+  card: Card;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <div className="overlay sanction" onClick={onCancel}>
+      <div className="sanction__box" onClick={(e) => e.stopPropagation()} role="alertdialog" aria-modal="true">
+        <div className="sanction__eye" aria-hidden="true">
+          <span className="sanction__trident">ॐ</span>
+        </div>
+        <div className="sanction__who">Shiva stays your hand</div>
+        <h2 className="sanction__name">{card.name}</h2>
+        <p className="sanction__warn">{card.cost?.consequence}</p>
+        <p className="sanction__ask">Loose it anyway?</p>
+        <div className="sanction__actions">
+          <button className="btn btn--ghost" onClick={onCancel} autoFocus>
+            Withdraw
+          </button>
+          <button className="btn btn--danger" onClick={onConfirm}>
+            Loose the {card.name}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function hintText(state: GameState, myTurn: boolean, plan: Plan | null, card: Card | null): string {

@@ -12,6 +12,10 @@ interface MatchConfig {
 }
 
 function makeSeed(): number {
+  // ?seed=17 replays an exact match. Every match is deterministic from its
+  // seed, so this is how you reproduce a battle you want to look at again.
+  const forced = new URLSearchParams(window.location.search).get('seed');
+  if (forced && /^\d+$/.test(forced)) return Number(forced) >>> 0;
   return (Date.now() ^ Math.floor(Math.random() * 0x7fffffff)) >>> 0;
 }
 

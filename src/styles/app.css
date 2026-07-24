@@ -1051,3 +1051,159 @@
     --card-h: 66px;
   }
 }
+
+/* -------------------------------------------------- Shiva's sanction gate */
+/* The pause before an ultimate astra. Deliberately heavier than any other
+   dialog in the game: this is the one decision that should feel irreversible. */
+.sanction {
+  background: radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(226, 122, 32, 0.22),
+      rgba(8, 7, 14, 0.86) 60%
+    ),
+    rgba(6, 5, 10, 0.92);
+}
+.sanction__box {
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  padding: 30px 26px 24px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #1b1524, #12101a);
+  border: 1px solid rgba(230, 168, 23, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 24px 70px rgba(0, 0, 0, 0.7),
+    0 0 90px rgba(226, 122, 32, 0.18);
+}
+.sanction__eye {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, rgba(240, 180, 60, 0.3), transparent 70%);
+  border: 1px solid rgba(230, 168, 23, 0.5);
+}
+.sanction__trident {
+  font-size: 30px;
+  color: #f0c04a;
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(240, 180, 60, 0.7);
+}
+.sanction__who {
+  font-family: var(--font-display, serif);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e0a83c;
+  margin-bottom: 6px;
+}
+.sanction__name {
+  font-family: var(--font-display, serif);
+  margin: 0 0 12px;
+  font-size: 27px;
+  line-height: 1.1;
+  color: #f6efe0;
+  text-wrap: balance;
+}
+.sanction__warn {
+  margin: 0 auto 16px;
+  max-width: 42ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #cfc4b4;
+}
+.sanction__ask {
+  margin: 0 0 18px;
+  font-family: var(--font-display, serif);
+  font-size: 16px;
+  color: #f6efe0;
+}
+.sanction__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn--danger {
+  background: linear-gradient(180deg, #8c2318, #5f160f);
+  border-color: rgba(226, 122, 32, 0.6);
+  color: #ffe9d8;
+}
+.btn--danger:hover {
+  background: linear-gradient(180deg, #a32b1d, #6f1a12);
+}
+
+/* ------------------------------------------------------------------- Omens */
+/* Consequences announce themselves: a curse taken, warriors burnt out of your
+   deck, two great weapons meeting. Tap to dismiss early. */
+.omen {
+  position: fixed;
+  left: 50%;
+  top: 64px;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: min(430px, calc(100vw - 28px));
+  padding: 13px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #1d1626, #14111c);
+  border: 1px solid var(--omen-edge, rgba(230, 168, 23, 0.5));
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 40px var(--omen-glow, transparent);
+  animation: omen-in 260ms ease-out;
+}
+@keyframes omen-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .omen {
+    animation: none;
+  }
+}
+.omen--curse {
+  --omen-edge: rgba(158, 74, 200, 0.6);
+  --omen-glow: rgba(158, 74, 200, 0.18);
+}
+.omen--burn {
+  --omen-edge: rgba(226, 122, 32, 0.6);
+  --omen-glow: rgba(226, 122, 32, 0.18);
+}
+.omen--clash {
+  --omen-edge: rgba(220, 90, 70, 0.6);
+  --omen-glow: rgba(220, 90, 70, 0.18);
+}
+.omen__title {
+  font-family: var(--font-display, serif);
+  font-size: 14.5px;
+  color: #f6efe0;
+  margin-bottom: 3px;
+  text-wrap: balance;
+}
+.omen__text {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #b9b0a2;
+}
+/* A curse you are carrying, shown on your seat chip for as long as it holds. */
+.curse-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 999px;
+  color: #d9a6f0;
+  border: 1px solid rgba(158, 74, 200, 0.55);
+  background: rgba(158, 74, 200, 0.14);
+}
