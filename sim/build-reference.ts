@@ -42,7 +42,7 @@ const ASTRA_TEXT: Record<string, string> = {
   brahmashirsha: 'Ravages the struck row (−8) and lingers (−4); scars your own adjacent line (−3).',
   narayanastra: 'A storm of −5 loosed across every enemy on the field.',
   vaishnavastra: 'Slays one chosen foe. It never misses its mark.',
-  vasavi_shakti: 'Slays the mightiest foe, then is spent — gone for the rest of the run.',
+  vasavi_shakti: 'Slays the mightiest foe, then is spent, gone for the rest of the run.',
   brahmastra: 'Ravages the struck row (−6) and lingers (−3); collateral (−2) to your own line.',
   bhargavastra: '−3 rained upon every enemy at once.',
   sammohanastra: 'A weapon of sleep: −2 across the struck row.',
@@ -50,11 +50,11 @@ const ASTRA_TEXT: Record<string, string> = {
   agneyastra: 'A wall of flame: −4 to the struck row.',
   varunastra: 'Varuna’s deluge: −4 to the mightiest foe; it quenches Agni.',
   vayavyastra: 'Vayu’s gale: −3 to the struck row.',
-  nagastra: 'Slays the mightiest foe — unless Garuda answers from the hand.',
+  nagastra: 'Slays the mightiest foe, unless Garuda answers from the hand.',
   garudastra: '−5 to the mightiest foe; its shadow scatters every naga.',
 };
 const TIER_META: Record<number, { label: string; name: string; desc: string }> = {
-  3: { label: 'Tier III', name: 'Divine Ultimates', desc: 'Loosed only by their named master — no rank alone unlocks them.' },
+  3: { label: 'Tier III', name: 'Divine Ultimates', desc: 'Loosed only by their named master. No rank alone unlocks them.' },
   2: { label: 'Tier II', name: 'Brahma-line', desc: 'Any Maharathi trained as an astra-master (mastery 2) may loose these.' },
   1: { label: 'Tier I', name: 'Elemental', desc: 'Any astra-adept warrior (mastery 1+) may loose these.' },
 };
@@ -66,7 +66,7 @@ const ORDER: Record<string, number> = {
 
 function wielders(a: U): string {
   const named = units.filter((u) => (u.knownAstras || []).includes(a.id)).map((u) => u.name);
-  if (a.astraTier === 3) return named.length ? named.join(', ') : '—';
+  if (a.astraTier === 3) return named.length ? named.join(', ') : 'none';
   const n = units.filter((u) => (u.astraMastery ?? 0) >= (a.astraTier ?? 1)).length;
   return a.astraTier === 2 ? `Any Maharathi astra-master · ${n} in roster` : `Any astra-adept · ${n} in roster`;
 }
@@ -78,7 +78,7 @@ function astraRows(tier: number): string {
     .map((a) => {
       const counter = (a.counteredBy || []).filter((c) => c !== a.id).map(byName);
       const mirror = (a.counteredBy || []).includes(a.id);
-      const counterTxt = counter.length ? counter.join(', ') : mirror ? 'Only its own kind' : '—';
+      const counterTxt = counter.length ? counter.join(', ') : mirror ? 'Only its own kind' : 'none';
       return `<tr>
         <td class="c-name"><span class="glyphdot t${tier}"></span>${esc(a.name)}</td>
         <td class="c-eff">${esc(ASTRA_TEXT[a.id] || '')}</td>
@@ -106,7 +106,7 @@ function tierBlock(tier: number): string {
 // ---- Warriors ----
 const SIG: Record<string, string> = {
   arjuna: 'Bearer of the Gandiva; looses the Pashupatastra.',
-  bhishma: 'Icchamrityu — cannot fall until Shikhandi stands.',
+  bhishma: 'Icchamrityu: cannot fall until Shikhandi stands.',
   karna: 'Kavacha-armour, but the wheel-curse and vow bind him in the end.',
   bhima: 'Vowed to break Dushasana and Duryodhana.',
   drona: 'Untouchable until the elephant-lie is told.',
@@ -115,7 +115,7 @@ const SIG: Record<string, string> = {
   dhrishtadyumna: 'Born from fire to slay Drona.',
   sweta: 'Looses a bolt at the mightiest foe.',
   satyaki: 'Krishna’s pupil, a Maharathi astra-master.',
-  shalya: 'Karna’s own charioteer — saps his spirit from within.',
+  shalya: 'Karna’s own charioteer, sapping his spirit from within.',
   ashwatthama: 'Chiranjivi; looses the Narayanastra.',
   bhagadatta: 'Rides Supratika; hurls the Vaishnavastra.',
   bhurishravas: 'Yupadhwaja, felled with his sword-arm raised.',
@@ -177,7 +177,7 @@ function powerBlock(p: number): string {
         .join('');
       return `<div class="fcol f-${h}">
         <div class="fcolhead"><span class="fdot f-${h}"></span>${FACTION[h]}<span class="fcount">${list.length}</span></div>
-        <ul class="unitlist">${items || '<li class="empty">—</li>'}</ul>
+        <ul class="unitlist">${items || '<li class="empty">none</li>'}</ul>
       </div>`;
     })
     .join('');
@@ -203,20 +203,20 @@ const CSS = fs.readFileSync('sim/reference.css', 'utf8')
   .replace('__CINZEL400__', cinzel400)
   .replace('__CINZEL700__', cinzel700);
 
-const html = `<title>Kurukshetra — Canon Reference</title>
+const html = `<title>Kurukshetra: Canon Reference</title>
 <style>${CSS}</style>
 <div class="wrap"><div class="sheet">
   <header class="mast">
     <div class="deva">कुरुक्षेत्र</div>
     <h1>Canon Reference</h1>
-    <p class="sub">The fixed ground beneath every mode: which astras exist and who may loose them, and where each warrior stands in raw power. Base power is only a starting number — vows, curses, and boons decide the rest.</p>
+    <p class="sub">The fixed ground beneath every mode: which astras exist and who may loose them, and where each warrior stands in raw power. Base power is only a starting number. Vows, curses, and boons decide the rest.</p>
   </header>
   <nav class="nav">
     <a href="#astras">The Astras</a><a href="#ladder">Astra Mastery</a><a href="#warriors">The Warriors</a>
   </nav>
   <section id="astras">
     <h2 class="secttitle">The Astras <span class="en">divine weapons, ranked by tier</span></h2>
-    <p class="lede">Every astra carries a tier. The higher the tier, the fewer hands that can wield it — and Tier III cannot be unlocked by rank at all, only by the warrior it belongs to in the epic.</p>
+    <p class="lede">Every astra carries a tier. The higher the tier, the fewer hands that can wield it. Tier III cannot be unlocked by rank at all, only by the warrior it belongs to in the epic.</p>
     ${tierBlock(3)}${tierBlock(2)}${tierBlock(1)}
     <div class="legend" style="margin-top:12px;">
       <span class="item"><span class="glyphdot t3" style="transform:rotate(45deg)"></span>Tier III · ultimate</span>
@@ -227,16 +227,16 @@ const html = `<title>Kurukshetra — Canon Reference</title>
   </section>
   <section id="ladder">
     <h2 class="secttitle">Astra Mastery <span class="en">who may loose what</span></h2>
-    <p class="lede">Rank grants the common weapons; the ultimates stay locked to their mythic owners. This ladder is the bridge between the two tables — a warrior's mastery decides which astras above they can actually fire.</p>
+    <p class="lede">Rank grants the common weapons; the ultimates stay locked to their mythic owners. This ladder is the bridge between the two tables: a warrior's mastery decides which astras above they can actually fire.</p>
     <div class="ladder">
       <div class="lrow l3"><div class="lk">Named bearers<small>Tier III ultimates, by boon</small></div><div class="lv">${namedLine}</div></div>
       <div class="lrow l2"><div class="lk">Brahma-line masters<small>Mastery 2 · Tier II &amp; below</small></div><div class="lv">${ladderT2.map((u) => u.name).join(' · ')}</div></div>
-      <div class="lrow l1"><div class="lk">Elemental adepts<small>Mastery 1 · Tier I only</small></div><div class="lv">${ladderT1only.map((u) => u.name).join(' · ')}<em> — plus every Brahma-line master above</em></div></div>
+      <div class="lrow l1"><div class="lk">Elemental adepts<small>Mastery 1 · Tier I only</small></div><div class="lv">${ladderT1only.map((u) => u.name).join(' · ')}<em> (plus every Brahma-line master above)</em></div></div>
     </div>
   </section>
   <section id="warriors">
     <h2 class="secttitle">The Warriors <span class="en">ranked by base power</span></h2>
-    <p class="lede">Raw power maps to the canon ranking of the Bhishma Parva — Maharathi at the peak, then Atirathi, then Rathi and levies. The rank mark <span class="rankmark">≡</span> Maharathi · <span class="rankmark">=</span> Atirathi · <span class="rankmark">–</span> Rathi sits before each name.</p>
+    <p class="lede">Raw power maps to the canon ranking of the Bhishma Parva: Maharathi at the peak, then Atirathi, then Rathi and levies. The rank mark <span class="rankmark">≡</span> Maharathi · <span class="rankmark">=</span> Atirathi · <span class="rankmark">–</span> Rathi sits before each name.</p>
     <div class="legend">
       <span class="item"><span class="fdot f-pandava"></span>Pandava</span>
       <span class="item"><span class="fdot f-kaurava"></span>Kaurava</span>
@@ -248,7 +248,7 @@ const html = `<title>Kurukshetra — Canon Reference</title>
     ${powerBands.join('\n')}
   </section>
   <footer class="foot"><div class="rule"></div>
-    Generated from the live card data — ${units.length} warriors, ${astras.length} astras. Numbers here are the balance-tuned values in play, not lore estimates.
+    Generated from the live card data: ${units.length} warriors, ${astras.length} astras. Numbers here are the balance-tuned values in play, not lore estimates.
   </footer>
 </div></div>`;
 
