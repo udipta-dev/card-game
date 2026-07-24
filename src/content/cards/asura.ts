@@ -17,6 +17,13 @@ export const ASURA_CARDS: Card[] = [
     keywords: [{ kind: 'armor', amount: 3 }],
     tags: ['rakshasa'],
     astraMastery: 2,
+    ability: {
+      name: 'Arrow Rain',
+      text: 'Darkens the sky over the enemy host (-2 to every foe). Once per battle.',
+      charges: 1,
+      target: { pick: 'allEnemyUnits' },
+      actions: [{ kind: 'damage', amount: 2 }],
+    },
     effects: [],
     flavor: 'The ten-headed lord of Lanka, whose penance armoured him against the gods.',
   },

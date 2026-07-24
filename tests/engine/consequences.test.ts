@@ -2,8 +2,9 @@
 // like an astra rather than a big damage card: it fires once, it costs you
 // something, and the worst of them take your own host with them.
 import { describe, expect, it } from 'vitest';
-import { reduce, isLegalPlay } from '@engine/reducer';
+import { reduce, isLegalAbility, isLegalPlay } from '@engine/reducer';
 import { unitsOf } from '@engine/queries';
+import { legalMoves } from '@engine/selectors';
 import { hasEvent, makeState } from './helpers';
 
 describe('a great astra fires only once', () => {
@@ -98,5 +99,40 @@ describe('Pashupatastra wins, but at a price', () => {
     for (const id of (burn as { cardIds: string[] }).cardIds) {
       expect(s1.bannedThisRun).toContain(id);
     }
+  });
+});
+
+describe('a warrior’s skill at arms', () => {
+  it('spends a charge, costs the turn, and runs dry within the battle', () => {
+    const s = makeState({
+      playerBoard: { ratha: ['arjuna'] },
+      aiBoard: { ratha: ['dushasana'], gaja: ['jayadratha'] },
+    });
+    const arjuna = s.board.player.ratha[0];
+    const dushasana = s.board.ai.ratha[0];
+    const jayadratha = s.board.ai.gaja[0];
+    const before = [s.instances[dushasana].currentPower, s.instances[jayadratha].currentPower];
+
+    const s1 = reduce(s, { type: 'USE_ABILITY', iid: arjuna });
+    // Arrow Rain falls on the whole enemy host, not one target.
+    expect(s1.instances[dushasana].currentPower).toBe(before[0] - 2);
+    expect(s1.instances[jayadratha].currentPower).toBe(before[1] - 2);
+    expect(s1.instances[arjuna].counters.charges).toBe(0);
+    expect(s1.activeSeat).toBe('ai'); // using a skill costs the turn
+    expect(hasEvent(s1, (e) => e.t === 'ability' && e.name === 'Arrow Rain')).toBe(true);
+
+    // Out of charges: the same warrior cannot loose it again this battle.
+    const s2 = { ...s1, activeSeat: 'player' as const };
+    expect(isLegalAbility(s2, 'player', arjuna)).toBe(false);
+    expect(reduce(s2, { type: 'USE_ABILITY', iid: arjuna })).toBe(s2);
+  });
+
+  it('is offered to the AI and the UI through legalMoves', () => {
+    const s = makeState({
+      playerBoard: { ratha: ['arjuna'] },
+      aiBoard: { ratha: ['dushasana'] },
+    });
+    const moves = legalMoves(s, 'player');
+    expect(moves.some((m) => m.type === 'USE_ABILITY')).toBe(true);
   });
 });

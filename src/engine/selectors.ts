@@ -2,7 +2,7 @@
 // enumerates every action the active seat may take, including target choices.
 import { getCard } from '@content/cards';
 import { opponentOf, unitsOf } from './queries';
-import { isLegalPlay } from './reducer';
+import { isLegalAbility, isLegalPlay } from './reducer';
 import type { Action, Card, GameState, InstanceId, Seat, UnitFilter } from './types';
 
 /** The `chosen` selector filter this card uses, if any. */
@@ -62,6 +62,19 @@ export function legalMoves(state: GameState, seat: Seat): Action[] {
         if (need === 'optional') moves.push({ type: 'PLAY_CARD', iid, row });
         for (const t of targets) moves.push({ type: 'PLAY_CARD', iid, row, targets: [t] });
       }
+    }
+  }
+
+  // A fielded warrior may spend the turn on his own skill at arms instead.
+  for (const u of unitsOf(state, seat)) {
+    if (!isLegalAbility(state, seat, u.iid)) continue;
+    const ability = getCard(u.cardId).ability!;
+    if (ability.target.pick === 'chosen') {
+      for (const t of candidateTargets(state, seat, ability.target.filter)) {
+        moves.push({ type: 'USE_ABILITY', iid: u.iid, targets: [t] });
+      }
+    } else {
+      moves.push({ type: 'USE_ABILITY', iid: u.iid });
     }
   }
   return moves;

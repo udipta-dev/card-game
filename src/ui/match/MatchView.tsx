@@ -4,7 +4,7 @@ import { getCard, provisionOf } from '@content/cards';
 import type { DeckList } from '@content/decks';
 import { chooseAction } from '@ai/ai';
 import { createMatch } from '@engine/createMatch';
-import { reduce } from '@engine/reducer';
+import { isLegalAbility, reduce } from '@engine/reducer';
 import { isFinalRound, rowPower, seatPower } from '@engine/queries';
 import { getCurse } from '@engine/curses';
 import { legalMoves } from '@engine/selectors';
@@ -47,6 +47,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
   const [banner, setBanner] = useState<string | null>(null);
   const [awaitingSanction, setAwaitingSanction] = useState<{ action: Action; card: Card } | null>(null);
   const [omen, setOmen] = useState<{ tone: 'curse' | 'burn' | 'clash'; title: string; text: string } | null>(null);
+  const [abilityPrompt, setAbilityPrompt] = useState<{ iid: InstanceId; card: Card } | null>(null);
   const roundEndsSeen = useRef(0);
   const logSeen = useRef(0);
 
@@ -228,7 +229,14 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
                 instance={u}
                 dead={u.currentPower <= 0}
                 targetable={isTargetable}
-                onClick={() => (isTargetable ? onUnitClick(iid) : setInspect({ card, inst: u }))}
+                ready={seat === 'player' && myTurn && isLegalAbility(state, 'player', iid)}
+                onClick={() =>
+                  isTargetable
+                    ? onUnitClick(iid)
+                    : seat === 'player' && myTurn && isLegalAbility(state, 'player', iid)
+                      ? setAbilityPrompt({ iid, card })
+                      : setInspect({ card, inst: u })
+                }
                 onEnter={showTip(card, u)}
                 onLeave={hideTip}
               />
@@ -323,6 +331,30 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
         <div className={`omen omen--${omen.tone}`} role="status" onClick={() => setOmen(null)}>
           <div className="omen__title">{omen.title}</div>
           <div className="omen__text">{omen.text}</div>
+        </div>
+      )}
+      {abilityPrompt && (
+        <div className="overlay" onClick={() => setAbilityPrompt(null)}>
+          <div className="panel ability-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="ability-panel__who">{abilityPrompt.card.name}</div>
+            <h3 className="ability-panel__name">{abilityPrompt.card.ability!.name}</h3>
+            <p className="ability-panel__text">{abilityPrompt.card.ability!.text}</p>
+            <div className="ability-panel__actions">
+              <button className="btn btn--ghost" onClick={() => setAbilityPrompt(null)}>
+                Not yet
+              </button>
+              <button
+                className="btn btn--primary"
+                onClick={() => {
+                  dispatch({ type: 'USE_ABILITY', iid: abilityPrompt.iid });
+                  setAbilityPrompt(null);
+                  setSelected(null);
+                }}
+              >
+                Use {abilityPrompt.card.ability!.name}
+              </button>
+            </div>
+          </div>
         </div>
       )}
       {awaitingSanction && (

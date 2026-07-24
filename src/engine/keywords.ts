@@ -33,6 +33,8 @@ export function initInstanceRuntime(state: GameState, iid: InstanceId): void {
   const u = state.instances[iid];
   if (!u) return;
   const card = getCard(u.cardId);
+  // A warrior arrives with his skill at arms ready for this battle.
+  if (card.ability) u.counters.charges = card.ability.charges;
   for (const kw of card.keywords) {
     if (kw.kind === 'armor') u.counters.armor = kw.amount;
     if (kw.kind === 'nightGrowth') {

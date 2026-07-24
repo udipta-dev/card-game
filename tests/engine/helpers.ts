@@ -38,6 +38,7 @@ function place(
   };
   // Mirror initInstanceRuntime + relevant onPlay self-flags for placed units.
   for (const kw of card.keywords) if (kw.kind === 'armor') inst.counters.armor = kw.amount;
+  if (card.ability) inst.counters.charges = card.ability.charges;
   if (row !== null) {
     // Duryodhana's diamond-body is applied by his onPlay; replicate for board setup.
     if (card.effects.some((e) => e.actions.some((a) => a.kind === 'addFlag' && a.flag === 'diamond-body')))

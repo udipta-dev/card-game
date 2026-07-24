@@ -8,6 +8,8 @@ interface Props {
   mini?: boolean;
   selected?: boolean;
   targetable?: boolean;
+  /** A fielded warrior with an unspent skill at arms this battle. */
+  ready?: boolean;
   dead?: boolean;
   onClick?: () => void;
   onEnter?: (e: MouseEvent) => void;
@@ -20,6 +22,7 @@ export function CardFrame({
   mini,
   selected,
   targetable,
+  ready,
   dead,
   onClick,
   onEnter,
@@ -44,6 +47,7 @@ export function CardFrame({
     onClick ? 'card--hand' : '',
     selected ? 'card--selected' : '',
     targetable ? 'card--targetable' : '',
+    ready ? 'card--ready' : '',
     dead ? 'card--dead' : '',
   ]
     .filter(Boolean)

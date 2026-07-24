@@ -13,6 +13,13 @@ export const PANDAVA_CARDS: Card[] = [
     basePower: 10,
     rows: ['ratha'],
     keywords: [],
+    ability: {
+      name: 'Arrow Rain',
+      text: 'Darkens the sky over the enemy host (-2 to every foe). Once per battle.',
+      charges: 1,
+      target: { pick: 'allEnemyUnits' },
+      actions: [{ kind: 'damage', amount: 2 }],
+    },
     effects: [],
     tags: ['pandava-brother'],
     astraMastery: 2,

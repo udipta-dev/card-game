@@ -153,6 +153,7 @@
     text-transform:uppercase; margin-left:7px; padding:1px 6px; border-radius:5px; white-space:nowrap;
     border:1px solid color-mix(in oklab,var(--mc) 55%,transparent); color:var(--mc);
     background:color-mix(in oklab,var(--mc) 12%,transparent);}
+  .mst-ab{--mc:var(--gold);}
   .mst-t3{--mc:var(--t3);} .mst-t2{--mc:var(--t2);} .mst-t1{--mc:var(--t1);}
 
   .foot{text-align:center; color:var(--muted); font-size:12px; margin-top:34px;}

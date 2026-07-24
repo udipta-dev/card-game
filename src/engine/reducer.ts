@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import { ADHARMA_CURSES, resolveClash } from './clash';
 import { afflict } from './curses';
 import type { EffectCtx } from './effects/context';
-import { runCardEffects } from './events';
+import { runCardEffects, runEffect } from './events';
 import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime } from './keywords';
 import { canInvokeAstra, isFinalRound, opponentOf } from './queries';
 import { resolveRound } from './rounds';
@@ -53,6 +53,18 @@ function banForRun(s: GameState, card: Card): void {
   if (s.bannedThisRun.includes(card.id)) return;
   s.bannedThisRun.push(card.id);
   s.log.push({ t: 'ban', cardId: card.id });
+}
+
+/**
+ * May this seat spend a turn on a fielded warrior's skill at arms? Needs the
+ * warrior on the board, alive, with a charge left in this battle.
+ */
+export function isLegalAbility(state: GameState, seat: Seat, iid: string): boolean {
+  if (state.phase !== 'playing' || state.activeSeat !== seat) return false;
+  const u = state.instances[iid];
+  if (!u || u.owner !== seat || u.row === null) return false;
+  if (!getCard(u.cardId).ability) return false;
+  return (u.counters.charges ?? 0) > 0;
 }
 
 function advanceTurn(s: GameState, seat: Seat): void {
@@ -158,6 +170,39 @@ export function reduce(state: GameState, action: Action): GameState {
         s.log.push({ t: 'battleEnd', winner: s.forcedWinner, reason: 'astra' });
         return s;
       }
+
+      advanceTurn(s, seat);
+      return s;
+    }
+
+    case 'USE_ABILITY': {
+      const seat = s.activeSeat;
+      if (!isLegalAbility(s, seat, action.iid)) return state;
+      const u = s.instances[action.iid]!;
+      const card = getCard(u.cardId);
+      const ability = card.ability!;
+
+      // Spending a skill costs your turn, exactly as playing a card does.
+      u.counters.charges = (u.counters.charges ?? 0) - 1;
+      s.log.push({
+        t: 'ability',
+        iid: action.iid,
+        cardId: card.id,
+        name: ability.name,
+        left: u.counters.charges,
+      });
+
+      runEffect(
+        {
+          state: s,
+          actorOwner: seat,
+          actorCardId: card.id,
+          actorIid: action.iid,
+          playedRow: u.row,
+          chosen: action.targets ?? [],
+        },
+        { on: 'onPlay', target: ability.target, actions: ability.actions },
+      );
 
       advanceTurn(s, seat);
       return s;

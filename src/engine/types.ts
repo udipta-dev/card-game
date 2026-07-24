@@ -76,6 +76,13 @@ export interface Card {
    * (the canonical counter-web: Naga vs Garuda, Agni vs Varuna, Brahma vs Brahma).
    */
   counteredBy?: CardId[];
+  /**
+   * A warrior's ordinary skill at arms: arrow rain, a mace strike, a firebolt.
+   * Limited uses per battle, replenished the next battle. These exist so that
+   * making the divyastras rare does not leave an ordinary battle flat, and so
+   * that a maharathi still feels like one with no astra in hand.
+   */
+  ability?: Ability;
   /** Free-form tags for bond/synergy (clan, squad, "rakshasa", "vrishni", ...). */
   tags?: string[];
   /** Path under public/art/cards/. Undefined => placeholder frame. */
@@ -86,6 +93,17 @@ export interface Card {
 // ---------------------------------------------------------------------------
 // Keywords, sticky, always-on abilities. Generic mechanics, card-specific data.
 // ---------------------------------------------------------------------------
+
+/** A repeatable, limited-use skill a fielded warrior may spend a turn on. */
+export interface Ability {
+  name: string;
+  /** Shown on the card and in the ability button. */
+  text: string;
+  /** Uses per battle. Refreshed when the next battle begins, not each round. */
+  charges: number;
+  target: TargetSelector;
+  actions: EffectAction[];
+}
 
 export type Keyword =
   // Bhishma: cannot be removed until `unlessCardOnBoard` is on the board.
@@ -275,6 +293,7 @@ export interface GameState {
 
 export type Action =
   | { type: 'PLAY_CARD'; iid: InstanceId; row: Row; targets?: InstanceId[] }
+  | { type: 'USE_ABILITY'; iid: InstanceId; targets?: InstanceId[] }
   | { type: 'PASS'; seat: Seat }
   | { type: 'MULLIGAN'; seat: Seat; iids: InstanceId[] };
 
@@ -293,6 +312,7 @@ export type GameEvent =
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }
+  | { t: 'ability'; iid: InstanceId; cardId: CardId; name: string; left: number }
   | { t: 'afflict'; seat: Seat; curse: CurseId; name: string; text: string }
   | { t: 'burn'; seat: Seat; cardIds: CardId[] }
   // Two great astras meet. Both hosts are scoured; the wielder who never

@@ -1207,3 +1207,54 @@
   border: 1px solid rgba(158, 74, 200, 0.55);
   background: rgba(158, 74, 200, 0.14);
 }
+
+/* ------------------------------------- Skill at arms (per-battle abilities) */
+/* A fielded warrior with a charge left gets a quiet pulse, so you can see at a
+   glance who still has something to spend this battle. */
+.card--ready {
+  box-shadow:
+    0 0 0 1px rgba(240, 196, 90, 0.65),
+    0 0 14px rgba(240, 196, 90, 0.32);
+  cursor: pointer;
+}
+.card--ready::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f0c45a;
+  box-shadow: 0 0 7px rgba(240, 196, 90, 0.95);
+}
+.ability-panel {
+  max-width: 380px;
+  width: 100%;
+  padding: 22px 22px 18px;
+  text-align: center;
+}
+.ability-panel__who {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted, #9a9080);
+}
+.ability-panel__name {
+  font-family: var(--font-display, serif);
+  margin: 4px 0 8px;
+  font-size: 22px;
+  color: #f6efe0;
+}
+.ability-panel__text {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #c3b9aa;
+}
+.ability-panel__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}

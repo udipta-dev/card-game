@@ -170,8 +170,9 @@ function powerBlock(p: number): string {
       const items = list
         .map((u) => {
           const sig = sigFor(u);
+          const ab = (u as { ability?: { name: string; text: string } }).ability;
           return `<li class="unit">
-            <span class="uname"><span class="rankmark" title="${RANK[u.tier ?? ''] || ''}">${RANKMARK[u.tier ?? ''] || ''}</span>${esc(u.name)}${masteryBadge(u)}</span>
+            <span class="uname"><span class="rankmark" title="${RANK[u.tier ?? ''] || ''}">${RANKMARK[u.tier ?? ''] || ''}</span>${esc(u.name)}${masteryBadge(u)}${ab ? `<span class="mst mst-ab" title="${esc(ab.text)}">${esc(ab.name)}</span>` : ''}</span>
             ${sig ? `<span class="usig">${esc(sig)}</span>` : ''}</li>`;
         })
         .join('');
