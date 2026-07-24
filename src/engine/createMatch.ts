@@ -68,6 +68,7 @@ export function createMatch(
     decks: { player: playerDeckIds, ai: aiDeckIds },
     rowMods: [],
     bannedThisRun: [],
+    curses: { player: [], ai: [] },
     forcedWinner: null,
     winner: null,
     mulliganDone: { player: false, ai: false },

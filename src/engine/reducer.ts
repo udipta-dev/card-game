@@ -2,13 +2,14 @@
 // pure function: it deep-clones the state, applies the action + all triggered
 // effects, and returns the new state. The AI simulates via this exact path.
 import { getCard } from '@content/cards';
+import { resolveClash } from './clash';
 import type { EffectCtx } from './effects/context';
 import { runCardEffects } from './events';
 import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime } from './keywords';
 import { canInvokeAstra, isFinalRound, opponentOf } from './queries';
 import { resolveRound } from './rounds';
 import { MULLIGAN_MAX } from './createMatch';
-import type { Action, GameState, Row, Seat } from './types';
+import type { Action, Card, GameState, Row, Seat } from './types';
 
 function clone(state: GameState): GameState {
   return structuredClone(state);
@@ -32,11 +33,25 @@ export function isLegalPlay(
   if (!u) return false;
   const card = getCard(u.cardId);
   if (!card.rows.includes(row)) return false;
+  // Spent for the run. A great astra fires once and the arsenal is empty.
+  if (state.bannedThisRun.includes(card.id)) return false;
   if (card.type === 'astra') {
     if (!canPlayAstras(state, seat, isFinalRound(state))) return false;
     if (!canInvokeAstra(state, seat, card.id)) return false; // needs a warrior who knows it
   }
   return true;
+}
+
+/**
+ * A Brahma-line weapon or greater fires once. Once loosed (or spent answering
+ * another), it is gone for the rest of the run: the arsenal empties. Elemental
+ * weapons are common enough to carry more than one of.
+ */
+function banForRun(s: GameState, card: Card): void {
+  if (card.type !== 'astra' || (card.astraTier ?? 1) < 2) return;
+  if (s.bannedThisRun.includes(card.id)) return;
+  s.bannedThisRun.push(card.id);
+  s.log.push({ t: 'ban', cardId: card.id });
 }
 
 function advanceTurn(s: GameState, seat: Seat): void {
@@ -111,14 +126,19 @@ export function reduce(state: GameState, action: Action): GameState {
             : undefined;
         if (counterHid) {
           const defender = opponentOf(seat);
-          const counterId = getCard(s.instances[counterHid]!.cardId).id;
+          const counterCard = getCard(s.instances[counterHid]!.cardId);
           s.hands[defender].splice(s.hands[defender].indexOf(counterHid), 1);
           delete s.instances[counterHid];
-          s.log.push({ t: 'countered', astra: card.id, by: counterId, seat: defender });
+          s.log.push({ t: 'countered', astra: card.id, by: counterCard.id, seat: defender });
+          // Two great weapons meeting is not a clean cancellation.
+          resolveClash(s, seat, card, counterCard);
+          // The answering weapon is spent for the run too.
+          banForRun(s, counterCard);
         } else {
           runCardEffects(ctx, 'onPlay');
         }
         delete s.instances[iid]; // the astra is spent either way
+        banForRun(s, card);
       }
 
       // A newly played card may disarm an immune enemy (Drona).

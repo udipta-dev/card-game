@@ -22,6 +22,8 @@ export type CardType = 'unit' | 'astra' | 'boon' | 'curse';
 
 /** Stable content id, e.g. 'bhishma'. */
 export type CardId = string;
+/** Stable curse id, e.g. 'kin_slayer'. See engine/curses.ts. */
+export type CurseId = string;
 /** Unique per placed/held card instance. */
 export type InstanceId = string;
 
@@ -138,6 +140,12 @@ export type EffectAction =
     }
   | { kind: 'banFromRun'; card: CardId }
   | { kind: 'winBattle' }
+  // The price of an adharmic weapon: permanently burn `count` cards out of the
+  // firer's own deck. Pashupatastra wins the battle, but at this cost.
+  | { kind: 'burnOwnDeck'; count: number }
+  // Loosing a Brahma-line weapon is an act of adharma. Draws one curse at
+  // random from `pool` onto the firer. See engine/curses.ts.
+  | { kind: 'afflict'; pool: CurseId[]; side: 'own' | 'enemy' }
   | { kind: 'addFlag'; flag: string }
   | { kind: 'removeFlag'; flag: string }
   | { kind: 'preventDestroy'; reason: string };
@@ -158,6 +166,10 @@ export type TargetSelector =
   | { pick: 'highestEnemyUnit' }
   | { pick: 'lowestEnemyUnit' }
   | { pick: 'allEnemyUnits' }
+  // Every unit the actor owns. Brahmashirsha consumes its wielder's host too.
+  | { pick: 'allOwnUnits' }
+  // Every unit on the field, both hosts. Utter destruction.
+  | { pick: 'allUnits' }
   | { pick: 'enemyRow'; row: Row }
   // Enemy units in the row this astra was played into.
   | { pick: 'enemyRowSameAsPlayed' }
@@ -243,7 +255,13 @@ export interface GameState {
   hands: Record<Seat, InstanceId[]>;
   decks: Record<Seat, InstanceId[]>;
   rowMods: RowModifier[];
+  /**
+   * Cards spent for the rest of the run. A great astra fires once: the arsenal
+   * empties. Enforced in isLegalPlay, so a banned card can never be played again.
+   */
   bannedThisRun: CardId[];
+  /** Curses each seat carries from its own acts of adharma. */
+  curses: Record<Seat, CurseId[]>;
   /** Set when a card forces an immediate battle result (Pashupatastra). */
   forcedWinner: Seat | null;
   winner: Seat | null;
@@ -275,6 +293,11 @@ export type GameEvent =
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }
+  | { t: 'afflict'; seat: Seat; curse: CurseId; name: string; text: string }
+  | { t: 'burn'; seat: Seat; cardIds: CardId[] }
+  // Two great astras meet. Both hosts are scoured; the wielder who never
+  // learned to withdraw his weapon pays the greater price.
+  | { t: 'clash'; astra: CardId; against: CardId; blast: number; unwithdrawn: Seat | null }
   | { t: 'flag'; iid: InstanceId; flag: string; on: boolean }
   | { t: 'roundEnd'; round: number; scores: Record<Seat, number>; winner: Seat | 'tie' }
   | { t: 'battleEnd'; winner: Seat; reason: string };

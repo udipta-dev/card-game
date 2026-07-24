@@ -28,6 +28,10 @@ export function resolveTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[
     }
     case 'allEnemyUnits':
       return unitsOf(state, enemy).map((u) => u.iid);
+    case 'allOwnUnits':
+      return unitsOf(state, actorOwner).map((u) => u.iid);
+    case 'allUnits':
+      return [...unitsOf(state, enemy), ...unitsOf(state, actorOwner)].map((u) => u.iid);
     case 'enemyRow':
       return rowUnits(state, enemy, sel.row).map((u) => u.iid);
     case 'enemyRowSameAsPlayed':

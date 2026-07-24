@@ -1,8 +1,8 @@
 // Derived, read-only views for the AI and UI. The key one is legalMoves: it
 // enumerates every action the active seat may take, including target choices.
 import { getCard } from '@content/cards';
-import { canPlayAstras } from './keywords';
-import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
+import { opponentOf, unitsOf } from './queries';
+import { isLegalPlay } from './reducer';
 import type { Action, Card, GameState, InstanceId, Seat, UnitFilter } from './types';
 
 /** The `chosen` selector filter this card uses, if any. */
@@ -43,20 +43,19 @@ function candidateTargets(state: GameState, seat: Seat, filter: UnitFilter): Ins
 export function legalMoves(state: GameState, seat: Seat): Action[] {
   if (state.phase !== 'playing' || state.activeSeat !== seat) return [];
   const moves: Action[] = [{ type: 'PASS', seat }];
-  const final = isFinalRound(state);
+
 
   for (const iid of state.hands[seat]) {
     const card = getCard(state.instances[iid]!.cardId);
-    if (card.type === 'astra') {
-      if (!canPlayAstras(state, seat, final)) continue;
-      if (!canInvokeAstra(state, seat, card.id)) continue; // no warrior knows it yet
-    }
 
     const need = targetNeed(card);
     const filter = need === 'none' ? null : chosenFilter(card);
     const targets = filter ? candidateTargets(state, seat, filter) : [];
 
     for (const row of card.rows) {
+      // Single source of truth: the reducer decides what is legal. Enumerating
+      // with a second copy of the rules is how a "legal" move becomes a no-op.
+      if (!isLegalPlay(state, seat, iid, row)) continue;
       if (need === 'none') {
         moves.push({ type: 'PLAY_CARD', iid, row });
       } else {

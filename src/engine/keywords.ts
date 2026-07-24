@@ -3,6 +3,7 @@
 // "you cannot remove me (yet)" through ONE generic gate, no card-specific
 // branch in the engine. Removal always goes through attemptDestroy().
 import { getCard } from '@content/cards';
+import { cursedAgainstAstras } from './curses';
 import { cardOnBoard } from './queries';
 import { ROWS } from './types';
 import type { CardInstance, GameState, InstanceId, Seat } from './types';
@@ -147,6 +148,8 @@ function boardUnits(state: GameState, seat: Seat): CardInstance[] {
 
 /** Whether a seat may currently invoke astras (Karna's final-round curse). */
 export function canPlayAstras(state: GameState, seat: Seat, isFinal: boolean): boolean {
+  // A curse earned by your own adharma bars you outright, in any round.
+  if (cursedAgainstAstras(state, seat)) return false;
   if (!isFinal) return true;
   // If this seat fields a unit with noAstrasInFinalRound, astras are barred.
   for (const u of boardUnits(state, seat)) {

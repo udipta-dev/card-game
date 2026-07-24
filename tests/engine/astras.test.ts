@@ -43,7 +43,7 @@ describe('Astra counter-web', () => {
     expect(s1.hands.ai.some((iid) => s1.instances[iid]?.cardId === 'garudastra')).toBe(false); // spent
   });
 
-  it('Brahmastra answers Brahmastra', () => {
+  it('Brahmastra answering Brahmastra scours both hosts, and only the untrained side is cursed', () => {
     const s = makeState({
       playerHand: ['brahmastra'],
       playerBoard: { ratha: ['arjuna'] },
@@ -51,9 +51,20 @@ describe('Astra counter-web', () => {
       aiHand: ['brahmastra'],
     });
     const dushasana = firstOf(s, 'ai', 'dushasana');
+    const arjuna = firstOf(s, 'player', 'arjuna');
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'brahmastra').iid, row: 'ratha' });
-    expect(s1.instances[dushasana.iid].currentPower).toBe(6); // unharmed, the strike fizzled
+
     expect(hasEvent(s1, (e) => e.t === 'countered' && e.astra === 'brahmastra')).toBe(true);
+    // Two Brahma-line weapons meeting is not a clean cancellation: blast 2 to all.
+    expect(hasEvent(s1, (e) => e.t === 'clash' && e.blast === 2 && e.unwithdrawn === 'ai')).toBe(true);
+    expect(s1.instances[arjuna.iid].currentPower).toBe(arjuna.currentPower - 2);
+    // Dushasana takes the blast; the AI fields no astra-master, so it could not
+    // withdraw its weapon and carries the curse for it (Vyasa's intervention).
+    expect(s1.instances[dushasana.iid].currentPower).toBeLessThan(6 - 2 + 1);
+    expect(s1.curses.ai.length).toBe(1);
+    expect(s1.curses.player.length).toBe(0);
+    // Both weapons are spent for the run.
+    expect(s1.bannedThisRun).toContain('brahmastra');
   });
 
   it('resolves normally when the defender holds no counter', () => {

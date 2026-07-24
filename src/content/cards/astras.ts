@@ -1,3 +1,4 @@
+import { ADHARMA_CURSES as ADHARMA } from '@engine/clash';
 import type { Card } from '@engine/types';
 
 // Divine weapons. Astras are 0-power bombs whose value is entirely their effect.
@@ -19,7 +20,7 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: ['brahmastra'],
     cost: {
       consequence:
-        'Scorches the land where it falls, and singes your own adjacent ranks. Only another Brahmastra can answer it.',
+        'Scorches the land where it falls and singes your own adjacent ranks. Loosing it is an act of adharma: a curse follows you for it. Only another Brahmastra can answer it.',
     },
     effects: [
       { on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'damage', amount: 6 }] },
@@ -31,6 +32,8 @@ export const ASTRA_CARDS: Card[] = [
         ],
       },
       { on: 'onPlay', target: { pick: 'ownAdjacentToPlayed' }, actions: [{ kind: 'damage', amount: 2 }] },
+      // The weapon wins you the row. The adharma of loosing it stays with you.
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'afflict', side: 'own', pool: ADHARMA }] },
     ],
     flavor: 'Brahma’s weapon; where it strikes, no rain falls for twelve years.',
   },
@@ -45,19 +48,38 @@ export const ASTRA_CARDS: Card[] = [
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     counteredBy: ['brahmashirsha', 'brahmastra'],
-    cost: { consequence: 'Four times a Brahmastra. Once loosed it cannot be recalled without a sage.' },
+    cost: {
+      consequence:
+        'Utter destruction. Every warrior on the field falls, yours among them. Only the deathless walk out of it, and the one who loosed it is cursed for the act.',
+    },
     effects: [
-      { on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'damage', amount: 8 }] },
+      // Brahma himself told Drona this should never be loosed. It takes the
+      // whole field: both hosts. The chiranjivis (Ashwatthama, Kripa, Bali)
+      // survive it, exactly as they survived the night of the Sauptika Parva.
+      { on: 'onPlay', target: { pick: 'allUnits' }, actions: [{ kind: 'destroy' }] },
       {
         on: 'onPlay',
         target: { pick: 'none' },
         actions: [
-          { kind: 'debuffRow', amount: -4, rows: [{ side: 'enemy', sameAsPlayed: true }], duration: 'lingering' },
+          {
+            kind: 'debuffRow',
+            amount: -3,
+            rows: [
+              { side: 'enemy', row: 'ratha' },
+              { side: 'enemy', row: 'gaja' },
+              { side: 'enemy', row: 'padati' },
+              { side: 'own', row: 'ratha' },
+              { side: 'own', row: 'gaja' },
+              { side: 'own', row: 'padati' },
+            ],
+            duration: 'lingering',
+          },
         ],
       },
-      { on: 'onPlay', target: { pick: 'ownAdjacentToPlayed' }, actions: [{ kind: 'damage', amount: 3 }] },
+      // And the price falls on the one who fired.
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'afflict', side: 'own', pool: ADHARMA }] },
     ],
-    flavor: 'The four-headed weapon, wielded by Arjuna and Ashwatthama.',
+    flavor: 'The four-headed weapon. Brahma warned Drona never to loose it.',
   },
   {
     id: 'pashupatastra',
@@ -71,13 +93,18 @@ export const ASTRA_CARDS: Card[] = [
     keywords: [],
     cost: {
       consequence:
-        'Wins the battle outright, then burns from your grasp for the rest of the run. No astra can answer it.',
+        'You win this battle the instant it is loosed. Then five warriors are torn out of your deck forever, and the weapon burns from your grasp. Nothing answers it. Nothing survives it.',
     },
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'none' },
-        actions: [{ kind: 'winBattle' }, { kind: 'banFromRun', card: 'pashupatastra' }],
+        actions: [
+          { kind: 'winBattle' },
+          { kind: 'banFromRun', card: 'pashupatastra' },
+          // Won at what cost. Five of your own are unmade along with the field.
+          { kind: 'burnOwnDeck', count: 5 },
+        ],
       },
     ],
     flavor: 'The weapon that could unmake creation, won by Arjuna from Shiva.',

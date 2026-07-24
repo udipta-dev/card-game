@@ -1,4 +1,7 @@
+import { afflict } from '../curses';
+import { nextRandom } from '../ids';
 import { attemptDestroy } from '../keywords';
+import { opponentOf } from '../queries';
 import type { EffectAction, EffectActionKind, InstanceId } from '../types';
 import type { EffectCtx } from './context';
 import { emit } from './context';
@@ -17,6 +20,8 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'addFlag',
   'removeFlag',
   'preventDestroy',
+  'burnOwnDeck',
+  'afflict',
 ]);
 
 /** Actions that operate on a single target instance. */
@@ -112,6 +117,33 @@ export function applyGlobalAction(ctx: EffectCtx, action: EffectAction): void {
     }
     case 'winBattle': {
       state.forcedWinner = ctx.actorOwner;
+      break;
+    }
+    case 'burnOwnDeck': {
+      // You win the field and lose part of your host forever. The cards are
+      // drawn from the deck at random (seeded) and banned for the run, so the
+      // cost is real and unrecoverable rather than a number on a screen.
+      const seat = ctx.actorOwner;
+      const burned: string[] = [];
+      for (let i = 0; i < action.count; i++) {
+        const deck = state.decks[seat];
+        if (!deck.length) break;
+        const [nextSeed, roll] = nextRandom(state.seed);
+        state.seed = nextSeed;
+        const idx = Math.floor(roll * deck.length);
+        const [iid] = deck.splice(idx, 1);
+        const inst = state.instances[iid];
+        if (!inst) continue;
+        burned.push(inst.cardId);
+        if (!state.bannedThisRun.includes(inst.cardId)) state.bannedThisRun.push(inst.cardId);
+        delete state.instances[iid];
+      }
+      if (burned.length) emit(ctx, { t: 'burn', seat, cardIds: burned });
+      break;
+    }
+    case 'afflict': {
+      const seat = action.side === 'own' ? ctx.actorOwner : opponentOf(ctx.actorOwner);
+      afflict(state, seat, action.pool);
       break;
     }
     default:
