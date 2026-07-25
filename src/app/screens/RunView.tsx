@@ -5,7 +5,7 @@ import { getCurse } from '@engine/curses';
 import { MatchView } from '@ui/match/MatchView';
 import { FACTION_NAME } from '@ui/card/cardTheme';
 import { chooseReward, chooseShrineOffer, currentEncounter, fieldedRoster, planBattle, resolveBattle } from '@run/run';
-import { getDeity } from '@run/shrine';
+import { getDeity, worthOf } from '@run/shrine';
 import type { PenanceOffer, ShrineOffer, VardaanOffer } from '@run/shrine';
 import type { RewardOption, RunState } from '@run/types';
 import { recordRunEnd } from '@run/meta';
@@ -104,8 +104,17 @@ function MapScreen({
         <div className="run__returned">
           {run.returned.map((p) => (
             <div key={p.warrior} className="run__returned-line">
-              <strong>{getCard(p.warrior).name}</strong> returns from {getDeity(p.deityId)?.name},
-              bearing the <strong>{getCard(p.astra).name}</strong>.
+              {p.astra ? (
+                <>
+                  <strong>{getCard(p.warrior).name}</strong> returns from {getDeity(p.deityId)?.name},
+                  bearing the <strong>{getCard(p.astra).name}</strong>.
+                </>
+              ) : (
+                <>
+                  <strong>{getCard(p.warrior).name}</strong> returns from {getDeity(p.deityId)?.name}{' '}
+                  empty-handed. The god was not satisfied.
+                </>
+              )}
             </div>
           ))}
         </div>
@@ -247,6 +256,13 @@ function VardaanCard({
   );
 }
 
+const pct = (n: number) => `${Math.round(n * 100)}%`;
+
+/**
+ * A wager, not an errand. The player sees exactly what standing and length buy
+ * them before committing, so choosing a longer penance or a worthier warrior is
+ * a real decision rather than a hidden roll.
+ */
 function PenanceCard({
   offer,
   onChoose,
@@ -256,19 +272,46 @@ function PenanceCard({
 }) {
   const deity = getDeity(offer.deityId);
   const warrior = getCard(offer.warrior);
-  const astra = getCard(offer.astra);
+  const o = offer.odds;
+  const bands: { label: string; share: number; cls: string }[] = [
+    { label: 'An ultimate', share: o.t3, cls: 'odds--t3' },
+    { label: 'A great weapon', share: o.t2, cls: 'odds--t2' },
+    { label: 'An elemental', share: o.t1, cls: 'odds--t1' },
+    { label: 'Nothing', share: o.fail, cls: 'odds--fail' },
+  ].filter((b) => b.share > 0.004);
+
   return (
     <button className="shrine__card shrine__card--penance" onClick={() => onChoose(offer)}>
-      <div className="shrine__kind">Tapasya · penance</div>
+      <div className="shrine__kind">
+        Tapasya · {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'}
+      </div>
       <div className="shrine__name">{deity?.name}</div>
       <div className="shrine__text">
-        Send <strong>{warrior.name}</strong> to {deity?.epithet}. He leaves your host for{' '}
-        {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'} and returns bearing the{' '}
-        <strong>{astra.name}</strong>.
+        Send <strong>{warrior.name}</strong> <span className="shrine__worth">standing {worthOf(offer.warrior)}</span>{' '}
+        to {deity?.epithet}.
       </div>
+
+      <div className="odds">
+        <div className="odds__bar">
+          {bands.map((b) => (
+            <span key={b.label} className={`odds__seg ${b.cls}`} style={{ flexGrow: b.share }} />
+          ))}
+        </div>
+        <ul className="odds__list">
+          {bands.map((b) => (
+            <li key={b.label} className={b.cls}>
+              <span className="odds__dot" />
+              {b.label}
+              <span className="odds__pct">{pct(b.share)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div className="shrine__foot">
         <span className="shrine__price">
-          You fight {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'} without him.
+          Absent for {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'}, and he may return
+          with nothing.
         </span>
       </div>
     </button>

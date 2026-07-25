@@ -1471,3 +1471,42 @@
   line-height: 1.5;
 }
 .run__returned-line + .run__returned-line { margin-top: 5px; }
+
+/* Penance odds: the wager laid out before you take it. */
+.shrine__worth {
+  font-size: 11px;
+  color: var(--muted, #9a9080);
+  border: 1px solid var(--panel-edge, #3a3346);
+  border-radius: 5px;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+.odds { display: flex; flex-direction: column; gap: 7px; }
+.odds__bar {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--bg-1, #12101a);
+}
+.odds__seg { display: block; min-width: 2px; }
+.odds__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11.5px;
+}
+.odds__list li { display: flex; align-items: center; gap: 6px; color: var(--muted, #b9b0a2); }
+.odds__dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+.odds__pct { margin-left: auto; font-variant-numeric: tabular-nums; }
+.odds--t3 { color: #eba53a; }
+.odds--t3.odds__seg, .odds--t3 .odds__dot { background: #eba53a; }
+.odds--t2 { color: #c79355; }
+.odds--t2.odds__seg, .odds--t2 .odds__dot { background: #c79355; }
+.odds--t1 { color: #8798b8; }
+.odds--t1.odds__seg, .odds--t1 .odds__dot { background: #8798b8; }
+.odds--fail { color: #7a6f66; }
+.odds--fail.odds__seg, .odds--fail .odds__dot { background: #4a423c; }

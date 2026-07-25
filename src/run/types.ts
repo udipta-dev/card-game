@@ -22,7 +22,13 @@ export type RunPhase = 'map' | 'reward' | 'shrine' | 'won' | 'lost';
 export interface Penance {
   warrior: CardId;
   deityId: string;
-  astra: CardId;
+  /**
+   * Rolled the moment the wager is accepted, so the run stays deterministic and
+   * replayable, but not revealed until he returns. Null means the god was not
+   * satisfied and he comes back empty-handed.
+   */
+  astra: CardId | null;
+  battles: number;
   /** Ladder index at which they rejoin the host. */
   returnsAt: number;
 }

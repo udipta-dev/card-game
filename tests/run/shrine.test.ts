@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import { canInvokeAstra } from '@engine/queries';
 import type { GameState } from '@engine/types';
 import { chooseReward, chooseShrineOffer, createRun, fieldedRoster, planBattle, resolveBattle } from '@run/run';
-import { isShrineIndex, rollShrine } from '@run/shrine';
+import { DEITIES, effectiveOdds, isShrineIndex, penanceOdds, rollShrine, worthOf } from '@run/shrine';
 import type { PenanceOffer, VardaanOffer } from '@run/shrine';
 import type { RunState } from '@run/types';
 import { makeState } from '../engine/helpers';
@@ -105,8 +105,8 @@ describe('tapasya: a warrior invested, an astra returned', () => {
     id: 't',
     deityId: 'vayu',
     warrior: run.roster.find((id) => (getCard(id).basePower ?? 0) >= 8)!,
-    astra: 'vayavyastra',
     battles: 2,
+    odds: { fail: 0, t1: 1, t2: 0, t3: 0 },
   });
 
   it('takes the warrior off the field while they are away', () => {
@@ -135,14 +135,19 @@ describe('tapasya: a warrior invested, an astra returned', () => {
     r = resolveBattle(r, finished({ winner: 'player' }));
     expect(r.away).toEqual([]);
     expect(fieldedRoster(r)).toContain(offer.warrior);
-    // The weapon itself joins the host, and the warrior is recorded as knowing it.
-    expect(r.roster).toContain('vayavyastra');
-    expect(r.astraGrants[offer.warrior]).toContain('vayavyastra');
-
-    // And the engine honours the grant in a real battle.
-    const s = makeState({ playerBoard: { ratha: [offer.warrior] } });
-    s.astraGrants.player = r.astraGrants;
-    expect(canInvokeAstra(s, 'player', 'vayavyastra')).toBe(true);
+    // Vayu teaches only the Vayavyastra, so a satisfied god gives exactly that.
+    const won = r.astraGrants[offer.warrior];
+    if (won) {
+      expect(won).toContain('vayavyastra');
+      expect(r.roster).toContain('vayavyastra');
+      // And the engine honours the grant in a real battle.
+      const s = makeState({ playerBoard: { ratha: [offer.warrior] } });
+      s.astraGrants.player = r.astraGrants;
+      expect(canInvokeAstra(s, 'player', 'vayavyastra')).toBe(true);
+    } else {
+      // He may return empty-handed; that is the wager, and the roster is unchanged.
+      expect(r.roster).not.toContain('vayavyastra');
+    }
   });
 });
 
@@ -166,7 +171,104 @@ describe('the gods are consistent', () => {
       const run = advanceTo(createRun(seed, 'pandava'), 2);
       const p = run.shrineOffers?.find((o) => o.kind === 'penance') as PenanceOffer | undefined;
       if (!p) continue;
-      expect(getCard(p.warrior).basePower).toBeGreaterThanOrEqual(8);
+      expect(worthOf(p.warrior)).toBeGreaterThanOrEqual(8);
+    }
+  });
+});
+
+describe('penance is a wager, and the terms are legible', () => {
+  const arjuna = 'arjuna';   // power 10, mastery 2 -> standing 14
+  const bhima = 'bhima';     // power 9,  mastery 0 -> standing 9, mighty but untaught
+  const nakula = 'nakula';   // power 6                -> standing 6
+
+  it('standing is rank plus training, so raw might is not enough', () => {
+    expect(worthOf(arjuna)).toBe(14);
+    expect(worthOf(bhima)).toBe(9);
+    expect(worthOf(arjuna)).toBeGreaterThan(worthOf(bhima));
+  });
+
+  it('a longer penance reaches higher', () => {
+    const short = penanceOdds(arjuna, 1);
+    const long = penanceOdds(arjuna, 4);
+    expect(long.t3).toBeGreaterThan(short.t3);
+    expect(long.fail).toBeLessThan(short.fail);
+  });
+
+  it('a worthier warrior reaches higher for the same penance', () => {
+    const great = penanceOdds(arjuna, 3);
+    const lesser = penanceOdds(bhima, 3);
+    expect(great.t3).toBeGreaterThan(lesser.t3);
+  });
+
+  it('the ultimates are walled behind BOTH a master and a long absence', () => {
+    expect(penanceOdds(arjuna, 2).t3).toBe(0);  // long enough? no
+    expect(penanceOdds(bhima, 4).t3).toBe(0);   // worthy enough? no
+    expect(penanceOdds(nakula, 4).t3).toBe(0);
+    expect(penanceOdds(arjuna, 3).t3).toBeGreaterThan(0);
+  });
+
+  it('is never a certainty, however great the wager', () => {
+    for (const battles of [1, 2, 3, 4]) {
+      const o = penanceOdds(arjuna, battles);
+      expect(o.t3).toBeLessThan(0.6);
+      expect(o.fail).toBeGreaterThan(0);
+      expect(o.fail + o.t1 + o.t2 + o.t3).toBeCloseTo(1, 5);
+    }
+  });
+
+  it('Shiva gives the Pashupatastra or nothing at all', () => {
+    const shiva = DEITIES.find((d) => d.id === 'shiva')!;
+    const o = effectiveOdds(shiva, arjuna, 3);
+    // He holds nothing at the lesser tiers, so every lesser roll comes to nothing.
+    expect(o.t1).toBe(0);
+    expect(o.t2).toBe(0);
+    expect(o.t3).toBeGreaterThan(0);
+    expect(o.fail).toBeGreaterThan(o.t3); // the odds are against you, and shown
+  });
+
+  it('a lesser god pays out reliably, which is the trade', () => {
+    const agni = DEITIES.find((d) => d.id === 'agni')!;
+    const o = effectiveOdds(agni, arjuna, 2);
+    expect(o.t1).toBeGreaterThan(0.8); // he only has the Agneyastra, and gives it
+    expect(o.t3).toBe(0);
+  });
+
+  it('only a true master may even approach Shiva', () => {
+    const shiva = DEITIES.find((d) => d.id === 'shiva')!;
+    expect(worthOf(arjuna)).toBeGreaterThanOrEqual(shiva.minWorth);
+    expect(worthOf(bhima)).toBeLessThan(shiva.minWorth);
+  });
+});
+
+describe('length never substitutes for standing', () => {
+  it('a lesser warrior cannot reach the great weapons however long he sits', () => {
+    for (const battles of [1, 2, 3, 4, 5]) {
+      const o = penanceOdds('nakula', battles); // standing 6
+      expect(o.t2).toBe(0);
+      expect(o.t3).toBe(0);
+    }
+    // Ghatotkacha is mighty (7) but untaught: still barred from the Brahma line.
+    expect(penanceOdds('ghatotkacha', 4).t2).toBe(0);
+  });
+
+  it('Bhima may earn a great weapon but never an ultimate, being untrained', () => {
+    const o = penanceOdds('bhima', 4); // standing 9: power without the mantras
+    expect(o.t2).toBeGreaterThan(0);
+    expect(o.t3).toBe(0);
+  });
+});
+
+describe('no god offers a wager he cannot honour', () => {
+  it('never shows a penance that is certain to come to nothing', () => {
+    for (let seed = 1; seed <= 60; seed++) {
+      for (const house of ['pandava', 'kaurava', 'asura'] as const) {
+        const run = advanceTo(createRun(seed, house), 2);
+        for (const o of run.shrineOffers ?? []) {
+          if (o.kind !== 'penance') continue;
+          const success = o.odds.t1 + o.odds.t2 + o.odds.t3;
+          expect(success).toBeGreaterThan(0.15);
+        }
+      }
     }
   });
 });

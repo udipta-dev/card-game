@@ -8,8 +8,8 @@ import type { BattleInit } from '@engine/createMatch';
 import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
 import { buildLadder } from './ladder';
-import { rollRewards } from './rewards';
-import { isShrineIndex, rollShrine } from './shrine';
+import { mixSeed, rollRewards } from './rewards';
+import { getDeity, isShrineIndex, rollPenanceOutcome, rollShrine } from './shrine';
 import type { ShrineOffer } from './shrine';
 import type { RewardOption, RunState } from './types';
 
@@ -109,6 +109,7 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
   const astraGrants = { ...run.astraGrants };
   const withReturned = [...roster];
   for (const p of returned) {
+    if (!p.astra) continue; // the god was not satisfied; he returns empty-handed
     astraGrants[p.warrior] = unique([...(astraGrants[p.warrior] ?? []), p.astra]);
     if (!withReturned.includes(p.astra)) withReturned.push(p.astra);
   }
@@ -169,12 +170,21 @@ export function chooseShrineOffer(run: RunState, offer: ShrineOffer | null): Run
     return next;
   }
 
+  // The wager is settled now, deterministically, but stays sealed until he
+  // returns. Rolling at departure keeps the run replayable from its seed.
+  const deity = getDeity(offer.deityId);
+  const held = new Set([...run.roster, ...run.banned]);
+  const rolled = deity
+    ? rollPenanceOutcome(deity, offer.warrior, offer.battles, mixSeed(run.seed, run.index + 997), held)
+    : { astra: null };
+
   next.away = [
     ...run.away,
     {
       warrior: offer.warrior,
       deityId: offer.deityId,
-      astra: offer.astra,
+      astra: rolled.astra,
+      battles: offer.battles,
       returnsAt: run.index + offer.battles,
     },
   ];

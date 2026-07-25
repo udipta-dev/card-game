@@ -14,14 +14,15 @@ export interface Deity {
   id: string;
   name: string;
   epithet: string;
-  /** Astras this god may teach. */
-  teaches: CardId[];
-  /** Battles the warrior is absent. Greater weapons cost longer penance. */
-  battles: number;
-  /** Only warriors this strong may approach. */
-  minPower: number;
-  /** Only warriors trained this far may approach (astra mastery). */
-  minMastery: number;
+  /**
+   * What this god may teach, banded by astra tier. A god only gives what is
+   * his to give: roll a tier above his reach and he steps down; roll below his
+   * least and he gives nothing. Shiva keeps only the Pashupatastra, which is
+   * why approaching him is a wager and not an errand.
+   */
+  domain: Partial<Record<1 | 2 | 3, CardId[]>>;
+  /** The least standing this god will even receive. */
+  minWorth: number;
 }
 
 export const DEITIES: Deity[] = [
@@ -29,57 +30,145 @@ export const DEITIES: Deity[] = [
     id: 'agni',
     name: 'Agni',
     epithet: 'lord of fire',
-    teaches: ['agneyastra'],
-    battles: 1,
-    minPower: 8,
-    minMastery: 0,
+    domain: { 1: ['agneyastra'] },
+    minWorth: 8,
   },
   {
     id: 'varuna',
     name: 'Varuna',
     epithet: 'lord of waters',
-    teaches: ['varunastra'],
-    battles: 1,
-    minPower: 8,
-    minMastery: 0,
+    domain: { 1: ['varunastra'] },
+    minWorth: 8,
   },
   {
     id: 'vayu',
     name: 'Vayu',
     epithet: 'the wind, father of Bhima',
-    teaches: ['vayavyastra'],
-    battles: 1,
-    minPower: 8,
-    minMastery: 0,
+    domain: { 1: ['vayavyastra'] },
+    minWorth: 8,
   },
   {
     id: 'indra',
     name: 'Indra',
     epithet: 'king of the devas',
-    teaches: ['aindrastra', 'vasavi_shakti'],
-    battles: 2,
-    minPower: 9,
-    minMastery: 1,
+    domain: { 1: ['aindrastra'], 3: ['vasavi_shakti'] },
+    minWorth: 10,
   },
   {
     id: 'brahma',
     name: 'Brahma',
     epithet: 'the creator',
-    teaches: ['brahmastra', 'brahmashirsha'],
-    battles: 2,
-    minPower: 9,
-    minMastery: 2,
+    domain: { 2: ['brahmastra'], 3: ['brahmashirsha'] },
+    minWorth: 11,
+  },
+  {
+    id: 'narayana',
+    name: 'Narayana',
+    epithet: 'Vishnu, who preserves',
+    domain: { 3: ['narayanastra', 'vaishnavastra'] },
+    minWorth: 11,
   },
   {
     id: 'shiva',
     name: 'Shiva',
     epithet: 'the destroyer, who tests those who dare seek him',
-    teaches: ['pashupatastra'],
-    battles: 3,
-    minPower: 10,
-    minMastery: 2,
+    domain: { 3: ['pashupatastra'] },
+    minWorth: 13,
   },
 ];
+
+/**
+ * What a warrior brings to a god: his rank, and whether he was ever taught to
+ * handle divine weapons at all. Arjuna and Bhishma stand at 14; Bhima, mighty
+ * but never trained in the mantras, stands at 9.
+ */
+export function worthOf(cardId: CardId): number {
+  const c = getCard(cardId);
+  return (c.basePower ?? 0) + (c.astraMastery ?? 0) * 2;
+}
+
+export interface PenanceOdds {
+  fail: number;
+  t1: number;
+  t2: number;
+  t3: number;
+}
+
+/**
+ * The wager. Standing and length of penance together decide how high a warrior
+ * can reach, and nothing is ever certain. Tier 3 is walled off behind both a
+ * true astra-master AND a long absence, so the ultimates stay rare by design
+ * rather than by price.
+ */
+export function penanceOdds(warrior: CardId, battles: number): PenanceOdds {
+  const worth = worthOf(warrior);
+  // Both gates are AND, never OR. Length alone must not substitute for standing:
+  // a rathi who sits in penance for a year is still a rathi, and no god hands
+  // the Brahma line to a warrior who was never taught the mantras.
+  const canReachThree = worth >= 12 && battles >= 3;
+  const canReachTwo = worth >= 9 && battles >= 2;
+
+  const w3 = canReachThree ? (worth - 10) * 2 + (battles - 2) * 6 : 0;
+  const w2 = canReachTwo ? 10 + battles * 3 : 0;
+  const w1 = 14;
+  const wFail = Math.max(2, 18 - worth - battles * 3);
+
+  const total = w3 + w2 + w1 + wFail;
+  return { t3: w3 / total, t2: w2 / total, t1: w1 / total, fail: wFail / total };
+}
+
+/** Odds as this god will actually pay them, after his domain is applied. */
+export function effectiveOdds(deity: Deity, warrior: CardId, battles: number): PenanceOdds {
+  const raw = penanceOdds(warrior, battles);
+  const out: PenanceOdds = { fail: raw.fail, t1: 0, t2: 0, t3: 0 };
+  for (const tier of [3, 2, 1] as const) {
+    const share = tier === 3 ? raw.t3 : tier === 2 ? raw.t2 : raw.t1;
+    if (share <= 0) continue;
+    const given = stepDown(deity, tier);
+    if (given === null) out.fail += share;
+    else if (given === 3) out.t3 += share;
+    else if (given === 2) out.t2 += share;
+    else out.t1 += share;
+  }
+  return out;
+}
+
+/** A god gives what is his: the rolled tier, or the greatest lesser one he holds. */
+function stepDown(deity: Deity, tier: 1 | 2 | 3): 1 | 2 | 3 | null {
+  for (let t = tier; t >= 1; t--) {
+    if (deity.domain[t as 1 | 2 | 3]?.length) return t as 1 | 2 | 3;
+  }
+  return null;
+}
+
+/**
+ * Roll what the warrior actually returns bearing. Null means the god was not
+ * satisfied and he comes back empty-handed, which is the risk you accepted.
+ */
+export function rollPenanceOutcome(
+  deity: Deity,
+  warrior: CardId,
+  battles: number,
+  seed: number,
+  exclude: Set<CardId>,
+): { astra: CardId | null; seed: number } {
+  const odds = penanceOdds(warrior, battles);
+  const [next, roll] = nextRandom(seed);
+  let acc = odds.t3;
+  let tier: 1 | 2 | 3 | null = null;
+  if (roll < acc) tier = 3;
+  else if (roll < (acc += odds.t2)) tier = 2;
+  else if (roll < acc + odds.t1) tier = 1;
+
+  if (tier === null) return { astra: null, seed: next };
+  const given = stepDown(deity, tier);
+  if (given === null) return { astra: null, seed: next };
+
+  const pool = (deity.domain[given] ?? []).filter((a) => !exclude.has(a));
+  if (!pool.length) return { astra: null, seed: next };
+  const [chosen, after] = pick(pool, next);
+  return { astra: chosen, seed: after };
+}
 
 /** The price bound to a gift. Nothing the gods give is free. */
 export type Shrap =
@@ -99,8 +188,9 @@ export interface PenanceOffer {
   id: string;
   deityId: string;
   warrior: CardId;
-  astra: CardId;
   battles: number;
+  /** Shown to the player before they commit. The wager is never blind. */
+  odds: PenanceOdds;
 }
 
 export type ShrineOffer = VardaanOffer | PenanceOffer;
@@ -164,42 +254,76 @@ export function rollShrine(run: RunState): ShrineOffer[] {
     offers.push({ kind: 'vardaan', id: `v-${run.index}-${i}`, cardId, shrap });
   }
 
-  // One penance, if any warrior in the host is worthy of the god who is here.
+  // The god at this shrine, and the wagers he will entertain. The longest
+  // penance is bounded so the warrior can still return before the last rung:
+  // commit too late and he would never rejoin the host at all.
   const away = new Set(run.away.map((p) => p.warrior));
-  for (const deity of shuffledDeities(run, seed)) {
-    const worthy = rosterUnits.filter((id) => {
-      if (away.has(id)) return false;
-      const c = getCard(id);
-      return (c.basePower ?? 0) >= deity.minPower && (c.astraMastery ?? 0) >= deity.minMastery;
-    });
-    const teachable = deity.teaches.filter((a) => !held.has(a));
-    if (!worthy.length || !teachable.length) continue;
+  const maxBattles = Math.max(1, run.ladder.length - 1 - run.index);
 
-    const [warrior, s1] = pick(worthy, seed);
-    seed = s1;
-    const [astra] = pick(teachable, seed);
-    offers.push({
-      kind: 'penance',
-      id: `p-${run.index}`,
-      deityId: deity.id,
-      warrior,
-      astra,
-      battles: deity.battles,
-    });
+  const candidates = rosterUnits
+    .filter((id) => !away.has(id))
+    .sort((a, b) => worthOf(b) - worthOf(a));
+
+  // Gather every god this host could actually reach, then choose among them by
+  // seed. Taking the first match in a fixed order let the elemental gods, who
+  // receive almost anyone, crowd out Brahma and Shiva entirely.
+  const reachable = DEITIES.filter((d) => {
+    const eligible = candidates.filter((id) => worthOf(id) >= d.minWorth);
+    const teachable = Object.values(d.domain).flat().filter((a) => !held.has(a));
+    return eligible.length > 0 && teachable.length > 0;
+  });
+
+  for (const deity of seededOrder(reachable, seed)) {
+    const eligible = candidates.filter((id) => worthOf(id) >= deity.minWorth);
+    const best = eligible[0];
+    const lesser = eligible.find((id) => worthOf(id) < worthOf(best));
+    const durations = uniqueNums([maxBattles, Math.ceil(maxBattles / 2), 1]);
+
+    // Two axes the player can actually game: how long, and whom to send.
+    const wagers: { warrior: CardId; battles: number }[] = durations.map((b) => ({
+      warrior: best,
+      battles: b,
+    }));
+    if (lesser && maxBattles > 1) wagers.push({ warrior: lesser, battles: maxBattles });
+
+    // A god never offers a bargain he cannot honour. Brahma holds nothing at the
+    // elemental tier, so a short penance to him would be a guaranteed nothing:
+    // that is not a wager, it is a trap, and it does not get shown.
+    const viable = wagers
+      .map((w) => ({ ...w, odds: effectiveOdds(deity, w.warrior, w.battles) }))
+      .filter((w) => w.odds.t1 + w.odds.t2 + w.odds.t3 >= MIN_VIABLE_CHANCE)
+      .slice(0, 3);
+    if (!viable.length) continue;
+
+    viable.forEach((w, i) =>
+      offers.push({
+        kind: 'penance',
+        id: `p-${run.index}-${i}`,
+        deityId: deity.id,
+        warrior: w.warrior,
+        battles: w.battles,
+        odds: w.odds,
+      }),
+    );
     break;
   }
 
   return offers;
 }
 
-/** Deities in a seeded order, greatest first when the host can reach them. */
-function shuffledDeities(run: RunState, seed: number): Deity[] {
-  const [, roll] = nextRandom(seed ^ run.index);
-  const start = Math.floor(roll * DEITIES.length);
-  // Rotate so different runs meet different gods, then prefer the greatest the
-  // host actually qualifies for by walking from the strongest down.
-  const rotated = [...DEITIES.slice(start), ...DEITIES.slice(0, start)];
-  return rotated.sort((a, b) => b.battles - a.battles);
+/** Below this chance of any reward, the wager is not worth a player's time. */
+const MIN_VIABLE_CHANCE = 0.2;
+
+function uniqueNums(xs: number[]): number[] {
+  return [...new Set(xs)].sort((a, b) => b - a);
+}
+
+/** A seeded rotation of the gods, so different runs meet different powers. */
+function seededOrder(deities: Deity[], seed: number): Deity[] {
+  if (!deities.length) return deities;
+  const [, roll] = nextRandom(seed);
+  const start = Math.floor(roll * deities.length);
+  return [...deities.slice(start), ...deities.slice(0, start)];
 }
 
 export function getDeity(id: string): Deity | undefined {
