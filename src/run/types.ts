@@ -16,7 +16,16 @@ export interface Encounter {
   boss?: boolean;
 }
 
-export type RunPhase = 'map' | 'reward' | 'won' | 'lost';
+export type RunPhase = 'map' | 'reward' | 'shrine' | 'won' | 'lost';
+
+/** A warrior away at tapasya, and what they will return bearing. */
+export interface Penance {
+  warrior: CardId;
+  deityId: string;
+  astra: CardId;
+  /** Ladder index at which they rejoin the host. */
+  returnsAt: number;
+}
 
 /** A choice offered after a victory. */
 export interface RewardOption {
@@ -45,4 +54,12 @@ export interface RunState {
   depth: number;
   /** The three choices offered after the last win, if we are in 'reward'. */
   rewardChoices?: RewardOption[];
+  /** Warriors currently away at penance. They do not fight while absent. */
+  away: Penance[];
+  /** Astras learned through tapasya (warrior card id -> astra ids). */
+  astraGrants: Record<CardId, CardId[]>;
+  /** Warriors who returned from penance since the last map view, for the UI. */
+  returned?: Penance[];
+  /** What the shrine offers, if we are in 'shrine'. */
+  shrineOffers?: import('./shrine').ShrineOffer[];
 }

@@ -283,6 +283,12 @@ export interface GameState {
   bannedThisRun: CardId[];
   /** Curses each seat carries from its own acts of adharma. */
   curses: Record<Seat, CurseId[]>;
+  /**
+   * Astras a warrior has LEARNED during a run (warrior card id -> astra ids),
+   * beyond what their card data grants. This is how tapasya pays out: Bhima
+   * returns from Vayu bearing a weapon Bhima never started with.
+   */
+  astraGrants: Record<Seat, Record<CardId, CardId[]>>;
   /** Set when a card forces an immediate battle result (Pashupatastra). */
   forcedWinner: Seat | null;
   winner: Seat | null;

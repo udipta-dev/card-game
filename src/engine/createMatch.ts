@@ -33,6 +33,8 @@ function makeInstance(cardId: string, owner: Seat): CardInstance {
 export interface BattleInit {
   banned?: string[];
   playerCurses?: string[];
+  /** Astras the player's warriors learned through tapasya (warrior -> astras). */
+  astraGrants?: Record<string, string[]>;
 }
 
 /** Build a fresh, deterministic match from two deck lists and a seed. */
@@ -79,6 +81,7 @@ export function createMatch(
     rowMods: [],
     bannedThisRun: init?.banned ? [...init.banned] : [],
     curses: { player: init?.playerCurses ? [...init.playerCurses] : [], ai: [] },
+    astraGrants: { player: init?.astraGrants ? { ...init.astraGrants } : {}, ai: {} },
     forcedWinner: null,
     winner: null,
     mulliganDone: { player: false, ai: false },

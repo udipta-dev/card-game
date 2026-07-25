@@ -9,6 +9,8 @@ import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
 import { buildLadder } from './ladder';
 import { rollRewards } from './rewards';
+import { isShrineIndex, rollShrine } from './shrine';
+import type { ShrineOffer } from './shrine';
 import type { RewardOption, RunState } from './types';
 
 const DECK_BY_HOUSE: Record<string, DeckList> = {
@@ -36,6 +38,8 @@ export function createRun(seed: number, house: House): RunState {
     banned: [],
     pendingCurses: [],
     depth: 0,
+    away: [],
+    astraGrants: {},
   };
 }
 
@@ -51,16 +55,25 @@ export interface BattlePlan {
   init: BattleInit;
 }
 
+/** The host that actually marches: minus what is spent, minus who is away. */
+export function fieldedRoster(run: RunState): CardId[] {
+  const away = new Set(run.away.map((p) => p.warrior));
+  return run.roster.filter((id) => !run.banned.includes(id) && !away.has(id));
+}
+
 /** Build the next battle. The player fields the roster minus what is spent. */
 export function planBattle(run: RunState): BattlePlan {
   const enc = currentEncounter(run);
-  const roster = run.roster.filter((id) => !run.banned.includes(id));
   const [battleSeed] = nextRandom((run.seed ^ (run.index * 0x85ebca6b)) >>> 0);
   return {
     seed: battleSeed,
-    playerDeck: { id: 'run-host', name: 'Your host', house: run.house, cards: roster },
+    playerDeck: { id: 'run-host', name: 'Your host', house: run.house, cards: fieldedRoster(run) },
     aiDeck: { id: enc.id, name: enc.name, house: enc.house, cards: enc.deckCards },
-    init: { banned: run.banned, playerCurses: run.pendingCurses },
+    init: {
+      banned: run.banned,
+      playerCurses: run.pendingCurses,
+      astraGrants: run.astraGrants,
+    },
   };
 }
 
@@ -87,30 +100,84 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
 
   const depth = run.depth + 1;
   const nextIndex = run.index + 1;
-  if (nextIndex >= run.ladder.length) {
-    return { ...run, phase: 'won', banned, roster, pendingCurses, depth, index: nextIndex };
+
+  // Warriors whose tapasya is complete rejoin the host, bearing the weapon the
+  // god taught them. The astra itself enters the roster, and the warrior is
+  // recorded as knowing it so canInvokeAstra will let them loose it.
+  const returned = run.away.filter((p) => nextIndex >= p.returnsAt);
+  const away = run.away.filter((p) => nextIndex < p.returnsAt);
+  const astraGrants = { ...run.astraGrants };
+  const withReturned = [...roster];
+  for (const p of returned) {
+    astraGrants[p.warrior] = unique([...(astraGrants[p.warrior] ?? []), p.astra]);
+    if (!withReturned.includes(p.astra)) withReturned.push(p.astra);
   }
 
-  const staged: RunState = {
+  const base: RunState = {
     ...run,
     banned,
-    roster,
+    roster: withReturned,
     pendingCurses,
     depth,
     index: nextIndex,
-    phase: 'reward',
+    away,
+    astraGrants,
+    returned: returned.length ? returned : undefined,
   };
-  return { ...staged, rewardChoices: rollRewards(staged) };
+
+  if (nextIndex >= run.ladder.length) return { ...base, phase: 'won' };
+  return { ...base, phase: 'reward', rewardChoices: rollRewards(base) };
 }
 
-/** Take one of the offered rewards and return to the map for the next fight. */
+/** Take one of the offered rewards, then a shrine if one stands before the next fight. */
 export function chooseReward(run: RunState, choice: RewardOption): RunState {
-  const next: RunState = { ...run, phase: 'map', rewardChoices: undefined };
+  const next: RunState = { ...run, rewardChoices: undefined };
   if (choice.kind === 'recruit' && choice.cardId) {
     next.roster = [...run.roster, choice.cardId];
   } else if (choice.kind === 'cleanse') {
     next.pendingCurses = [];
   }
+  return enterMapOrShrine(next);
+}
+
+/** A shrine stands before some rungs; otherwise go straight to the map. */
+function enterMapOrShrine(run: RunState): RunState {
+  if (!isShrineIndex(run.index)) return { ...run, phase: 'map', shrineOffers: undefined };
+  const offers = rollShrine(run);
+  if (!offers.length) return { ...run, phase: 'map', shrineOffers: undefined };
+  return { ...run, phase: 'shrine', shrineOffers: offers };
+}
+
+/**
+ * Accept what the shrine offers, or walk on. A vardaan enters the host as a
+ * one-shot card and its bound shrap is paid at once; tapasya sends the warrior
+ * away, and they are simply not there for the battles that follow.
+ */
+export function chooseShrineOffer(run: RunState, offer: ShrineOffer | null): RunState {
+  const next: RunState = { ...run, phase: 'map', shrineOffers: undefined };
+  if (!offer) return next;
+
+  if (offer.kind === 'vardaan') {
+    next.roster = [...run.roster, offer.cardId];
+    if (offer.shrap?.kind === 'curse') {
+      next.pendingCurses = unique([...run.pendingCurses, offer.shrap.curse]);
+    } else if (offer.shrap?.kind === 'sacrifice') {
+      const lost = offer.shrap.warrior;
+      next.roster = next.roster.filter((id) => id !== lost);
+      next.banned = unique([...run.banned, lost]);
+    }
+    return next;
+  }
+
+  next.away = [
+    ...run.away,
+    {
+      warrior: offer.warrior,
+      deityId: offer.deityId,
+      astra: offer.astra,
+      returnsAt: run.index + offer.battles,
+    },
+  ];
   return next;
 }
 

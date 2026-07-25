@@ -1407,3 +1407,67 @@
   border-left: 3px solid rgba(224, 168, 60, 0.45);
   padding-left: 12px;
 }
+
+/* ----------------------------------------------------------------- Shrine */
+.shrine__om {
+  font-size: 34px;
+  color: #e0a83c;
+  text-shadow: 0 0 24px rgba(224, 168, 60, 0.55);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.shrine__grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .shrine__grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
+.shrine__card {
+  text-align: left;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--panel-edge, #2a2533);
+  background: var(--bg-2, #17141d);
+  color: var(--ink, #ece5d5);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 120ms, transform 120ms;
+}
+.shrine__card:hover { transform: translateY(-2px); }
+.shrine__card--vardaan { border-color: rgba(224, 168, 60, 0.4); }
+.shrine__card--vardaan:hover { border-color: #e0a83c; }
+.shrine__card--penance { border-color: rgba(84, 183, 196, 0.4); }
+.shrine__card--penance:hover { border-color: #54b7c4; }
+.shrine__kind {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted, #9a9080);
+}
+.shrine__name { font-family: var(--font-display, serif); font-size: 19px; }
+.shrine__text { font-size: 12.5px; line-height: 1.5; color: var(--muted, #b9b0a2); flex: 1; }
+.shrine__foot { margin-top: 4px; padding-top: 8px; border-top: 1px solid var(--panel-edge, #2a2533); }
+.shrine__price { font-size: 12px; color: #e06256; }
+.shrine__free { font-size: 12px; color: #4fbd78; }
+.shrine__walk { align-self: center; margin-top: 4px; }
+
+/* Penance / returns on the map */
+.run__away { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.away-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #8fd8e2;
+  border: 1px solid rgba(84, 183, 196, 0.5);
+  background: rgba(84, 183, 196, 0.12);
+}
+.run__returned {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(224, 168, 60, 0.45);
+  background: rgba(224, 168, 60, 0.08);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.run__returned-line + .run__returned-line { margin-top: 5px; }

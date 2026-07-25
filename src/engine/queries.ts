@@ -97,9 +97,13 @@ export function isFinalRound(state: GameState): boolean {
  */
 export function canInvokeAstra(state: GameState, seat: Seat, astraId: CardId): boolean {
   const tier = getCard(astraId).astraTier ?? 1;
+  const granted = state.astraGrants?.[seat] ?? {};
   return unitsOf(state, seat).some((u) => {
     const w = getCard(u.cardId);
-    return (w.astraMastery ?? 0) >= tier || !!w.knownAstras?.includes(astraId);
+    if ((w.astraMastery ?? 0) >= tier) return true;
+    if (w.knownAstras?.includes(astraId)) return true;
+    // Learned through tapasya during a run, not born with it.
+    return !!granted[u.cardId]?.includes(astraId);
   });
 }
 

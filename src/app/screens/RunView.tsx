@@ -4,7 +4,9 @@ import type { GameState } from '@engine/types';
 import { getCurse } from '@engine/curses';
 import { MatchView } from '@ui/match/MatchView';
 import { FACTION_NAME } from '@ui/card/cardTheme';
-import { chooseReward, currentEncounter, planBattle, resolveBattle } from '@run/run';
+import { chooseReward, chooseShrineOffer, currentEncounter, fieldedRoster, planBattle, resolveBattle } from '@run/run';
+import { getDeity } from '@run/shrine';
+import type { PenanceOffer, ShrineOffer, VardaanOffer } from '@run/shrine';
 import type { RewardOption, RunState } from '@run/types';
 import { recordRunEnd } from '@run/meta';
 
@@ -51,6 +53,9 @@ export function RunView({ run: initial, onExit }: Props) {
   if (run.phase === 'reward') {
     return <RewardScreen run={run} onChoose={(opt) => setRun((r) => chooseReward(r, opt))} />;
   }
+  if (run.phase === 'shrine') {
+    return <ShrineScreen run={run} onChoose={(o) => setRun((r) => chooseShrineOffer(r, o))} />;
+  }
   if (run.phase === 'won' || run.phase === 'lost') {
     return <RunEndScreen run={run} onExit={onExit} />;
   }
@@ -68,7 +73,7 @@ function MapScreen({
   onExit: () => void;
 }) {
   const enc = currentEncounter(run);
-  const roster = run.roster.filter((id) => !run.banned.includes(id));
+  const roster = fieldedRoster(run);
   return (
     <div className="run">
       <header className="run__top">
@@ -94,6 +99,28 @@ function MapScreen({
           );
         })}
       </ol>
+
+      {run.returned && run.returned.length > 0 && (
+        <div className="run__returned">
+          {run.returned.map((p) => (
+            <div key={p.warrior} className="run__returned-line">
+              <strong>{getCard(p.warrior).name}</strong> returns from {getDeity(p.deityId)?.name},
+              bearing the <strong>{getCard(p.astra).name}</strong>.
+            </div>
+          ))}
+        </div>
+      )}
+
+      {run.away.length > 0 && (
+        <div className="run__away">
+          {run.away.map((p) => (
+            <span key={p.warrior} className="away-chip" title={`Returns before rung ${p.returnsAt + 1}`}>
+              🕉 {getCard(p.warrior).name} at penance
+            </span>
+          ))}
+          <span className="run__curses-note">absent until the tapasya is complete</span>
+        </div>
+      )}
 
       {run.pendingCurses.length > 0 && (
         <div className="run__curses">
@@ -152,6 +179,99 @@ function RewardScreen({
         ))}
       </div>
     </div>
+  );
+}
+
+// ------------------------------------------------------------- Shrine screen
+/**
+ * The gods between battles. Both doors are the same bargain in different
+ * clothes: take a gift now and pay its bound price, or invest a warrior in
+ * tapasya and go without him until he returns bearing a divine weapon.
+ */
+function ShrineScreen({
+  run,
+  onChoose,
+}: {
+  run: RunState;
+  onChoose: (offer: ShrineOffer | null) => void;
+}) {
+  const offers = run.shrineOffers ?? [];
+  return (
+    <div className="run shrine">
+      <header className="run__top run__top--center">
+        <div className="shrine__om" aria-hidden="true">ॐ</div>
+        <div className="run__title">A shrine on the road</div>
+      </header>
+      <p className="reward__lede">
+        The gods ask what you are willing to pay. Nothing here is given freely.
+      </p>
+
+      <div className="shrine__grid">
+        {offers.map((offer) =>
+          offer.kind === 'vardaan' ? (
+            <VardaanCard key={offer.id} offer={offer} onChoose={onChoose} />
+          ) : (
+            <PenanceCard key={offer.id} offer={offer} onChoose={onChoose} />
+          ),
+        )}
+      </div>
+
+      <button className="btn btn--ghost shrine__walk" onClick={() => onChoose(null)}>
+        Walk on, and ask nothing
+      </button>
+    </div>
+  );
+}
+
+function VardaanCard({
+  offer,
+  onChoose,
+}: {
+  offer: VardaanOffer;
+  onChoose: (o: ShrineOffer) => void;
+}) {
+  const card = getCard(offer.cardId);
+  return (
+    <button className="shrine__card shrine__card--vardaan" onClick={() => onChoose(offer)}>
+      <div className="shrine__kind">Vardaan · a gift</div>
+      <div className="shrine__name">{card.name}</div>
+      <div className="shrine__text">{card.cost?.consequence ?? card.flavor}</div>
+      <div className="shrine__foot">
+        {offer.shrap ? (
+          <span className="shrine__price">Shrap: {offer.shrap.text}</span>
+        ) : (
+          <span className="shrine__free">Freely given</span>
+        )}
+      </div>
+    </button>
+  );
+}
+
+function PenanceCard({
+  offer,
+  onChoose,
+}: {
+  offer: PenanceOffer;
+  onChoose: (o: ShrineOffer) => void;
+}) {
+  const deity = getDeity(offer.deityId);
+  const warrior = getCard(offer.warrior);
+  const astra = getCard(offer.astra);
+  return (
+    <button className="shrine__card shrine__card--penance" onClick={() => onChoose(offer)}>
+      <div className="shrine__kind">Tapasya · penance</div>
+      <div className="shrine__name">{deity?.name}</div>
+      <div className="shrine__text">
+        Send <strong>{warrior.name}</strong> to {deity?.epithet}. He leaves your host for{' '}
+        {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'} and returns bearing the{' '}
+        <strong>{astra.name}</strong>.
+      </div>
+      <div className="shrine__foot">
+        <span className="shrine__price">
+          You fight {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'} without him.
+        </span>
+      </div>
+    </button>
   );
 }
 

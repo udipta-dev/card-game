@@ -155,6 +155,13 @@ const GLYPHS: Record<string, string> = {
   vritra: '🐉',
   tarakasura: '⭐',
   asura_horde: '👹',
+  // Vardaan: gifts of the gods
+  gandhari_gaze: '👁️',
+  kunti_invocation: '🕉️',
+  surya_kavacha: '🌞',
+  ashwins_draught: '⚕️',
+  vayu_fury: '🌪️',
+  yama_summons: '⚖️',
   // Those who stood apart
   barbarika: '🏹',
   jarasandha: '🤼',

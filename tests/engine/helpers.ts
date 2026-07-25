@@ -88,6 +88,7 @@ export function makeState(spec: StateSpec = {}): GameState {
     rowMods: [],
     bannedThisRun: [],
     curses: { player: [], ai: [] },
+    astraGrants: { player: {}, ai: {} },
     forcedWinner: null,
     winner: null,
     mulliganDone: { player: true, ai: true },
