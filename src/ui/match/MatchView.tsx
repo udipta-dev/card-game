@@ -88,11 +88,19 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
               : 'Round lost';
         setBanner(txt);
         setSelected(null);
-        const t = setTimeout(() => setBanner(null), 1600);
-        return () => clearTimeout(t);
       }
     }
   }, [state]);
+
+  // Clear the round banner on its own timer. This MUST be keyed on `banner`, not
+  // on `state`: an AI move ~700ms later changes `state`, and if the clear-timeout
+  // lived on the state effect its cleanup would cancel the timer and the banner
+  // would freeze on screen forever, which reads exactly like the game hanging.
+  useEffect(() => {
+    if (!banner) return;
+    const t = setTimeout(() => setBanner(null), 1600);
+    return () => clearTimeout(t);
+  }, [banner]);
 
   // --- Omens: curses, burnt warriors and clashing weapons announce themselves.
   // These are the consequences of the great astras, and they are the whole
@@ -148,7 +156,9 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     // field asks once, and says plainly what it will cost you.
     if (action.type === 'PLAY_CARD') {
       const card = getCard(state.instances[action.iid]!.cardId);
-      if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
+      // Any Brahma-line weapon or greater warns before it is loosed, so its
+      // price is known and chosen, never sprung on you after the fact.
+      if (card.type === 'astra' && (card.astraTier ?? 1) >= 2) {
         setAwaitingSanction({ action, card });
         return;
       }
@@ -266,9 +276,24 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
       <div className="board">
         <div className="board__group">{ROWS.slice().reverse().map((r) => renderRow('ai', r))}</div>
         <div className="score-strip">
-          <span className={'score-num score-num--ai'}>{aScore}</span>
-          <span className="score-vs">KURUKSHETRA</span>
-          <span className={'score-num score-num--player'}>{pScore}</span>
+          <div className="score-side score-side--ai">
+            <span className="score-num score-num--ai">{aScore}</span>
+            <span className="score-label">
+              Enemy <RoundPips n={state.roundWins.ai} lead={aScore > pScore} />
+            </span>
+          </div>
+          <div className="score-mid">
+            <span className={'score-lead ' + (pScore > aScore ? 'score-lead--you' : aScore > pScore ? 'score-lead--foe' : '')}>
+              {pScore > aScore ? 'You lead' : aScore > pScore ? 'Enemy leads' : 'Level'}
+            </span>
+            <span className="score-vs">First to two rounds</span>
+          </div>
+          <div className="score-side score-side--player">
+            <span className="score-num score-num--player">{pScore}</span>
+            <span className="score-label">
+              You <RoundPips n={state.roundWins.player} lead={pScore > aScore} />
+            </span>
+          </div>
         </div>
         <div className="board__group">{ROWS.map((r) => renderRow('player', r))}</div>
       </div>
@@ -287,20 +312,25 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           <span className={myTurn ? 'hint--act' : ''}>{hintText(state, myTurn, plan, selectedCard)}</span>
         </div>
         <div className="hand">
-          {state.hands.player.map((iid) => {
+          {sortedHand(state.hands.player, state).map((iid, i, arr) => {
             const card = getCard(state.instances[iid]!.cardId);
             const playable = myMoves.some((m) => m.type === 'PLAY_CARD' && m.iid === iid);
+            // A thin divider where warriors give way to astras/fates in the hand.
+            const prev = i > 0 ? getCard(state.instances[arr[i - 1]]!.cardId).type : card.type;
+            const groupBreak = handGroup(card.type) !== handGroup(prev);
             return (
-              <CardFrame
-                key={iid}
-                card={card}
-                instance={state.instances[iid]}
-                selected={selected === iid}
-                onClick={() => onHandClick(iid)}
-                dead={myTurn && !playable}
-                onEnter={showTip(card, state.instances[iid])}
-                onLeave={hideTip}
-              />
+              <div className="hand__slot" key={iid}>
+                {groupBreak && <span className="hand__divider" aria-hidden="true" />}
+                <CardFrame
+                  card={card}
+                  instance={state.instances[iid]}
+                  selected={selected === iid}
+                  onClick={() => onHandClick(iid)}
+                  dead={myTurn && !playable}
+                  onEnter={showTip(card, state.instances[iid])}
+                  onLeave={hideTip}
+                />
+              </div>
             );
           })}
         </div>
@@ -667,7 +697,9 @@ function SanctionGate({
         <div className="sanction__eye" aria-hidden="true">
           <span className="sanction__trident">ॐ</span>
         </div>
-        <div className="sanction__who">Shiva stays your hand</div>
+        <div className="sanction__who">
+          {(card.astraTier ?? 1) >= 3 ? 'Shiva stays your hand' : 'Know the price before you loose it'}
+        </div>
         <h2 className="sanction__name">{card.name}</h2>
         <p className="sanction__warn">{card.cost?.consequence}</p>
         <p className="sanction__ask">Loose it anyway?</p>
@@ -681,6 +713,31 @@ function SanctionGate({
         </div>
       </div>
     </div>
+  );
+}
+
+/** Warriors read as one block, boons/astras/fates as another. */
+function handGroup(type: Card['type']): number {
+  return type === 'unit' ? 0 : 1;
+}
+/** Sort the hand so warriors come first, then boons and astras, stable within. */
+function sortedHand(iids: InstanceId[], state: GameState): InstanceId[] {
+  return [...iids].sort((a, b) => {
+    const ga = handGroup(getCard(state.instances[a]!.cardId).type);
+    const gb = handGroup(getCard(state.instances[b]!.cardId).type);
+    return ga - gb;
+  });
+}
+
+/** Two round-win pips (best of three: first to two takes the battle). */
+function RoundPips({ n, lead }: { n: number; lead: boolean }) {
+  return (
+    <span className="pips" title={`${n} of 2 rounds won`}>
+      {[0, 1].map((i) => (
+        <span key={i} className={'pip' + (i < n ? ' pip--won' : '')} />
+      ))}
+      {lead && <span className="pip-lead" title="ahead this round">▲</span>}
+    </span>
   );
 }
 

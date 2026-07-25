@@ -211,8 +211,10 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 3,
     rows: ['padati'],
     keywords: [],
-    effects: [{ on: 'onPlay', target: { pick: 'highestEnemyUnit' }, actions: [{ kind: 'damage', amount: 3 }] }],
-    flavor: 'His dice never rolled true for anyone but him.',
+    // Weak at arms, deadly in stratagem. His deception saps the whole enemy
+    // host by 1, the kind of low-body, high-guile card Gwent is built on.
+    effects: [{ on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'buff', amount: -1 }] }],
+    flavor: 'Weak in battle, without equal in cunning. His dice never rolled true for anyone but him.',
   },
   {
     id: 'uluka',

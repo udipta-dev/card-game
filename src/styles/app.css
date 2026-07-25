@@ -211,7 +211,57 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: clamp(12px, 4vw, 34px);
+}
+.score-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.score-label {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted, #9a9080);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.score-side--player .score-label { color: var(--pandava, #6786ef); }
+.score-side--ai .score-label { color: var(--kaurava, #e06256); }
+.score-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 96px;
+}
+.score-lead {
+  font-family: var(--font-display, serif);
+  font-size: 13px;
+  color: var(--muted, #9a9080);
+}
+.score-lead--you { color: var(--gold, #e3b64a); }
+.score-lead--foe { color: var(--kaurava, #e06256); }
+.pips { display: inline-flex; gap: 3px; align-items: center; }
+.pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.5;
+}
+.pip--won { background: currentColor; opacity: 1; }
+.pip-lead { font-size: 8px; margin-left: 1px; opacity: 0.9; }
+
+/* Hand: a thin divider where warriors give way to astras/fates. */
+.hand__slot { display: flex; align-items: flex-end; gap: 8px; scroll-snap-align: start; }
+.hand__divider {
+  align-self: stretch;
+  width: 1px;
+  margin: 6px 2px;
+  background: linear-gradient(180deg, transparent, var(--panel-edge, #3a3346), transparent);
 }
 .score-num {
   font-family: var(--font-display);
