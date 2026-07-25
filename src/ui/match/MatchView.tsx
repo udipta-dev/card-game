@@ -13,7 +13,7 @@ import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, House, InstanceId, Row, Seat } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
-import { FACTION_DOT, FACTION_NAME, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
+import { FACTION_DOT, FACTION_NAME, ROW_GLOSS, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
 import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
 
@@ -227,7 +227,10 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
         ].join(' ')}
         onClick={() => onRowClick(seat, row)}
       >
-        <span className="row__label">{ROW_LABEL[row]}</span>
+        <span className="row__label" title={`${ROW_LABEL[row]}: ${ROW_GLOSS[row]}`}>
+          {ROW_LABEL[row]}
+          <span className="row__gloss">{ROW_GLOSS[row]}</span>
+        </span>
         <div className="row__cards">
           {state.board[seat][row].map((iid) => {
             const u = state.instances[iid];

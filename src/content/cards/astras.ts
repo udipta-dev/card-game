@@ -9,7 +9,7 @@ export const ASTRA_CARDS: Card[] = [
   // ---- The Brahma line ----
   {
     id: 'brahmastra',
-    name: 'Brahmastra',
+    name: 'Brahma-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 2,
@@ -39,7 +39,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'brahmashirsha',
-    name: 'Brahmashirsha',
+    name: 'Brahmashirsha-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 3,
@@ -81,7 +81,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'pashupatastra',
-    name: 'Pashupatastra',
+    name: 'Pashupat-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 3,
@@ -111,7 +111,7 @@ export const ASTRA_CARDS: Card[] = [
   // ---- Vishnu line ----
   {
     id: 'narayanastra',
-    name: 'Narayanastra',
+    name: 'Narayan-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 3,
@@ -128,7 +128,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'vaishnavastra',
-    name: 'Vaishnavastra',
+    name: 'Vaishnav-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 3,
@@ -177,7 +177,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'aindrastra',
-    name: 'Aindrastra',
+    name: 'Aindra-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -193,7 +193,7 @@ export const ASTRA_CARDS: Card[] = [
   // ---- Elemental line + counters ----
   {
     id: 'agneyastra',
-    name: 'Agneyastra',
+    name: 'Agney-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -208,7 +208,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'varunastra',
-    name: 'Varunastra',
+    name: 'Varun-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -222,7 +222,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'vayavyastra',
-    name: 'Vayavyastra',
+    name: 'Vayavya-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -236,7 +236,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'nagastra',
-    name: 'Nagastra',
+    name: 'Nag-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -258,7 +258,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'garudastra',
-    name: 'Garudastra',
+    name: 'Garud-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -274,7 +274,7 @@ export const ASTRA_CARDS: Card[] = [
   // ---- Parashurama's line + disablers ----
   {
     id: 'bhargavastra',
-    name: 'Bhargavastra',
+    name: 'Bhargav-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 2,
@@ -288,7 +288,7 @@ export const ASTRA_CARDS: Card[] = [
   },
   {
     id: 'sammohana',
-    name: 'Sammohanastra',
+    name: 'Sammohan-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 2,

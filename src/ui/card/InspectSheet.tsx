@@ -1,7 +1,9 @@
 import { provisionOf } from '@content/cards';
 import type { Card, CardInstance } from '@engine/types';
 import { CardFrame } from './CardFrame';
-import { TIER_LABEL, TYPE_LABEL, rulesText } from './cardTheme';
+import { ROW_GLOSS, TIER_GLOSS, TIER_LABEL, TYPE_GLOSS, TYPE_LABEL, rulesText } from './cardTheme';
+
+const ROW_LABEL_OF: Record<string, string> = { ratha: 'Ratha', gaja: 'Gaja', padati: 'Padati' };
 
 // A tap-to-inspect card detail sheet, shared by the match view and the codex.
 export function InspectSheet({
@@ -28,6 +30,16 @@ export function InspectSheet({
             {inst ? ` · Power ${inst.currentPower}` : card.basePower ? ` · Power ${card.basePower}` : ''}
             {` · Cost ${provisionOf(card)}`}
           </div>
+          {/* Every Sanskrit term explains itself the first time you meet it. */}
+          <div className="sheet__gloss">
+            {TYPE_GLOSS[card.type]}
+            {card.tier ? ` · ${TIER_LABEL[card.tier]}: ${TIER_GLOSS[card.tier]}` : ''}
+          </div>
+          {card.rows.length > 0 && card.type === 'unit' && (
+            <div className="sheet__gloss">
+              Fights in: {card.rows.map((r) => `${ROW_LABEL_OF[r]} (${ROW_GLOSS[r]})`).join(', ')}
+            </div>
+          )}
           {rules.map((r, i) => (
             <div key={i} className="sheet__rule">
               {r}

@@ -185,8 +185,32 @@ export function cardGlyph(card: Card): string {
 export const TYPE_LABEL: Record<Card['type'], string> = {
   unit: 'Warrior',
   astra: 'Astra',
-  boon: 'Boon',
+  boon: 'Vardaan',
   curse: 'Fate',
+};
+
+// The game keeps its Sanskrit names, and explains every one of them in plain
+// English the first time you meet it. A player who has never heard of a
+// Maharathi should never be blocked by the word, and a player who has should
+// never see it watered down.
+export const TYPE_GLOSS: Record<Card['type'], string> = {
+  unit: 'a warrior of the host',
+  astra: 'a divine long-range weapon',
+  boon: 'a divine gift, granted at a shrine',
+  curse: 'a curse, or a turn of fate',
+};
+
+export const TIER_GLOSS: Record<Tier, string> = {
+  maharathi: 'a champion able to fight ten thousand at once',
+  atirathi: 'a warrior able to fight ten thousand in turn',
+  rathi: 'a chariot-warrior, the line of the army',
+};
+
+/** The Chaturanga rows, in English, for anyone meeting the words for the first time. */
+export const ROW_GLOSS: Record<string, string> = {
+  ratha: 'Chariots',
+  gaja: 'Elephants',
+  padati: 'Infantry',
 };
 
 /** Short human-readable rules text derived from a card's keywords/effects. */

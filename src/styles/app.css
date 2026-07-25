@@ -1510,3 +1510,22 @@
 .odds--t1.odds__seg, .odds--t1 .odds__dot { background: #8798b8; }
 .odds--fail { color: #7a6f66; }
 .odds--fail.odds__seg, .odds--fail .odds__dot { background: #4a423c; }
+
+/* Plain-English gloss under a card's stat line, so the Sanskrit never blocks
+   a reader who is meeting these words for the first time. */
+.sheet__gloss {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-faint, #7a7266);
+  margin-top: -2px;
+  margin-bottom: 6px;
+}
+
+/* The row name carries its English meaning, quieter and beneath. */
+.row__gloss {
+  display: block;
+  font-size: 7.5px;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-top: 2px;
+}
