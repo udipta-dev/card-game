@@ -24,6 +24,7 @@ export const HOUSE_PALETTE: Record<House, HousePalette> = {
   kaurava: { base: '#4a0f14', edge: '#c9a227', ink: '#ffeaea', glow: 'rgba(220,80,80,0.55)' },
   neutral: { base: '#2c1a4d', edge: '#8b7bd8', ink: '#f0eaff', glow: 'rgba(160,120,240,0.55)' },
   asura: { base: '#152b1c', edge: '#57b06e', ink: '#e6ffe9', glow: 'rgba(90,200,120,0.5)' },
+  legend: { base: '#12313a', edge: '#54b7c4', ink: '#e6fbff', glow: 'rgba(84,183,196,0.5)' },
 };
 
 /** Short display name and dot colour per house, for chips and the picker. */
@@ -32,12 +33,14 @@ export const FACTION_NAME: Record<House, string> = {
   kaurava: 'Kauravas',
   asura: 'Asuras',
   neutral: 'Neutral',
+  legend: 'Legends',
 };
 export const FACTION_DOT: Record<House, string> = {
   pandava: 'var(--pandava)',
   kaurava: 'var(--kaurava)',
   asura: 'var(--asura)',
   neutral: 'var(--neutral)',
+  legend: 'var(--legend)',
 };
 
 export const TIER_LABEL: Record<Tier, string> = {
@@ -152,6 +155,13 @@ const GLYPHS: Record<string, string> = {
   vritra: '🐉',
   tarakasura: '⭐',
   asura_horde: '👹',
+  // Those who stood apart
+  barbarika: '🏹',
+  jarasandha: '🤼',
+  balarama: '🌾',
+  ekalavya: '🎯',
+  shishupala: '💯',
+  rukmi: '🏹',
 };
 
 const TYPE_FALLBACK: Record<Card['type'], string> = {
@@ -177,7 +187,7 @@ export function rulesText(card: Card): string[] {
   const lines: string[] = [];
   for (const kw of card.keywords) {
     if (kw.kind === 'icchamrityu')
-      lines.push(`Icchamrityu: cannot be slain while ${titleize(kw.unlessCardOnBoard)} stands.`);
+      lines.push(`Icchamrityu: cannot be slain until ${titleize(kw.unlessCardOnBoard)} takes the field.`);
     if (kw.kind === 'immuneUntilPlayed')
       lines.push(`Immune until "${titleize(kw.card)}" is played, then falls.`);
     if (kw.kind === 'armor') lines.push(`Kavacha-Kundala: armour absorbs the first strike.`);

@@ -171,3 +171,6 @@
   }
   @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto;}}
   html{scroll-behavior:smooth;}
+
+  .legendband{border-left-color:#54b7c4;}
+  .prov--pow{color:#54b7c4;border-color:color-mix(in oklab,#54b7c4 45%,var(--line));}

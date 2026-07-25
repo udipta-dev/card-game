@@ -8,6 +8,7 @@ const GROUPS: { title: string; house: House }[] = [
   { title: 'The Pandava Host', house: 'pandava' },
   { title: 'The Kaurava Host', house: 'kaurava' },
   { title: 'The Asura Host', house: 'asura' },
+  { title: 'Those Who Stood Apart', house: 'legend' },
   { title: 'Astras and Fates', house: 'neutral' },
 ];
 

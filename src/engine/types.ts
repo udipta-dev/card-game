@@ -13,7 +13,10 @@ export type Seat = 'player' | 'ai';
 export type Row = 'ratha' | 'gaja' | 'padati';
 export const ROWS: Row[] = ['ratha', 'gaja', 'padati'];
 
-export type House = 'pandava' | 'kaurava' | 'neutral' | 'asura';
+// 'legend' holds the figures who never took the field for either host, whether
+// they were kept off it (Barbarika, beheaded before the war), died before it
+// (Jarasandha, Ekalavya, Shishupala), or refused it (Balarama, Rukmi).
+export type House = 'pandava' | 'kaurava' | 'neutral' | 'asura' | 'legend';
 
 /** Canon warrior ranking from the Bhishma Parva. Drives base power tiers. */
 export type Tier = 'rathi' | 'atirathi' | 'maharathi';

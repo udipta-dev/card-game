@@ -161,8 +161,11 @@ function masteryBadge(u: U): string {
   if ((u.astraMastery ?? 0) >= 1) return `<span class="mst mst-t1" title="Elemental astra-adept">◆ elemental</span>`;
   return '';
 }
+const HOSTS = ['pandava', 'kaurava', 'asura'];
 function powerBlock(p: number): string {
-  const g = units.filter((u) => u.basePower === p);
+  // The power ladder is the three fighting hosts. The legends stand apart and
+  // get their own section, so they are not counted here.
+  const g = units.filter((u) => u.basePower === p && HOSTS.includes(u.house ?? ''));
   if (!g.length) return '';
   const cols = (['pandava', 'kaurava', 'asura'] as const)
     .map((h) => {
@@ -194,6 +197,23 @@ for (let p = 10; p >= 1; p--) {
   if (b) powerBands.push(b);
 }
 
+// ---- The Legends: those who stood apart ----
+const legends = units
+  .filter((u) => u.house === 'legend')
+  .sort((a, b) => (b.basePower ?? 0) - (a.basePower ?? 0));
+function legendRows(): string {
+  return legends
+    .map((u) => {
+      const ab = (u as { ability?: { name: string; text: string } }).ability;
+      return `<tr>
+        <td class="c-name">${esc(u.name)}${ab ? ` <span class="mst mst-ab" title="${esc(ab.text)}">${esc(ab.name)}</span>` : ''}</td>
+        <td class="c-cost"><span class="prov prov--pow">${u.basePower}</span></td>
+        <td class="c-eff">${esc(u.flavor ?? '')}</td>
+      </tr>`;
+    })
+    .join('\n');
+}
+
 // ---- Mastery ladder ----
 const ladderNamed = units.filter((u) => (u.knownAstras || []).length);
 const ladderT2 = units.filter((u) => (u.astraMastery ?? 0) >= 2 && !(u.knownAstras || []).length);
@@ -213,7 +233,7 @@ const html = `<title>Kurukshetra: Canon Reference</title>
     <p class="sub">The fixed ground beneath every mode: which astras exist and who may loose them, and where each warrior stands in raw power. Base power is only a starting number. Vows, curses, and boons decide the rest.</p>
   </header>
   <nav class="nav">
-    <a href="#astras">The Astras</a><a href="#ladder">Astra Mastery</a><a href="#warriors">The Warriors</a>
+    <a href="#astras">The Astras</a><a href="#ladder">Astra Mastery</a><a href="#warriors">The Warriors</a><a href="#legends">The Legends</a>
   </nav>
   <section id="astras">
     <h2 class="secttitle">The Astras <span class="en">divine weapons, ranked by tier</span></h2>
@@ -247,6 +267,16 @@ const html = `<title>Kurukshetra: Canon Reference</title>
       <span class="item"><span class="mst mst-t1">◆ elemental</span> mastery 1</span>
     </div>
     ${powerBands.join('\n')}
+  </section>
+  <section id="legends">
+    <h2 class="secttitle">Those Who Stood Apart <span class="en">the ones who never took the field</span></h2>
+    <p class="lede">Some were kept off the field, some died before it, some refused it. They belong to no host, and each carries a fate from the epic rather than a rank in the war.</p>
+    <div class="tierband legendband">
+      <div class="tablewrap"><table class="astratable">
+        <thead><tr><th>Legend</th><th>Power</th><th>Their fate</th></tr></thead>
+        <tbody>${legendRows()}</tbody>
+      </table></div>
+    </div>
   </section>
   <footer class="foot"><div class="rule"></div>
     Generated from the live card data: ${units.length} warriors, ${astras.length} astras. Numbers here are the balance-tuned values in play, not lore estimates.
