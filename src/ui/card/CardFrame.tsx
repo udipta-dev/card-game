@@ -1,6 +1,7 @@
 import type { CSSProperties, MouseEvent } from 'react';
 import type { Card, CardInstance } from '@engine/types';
 import { HOUSE_PALETTE, TIER_LABEL, TYPE_LABEL, cardGlyph, tierMark } from './cardTheme';
+import { artFor } from './cardArt';
 
 interface Props {
   card: Card;
@@ -28,6 +29,7 @@ export function CardFrame({
   onEnter,
   onLeave,
 }: Props) {
+  const art = artFor(card);
   const pal = HOUSE_PALETTE[card.house];
   const style = {
     '--pal-base': pal.base,
@@ -71,7 +73,11 @@ export function CardFrame({
       </div>
 
       <div className="card__art">
-        {card.art ? <img src={card.art} alt={card.name} /> : <span>{cardGlyph(card)}</span>}
+        {art ? (
+          <img src={art} alt="" loading="lazy" draggable={false} />
+        ) : (
+          <span>{cardGlyph(card)}</span>
+        )}
       </div>
 
       <div className="card__foot">
