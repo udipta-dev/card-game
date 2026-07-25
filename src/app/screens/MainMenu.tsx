@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { HowToPlay } from '@ui/HowToPlay';
+import { loadMeta } from '@run/meta';
 
 interface Props {
   onPlay: () => void;
+  onCampaign: () => void;
   onCodex: () => void;
 }
 
 const SEEN_KEY = 'kuru_seen_help';
 
-export function MainMenu({ onPlay, onCodex }: Props) {
+export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
   const [showHelp, setShowHelp] = useState(false);
+  const meta = loadMeta();
 
   // First-time visitors get the rules once, automatically.
   useEffect(() => {
@@ -29,8 +32,11 @@ export function MainMenu({ onPlay, onCodex }: Props) {
         vow undoes the mightiest warrior.
       </p>
       <div className="menu__actions">
-        <button className="btn btn--primary" onClick={onPlay}>
-          Quickplay
+        <button className="btn btn--primary" onClick={onCampaign}>
+          Begin a Campaign
+        </button>
+        <button className="btn btn--ghost" onClick={onPlay}>
+          Quickplay · a single battle
         </button>
         <button className="btn btn--ghost" onClick={onCodex}>
           Codex · browse all cards
@@ -38,12 +44,10 @@ export function MainMenu({ onPlay, onCodex }: Props) {
         <button className="btn btn--ghost" onClick={() => setShowHelp(true)}>
           How to play
         </button>
-        <button className="btn btn--ghost" disabled>
-          18-Day Campaign · coming soon
-        </button>
       </div>
       <p className="menu__sub" style={{ fontSize: 12, opacity: 0.6, marginTop: 8 }}>
-        Quickplay vs the AI · best of three · first to two rounds
+        Campaign: carry one host up a ladder of battles. Win what you keep, lose it all in one defeat.
+        {meta.bestDepth > 0 && ` · Best run: ${meta.bestDepth} won`}
       </p>
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
     </div>

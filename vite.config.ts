@@ -46,6 +46,7 @@ export default defineConfig({
       '@content': '/src/content',
       '@ai': '/src/ai',
       '@ui': '/src/ui',
+      '@run': '/src/run',
     },
   },
   test: {

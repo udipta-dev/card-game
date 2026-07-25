@@ -27,7 +27,8 @@
       "@engine/*": ["src/engine/*"],
       "@content/*": ["src/content/*"],
       "@ai/*": ["src/ai/*"],
-      "@ui/*": ["src/ui/*"]
+      "@ui/*": ["src/ui/*"],
+      "@run/*": ["src/run/*"]
     }
   },
   "include": ["src", "tests"]

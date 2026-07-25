@@ -26,12 +26,22 @@ function makeInstance(cardId: string, owner: Seat): CardInstance {
   };
 }
 
+/**
+ * Carried run state seeded into a battle: the arsenal already spent earlier in
+ * the run, and any curse still clinging to the player from a past act of adharma.
+ */
+export interface BattleInit {
+  banned?: string[];
+  playerCurses?: string[];
+}
+
 /** Build a fresh, deterministic match from two deck lists and a seed. */
 export function createMatch(
   seed: number,
   playerDeck: DeckList,
   aiDeck: DeckList,
   firstMover: Seat = 'player',
+  init?: BattleInit,
 ): GameState {
   const instances: Record<InstanceId, CardInstance> = {};
   let s = seed >>> 0;
@@ -67,8 +77,8 @@ export function createMatch(
     hands: { player: playerHand, ai: aiHand },
     decks: { player: playerDeckIds, ai: aiDeckIds },
     rowMods: [],
-    bannedThisRun: [],
-    curses: { player: [], ai: [] },
+    bannedThisRun: init?.banned ? [...init.banned] : [],
+    curses: { player: init?.playerCurses ? [...init.playerCurses] : [], ai: [] },
     forcedWinner: null,
     winner: null,
     mulliganDone: { player: false, ai: false },

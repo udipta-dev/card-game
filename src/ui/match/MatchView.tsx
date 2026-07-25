@@ -4,6 +4,7 @@ import { getCard, provisionOf } from '@content/cards';
 import type { DeckList } from '@content/decks';
 import { chooseAction } from '@ai/ai';
 import { createMatch } from '@engine/createMatch';
+import type { BattleInit } from '@engine/createMatch';
 import { isLegalAbility, reduce } from '@engine/reducer';
 import { isFinalRound, rowPower, seatPower } from '@engine/queries';
 import { getCurse } from '@engine/curses';
@@ -31,13 +32,17 @@ interface Props {
   playerDeck: DeckList;
   aiDeck: DeckList;
   onExit: () => void;
+  /** Run mode: carried arsenal/curses seeded into this battle. */
+  init?: BattleInit;
+  /** Run mode: hand the finished state back to the run instead of exiting. */
+  onFinish?: (finalState: GameState) => void;
 }
 
-export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
+export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: Props) {
   // The AI opens (firstMover 'ai') so the human plays second and gets the
   // last-say edge, which keeps a single-player match feeling fair.
   const [state, dispatch] = useReducer(reduce, undefined, () =>
-    createMatch(seed, playerDeck, aiDeck, 'ai'),
+    createMatch(seed, playerDeck, aiDeck, 'ai', init),
   );
   const [selected, setSelected] = useState<InstanceId | null>(null);
   const [mSel, setMSel] = useState<InstanceId[]>([]);
@@ -382,7 +387,9 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit }: Props) {
           }}
         />
       )}
-      {state.phase === 'battleEnd' && <ResultOverlay state={state} onExit={onExit} />}
+      {state.phase === 'battleEnd' && (
+        <ResultOverlay state={state} onExit={onExit} onFinish={onFinish} />
+      )}
     </div>
   );
 }
@@ -559,10 +566,20 @@ function MulliganOverlay({
   );
 }
 
-function ResultOverlay({ state, onExit }: { state: GameState; onExit: () => void }) {
+function ResultOverlay({
+  state,
+  onExit,
+  onFinish,
+}: {
+  state: GameState;
+  onExit: () => void;
+  onFinish?: (s: GameState) => void;
+}) {
   const won = state.winner === 'player';
   const draw = state.winner === null;
   const cls = draw ? '' : won ? 'result--win' : 'result--lose';
+  // In a run, the outcome flows back into the campaign rather than to the menu.
+  const inRun = !!onFinish;
   return (
     <div className="overlay">
       <div className={'panel ' + cls}>
@@ -576,8 +593,8 @@ function ResultOverlay({ state, onExit }: { state: GameState; onExit: () => void
           {' '}Rounds {state.roundWins.player}–{state.roundWins.ai}.
         </p>
         <div className="menu__actions" style={{ margin: '0 auto' }}>
-          <button className="btn btn--primary" onClick={onExit}>
-            Return to the field
+          <button className="btn btn--primary" onClick={() => (inRun ? onFinish!(state) : onExit())}>
+            {inRun ? (won ? 'March on' : 'The run ends') : 'Return to the field'}
           </button>
         </div>
       </div>

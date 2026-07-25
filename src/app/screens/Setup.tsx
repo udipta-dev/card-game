@@ -14,13 +14,17 @@ const FACTIONS: { house: House; deck: DeckList }[] = [
 ];
 const deckFor = (h: House) => FACTIONS.find((f) => f.house === h)!.deck;
 
-export function Setup({
-  onStart,
-  onBack,
-}: {
-  onStart: (playerDeck: DeckList, aiDeck: DeckList) => void;
+interface Props {
+  mode: 'quickplay' | 'campaign';
   onBack: () => void;
-}) {
+  /** Quickplay: choose both hosts and fight one battle. */
+  onStart?: (playerDeck: DeckList, aiDeck: DeckList) => void;
+  /** Campaign: choose your host; the ladder provides the opponents. */
+  onStartHost?: (playerDeck: DeckList) => void;
+}
+
+export function Setup({ mode, onStart, onStartHost, onBack }: Props) {
+  const campaign = mode === 'campaign';
   const [playerHouse, setPlayerHouse] = useState<House>('pandava');
   const [oppHouse, setOppHouse] = useState<House | 'random'>('random');
   const [inspect, setInspect] = useState<Card | null>(null);
@@ -28,9 +32,13 @@ export function Setup({
   const playerDeck = deckFor(playerHouse);
 
   const begin = () => {
+    if (campaign) {
+      onStartHost?.(playerDeck);
+      return;
+    }
     const others = FACTIONS.filter((f) => f.house !== playerHouse).map((f) => f.house);
     const ai = oppHouse === 'random' ? others[Math.floor(Math.random() * others.length)] : oppHouse;
-    onStart(playerDeck, deckFor(ai));
+    onStart?.(playerDeck, deckFor(ai));
   };
 
   const factionButton = (house: House, selected: boolean, onClick: () => void) => (
@@ -72,21 +80,30 @@ export function Setup({
           ))}
         </div>
 
-        <div className="setup__label" style={{ marginTop: 18 }}>
-          Opponent
-        </div>
-        <div className="faction-picker">
-          <button
-            className={'faction-btn' + (oppHouse === 'random' ? ' faction-btn--on' : '')}
-            onClick={() => setOppHouse('random')}
-          >
-            🎲 Random
-          </button>
-          {FACTIONS.map((f) => factionButton(f.house, oppHouse === f.house, () => setOppHouse(f.house)))}
-        </div>
+        {campaign ? (
+          <p className="setup__note">
+            You will carry this host up a ladder of battles. Your great astra is not with you: it
+            must be earned. Win to recruit new warriors; lose a single battle and the run is over.
+          </p>
+        ) : (
+          <>
+            <div className="setup__label" style={{ marginTop: 18 }}>
+              Opponent
+            </div>
+            <div className="faction-picker">
+              <button
+                className={'faction-btn' + (oppHouse === 'random' ? ' faction-btn--on' : '')}
+                onClick={() => setOppHouse('random')}
+              >
+                🎲 Random
+              </button>
+              {FACTIONS.map((f) => factionButton(f.house, oppHouse === f.house, () => setOppHouse(f.house)))}
+            </div>
+          </>
+        )}
 
         <button className="btn btn--primary setup__begin" onClick={begin}>
-          Begin battle
+          {campaign ? 'Begin the campaign' : 'Begin battle'}
         </button>
       </div>
 

@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import type { DeckList } from '@content/decks';
+import type { House } from '@engine/types';
 import { MatchView } from '@ui/match/MatchView';
+import { createRun } from '@run/run';
+import { recordRunStart } from '@run/meta';
+import type { RunState } from '@run/types';
 import { Codex } from './screens/Codex';
 import { MainMenu } from './screens/MainMenu';
+import { RunView } from './screens/RunView';
 import { Setup } from './screens/Setup';
 
 interface MatchConfig {
@@ -10,6 +15,8 @@ interface MatchConfig {
   playerDeck: DeckList;
   aiDeck: DeckList;
 }
+
+type Screen = 'menu' | 'quickSetup' | 'campaignSetup' | 'codex';
 
 function makeSeed(): number {
   // ?seed=17 replays an exact match. Every match is deterministic from its
@@ -20,19 +27,24 @@ function makeSeed(): number {
 }
 
 export function App() {
+  const [screen, setScreen] = useState<Screen>('menu');
   const [match, setMatch] = useState<MatchConfig | null>(null);
-  const [showCodex, setShowCodex] = useState(false);
-  const [showSetup, setShowSetup] = useState(false);
+  const [run, setRun] = useState<RunState | null>(null);
 
-  const startMatch = (playerDeck: DeckList, aiDeck: DeckList) => {
-    setShowSetup(false);
-    setShowCodex(false);
+  const startQuickplay = (playerDeck: DeckList, aiDeck: DeckList) => {
+    setScreen('menu');
     setMatch({ seed: makeSeed(), playerDeck, aiDeck });
   };
 
-  return (
-    <div className="app">
-      {match ? (
+  const startCampaign = (playerDeck: DeckList) => {
+    recordRunStart();
+    setScreen('menu');
+    setRun(createRun(makeSeed(), playerDeck.house as House));
+  };
+
+  if (match) {
+    return (
+      <div className="app">
         <MatchView
           key={match.seed}
           seed={match.seed}
@@ -40,12 +52,32 @@ export function App() {
           aiDeck={match.aiDeck}
           onExit={() => setMatch(null)}
         />
-      ) : showSetup ? (
-        <Setup onStart={startMatch} onBack={() => setShowSetup(false)} />
-      ) : showCodex ? (
-        <Codex onBack={() => setShowCodex(false)} />
+      </div>
+    );
+  }
+
+  if (run) {
+    return (
+      <div className="app">
+        <RunView run={run} onExit={() => setRun(null)} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="app">
+      {screen === 'quickSetup' ? (
+        <Setup mode="quickplay" onStart={startQuickplay} onBack={() => setScreen('menu')} />
+      ) : screen === 'campaignSetup' ? (
+        <Setup mode="campaign" onStartHost={startCampaign} onBack={() => setScreen('menu')} />
+      ) : screen === 'codex' ? (
+        <Codex onBack={() => setScreen('menu')} />
       ) : (
-        <MainMenu onPlay={() => setShowSetup(true)} onCodex={() => setShowCodex(true)} />
+        <MainMenu
+          onPlay={() => setScreen('quickSetup')}
+          onCampaign={() => setScreen('campaignSetup')}
+          onCodex={() => setScreen('codex')}
+        />
       )}
     </div>
   );
