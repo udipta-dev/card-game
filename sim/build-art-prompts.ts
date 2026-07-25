@@ -1,146 +1,197 @@
 // Build docs/art-prompts.md: one image prompt per card, generated from the live
-// card data so nothing is missed and it can be regenerated as cards change.
-//   npx vite-node sim/build-art-prompts.ts
+// card data.  npx vite-node sim/build-art-prompts.ts
+//
+// Everything here is derived from what actually worked in testing, not theory.
+// The Bhima prompt is the reference implementation: every card clones its
+// structure and density and swaps only the character facts.
+//
+// Rules earned the hard way, each from a specific observed failure:
+//  1. DENSE, not minimal. Stripped-back prompts came out worse, because gaps
+//     get filled by the model's priors (bare-chested Arjuna, calendar art).
+//  2. Armour by COVERAGE ("torso completely enclosed"), never by analogy.
+//     "Fused to his skin" produced bare skin.
+//  3. Pose must be DEPICTABLE: a weapon held, never in transit. A mace overhead
+//     works; a just-released bowstring needs a deformed string plus an absent
+//     arrow and comes back as melted geometry.
+//  4. The face needs an EMOTION. "Teeth bared in fury" gave Bhima presence;
+//     "lean and exact" gave Arjuna a mannequin.
+//  5. NEVER name a colour for the air. "Dark indigo air" produced a blue
+//     daylight sky. Bhima names only weather and comes back properly dark.
+//  6. One item per slot. Stacked elements wrecked the first Karna.
+//  7. Never name a thing you do not want: Firefly has no negative-prompt field,
+//     so every mention is a request.
+//  8. No JSON. It collapses the prompt entirely and returns stock images.
 import fs from 'node:fs';
 import { allCards } from '@content/cards';
 import type { Card } from '@engine/types';
 
-// The style anchor is pasted VERBATIM into every prompt. Consistency across a
-// hundred images comes from never rewording this, not from clever per-card text.
-const STYLE = [
-  'Ink-and-gouache painting in the Indian miniature tradition, heroic epic grandeur:',
-  'confident black linework beneath flat saturated colour, opulent gold detailing,',
-  'fine filigree, jewelled ornament, many layered silks. Imperial and lavish, never',
-  'rustic. Dramatic storm light from the upper left; the subject surges out of a',
-  'smoky near-black ground. Deep chiaroscuro, limited palette, dust and sparks',
-  'in the air. Vertical 4:5 composition. Clean unmarked background.',
-].join(' ');
+/** Pasted verbatim into every standalone prompt. Never reworded. */
+const STYLE =
+  'Ink-and-gouache Indian miniature painting: bold black linework, flat saturated colour, ' +
+  'deep chiaroscuro, lavish gold.';
 
-// Human characters are HUMAN. Left unsaid, image models give any Indian
-// mythological archer Krishna's blue skin and peacock feather, because that is
-// what dominates their training data. Only the gods and rakshasas differ.
-const HUMAN_SKIN = 'warm bronze-brown human skin (not blue)';
+type U = Card & { basePower?: number; tier?: string; flavor?: string };
 
-// Negations inside a positive prompt tend to summon the very thing they ban, so
-// these belong in the generator's "Exclude" / negative-prompt field instead.
-const EXCLUDE = [
-  'blue skin, peacock feather, flute, Krishna, Vishnu,',
-  'text, letters, writing, script, calligraphy, watermark, signature, caption,',
-  'tribal, primitive, rustic, folk art, crude, modern clothing,',
-  'bare chest, unarmoured, plain wooden bow, static pose, stiff, posed portrait',
-].join(' ');
-
-const TINT: Record<string, string> = {
-  pandava: 'Atmosphere tinted deep indigo blue.',
-  kaurava: 'Atmosphere tinted dark crimson.',
-  asura: 'Atmosphere tinted venomous green.',
-  legend: 'Atmosphere tinted cold teal.',
-  neutral: 'Atmosphere tinted antique gold.',
+// ---------------------------------------------------------------- house look
+// Armour metal differs per house so the set reads as one family while staying
+// distinguishable at board size. Tunic colour never touches the AIR (rule 5).
+const ARMOUR: Record<string, string> = {
+  pandava: 'a sculpted golden cuirass embossed with a sunburst over a deep blue tunic',
+  kaurava: 'a lacquered crimson cuirass banded with heavy gold over a black tunic',
+  asura: 'a heavy green-lacquered cuirass banded with dark bronze over a black tunic',
+  legend: 'a plain steel cuirass chased with silver over a grey tunic',
+  neutral: 'a sculpted golden cuirass over a crimson tunic',
+};
+const PLATES: Record<string, string> = {
+  maharathi: 'massive layered shoulder-plates, thick articulated arm-guards, studded war-belt',
+  atirathi: 'layered shoulder-plates, articulated arm-guards, jewelled war-belt',
+  rathi: 'plain shoulder-plates, leather arm-guards, banded war-belt',
+};
+const BUILD: Record<string, string> = {
+  maharathi: 'broad-shouldered and powerful',
+  atirathi: 'hard-muscled and scarred',
+  rathi: 'wiry and weather-beaten',
 };
 
-const FRAMING: Record<Card['type'], string> = {
-  // Action INSIDE a portrait crop. A full-body action shot is glorious at full
-  // size and an unreadable smudge at the ~46px the board actually renders, so
-  // the motion has to happen while the head still dominates the frame.
-  unit: 'Dynamic half-figure, waist-up, caught mid-action on a strong diagonal, cloth and hair whipping in the wind.',
-  astra: 'No human figure. The weapon itself as a phenomenon of light and force filling the frame.',
-  boon: 'A single figure in the act of blessing, or the gift itself, centred and radiant.',
-  curse: 'A symbolic omen object, centred, ominous, no human figure.',
+// A weapon HELD, per battlefield role. Never in transit (rule 3).
+const WEAPON: Record<string, string> = {
+  ratha: 'He draws a great recurved war-bow of gold-chased horn, hauled to full draw with a single arrow nocked',
+  gaja: 'He levels a long iron war-lance, its head a broad leaf of steel, braced across his body',
+  padati: 'He plants a heavy iron spear and a round bossed shield, set to receive a charge',
 };
 
-
-// The instant each figure is caught in. Varying the MOTION per card is safe for
-// set consistency; only style, light and palette must stay fixed.
-const ACTION: Record<string, string> = {
-  arjuna: 'in the instant of loosing an arrow, string drawn back past his ear, bow arm locked, body torqued into the shot',
-  bhima: 'mid-swing, the great iron mace coming around in a killing arc, shoulders wrenched with the effort',
-  yudhishthira: 'lowering his spear to halt his own line, hand raised, refusing the charge',
-  nakula: 'twisting into a fast sword cut, blade a bright line across the frame',
-  sahadeva: 'turning sharply, sword coming up, having seen what no one else saw',
-  abhimanyu: 'spinning to loose an arrow behind him, hemmed in on every side, alone',
-  ghatotkacha: 'dropping out of the night sky, club raised overhead, enormous',
-  dhrishtadyumna: 'lunging forward through fire, blade levelled at one man only',
-  shikhandi: 'raising the bow with terrible stillness while everything else moves',
-  bhishma: 'loosing arrows in every direction at once, unhurried, a wall of shafts blooming around him',
-  drona: 'raising an open hand mid-mantra, an astra kindling white at his fingertips',
-  karna: 'drawing with terrible calm as his chariot wheel sinks and the earth swallows it',
-  duryodhana: 'striding in, mace swung back for the blow, body gleaming like struck adamant',
-  dushasana: 'lunging with a grasping hand outstretched, mouth open',
-  ashwatthama: 'wheeling around with a snarl, blade up, the jewel in his brow blazing',
-  shakuni: 'casting the dice underhand and already watching them fall, unbothered by the war',
-  jayadratha: 'bracing a gate-bar overhead against a press of men, holding the line alone',
-  shalya: 'hauling the reins hard over, chariot slewing, mouth set in quiet betrayal',
-  kripa: 'drawing an arrow with weary practised calm, prayer beads swinging at his wrist',
-  bhagadatta: 'leaning from the neck of his war elephant, hook raised, as it tramples forward',
-  ravana: 'all ten heads roaring at once, many arms bringing up many weapons together',
-  kumbhakarna: 'rising to his full impossible height, shaking sleep off like water',
-  indrajit: 'loosing an arrow from inside a thundercloud, half-dissolved into vapour',
-  hiranyakashipu: 'throwing his arms wide in contempt, daring the world to strike him',
-  mahishasura: 'mid-shapeshift, buffalo horns lowering into a charge',
-  raktabija: 'struck and bleeding, small identical figures already rising from every falling drop',
-  vritra: 'uncoiling upward, jaws opening over a cracked dry riverbed',
-  bali: 'pouring the water of a vow from his palms, calm while the world tilts',
-  barbarika: 'nocking the first of three arrows, wind rising, everything about to end',
-  jarasandha: 'seizing an opponent two-handed, the faint seam down his body showing',
-  balarama: 'planting the plough into the ground like a wall, turning his back on the war',
-  ekalavya: 'loosing an arrow in an altered grip, right thumb missing, unbowed',
-  shishupala: 'mid-insult, arm flung out, a discus-light already circling his throat',
-  rukmi: 'lowering an ornate unused bow, jaw tight, refused by both armies',
+// Every card needs an emotion (rule 4); varying it by house makes the hosts
+// read differently before you know who anyone is.
+const FACE: Record<string, string> = {
+  pandava: 'eyes narrowed in cold fury',
+  kaurava: 'jaw set, mouth hard with contempt',
+  asura: 'teeth bared, eyes burning',
+  legend: 'gaze level and unreadable',
+  neutral: 'expression grim',
 };
 
-const ACTION_BY_ROW: Record<string, string> = {
-  ratha: 'at full draw, arrow nocked, chariot rail rocking beneath him',
-  gaja: 'braced and shouting as his war elephant surges forward beneath him',
-  padati: 'driving in behind a levelled spear, shield up, feet churning',
+// One scene idea, and no colour named for the air (rule 5).
+const SCENE: Record<string, string> = {
+  pandava: 'A howling dust-storm, splintered shields spinning through the air',
+  kaurava: 'Smoke rolling across a burning field, broken banners spinning through the air',
+  asura: 'A night sky torn with lightning, shattered chariots spinning through the air',
+  legend: 'Drifting ash over an empty field, a single broken banner turning in the air',
+  neutral: 'Darkness lit by distant fires, embers streaming past',
 };
 
-// Hand-written for the marquee cards, where the epic gives something specific to
-// draw. Everything else falls back to its flavour line, which already carries
-// the one detail that makes the character legible.
-const DESC: Record<string, string> = {
-  arjuna: 'He wields the Gandiva, an immense divine war-bow of gold-chased horn with curling makara-head finials, glowing faintly along the grip. Golden lamellar armour with a sunburst-embossed breastplate, and the Kiritin, the tall golden crown given him by Indra',
-  bhima: 'a huge-shouldered warrior resting an iron mace on one shoulder, wild-haired, openly furious',
-  yudhishthira: 'an ascetic-faced king in plain white, holding a spear he does not want to use',
-  nakula: 'the handsomest of the brothers, sword drawn, groomed and precise',
-  sahadeva: 'the youngest brother, quiet and watchful, holding a sword and a palm-leaf almanac',
-  abhimanyu: 'a boy of sixteen in bright armour, bow raised, surrounded by the shadow of a closing spiral formation',
-  ghatotkacha: 'a towering rakshasa with tusks and dark skin, half-giant, iron club in hand, night behind him',
-  dhrishtadyumna: 'a warrior born from sacrificial fire, flame still clinging to his armour, eyes fixed',
-  shikhandi: 'a warrior of ambiguous aspect, bow lowered, standing with terrible stillness',
-  krishna_charioteer: 'a blue-skinned god serving as charioteer, peacock feather in his crown, holding reins and a conch rather than a weapon, serene and knowing',
-  bhishma: 'an ancient white-bearded patriarch in silver mail, bow in hand, unbowed and sorrowful',
-  drona: 'a grey-bearded brahmin-warrior in armour, bow held loosely, teacher and killer at once',
-  karna: 'a golden-armoured archer with sun-bright kavacha at his chest and heavy earrings, proud and alone',
-  duryodhana: 'a broad crowned prince, mace across his knees, body faintly gleaming like adamant',
-  dushasana: 'a cruel-mouthed prince with a raised, grasping hand',
-  ashwatthama: 'a wild-eyed warrior with a jewel set into his forehead, blood-flecked, unable to die',
-  shakuni: 'a lean smiling schemer rolling dice in his palm, no armour, all cunning',
-  jayadratha: 'a hard-faced king holding a gate-bar like a weapon, boon-light at his back',
-  shalya: 'a kingly charioteer holding reins, mouth set in quiet betrayal',
-  kripa: 'a serene old brahmin-warrior, prayer beads at his wrist, bow across his back',
-  bhagadatta: 'an aged king seated on a war elephant, hook in hand, cloth binding his eyelids up',
-  ravana: 'a ten-headed rakshasa king crowned in gold, many arms, arrogant and magnificent',
-  kumbhakarna: 'a mountainous sleeping giant just waking, eyes half-open, monstrous and calm',
-  indrajit: 'a rakshasa prince mid-vanishing into cloud, bow drawn, conqueror of heaven',
-  hiranyakashipu: 'an asura king whose body is armoured by a boon, throat bared in contempt',
-  mahishasura: 'a buffalo-headed demon lord mid-shapeshift, horns lowered',
-  raktabija: 'an asura from whose falling blood small identical figures are rising',
-  vritra: 'a vast drought-serpent coiled around a dry riverbed, scales like cracked earth',
-  bali: 'a noble asura king offering water in his palms, deathless and generous',
-  barbarika: 'a young archer with three arrows, seated in meditation, his own severed head watching from a hilltop',
-  jarasandha: 'a king whose body shows a faint vertical seam from crown to groin, immensely strong',
-  balarama: 'a fair-skinned elder brother leaning on a plough, drinking horn at his belt, refusing the war',
-  ekalavya: 'a forest-born archer of the Nishada, right thumb missing, bow held in an altered grip',
-  shishupala: 'a proud king mid-insult, a faint discus-light already circling his neck',
-  rukmi: 'an arrogant prince with an ornate unused bow, standing apart from both armies',
-  // Astras
-  pashupatastra: 'a single unbearable eye of white fire opening in the sky, the world beneath it thinning to nothing',
+const LIGHT = 'Darkness lit by distant fires, deep shadow.';
+
+// ------------------------------------------------------- marquee characters
+interface Marquee {
+  armour?: string;
+  mark?: string;
+  weapon?: string;
+  face?: string;
+  build?: string;
+  scene?: string;
+}
+const M: Record<string, Marquee> = {
+  arjuna: {
+    mark: 'a tall ornate golden war-crown, long black hair',
+    weapon:
+      'He draws the Gandiva, a colossal recurved war-bow of gold-chased horn with curling makara-dragon heads, hauled to full draw',
+  },
+  bhima: {
+    armour: 'a dark iron cuirass banded with heavy gold over a deep blue tunic',
+    build: 'bull-necked and immense',
+    mark: 'wild black hair',
+    face: 'teeth bared in fury',
+    weapon:
+      'He raises the Gada, a colossal iron war-mace, its head a fluted mass of gold-banded metal ringed with spikes, lifted overhead mid-swing',
+    scene: 'A howling dust-storm, shattered chariots spinning through the air',
+  },
+  karna: {
+    armour: 'a seamless golden cuirass engraved with sun-rays over a deep crimson tunic',
+    mark: 'heavy golden Kundala earrings, long black hair in a topknot',
+    weapon: 'He draws the Vijaya, a colossal recurved war-bow of gold-chased horn, hauled to full draw',
+    face: 'eyes steady, mouth set in grim resolve',
+  },
+  bhishma: {
+    build: 'immensely tall and straight-backed',
+    mark: 'a long white beard, a high silver crown',
+    face: 'eyes heavy with sorrow',
+  },
+  drona: {
+    mark: 'a grey beard, ash marks across his brow, a sacred thread over the armour',
+    face: 'expression cold and measuring',
+  },
+  duryodhana: {
+    mark: 'a heavy jewelled crown, skin faintly gleaming like struck adamant',
+    weapon: 'He raises a colossal gold-banded war-mace, lifted overhead mid-swing',
+  },
+  ashwatthama: {
+    mark: 'a burning jewel set into his forehead, blood-flecked armour',
+    face: 'wild-eyed and snarling',
+  },
+  ghatotkacha: {
+    build: 'a towering half-rakshasa, tusked and colossal',
+    mark: 'a wild black mane, dark grey skin',
+    weapon: 'He raises an enormous studded iron club, lifted overhead mid-swing',
+  },
+  abhimanyu: {
+    build: 'a beardless youth, slight beside the men around him',
+    mark: 'bright unscarred golden armour',
+    scene: 'A closing spiral of spears and shields hemming him in on every side',
+  },
+  shakuni: {
+    armour: 'rich unarmoured court silks, rings on every finger',
+    build: 'lean and stooped',
+    mark: 'a thin smile, dice cupped in one palm',
+    weapon: 'He carries no weapon at all, only the dice',
+    face: 'smiling, eyes cold with calculation',
+  },
+  ravana: {
+    build: 'a colossal ten-headed rakshasa king',
+    mark: 'ten crowned heads, many arms',
+    face: 'all ten faces roaring at once',
+  },
+  kumbhakarna: {
+    build: 'a mountainous giant, slab-muscled and tusked',
+    mark: 'half-shut eyes still heavy with sleep',
+  },
+  indrajit: {
+    mark: 'half-dissolved into thundercloud, only his drawn bow solid',
+    face: 'expression serene and merciless',
+  },
+  krishna_charioteer: {
+    armour: 'flowing yellow silks and no armour at all',
+    mark: 'blue skin, a peacock feather in his crown',
+    weapon: 'He holds chariot reins and a white conch, no weapon',
+    face: 'serene, faintly smiling',
+  },
+  barbarika: {
+    mark: 'three arrows and nothing else in his quiver',
+    face: 'calm, already resigned',
+  },
+  jarasandha: {
+    build: 'immense and thick-limbed',
+    mark: 'a faint vertical seam running the length of his body',
+  },
+  balarama: {
+    mark: 'fair skin, a drinking horn at his belt',
+    weapon: 'He plants the plough Hala into the ground like a wall',
+    face: 'turned away, refusing the field',
+  },
+  ekalavya: {
+    mark: 'forest dress, the right thumb missing from his draw hand',
+    face: 'unbowed, jaw set',
+  },
+};
+
+// ------------------------------------------------------------ astras & fates
+const PHENOMENON: Record<string, string> = {
+  pashupatastra: 'a single unbearable eye of white fire opening in a black sky, the world thinning to nothing beneath it',
   brahmashirsha: 'a four-faced pillar of fire rising from a scorched horizon, the air itself burning',
   brahmastra: 'a single arrow blooming into a column of white fire, the ground beneath already ash',
   narayanastra: 'a sky filled edge to edge with descending divine weapons, discs and spears without number',
-  vaishnavastra: 'a discus of blue-white light travelling with impossible certainty toward its mark',
-  vasavi_shakti: 'a single blazing spear of Indra hanging in the dark, thrown once and never again',
-  nagastra: 'a serpent of living arrow-fire striking through smoke, hood spread',
+  vaishnavastra: 'a discus of blue-white light travelling with impossible certainty across a dark field',
+  vasavi_shakti: 'a single blazing spear hanging in the dark, thrown once and never again',
+  nagastra: 'a serpent of living arrow-fire striking through smoke, hood spread wide',
   garudastra: 'the shadow of a vast eagle falling across a field, serpents scattering beneath it',
   agneyastra: 'a wall of unquenchable flame advancing across a rank of soldiers',
   varunastra: 'a rising wall of black water swallowing fire',
@@ -148,150 +199,131 @@ const DESC: Record<string, string> = {
   aindrastra: 'a sky-blackening rain of arrows falling in a solid sheet',
   bhargavastra: 'countless arrows loosed at once from a single point, a fan of fire',
   sammohanastra: 'a soft grey haze rolling over an army, weapons falling from slack hands',
-  // Boons and fates
-  gandhari_gaze: 'a blindfolded queen lifting the cloth from her eyes for the first time, terrible light beneath it',
-  kunti_invocation: 'a woman speaking a mantra with her eyes closed, a god half-formed in the air above her',
-  surya_kavacha: 'golden armour and earrings glowing with sunlight, worn by no one, floating',
+  gandhari_gaze: 'a blindfold lifted from a queen’s eyes for the first time, terrible light beneath it',
+  kunti_invocation: 'a woman with closed eyes speaking a mantra, a god half-formed in the air above her',
+  surya_kavacha: 'golden armour and earrings glowing with sunlight, worn by no one, floating in darkness',
   ashwins_draught: 'twin physician-gods pouring a luminous draught, horses behind them',
   vayu_fury: 'a gale tearing across a battlefield, banners and men going over together',
   yama_summons: 'a dark lord of death holding a noose and a ledger, tallying the field',
   ashwatthama_elephant: 'a war elephant falling in smoke, a lie taking shape above it',
 };
 
-// Flavour text is narrative, not visual: "second of Virata's fallen sons" gives
-// an image model nothing to draw. So the fallback is composed from what the card
-// actually IS, rank and battlefield role, with the lore hook appended as colour.
-const BEARING: Record<string, string> = {
-  maharathi:
-    'a great champion in magnificent golden lamellar war-armour: sculpted embossed breastplate, layered pauldrons, engraved vambraces, jewelled war-belt and ornate helm',
-  atirathi:
-    'a seasoned warrior in fine gilded scale armour with shoulder guards, bracers and an ornamented war-belt',
-  rathi:
-    'a hardened line-fighter in banded bronze cuirass and leather bracers, scarred and well-used',
-};
-const ROLE: Record<string, string> = {
-  ratha: 'a chariot-borne archer, bow in hand',
-  gaja: 'a heavy warrior of the elephant corps, tusked mount shouldering into frame behind him',
-  padati: 'a foot soldier of the line, spear and shield',
-};
-const DRESS: Record<string, string> = {
-  pandava: 'in the indigo and silver of the Pandavas',
-  kaurava: 'in the crimson and gold of the Kauravas',
-  asura: 'an asura, dark-skinned and tusked, in barbaric green-lacquered plate',
-  legend: 'in the plain dress of one who fought for neither host',
-  neutral: '',
-};
+// ------------------------------------------------------------------- builder
+function hookOf(card: U): string {
+  const flavor = (card.flavor ?? '').split(/(?<=\.)\s/)[0] ?? '';
+  return flavor.replace(/\s+/g, ' ').trim().replace(/\.$/, '');
+}
 
-function subjectOf(card: Card): string {
-  if (DESC[card.id]) return DESC[card.id];
+/** The character half of a prompt: everything except the style sentence. */
+function bodyOf(card: U): string {
+  if (card.type !== 'unit') {
+    const p = PHENOMENON[card.id] || hookOf(card) || card.name;
+    const noFigure =
+      card.type === 'astra'
+        ? 'No human figure, the weapon itself filling the frame.'
+        : 'No human figure.';
+    return `${card.name}: ${p}. ${noFigure} ${LIGHT}`;
+  }
 
-  const flavor = ((card as { flavor?: string }).flavor ?? '').split(/(?<=\.)\s/)[0] ?? '';
-  const hook = flavor.replace(/\s+/g, ' ').trim().replace(/\.$/, '');
-
-  if (card.type !== 'unit') return hook.toLowerCase() || card.name;
-
-  const tier = (card as { tier?: string }).tier ?? 'rathi';
+  const m = M[card.id] ?? {};
+  const tier = card.tier ?? 'rathi';
   const row = card.rows[0] ?? 'padati';
-  const parts = [BEARING[tier] ?? BEARING.rathi, ROLE[row] ?? ROLE.padati, DRESS[card.house] ?? ''];
-  const visual = parts.filter(Boolean).join(', ');
-  return hook ? `${visual}. ${hook}` : visual;
+  const armour = m.armour ?? ARMOUR[card.house] ?? ARMOUR.neutral;
+  const plates = PLATES[tier] ?? PLATES.rathi;
+  const build = m.build ?? BUILD[tier] ?? BUILD.rathi;
+  const mark = m.mark ?? 'long black hair';
+  const face = m.face ?? FACE[card.house] ?? FACE.neutral;
+  const weapon = m.weapon ?? WEAPON[row] ?? WEAPON.padati;
+  const scene = m.scene ?? SCENE[card.house] ?? SCENE.neutral;
+
+  // Asuras are meant to be inhuman; everyone else must be told they are human,
+  // or the model reaches for Krishna's blue skin.
+  const skin = card.house === 'asura' ? 'Dark-skinned and inhuman.' : 'Warm bronze-brown skin.';
+
+  const unarmoured = /no armour/.test(armour);
+  const armourClause = unarmoured
+    ? `${card.name} in ${armour}`
+    : `${card.name} in FULL BATTLE ARMOUR, his torso completely enclosed in ${armour}, ${plates}`;
+
+  const cap = build.charAt(0).toUpperCase() + build.slice(1);
+  return `${armourClause}. ${cap}, ${mark}, ${face}. ${weapon}. Braced wide, torso torqued. ${skin} ${scene}.`;
 }
 
-function promptFor(card: Card): string {
-  const tint = TINT[card.house] ?? TINT.neutral;
-  // Asuras are meant to be inhuman; everyone else must be told they are human.
-  const skin = card.type === 'unit' && card.house !== 'asura' ? ` A human warrior with ${HUMAN_SKIN}.` : '';
-  const act =
-    card.type === 'unit'
-      ? ` ${ACTION[card.id] ?? ACTION_BY_ROW[card.rows[0] ?? 'padati'] ?? ACTION_BY_ROW.padati}`
-      : '';
-  return `${STYLE} ${FRAMING[card.type]} ${tint} Subject: ${card.name},${act}. ${subjectOf(card)}.${skin}`;
-}
-
-const cards = allCards();
-const GROUPS: { title: string; match: (c: Card) => boolean }[] = [
+const cards = allCards() as U[];
+const GROUPS: { title: string; match: (c: U) => boolean }[] = [
   { title: 'The Pandava Host', match: (c) => c.type === 'unit' && c.house === 'pandava' },
   { title: 'The Kaurava Host', match: (c) => c.type === 'unit' && c.house === 'kaurava' },
   { title: 'The Asura Host', match: (c) => c.type === 'unit' && c.house === 'asura' },
   { title: 'Those Who Stood Apart', match: (c) => c.type === 'unit' && c.house === 'legend' },
-  { title: 'Astras (divine weapons)', match: (c) => c.type === 'astra' },
+  { title: 'Astras', match: (c) => c.type === 'astra' },
   { title: 'Vardaan and Fates', match: (c) => c.type === 'boon' || c.type === 'curse' },
 ];
 
-let n = 0;
 const out: string[] = [];
+let over = 0;
+let longest = 0;
+
 out.push('# Kurukshetra: card art prompts');
 out.push('');
-out.push(`Generated from the live card data. ${cards.length} images, one per card.`);
-out.push('Regenerate with `npx vite-node sim/build-art-prompts.ts`.');
+out.push(`${cards.length} prompts, generated from the live card data. Regenerate with \`npx vite-node sim/build-art-prompts.ts\`.`);
 out.push('');
-out.push('## The rules that actually keep 100+ images consistent');
+out.push('## How to use these');
 out.push('');
-out.push('1. **Paste the style anchor verbatim every time.** Never reword it, never summarise it. Consistency comes from this sentence being byte-identical across every generation, not from describing each card well.');
-out.push('2. **One light direction, always upper-left.** It is in the anchor. Do not let a prompt override it.');
-out.push('3. **Framing is fixed by card type**, not chosen per card. Warriors are chest-up three-quarter portraits; astras have no human figure; fates are objects.');
-out.push('4. **Aspect ratio 5:7 vertical.** This matches the card frames in the game exactly.');
-out.push('5. **No text in the image.** Image models garble Devanagari badly, and the card frame supplies the name anyway.');
-out.push('6. **Test three first** (Arjuna, Karna, Ravana) and view them at 46px wide before committing to the rest. If the silhouette does not read at that size, the style needs more contrast, not more detail.');
+out.push('Each card gives two forms.');
 out.push('');
-out.push('## The style anchor');
+out.push('- **Standalone** includes the style sentence. Use it when generating from the prompt alone.');
+out.push('- **With style reference** omits the style sentence. Use it when an approved image is uploaded as a Firefly Style Reference, because the reference already supplies the style and repeating it in words gives the model two competing instructions.');
+out.push('');
+out.push('Aspect ratio 4:5, set in the generator rather than the prompt. Firefly caps prompts at 1024 characters and has no negative-prompt field.');
+out.push('');
+out.push('## What testing taught us');
+out.push('');
+out.push('1. **Dense beats minimal.** Stripped-back prompts came out worse: gaps get filled by the model\'s own priors, which for these characters means a bare chest and calendar art.');
+out.push('2. **Describe armour by coverage**, never by analogy. "Torso completely enclosed" works; "fused to his skin" produced bare skin.');
+out.push('3. **The pose must be depictable.** A weapon held is fine, a weapon in transit is not. A mace raised overhead renders cleanly; a just-released bowstring comes back as melted geometry, because it needs a deformed string and an absent arrow.');
+out.push('4. **Give the face an emotion.** It is most of what separates a character from a mannequin.');
+out.push('5. **Never name a colour for the air.** "Dark indigo air" produced a bright blue daylight sky and killed the chiaroscuro. Name the weather, not the colour.');
+out.push('6. **One item per slot.** Stacked elements turned the first Karna into an all-red mess.');
+out.push('7. **Never name what you do not want.** With no negative-prompt field, every mention is a request.');
+out.push('8. **Do not use JSON.** It collapses the prompt entirely and returns unrelated stock images.');
+out.push('');
+out.push('## The style sentence');
 out.push('');
 out.push('```');
 out.push(STYLE);
 out.push('```');
 out.push('');
-out.push('## The exclude list');
-out.push('');
-out.push('Put this in the generator\'s **Exclude** / negative-prompt field, not in the prompt itself. Naming a thing in order to forbid it tends to summon it, which is how the first test came back covered in garbled Devanagari.');
-out.push('');
-out.push('```');
-out.push(EXCLUDE);
-out.push('```');
-out.push('');
-out.push('## Palette by house');
-out.push('');
-out.push('| House | Atmosphere |');
-out.push('| --- | --- |');
-for (const [h, t] of Object.entries(TINT)) out.push(`| ${h} | ${t} |`);
-out.push('');
 
-// Two formats, because there are two ways you will actually use this. The table
-// is for handing the whole set to a model at once: paste the anchor, then the
-// rows. The full prompts below are for generating one card at a time.
-out.push('## All 103 in one table');
-out.push('');
-out.push('Prepend the style anchor and the framing rule to each subject line.');
-out.push('');
-out.push('| # | Card | Type | House | Subject |');
-out.push('| --- | --- | --- | --- | --- |');
-for (const g of GROUPS) {
-  for (const c of cards.filter(g.match)) {
-    n += 1;
-    out.push(`| ${n} | ${c.name} | ${c.type} | ${c.house} | ${subjectOf(c).replace(/\|/g, '/')} |`);
-  }
-}
-out.push('');
-out.push('---');
-out.push('');
-out.push('## Ready-to-paste prompts');
-out.push('');
-
-n = 0;
 for (const g of GROUPS) {
   const group = cards.filter(g.match);
   if (!group.length) continue;
-  out.push(`### ${g.title} (${group.length})`);
+  out.push(`## ${g.title} (${group.length})`);
   out.push('');
   for (const c of group) {
-    n += 1;
-    out.push(`**${n}. ${c.name}**`);
+    const body = bodyOf(c);
+    const full = `${STYLE} ${body}`;
+    longest = Math.max(longest, full.length);
+    if (full.length > 1024) over++;
+    out.push(`### ${c.name}`);
+    out.push('');
+    out.push(`\`${c.id}.webp\` · ${full.length} chars`);
+    out.push('');
+    out.push('Standalone:');
     out.push('');
     out.push('```');
-    out.push(promptFor(c));
+    out.push(full);
+    out.push('```');
+    out.push('');
+    out.push('With style reference:');
+    out.push('');
+    out.push('```');
+    out.push(body);
     out.push('```');
     out.push('');
   }
 }
 
 fs.writeFileSync('docs/art-prompts.md', out.join('\n'));
-console.log(`docs/art-prompts.md written: ${n} prompts across ${GROUPS.length} groups`);
+console.log(
+  `docs/art-prompts.md written: ${cards.length} prompts, longest ${longest} chars, ${over} over the 1024 cap`,
+);
