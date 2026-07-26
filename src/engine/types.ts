@@ -18,7 +18,32 @@ export const ROWS: Row[] = ['ratha', 'gaja', 'padati'];
 // (Jarasandha, Ekalavya, Shishupala), or refused it (Balarama, Rukmi).
 export type House = 'pandava' | 'kaurava' | 'neutral' | 'asura' | 'legend';
 
-/** Canon warrior ranking from the Bhishma Parva. Drives base power tiers. */
+/**
+ * Warrior rank. Drives base power AND deck cost, via TIER_PROVISION.
+ *
+ * DELIBERATELY NOT THE EPIC'S LADDER, and this is not a bug to be fixed.
+ * Bhishma's enumeration (Udyoga Parva CLXVI-CLXXIII, not Bhishma Parva as this
+ * comment used to say) counts in three grades: ardharatha < ratha < atiratha.
+ * He closes by naming exactly those: "The Rathas and Atirathas, according to
+ * their precedence, have now been declared by me to thee, and they also that
+ * are half Rathas."
+ *
+ * MAHARATHA IS NEVER A COUNTING TIER THERE. Bhishma uses it as loose praise and
+ * applies it to 22 people, including several obscure Panchala nobles, while
+ * reserving ATIRATHA for only 8: Kritavarma, Shalya and Bahlika on one side,
+ * Dhrishtadyumna, Satyajit, Srenimat, king Vasudeva and Kuntibhoja on the
+ * other. Neither Bhishma, Drona, Karna nor Arjuna is among them. Karna he rates
+ * ardharatha, half a ratha, which is the famous insult; Drona concurs, and
+ * Sanjaya later retorts that Karna "is equal to two Maharathas". Arjuna he
+ * refuses to grade at all, saying no such car-warrior was ever born or will be.
+ * The one exchange rate the text gives is "equal to eight Rathas... he is an
+ * Atiratha".
+ *
+ * We use rathi < atirathi < maharathi because that is what every modern reader
+ * and retelling means by the words. Matching the epic here would invert player
+ * expectation for a subtlety almost nobody knows. Recorded so it is not
+ * "corrected" later.
+ */
 export type Tier = 'rathi' | 'atirathi' | 'maharathi';
 
 export type CardType = 'unit' | 'astra' | 'boon' | 'curse';
