@@ -531,17 +531,30 @@ const DRAPE_POOL = [
   '', '', '', '', '', '',
   'A billowing white battle scarf',
   'A billowing dark ochre battle scarf',
-  'A short crimson cloak thrown back from one shoulder',
-  'A heavy dark cloak clasped at the throat',
+  // Indian drape, not European. A cloak clasped at the throat is the same
+  // wrong-civilisation error as the boots were.
+  'A crimson uttariya thrown back over one shoulder',
+  'A heavy dark angavastram draped across the chest',
   'A long sash knotted at the hip, ends flying',
   'A coarse wool shawl over one shoulder',
+  'A gold-bordered uttariya wound across the torso',
 ] as const;
 
 const DHOTI_POOL = ['white dhoti', 'cream dhoti', 'saffron dhoti', 'deep red dhoti',
                     'undyed dhoti', 'dark blue dhoti', 'ochre dhoti'] as const;
 
-const FOOT_POOL = ['gold sandals', 'leather sandals', 'heavy boots', 'bare feet',
-                   'strapped shin-boots', 'plain sandals'] as const;
+/** NO BOOTS. "Heavy boots" and "shin-boots" are European kit and the model drew
+ *  exactly that: an ancient Indian warrior in medieval footwear. Ancient India
+ *  wore the paduka and the open sandal. "Toes visible" is the load-bearing
+ *  phrase - without it the model reverts to a boot whatever noun you use. */
+const FOOT_POOL = [
+  'open-toed Indian warrior sandals with golden straps, toes visible beneath the greaves',
+  'leather paduka sandals with plain straps, toes visible',
+  'jewelled sandals with silver straps, toes visible',
+  'sandals laced with crossed leather thongs to the ankle, toes visible',
+  'plain wooden paduka, bare toes',
+  'bare feet',
+] as const;
 
 /** Rule 7 still holds inside every one of these: no hue is ever named for the
  *  air. Weather objects and values only. */
@@ -794,7 +807,7 @@ const M: Record<string, Marquee> = {
     tunic: 'a black tunic', // the blue belongs on the loincloth, not twice over
     mark: 'tall as a sala tree, long-armed, bitten lip and three deep furrows across his brow',
     face: 'screaming, teeth bared',
-    cloth: 'Torn blue loincloth, heavy black boots',
+    cloth: 'Torn blue loincloth, heavy leather paduka sandals with dark straps, toes visible',
     scene: 'Ruined battlefield, flying dust, rock debris',
   },
   karna: {
