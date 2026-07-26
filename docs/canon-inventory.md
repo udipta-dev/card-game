@@ -186,3 +186,118 @@ Two specific traps:
   not under that name.)
 
 **Kartikeya / Skanda has no astra at all.** Zero. Do not invent one.
+
+---
+
+# Boons and curses
+
+Ganguli via Gutenberg 15474-15477, Valmiki via Griffith 24869, all grepped in
+full. Every debunk re-checked on whitespace-normalised text, because the corpus
+hard-wraps at ~72 chars and that silently breaks phrase searches.
+
+## 7. A card we ship is built on an episode that is not in the epic
+
+**`gandhari_gaze` — Gandhari's adamantine gaze. DENIED.**
+
+Zero hits across all four volumes for adamant, blindfold, bandage, naked, gaze
+or loins in that combination. There is no episode where Duryodhana comes to his
+mother naked or leaf-clad and she hardens his body with a look.
+
+What *is* there: she blindfolds herself **at her marriage, out of devotion**
+(Adi CX), and her single gaze-power scene targets **Yudhishthira's toe** in the
+Stri Parva.
+
+The vajra-torso claim is real but comes from **the Danavas' speech** talking
+Duryodhana out of suicide (Vana CCL) - it is a character's assertion, not the
+narrator's. Combined with Bhima's vow over the bared thigh and **Maitreya's
+curse**, that trio is what Krishna himself cites to justify the foul blow. That
+is the honest version of the card.
+
+## 8. Two design rules the epic follows, and we do not
+
+**Boons cannot be renegotiated once uttered.** Draupadi, Drupada and Ravana all
+ask for an amendment and are refused in near-identical words: *"It will not be
+otherwise."* **But a third party can add limits.** Indra caps Urvasi's curse,
+Kubera makes Sthuna's swap permanent, the Yakshas negotiate a termination
+trigger. That asymmetry is a clean rules primitive we are not using.
+
+**The answer to an invulnerable thing is almost never a bigger weapon.** It is a
+disarm, a legalism, or a targeting restriction. Krishna's own list of engineered
+kills (Drona CLXXXI) names Jarasandha, Ghatotkacha, Ekalavya and Sisupala
+together as removals accomplished *"by the employment of means."*
+
+This cuts directly against an astra arms race. The epic's climaxes are
+loopholes, not damage numbers.
+
+## 9. The best loopholes, ranked by how cleanly they become rules
+
+1. **Sunda and Upasunda.** Brahma **refuses** immortality and makes them name
+   their own death clause. They choose "no fear from any created thing... except
+   only from each other", and Tilottama exists purely to trigger it. The
+   Hiranyakashipu archetype, fully inside the Mahabharata. (Adi CCXI-CCXIV)
+2. **Ravana.** Immune to Gandharvas, Celestials, Kinnaras, Asuras, Yakshas,
+   Rakshasas and Serpents - **humans omitted, out of contempt**. The omission is
+   the entire plot.
+3. **Bhishma.** Unkillable by boon, so his death attacks the **vow** instead: he
+   will not shoot a woman, one formerly a woman, one feminine-named, or one
+   feminine-formed. He hands his enemies the exploit himself.
+4. **Drona.** Binary. Armed, unslayable by gods; disarmed, "capable of being
+   slain even by human beings". The trigger is **social** - bad news "from some
+   one of credible speech" - which is why the honest man had to be the liar.
+5. **Jarasandha.** Weapon-immune, so the answer is bare hands after his mace is
+   taken away.
+6. **Duryodhana.** Vajra above, flowers below. Immunity that names its own weak
+   point.
+7. **Jayadratha.** Checks four Pandavas, **excludes Arjuna**, and in the Vana
+   wording only once.
+8. **Karna's dart.** One use, auto-kill, returns to Indra. Plus the misfire
+   clause: thrown while other weapons remain and his life is not in peril, "it
+   will fall even on thyself."
+9. **Indrajit.** Invincible only while his daily fire sacrifice is complete.
+   Killed in the window, on Vibhishana's insider tip.
+10. **Bali.** Undefeatable by force, undone by honouring his own promise.
+
+## 10. Curses that are ongoing STATE, not one-off events
+
+The whole list models as persistent effects rather than instant damage.
+
+| what | shape |
+|---|---|
+| **Yayati** | the only literally **transferable** curse: "thou mayst transfer this thy decrepitude to whomsoever thou likest". Needs consent, pays the transferee the throne, and he curses each son who refuses. A complete trading mechanic as written |
+| **Maitreya on Duryodhana** | conditional and **voidable by an action**: null if he makes peace. An ongoing threat the player can cancel by changing behaviour |
+| **Arjuna / Urvasi** | untermed curse, then Indra rewrites it: fixed one year, **deferred activation**, guaranteed expiry, valence flipped. A timed buff disguised as a debuff |
+| **Ashwatthama's gem** | removable equipment granting immunity to weapons, disease, hunger, gods, nagas, rakshasas. Physically changes hands to Yudhishthira |
+| **Ashwatthama's curse** | **finite: 3,000 years.** Not immortality |
+| **Shikhandi / Sthuna** | duration-limited swap with mandatory return, overridden to permanent by Kubera, reverting on death. Three-layer state |
+| **Amba** | persists **across death and rebirth with memory intact**, plus a second delay after birth |
+| **Karna's two curses** | both dormant, firing on triggers: the hour of death, fear in battle, facing an equal |
+| **Gandhari on Krishna** | a 36-year timer |
+| **Vrishni iron bolt** | the countermeasure **fails** - ground to powder, it returns as eraka grass. Models as un-dispellable |
+| **Kumbhakarna** | a recurring six-off, one-on cycle |
+| **Bhishma** | targeting restriction (passive rule) plus death suspended through the solstice, 58 nights on the arrow bed |
+
+## 11. Refuse list, boons and curses
+
+All re-verified on normalised text.
+
+- **Gandhari's adamantine gaze** (see above)
+- **Barbarika / Khatushyam and the three arrows** - zero occurrences of the name
+- **Shakuni's dice made from his father's bones**, or any dice boon. Ganguli
+  gives plain skill: *"I am skillful at dice. There is none equal to me."*
+- **Draupadi's "blind son of a blind man."** Zero. In Sabha XLVI it is Bhima,
+  Arjuna, the twins and the servants who laugh. Draupadi is not even present
+- **Abhimanyu learned the chakravyuha in the womb.** Not in Ganguli - flat
+  statement that the lesson was incomplete
+- **Ashwatthama immortal / chiranjivi.** The curse is finite
+- **Kripa's immortality.** Not found
+- **Kunti's mantra usable four times.** **No number exists in Ganguli.** The cap
+  is social, imposed by Kunti on Madri
+- **Karna cursed by the Earth goddess.** Earth is only the instrument of the
+  brahmana's curse
+- **Jarasandha: throw the halves apart or they rejoin.** Not in Ganguli
+- **Vali's half-strength boon.** Not in Griffith or Ganguli
+- **Arjuna chose which year to spend the curse.** Indra fixes the timing
+- **Saraswati twisting Kumbhakarna's tongue.** Only in Griffith's prose
+  *appendix*, not the Valmiki verse
+- **Hiranyakashipu's loophole is real but PURANIC** (Bhagavata 7.3), not epic.
+  Label it rather than presenting it as Mahabharata
