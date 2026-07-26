@@ -276,7 +276,7 @@ const WEAPON_BY_ID: Record<string, string> = {
   bali: 'holding a water-pot, poised to pour the water of the gift',
   // Rig Veda 1.32.7: "Footless and handless still he challenged Indra." The
   // Vedic Vritra has no hands to hold anything. The vajra is INDRA'S, not his.
-  vritra: '',
+  vritra: 'holding a great trident',
   // A devotee, not a combatant. Bhagavata 7.9.4 has him prostrate with folded
   // palms. Arming him would be the single most wrong thing on this card.
   prahlada: '',
@@ -429,6 +429,16 @@ interface Marquee {
 // already a slot, and it makes five brothers in near-identical armour read as
 // five different men.
 const M: Record<string, Marquee> = {
+  nishumbha: {
+    mark: 'a second armed man bursting out of his pierced chest',
+  },
+  hiranyaksha: {
+    mark: 'brown hair standing out stiff like swords, gold anklets',
+  },
+  hiranyakashipu: {
+    skin: 'Molten-gold skin',
+    mark: 'limbs of molten gold, skin still pitted where ants ate him',
+  },
   durmukha: {
     mark: 'handsome despite his name, which means foul-faced',
   },
@@ -526,22 +536,21 @@ const M: Record<string, Marquee> = {
     mark: 'round cheeks, huge eyes, steel armour he was born wearing',
   },
   vritra: {
-    banner: '',
-    skin: 'Dull green-black scales',
-    // Not a man in armour. A dragon lying on the mountain, hoarding the waters.
-    build: 'a vast limbless serpent-dragon, coiled on a mountain',
-    metal: 'No armour, bare hide',
-    tunic: 'no armour at all',
-    cloth: 'Coils heaped across the rock',
-    mark: 'a blunt reptilian head, no arms and no legs',
+    // TWO TRADITIONS, and I had picked the wrong one for this game. Rig Veda
+    // 1.32.7 has him "footless and handless", a serpent on the mountain, which
+    // is what I built. But Mahabharata Santi Parva CCLXXXI has a humanoid
+    // asura "like a mountain, full five hundred Yojanas in height and three
+    // hundred in circumference" who whirls Indra and swallows him whole. This
+    // is a Mahabharata game, so the Mahabharata Vritra wins, and he has hands.
+    build: 'a mountain-shaped giant, vast beyond any man',
+    mark: 'a mouth wide enough to swallow a god whole',
     face: 'jaws parted, eyes cold',
-    mount: '',
-    scene: 'Mountain crag under a withheld storm, dry riverbeds below',
+    scene: 'A withheld storm over dry riverbeds, no rain falling',
   },
   prahlada: {
     banner: '',
     skin: 'Warm brown skin',
-    build: 'a slight boy',
+    build: 'a boy of five',
     metal: 'Plain undyed cloth and no armour',
     tunic: 'no armour at all',
     cloth: 'Simple white dhoti, bare feet',
@@ -554,17 +563,17 @@ const M: Record<string, Marquee> = {
   mahishasura: {
     // The Mahishasuramardini composition: half out of the severed buffalo neck.
     build: 'a huge warrior emerging from the neck of a slain buffalo',
-    mark: 'buffalo horns and a heavy black muzzle behind him',
+    mark: 'half issuing from the mouth of a great black buffalo',
   },
   raktabija: {
-    mark: 'blood running from many wounds, drops falling',
+    mark: 'blood running from many wounds, each fallen drop rising as a duplicate',
   },
   narakasura: {
     // Bhagavata 10.59: Krishna beheads him while he rides an elephant.
     mount: 'a great war-elephant beside him, its head and tusks filling one side',
   },
   shumbha: {
-    mark: 'eight arms lifted high, each grasping a weapon',
+    mark: 'eight arms lifted high, filling the sky',
   },
   shishupala: {
     // Sabha XLII: born with three eyes and four arms, which fall away in
@@ -682,14 +691,15 @@ const M: Record<string, Marquee> = {
     face: 'smiling, eyes cold with calculation',
   },
   ravana: {
+    skin: 'Dark lapis-blue skin chased with gold',
     build: 'a colossal rakshasa king',
-    mark: 'ten crowned heads and many arms',
+    mark: 'ten crowned heads and twenty arms, white teeth, chest gouged by an elephant\'s tusk',
     face: 'all ten faces roaring at once',
   },
   kumbhakarna: {
     mount: '',
     build: 'a mountainous tusked giant',
-    mark: 'half-shut eyes heavy with sleep',
+    mark: 'half-shut eyes heavy with sleep, nostrils a man could crawl through',
   },
   indrajit: {
     mark: 'half-dissolved into thundercloud, only his bow solid',
