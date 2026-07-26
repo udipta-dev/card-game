@@ -63,6 +63,35 @@ const CAMERA: Record<string, string> = {
 /** Same idea where there is no "him" to look up at. */
 const CAMERA_SCENE = 'Low camera angle looking up from below, towering scale.';
 
+// ------------------------------------------------------------------- facing
+// Nothing in the prompt said which way anyone faced, so the model fell back to
+// the same default every time and the whole set looked away to its left. That
+// reads as a template, which is exactly the fatigue it produces.
+//
+// Deterministic, not random: a stable hash of the card id, so regenerating a
+// prompt never changes the picture you already made from it, and the spread is
+// designed rather than noisy. Square-on is the most confrontational and is
+// reserved by weighting for the ranks that should feel that way.
+const FACING = [
+  'turned three-quarters to his right',
+  'squarely facing the viewer',
+  'turned three-quarters to his left',
+  'squarely facing the viewer, head slightly turned',
+];
+function hashOf(id: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < id.length; i++) {
+    h ^= id.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function facingOf(card: U): string {
+  // Maharathis skew square-on: the greatest should meet your eye.
+  const pool = card.tier === 'maharathi' ? FACING : [FACING[0], FACING[2], FACING[1]];
+  return pool[hashOf(card.id) % pool.length];
+}
+
 /** Rule 8: framing, kept in a separate sentence from the camera because the two
  *  genuinely fight. A low angle wants to crop the feet or the crown, so the
  *  guard has to be explicit about the extremities rather than saying "nothing
@@ -383,6 +412,7 @@ const SKIN: Record<string, string> = {
 // rule 1, so anything the house look already handles is left alone.
 interface Marquee {
   banner?: string;
+  facing?: string;
   camera?: string;
   mount?: string;
   stance?: string;
@@ -638,6 +668,7 @@ function bodyOf(card: U): string {
 
   const camera = m.camera ?? CAMERA[tier] ?? CAMERA.rathi;
   const stance = m.stance ?? 'a wide battle stance';
+  const facing = m.facing ?? facingOf(card);
   const weapon: string =
     WEAPON_BY_ID[card.id] ?? WEAPON_FALLBACK[row] ?? WEAPON_FALLBACK.padati;
   // An explicit '' means the character canonically holds nothing.
@@ -668,8 +699,8 @@ function bodyOf(card: U): string {
   // Prahlada has his palms together). They must not inherit a battle stance, a
   // war-standard, or a frame guard promising a weapon that is not there.
   const opening = weapon
-    ? `${card.name}, ${build}, in ${stance}, ${weapon}.`
-    : `${card.name}, ${build}.`;
+    ? `${card.name}, ${build}, in ${stance}, ${facing}, ${weapon}.`
+    : `${card.name}, ${build}, ${facing}.`;
   const bannerClause = [banner, mount].filter(Boolean).join(', and ');
   return (
     `${opening} ` +

@@ -50,1304 +50,1304 @@ Each card below gives two forms. **Standalone** includes the style sentence; use
 
 ### Arjuna
 
-`arjuna.png` · 900 chars · 130 words
+`arjuna.png` · 935 chars · 135 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Arjuna, powerfully built, in a wide battle stance, holding Gandiva, a huge golden-backed longbow, a full quiver on his back. Blue-grey skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a golden ape with a lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Arjuna, powerfully built, in a wide battle stance, turned three-quarters to his left, holding Gandiva, a huge golden-backed longbow, a full quiver on his back. Blue-grey skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a golden ape with a lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Arjuna, powerfully built, in a wide battle stance, holding Gandiva, a huge golden-backed longbow, a full quiver on his back. Blue-grey skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a golden ape with a lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Arjuna, powerfully built, in a wide battle stance, turned three-quarters to his left, holding Gandiva, a huge golden-backed longbow, a full quiver on his back. Blue-grey skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a golden ape with a lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Bhima
 
-`bhima.png` · 912 chars · 135 words
+`bhima.png` · 948 chars · 140 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhima, hyper-muscular, in a wide battle stance, holding a heavy gold-decked iron mace in both hands. Deep bronze skin, screaming, teeth bared, wild black hair and a thick black beard beneath a spiked golden crown. Engraved black armour hung with heavy gold chains, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn blue loincloth, heavy black boots. Ruined battlefield, flying dust, rock debris. A tall war-standard bearing a giant silver lion with lapis-blue eyes, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhima, hyper-muscular, in a wide battle stance, turned three-quarters to his right, holding a heavy gold-decked iron mace in both hands. Deep bronze skin, screaming, teeth bared, wild black hair and a thick black beard beneath a spiked golden crown. Engraved black armour hung with heavy gold chains, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn blue loincloth, heavy black boots. Ruined battlefield, flying dust, rock debris. A tall war-standard bearing a giant silver lion with lapis-blue eyes, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Bhima, hyper-muscular, in a wide battle stance, holding a heavy gold-decked iron mace in both hands. Deep bronze skin, screaming, teeth bared, wild black hair and a thick black beard beneath a spiked golden crown. Engraved black armour hung with heavy gold chains, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn blue loincloth, heavy black boots. Ruined battlefield, flying dust, rock debris. A tall war-standard bearing a giant silver lion with lapis-blue eyes, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Bhima, hyper-muscular, in a wide battle stance, turned three-quarters to his right, holding a heavy gold-decked iron mace in both hands. Deep bronze skin, screaming, teeth bared, wild black hair and a thick black beard beneath a spiked golden crown. Engraved black armour hung with heavy gold chains, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn blue loincloth, heavy black boots. Ruined battlefield, flying dust, rock debris. A tall war-standard bearing a giant silver lion with lapis-blue eyes, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Yudhishthira
 
-`yudhishthira.png` · 920 chars · 134 words
+`yudhishthira.png` · 948 chars · 138 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Yudhishthira, powerfully built, in a wide battle stance, holding a long gold-hafted spear hung with bells. Deep bronze skin, calm sorrowful expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Still grey battlefield, falling ash, dead air. A tall war-standard bearing a golden moon circled by planets, two kettledrums lashed to the staff, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Yudhishthira, powerfully built, in a wide battle stance, squarely facing the viewer, holding a long gold-hafted spear hung with bells. Deep bronze skin, calm sorrowful expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Still grey battlefield, falling ash, dead air. A tall war-standard bearing a golden moon circled by planets, two kettledrums lashed to the staff, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Yudhishthira, powerfully built, in a wide battle stance, holding a long gold-hafted spear hung with bells. Deep bronze skin, calm sorrowful expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Still grey battlefield, falling ash, dead air. A tall war-standard bearing a golden moon circled by planets, two kettledrums lashed to the staff, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Yudhishthira, powerfully built, in a wide battle stance, squarely facing the viewer, holding a long gold-hafted spear hung with bells. Deep bronze skin, calm sorrowful expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Still grey battlefield, falling ash, dead air. A tall war-standard bearing a golden moon circled by planets, two kettledrums lashed to the staff, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Nakula
 
-`nakula.png` · 877 chars · 127 words
+`nakula.png` · 913 chars · 132 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Nakula, lithe and handsome, in a wide battle stance, holding a straight steel sword and a shield decked with a thousand stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a gold-backed sarabha, the eight-legged beast, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Nakula, lithe and handsome, in a wide battle stance, turned three-quarters to his right, holding a straight steel sword and a shield decked with a thousand stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a gold-backed sarabha, the eight-legged beast, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Nakula, lithe and handsome, in a wide battle stance, holding a straight steel sword and a shield decked with a thousand stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a gold-backed sarabha, the eight-legged beast, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Nakula, lithe and handsome, in a wide battle stance, turned three-quarters to his right, holding a straight steel sword and a shield decked with a thousand stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a gold-backed sarabha, the eight-legged beast, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Sahadeva
 
-`sahadeva.png` · 842 chars · 123 words
+`sahadeva.png` · 878 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sahadeva, lithe and watchful, in a wide battle stance, holding a broad curved scimitar and a shield. Deep bronze skin, quiet knowing expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a silver swan hung with small bells, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sahadeva, lithe and watchful, in a wide battle stance, turned three-quarters to his right, holding a broad curved scimitar and a shield. Deep bronze skin, quiet knowing expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a silver swan hung with small bells, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Sahadeva, lithe and watchful, in a wide battle stance, holding a broad curved scimitar and a shield. Deep bronze skin, quiet knowing expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a silver swan hung with small bells, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Sahadeva, lithe and watchful, in a wide battle stance, turned three-quarters to his right, holding a broad curved scimitar and a shield. Deep bronze skin, quiet knowing expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Battlefield at first light, low dawn mist. A tall war-standard bearing a silver swan hung with small bells, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Abhimanyu
 
-`abhimanyu.png` · 889 chars · 133 words
+`abhimanyu.png` · 917 chars · 137 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Abhimanyu, a beardless youth, slight beside grown men, in a wide battle stance, raising a chariot wheel overhead in both arms. Deep bronze skin, calm focused expression, bright unscarred golden armour, no crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. A closing ring of spears and shields on every side. A tall war-standard bearing a karnikara flower in pure gold, and a war-chariot behind him. High camera angle looking down at him, hemmed in and overwhelmed. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Abhimanyu, a beardless youth, slight beside grown men, in a wide battle stance, squarely facing the viewer, raising a chariot wheel overhead in both arms. Deep bronze skin, calm focused expression, bright unscarred golden armour, no crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. A closing ring of spears and shields on every side. A tall war-standard bearing a karnikara flower in pure gold, and a war-chariot behind him. High camera angle looking down at him, hemmed in and overwhelmed. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Abhimanyu, a beardless youth, slight beside grown men, in a wide battle stance, raising a chariot wheel overhead in both arms. Deep bronze skin, calm focused expression, bright unscarred golden armour, no crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. A closing ring of spears and shields on every side. A tall war-standard bearing a karnikara flower in pure gold, and a war-chariot behind him. High camera angle looking down at him, hemmed in and overwhelmed. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Abhimanyu, a beardless youth, slight beside grown men, in a wide battle stance, squarely facing the viewer, raising a chariot wheel overhead in both arms. Deep bronze skin, calm focused expression, bright unscarred golden armour, no crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. A closing ring of spears and shields on every side. A tall war-standard bearing a karnikara flower in pure gold, and a war-chariot behind him. High camera angle looking down at him, hemmed in and overwhelmed. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Ghatotkacha
 
-`ghatotkacha.png` · 786 chars · 108 words
+`ghatotkacha.png` · 821 chars · 113 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ghatotkacha, a towering tusked half-rakshasa, in a wide battle stance, holding a huge blazing spear upraised overhead. Dark grey skin, calm focused expression, a wild black mane. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a vulture. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ghatotkacha, a towering tusked half-rakshasa, in a wide battle stance, turned three-quarters to his left, holding a huge blazing spear upraised overhead. Dark grey skin, calm focused expression, a wild black mane. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a vulture. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Ghatotkacha, a towering tusked half-rakshasa, in a wide battle stance, holding a huge blazing spear upraised overhead. Dark grey skin, calm focused expression, a wild black mane. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a vulture. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ghatotkacha, a towering tusked half-rakshasa, in a wide battle stance, turned three-quarters to his left, holding a huge blazing spear upraised overhead. Dark grey skin, calm focused expression, a wild black mane. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a vulture. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Iravan
 
-`iravan.png` · 797 chars · 111 words
+`iravan.png` · 825 chars · 115 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Iravan, hard-muscled, in a wide battle stance, holding a sword and a battle-axe. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Iravan, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a sword and a battle-axe. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Iravan, hard-muscled, in a wide battle stance, holding a sword and a battle-axe. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Iravan, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a sword and a battle-axe. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Anjanaparvan
 
-`anjanaparvan.png` · 858 chars · 120 words
+`anjanaparvan.png` · 894 chars · 125 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Anjanaparvan, hard-muscled, in a wide battle stance, holding a scimitar decked with golden stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Anjanaparvan, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a scimitar decked with golden stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Anjanaparvan, hard-muscled, in a wide battle stance, holding a scimitar decked with golden stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Anjanaparvan, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a scimitar decked with golden stars. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Prativindhya
 
-`prativindhya.png` · 821 chars · 114 words
+`prativindhya.png` · 857 chars · 119 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prativindhya, hard-muscled, in a wide battle stance, holding a drawn bow, arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Dharma, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prativindhya, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a drawn bow, arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Dharma, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Prativindhya, hard-muscled, in a wide battle stance, holding a drawn bow, arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Dharma, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Prativindhya, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a drawn bow, arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Dharma, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Sutasoma
 
-`sutasoma.png` · 849 chars · 121 words
+`sutasoma.png` · 885 chars · 126 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sutasoma, hard-muscled, in a wide battle stance, holding an uplifted sword, a lance in his other hand. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Marut, lord of winds, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sutasoma, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding an uplifted sword, a lance in his other hand. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Marut, lord of winds, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Sutasoma, hard-muscled, in a wide battle stance, holding an uplifted sword, a lance in his other hand. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Marut, lord of winds, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Sutasoma, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding an uplifted sword, a lance in his other hand. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Marut, lord of winds, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shrutakarma
 
-`shrutakarma.png` · 832 chars · 116 words
+`shrutakarma.png` · 860 chars · 120 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shrutakarma, hard-muscled, in a wide battle stance, holding a spiked iron bludgeon. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Sakra, lord of thunder, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shrutakarma, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a spiked iron bludgeon. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Sakra, lord of thunder, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shrutakarma, hard-muscled, in a wide battle stance, holding a spiked iron bludgeon. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Sakra, lord of thunder, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shrutakarma, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a spiked iron bludgeon. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of Sakra, lord of thunder, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shatanika
 
-`shatanika.png` · 846 chars · 121 words
+`shatanika.png` · 881 chars · 126 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shatanika, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shatanika, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shatanika, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shatanika, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shrutasena
 
-`shrutasena.png` · 843 chars · 118 words
+`shrutasena.png` · 878 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shrutasena, hard-muscled, in a wide battle stance, holding a drawn bow, pouring showers of arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shrutasena, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a drawn bow, pouring showers of arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shrutasena, hard-muscled, in a wide battle stance, holding a drawn bow, pouring showers of arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shrutasena, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a drawn bow, pouring showers of arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing the image of an Ashwin horseman, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Dhrishtadyumna
 
-`dhrishtadyumna.png` · 865 chars · 123 words
+`dhrishtadyumna.png` · 901 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Dhrishtadyumna, powerfully built, in a wide battle stance, holding a drawn sword, the blade that took Drona’s head. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Dhrishtadyumna, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a drawn sword, the blade that took Drona’s head. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Dhrishtadyumna, powerfully built, in a wide battle stance, holding a drawn sword, the blade that took Drona’s head. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Dhrishtadyumna, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a drawn sword, the blade that took Drona’s head. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shikhandi
 
-`shikhandi.png` · 805 chars · 111 words
+`shikhandi.png` · 840 chars · 116 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shikhandi, hard-muscled, in a wide battle stance, holding a bow, sun-hued arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shikhandi, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, sun-hued arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shikhandi, hard-muscled, in a wide battle stance, holding a bow, sun-hued arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shikhandi, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, sun-hued arrows nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Drupada
 
-`drupada.png` · 852 chars · 122 words
+`drupada.png` · 887 chars · 127 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Drupada, powerfully built, in a wide battle stance, holding a gold-decked iron dart, his bow cut away. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Drupada, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a gold-decked iron dart, his bow cut away. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Drupada, powerfully built, in a wide battle stance, holding a gold-decked iron dart, his bow cut away. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Drupada, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a gold-decked iron dart, his bow cut away. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Yudhamanyu
 
-`yudhamanyu.png` · 805 chars · 111 words
+`yudhamanyu.png` · 833 chars · 115 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Yudhamanyu, hard-muscled, in a wide battle stance, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Yudhamanyu, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Yudhamanyu, hard-muscled, in a wide battle stance, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Yudhamanyu, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Uttamaujas
 
-`uttamaujas.png` · 805 chars · 111 words
+`uttamaujas.png` · 840 chars · 116 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Uttamaujas, hard-muscled, in a wide battle stance, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Uttamaujas, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Uttamaujas, hard-muscled, in a wide battle stance, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Uttamaujas, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow and gold-decked arrows. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Virata
 
-`virata.png` · 831 chars · 119 words
+`virata.png` · 866 chars · 124 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Virata, powerfully built, in a wide battle stance, holding a sheaf of ten lances. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Virata, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a sheaf of ten lances. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Virata, powerfully built, in a wide battle stance, holding a sheaf of ten lances. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Virata, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a sheaf of ten lances. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Sweta
 
-`sweta.png` · 859 chars · 124 words
+`sweta.png` · 887 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sweta, powerfully built, in a wide battle stance, holding a gold-decked dart, his bow left behind on the car. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sweta, powerfully built, in a wide battle stance, squarely facing the viewer, holding a gold-decked dart, his bow left behind on the car. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Sweta, powerfully built, in a wide battle stance, holding a gold-decked dart, his bow left behind on the car. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Sweta, powerfully built, in a wide battle stance, squarely facing the viewer, holding a gold-decked dart, his bow left behind on the car. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Sankha
 
-`sankha.png` · 815 chars · 116 words
+`sankha.png` · 851 chars · 121 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sankha, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sankha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Sankha, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Sankha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Uttara
 
-`uttara.png` · 820 chars · 119 words
+`uttara.png` · 848 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Uttara, a slight young prince, in a wide battle stance, holding an elephant-hook and a lance. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a lion, and a great war-elephant beside him, its head and trunk filling one side. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Uttara, a slight young prince, in a wide battle stance, squarely facing the viewer, holding an elephant-hook and a lance. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a lion, and a great war-elephant beside him, its head and trunk filling one side. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Uttara, a slight young prince, in a wide battle stance, holding an elephant-hook and a lance. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a lion, and a great war-elephant beside him, its head and trunk filling one side. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Uttara, a slight young prince, in a wide battle stance, squarely facing the viewer, holding an elephant-hook and a lance. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing a lion, and a great war-elephant beside him, its head and trunk filling one side. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Satyaki
 
-`satyaki.png` · 869 chars · 128 words
+`satyaki.png` · 897 chars · 132 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Satyaki, powerfully built, in a wide battle stance, holding a great bow tall as a sala tree, a full quiver on his back. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Satyaki, powerfully built, in a wide battle stance, squarely facing the viewer, holding a great bow tall as a sala tree, a full quiver on his back. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Satyaki, powerfully built, in a wide battle stance, holding a great bow tall as a sala tree, a full quiver on his back. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Satyaki, powerfully built, in a wide battle stance, squarely facing the viewer, holding a great bow tall as a sala tree, a full quiver on his back. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Chekitana
 
-`chekitana.png` · 837 chars · 118 words
+`chekitana.png` · 887 chars · 125 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Chekitana, powerfully built, in a wide battle stance, holding a hero-slaying iron mace. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Chekitana, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a hero-slaying iron mace. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Chekitana, powerfully built, in a wide battle stance, holding a hero-slaying iron mace. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Chekitana, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a hero-slaying iron mace. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Dhrishtaketu
 
-`dhrishtaketu.png` · 848 chars · 121 words
+`dhrishtaketu.png` · 898 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Dhrishtaketu, powerfully built, in a wide battle stance, holding an iron dart with a golden staff. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Dhrishtaketu, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding an iron dart with a golden staff. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Dhrishtaketu, powerfully built, in a wide battle stance, holding an iron dart with a golden staff. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Dhrishtaketu, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding an iron dart with a golden staff. Deep bronze skin, calm focused expression, long black hair beneath an ornate golden crown. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### The Kekaya Brothers
 
-`kekaya_brothers.png` · 849 chars · 119 words
+`kekaya_brothers.png` · 877 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. The Kekaya Brothers, hard-muscled, in a wide battle stance, holding bows, a full quiver each on their backs. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing five red standards together, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. The Kekaya Brothers, hard-muscled, in a wide battle stance, squarely facing the viewer, holding bows, a full quiver each on their backs. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing five red standards together, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-The Kekaya Brothers, hard-muscled, in a wide battle stance, holding bows, a full quiver each on their backs. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing five red standards together, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+The Kekaya Brothers, hard-muscled, in a wide battle stance, squarely facing the viewer, holding bows, a full quiver each on their backs. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall war-standard bearing five red standards together, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Kuntibhoja
 
-`kuntibhoja.png` · 819 chars · 116 words
+`kuntibhoja.png` · 855 chars · 121 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kuntibhoja, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kuntibhoja, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Kuntibhoja, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Kuntibhoja, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Yuyutsu
 
-`yuyutsu.png` · 808 chars · 112 words
+`yuyutsu.png` · 844 chars · 117 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Yuyutsu, hard-muscled, in a wide battle stance, holding a bow, a broad-headed arrow nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Yuyutsu, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a broad-headed arrow nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Yuyutsu, hard-muscled, in a wide battle stance, holding a bow, a broad-headed arrow nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Yuyutsu, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a broad-headed arrow nocked. Deep bronze skin, calm focused expression, long black hair beneath a golden circlet. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Pandava Footmen
 
-`pandava_infantry.png` · 746 chars · 106 words
+`pandava_infantry.png` · 782 chars · 111 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Pandava Footmen, wiry, in a wide battle stance, holding an iron spear and a round bossed shield. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Pandava Footmen, wiry, in a wide battle stance, turned three-quarters to his right, holding an iron spear and a round bossed shield. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Pandava Footmen, wiry, in a wide battle stance, holding an iron spear and a round bossed shield. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Pandava Footmen, wiry, in a wide battle stance, turned three-quarters to his right, holding an iron spear and a round bossed shield. Deep bronze skin, calm focused expression, long black hair bound in a topknot. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a dark blue tunic. Billowing white battle scarf, white dhoti, gold sandals. Stormy battlefield, dark thunderclouds, lightning. A tall plain white war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ## The Kaurava Host (30)
 
 ### Bhishma
 
-`bhishma.png` · 922 chars · 138 words
+`bhishma.png` · 972 chars · 145 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhishma, tall and straight-backed, in a wide battle stance, holding a huge longbow six cubits long, an arrow nocked. Deep bronze skin, expression heavy with sorrow, a long white beard beneath a high silver crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Battlefield beside a wide river, drifting mist. A tall war-standard bearing a golden palmyra palm and five stars on a silver staff, and a war-chariot behind him. Slightly low camera angle, grave and monumental. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhishma, tall and straight-backed, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a huge longbow six cubits long, an arrow nocked. Deep bronze skin, expression heavy with sorrow, a long white beard beneath a high silver crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Battlefield beside a wide river, drifting mist. A tall war-standard bearing a golden palmyra palm and five stars on a silver staff, and a war-chariot behind him. Slightly low camera angle, grave and monumental. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Bhishma, tall and straight-backed, in a wide battle stance, holding a huge longbow six cubits long, an arrow nocked. Deep bronze skin, expression heavy with sorrow, a long white beard beneath a high silver crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Battlefield beside a wide river, drifting mist. A tall war-standard bearing a golden palmyra palm and five stars on a silver staff, and a war-chariot behind him. Slightly low camera angle, grave and monumental. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Bhishma, tall and straight-backed, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a huge longbow six cubits long, an arrow nocked. Deep bronze skin, expression heavy with sorrow, a long white beard beneath a high silver crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Battlefield beside a wide river, drifting mist. A tall war-standard bearing a golden palmyra palm and five stars on a silver staff, and a war-chariot behind him. Slightly low camera angle, grave and monumental. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Drona
 
-`drona.png` · 929 chars · 138 words
+`drona.png` · 957 chars · 142 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Drona, powerfully built, in a wide battle stance, holding a bow, worn leather fences encasing his fingers. Deep bronze skin, cold measuring expression, a grey beard, ash marks on his brow, a sacred thread across the armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden altar with a water-pot and bow, a black deerskin waving from the top, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Drona, powerfully built, in a wide battle stance, squarely facing the viewer, holding a bow, worn leather fences encasing his fingers. Deep bronze skin, cold measuring expression, a grey beard, ash marks on his brow, a sacred thread across the armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden altar with a water-pot and bow, a black deerskin waving from the top, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Drona, powerfully built, in a wide battle stance, holding a bow, worn leather fences encasing his fingers. Deep bronze skin, cold measuring expression, a grey beard, ash marks on his brow, a sacred thread across the armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden altar with a water-pot and bow, a black deerskin waving from the top, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Drona, powerfully built, in a wide battle stance, squarely facing the viewer, holding a bow, worn leather fences encasing his fingers. Deep bronze skin, cold measuring expression, a grey beard, ash marks on his brow, a sacred thread across the armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden altar with a water-pot and bow, a black deerskin waving from the top, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Karna
 
-`karna.png` · 966 chars · 143 words
+`karna.png` · 1002 chars · 148 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Karna, powerfully built, in a wide battle stance, holding a massive ornate dark bow, a full quiver of arrows on his back. Deep bronze skin, grim resolute expression, long black hair beneath a golden diadem, huge ornate golden earrings. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Dusty battlefield under a low sun, drifting smoke, distant broken chariots. A tall war-standard bearing a gold elephant-girth rope set with pearls, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Karna, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a massive ornate dark bow, a full quiver of arrows on his back. Deep bronze skin, grim resolute expression, long black hair beneath a golden diadem, huge ornate golden earrings. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Dusty battlefield under a low sun, drifting smoke, distant broken chariots. A tall war-standard bearing a gold elephant-girth rope set with pearls, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Karna, powerfully built, in a wide battle stance, holding a massive ornate dark bow, a full quiver of arrows on his back. Deep bronze skin, grim resolute expression, long black hair beneath a golden diadem, huge ornate golden earrings. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Dusty battlefield under a low sun, drifting smoke, distant broken chariots. A tall war-standard bearing a gold elephant-girth rope set with pearls, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Karna, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a massive ornate dark bow, a full quiver of arrows on his back. Deep bronze skin, grim resolute expression, long black hair beneath a golden diadem, huge ornate golden earrings. Engraved gold armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Dusty battlefield under a low sun, drifting smoke, distant broken chariots. A tall war-standard bearing a gold elephant-girth rope set with pearls, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shalya
 
-`shalya.png` · 924 chars · 134 words
+`shalya.png` · 952 chars · 138 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shalya, powerfully built, in a wide battle stance, holding an iron mace wrapped in a cloth of gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing the corn-goddess with a golden ploughshare, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shalya, powerfully built, in a wide battle stance, squarely facing the viewer, holding an iron mace wrapped in a cloth of gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing the corn-goddess with a golden ploughshare, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shalya, powerfully built, in a wide battle stance, holding an iron mace wrapped in a cloth of gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing the corn-goddess with a golden ploughshare, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shalya, powerfully built, in a wide battle stance, squarely facing the viewer, holding an iron mace wrapped in a cloth of gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing the corn-goddess with a golden ploughshare, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Duryodhana
 
-`duryodhana.png` · 935 chars · 133 words
+`duryodhana.png` · 970 chars · 138 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Duryodhana, powerfully built, in a wide battle stance, holding a colossal gold-banded war-mace. Deep bronze skin, hard contemptuous expression, long black hair beneath a heavy jewelled crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing an elephant worked in gems, tinkling with a hundred bells, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Duryodhana, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a colossal gold-banded war-mace. Deep bronze skin, hard contemptuous expression, long black hair beneath a heavy jewelled crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing an elephant worked in gems, tinkling with a hundred bells, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Duryodhana, powerfully built, in a wide battle stance, holding a colossal gold-banded war-mace. Deep bronze skin, hard contemptuous expression, long black hair beneath a heavy jewelled crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing an elephant worked in gems, tinkling with a hundred bells, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Duryodhana, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a colossal gold-banded war-mace. Deep bronze skin, hard contemptuous expression, long black hair beneath a heavy jewelled crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing an elephant worked in gems, tinkling with a hundred bells, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Dushasana
 
-`dushasana.png` · 853 chars · 122 words
+`dushasana.png` · 888 chars · 127 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Dushasana, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Dushasana, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Dushasana, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Dushasana, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Vikarna
 
-`vikarna.png` · 857 chars · 122 words
+`vikarna.png` · 892 chars · 127 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vikarna, hard-muscled, in a wide battle stance, holding a bow, his palm cased in a scarred leather fence. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vikarna, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, his palm cased in a scarred leather fence. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Vikarna, hard-muscled, in a wide battle stance, holding a bow, his palm cased in a scarred leather fence. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Vikarna, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow, his palm cased in a scarred leather fence. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Chitrasena
 
-`chitrasena.png` · 797 chars · 115 words
+`chitrasena.png` · 825 chars · 119 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Chitrasena, wiry, in a wide battle stance, holding a bow, the model of all bowmen. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Chitrasena, wiry, in a wide battle stance, squarely facing the viewer, holding a bow, the model of all bowmen. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Chitrasena, wiry, in a wide battle stance, holding a bow, the model of all bowmen. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Chitrasena, wiry, in a wide battle stance, squarely facing the viewer, holding a bow, the model of all bowmen. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Vivimsati
 
-`vivimsati.png` · 802 chars · 116 words
+`vivimsati.png` · 830 chars · 120 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vivimsati, wiry, in a wide battle stance, holding a sword and a shield, his horse gone. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vivimsati, wiry, in a wide battle stance, squarely facing the viewer, holding a sword and a shield, his horse gone. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Vivimsati, wiry, in a wide battle stance, holding a sword and a shield, his horse gone. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Vivimsati, wiry, in a wide battle stance, squarely facing the viewer, holding a sword and a shield, his horse gone. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Durmukha
 
-`durmukha.png` · 813 chars · 119 words
+`durmukha.png` · 849 chars · 124 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Durmukha, wiry, in a wide battle stance, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Durmukha, wiry, in a wide battle stance, turned three-quarters to his right, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Durmukha, wiry, in a wide battle stance, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Durmukha, wiry, in a wide battle stance, turned three-quarters to his right, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Ashwatthama
 
-`ashwatthama.png` · 937 chars · 135 words
+`ashwatthama.png` · 972 chars · 140 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ashwatthama, powerfully built, in a wide battle stance, holding a gold-hilted celestial sword and a shield of a thousand moons. Deep bronze skin, wild-eyed and snarling, a burning jewel set into his forehead, blood-flecked armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ashwatthama, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a gold-hilted celestial sword and a shield of a thousand moons. Deep bronze skin, wild-eyed and snarling, a burning jewel set into his forehead, blood-flecked armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Ashwatthama, powerfully built, in a wide battle stance, holding a gold-hilted celestial sword and a shield of a thousand moons. Deep bronze skin, wild-eyed and snarling, a burning jewel set into his forehead, blood-flecked armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ashwatthama, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a gold-hilted celestial sword and a shield of a thousand moons. Deep bronze skin, wild-eyed and snarling, a burning jewel set into his forehead, blood-flecked armour. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden lion’s tail, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Kripa
 
-`kripa.png` · 903 chars · 133 words
+`kripa.png` · 939 chars · 138 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kripa, powerfully built, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a great bovine bull, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kripa, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a great bovine bull, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Kripa, powerfully built, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a great bovine bull, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Kripa, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a great bovine bull, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Kritavarma
 
-`kritavarma.png` · 893 chars · 128 words
+`kritavarma.png` · 943 chars · 135 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kritavarma, powerfully built, in a wide battle stance, holding a formidable bow, its staff decked with gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kritavarma, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a formidable bow, its staff decked with gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Kritavarma, powerfully built, in a wide battle stance, holding a formidable bow, its staff decked with gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Kritavarma, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a formidable bow, its staff decked with gold. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shakuni
 
-`shakuni.png` · 708 chars · 104 words
+`shakuni.png` · 744 chars · 109 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shakuni, lean and stooped, in a wide battle stance, holding a pair of ivory dice and no weapon. Deep bronze skin, smiling, eyes cold with calculation, a thin smile, grey hair. Rich unarmoured court silks with rings on every finger. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera, close and conspiratorial. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shakuni, lean and stooped, in a wide battle stance, turned three-quarters to his right, holding a pair of ivory dice and no weapon. Deep bronze skin, smiling, eyes cold with calculation, a thin smile, grey hair. Rich unarmoured court silks with rings on every finger. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera, close and conspiratorial. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shakuni, lean and stooped, in a wide battle stance, holding a pair of ivory dice and no weapon. Deep bronze skin, smiling, eyes cold with calculation, a thin smile, grey hair. Rich unarmoured court silks with rings on every finger. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera, close and conspiratorial. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shakuni, lean and stooped, in a wide battle stance, turned three-quarters to his right, holding a pair of ivory dice and no weapon. Deep bronze skin, smiling, eyes cold with calculation, a thin smile, grey hair. Rich unarmoured court silks with rings on every finger. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera, close and conspiratorial. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Uluka
 
-`uluka.png` · 844 chars · 121 words
+`uluka.png` · 872 chars · 125 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Uluka, hard-muscled, in a wide battle stance, holding a bow slung and a message in his hand. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Uluka, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow slung and a message in his hand. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Uluka, hard-muscled, in a wide battle stance, holding a bow slung and a message in his hand. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Uluka, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow slung and a message in his hand. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Bahlika
 
-`bahlika.png` · 885 chars · 128 words
+`bahlika.png` · 935 chars · 135 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bahlika, powerfully built, in a wide battle stance, holding a great bow and a gold-decked iron dart. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bahlika, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a great bow and a gold-decked iron dart. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Bahlika, powerfully built, in a wide battle stance, holding a great bow and a gold-decked iron dart. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Bahlika, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a great bow and a gold-decked iron dart. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Somadatta
 
-`somadatta.png` · 896 chars · 131 words
+`somadatta.png` · 924 chars · 135 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Somadatta, powerfully built, in a wide battle stance, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Somadatta, powerfully built, in a wide battle stance, squarely facing the viewer, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Somadatta, powerfully built, in a wide battle stance, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Somadatta, powerfully built, in a wide battle stance, squarely facing the viewer, holding a large bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Bhurishravas
 
-`bhurishravas.png` · 892 chars · 126 words
+`bhurishravas.png` · 920 chars · 130 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhurishravas, powerfully built, in a wide battle stance, holding an upraised sword. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden sacrificial stake, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhurishravas, powerfully built, in a wide battle stance, squarely facing the viewer, holding an upraised sword. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden sacrificial stake, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Bhurishravas, powerfully built, in a wide battle stance, holding an upraised sword. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden sacrificial stake, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Bhurishravas, powerfully built, in a wide battle stance, squarely facing the viewer, holding an upraised sword. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden sacrificial stake, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Jayadratha
 
-`jayadratha.png` · 928 chars · 134 words
+`jayadratha.png` · 964 chars · 139 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jayadratha, hard-muscled, in a wide battle stance, holding a sword and a peacock shield hung with a hundred small bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a silver boar on a silver staff, decked with golden chains, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jayadratha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a sword and a peacock shield hung with a hundred small bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a silver boar on a silver staff, decked with golden chains, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Jayadratha, hard-muscled, in a wide battle stance, holding a sword and a peacock shield hung with a hundred small bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a silver boar on a silver staff, decked with golden chains, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Jayadratha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a sword and a peacock shield hung with a hundred small bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a silver boar on a silver staff, decked with golden chains, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Bhagadatta
 
-`bhagadatta.png` · 938 chars · 134 words
+`bhagadatta.png` · 974 chars · 139 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhagadatta, powerfully built, in a wide battle stance, holding an iron elephant-hook, the ankusa. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and the great war-elephant Supratika beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bhagadatta, powerfully built, in a wide battle stance, turned three-quarters to his right, holding an iron elephant-hook, the ankusa. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and the great war-elephant Supratika beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Bhagadatta, powerfully built, in a wide battle stance, holding an iron elephant-hook, the ankusa. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and the great war-elephant Supratika beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Bhagadatta, powerfully built, in a wide battle stance, turned three-quarters to his right, holding an iron elephant-hook, the ankusa. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and the great war-elephant Supratika beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Vinda
 
-`vinda.png` · 855 chars · 123 words
+`vinda.png` · 890 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vinda, hard-muscled, in a wide battle stance, holding a great bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vinda, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a great bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Vinda, hard-muscled, in a wide battle stance, holding a great bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Vinda, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a great bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Anuvinda
 
-`anuvinda.png` · 847 chars · 119 words
+`anuvinda.png` · 882 chars · 124 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Anuvinda, hard-muscled, in a wide battle stance, holding a mace, his car destroyed beneath him. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Anuvinda, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a mace, his car destroyed beneath him. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Anuvinda, hard-muscled, in a wide battle stance, holding a mace, his car destroyed beneath him. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Anuvinda, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a mace, his car destroyed beneath him. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Susharma
 
-`susharma.png` · 869 chars · 123 words
+`susharma.png` · 897 chars · 127 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Susharma, hard-muscled, in a wide battle stance, holding a bow, his bowstring worn as a girdle over kusa-grass robes. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Susharma, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow, his bowstring worn as a girdle over kusa-grass robes. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Susharma, hard-muscled, in a wide battle stance, holding a bow, his bowstring worn as a girdle over kusa-grass robes. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Susharma, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow, his bowstring worn as a girdle over kusa-grass robes. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Sudakshina
 
-`sudakshina.png` · 852 chars · 121 words
+`sudakshina.png` · 880 chars · 125 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sudakshina, hard-muscled, in a wide battle stance, holding a bow and an iron dart decked with bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Sudakshina, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow and an iron dart decked with bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Sudakshina, hard-muscled, in a wide battle stance, holding a bow and an iron dart decked with bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Sudakshina, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a bow and an iron dart decked with bells. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Srutayudha
 
-`srutayudha.png` · 850 chars · 118 words
+`srutayudha.png` · 885 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Srutayudha, hard-muscled, in a wide battle stance, holding the mace Varuna gave him, hero-slaying. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Srutayudha, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding the mace Varuna gave him, hero-slaying. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Srutayudha, hard-muscled, in a wide battle stance, holding the mace Varuna gave him, hero-slaying. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Srutayudha, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding the mace Varuna gave him, hero-slaying. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Jalasandha
 
-`jalasandha.png` · 919 chars · 131 words
+`jalasandha.png` · 955 chars · 136 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jalasandha, hard-muscled, in a wide battle stance, holding a scimitar and a bull’s-hide shield decked with a hundred moons. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jalasandha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a scimitar and a bull’s-hide shield decked with a hundred moons. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Jalasandha, hard-muscled, in a wide battle stance, holding a scimitar and a bull’s-hide shield decked with a hundred moons. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Jalasandha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a scimitar and a bull’s-hide shield decked with a hundred moons. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Alambusha
 
-`alambusha.png` · 851 chars · 120 words
+`alambusha.png` · 886 chars · 125 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Alambusha, hard-muscled, in a wide battle stance, holding a bow and the sword that beheaded Iravan. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Alambusha, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow and the sword that beheaded Iravan. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Alambusha, hard-muscled, in a wide battle stance, holding a bow and the sword that beheaded Iravan. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Alambusha, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a bow and the sword that beheaded Iravan. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Alayudha
 
-`alayudha.png` · 925 chars · 133 words
+`alayudha.png` · 961 chars · 138 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Alayudha, powerfully built, in a wide battle stance, holding a gigantic iron-bound parigha club. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Alayudha, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a gigantic iron-bound parigha club. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Alayudha, powerfully built, in a wide battle stance, holding a gigantic iron-bound parigha club. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Alayudha, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a gigantic iron-bound parigha club. Deep bronze skin, hard contemptuous expression, long black hair beneath an ornate golden crown. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Vrishasena
 
-`vrishasena.png` · 883 chars · 126 words
+`vrishasena.png` · 919 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vrishasena, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden peacock caught mid-cry, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vrishasena, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden peacock caught mid-cry, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Vrishasena, hard-muscled, in a wide battle stance, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden peacock caught mid-cry, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Vrishasena, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a bow, a full quiver of arrows on his back. Deep bronze skin, hard contemptuous expression, long black hair beneath a golden circlet. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall war-standard bearing a golden peacock caught mid-cry, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Kaurava Footmen
 
-`kaurava_infantry.png` · 781 chars · 112 words
+`kaurava_infantry.png` · 816 chars · 117 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kaurava Footmen, wiry, in a wide battle stance, holding an iron spear and a round bossed shield. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kaurava Footmen, wiry, in a wide battle stance, turned three-quarters to his left, holding an iron spear and a round bossed shield. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Kaurava Footmen, wiry, in a wide battle stance, holding an iron spear and a round bossed shield. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Kaurava Footmen, wiry, in a wide battle stance, turned three-quarters to his left, holding an iron spear and a round bossed shield. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Engraved dark iron armour banded with gold, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a deep crimson tunic. Billowing dark ochre battle scarf, white dhoti, gold sandals. Burning battlefield, rolling smoke, broken banners. A tall plain gold war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ## The Asura Host (15)
 
 ### Ravana
 
-`ravana.png` · 889 chars · 131 words
+`ravana.png` · 925 chars · 136 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ravana, a colossal rakshasa king, in a wide battle stance, holding a great bow, the curved sword Chandrahasa at his belt. Ashen grey skin, all ten faces roaring at once, ten crowned heads and many arms. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ravana, a colossal rakshasa king, in a wide battle stance, turned three-quarters to his right, holding a great bow, the curved sword Chandrahasa at his belt. Ashen grey skin, all ten faces roaring at once, ten crowned heads and many arms. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Ravana, a colossal rakshasa king, in a wide battle stance, holding a great bow, the curved sword Chandrahasa at his belt. Ashen grey skin, all ten faces roaring at once, ten crowned heads and many arms. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ravana, a colossal rakshasa king, in a wide battle stance, turned three-quarters to his right, holding a great bow, the curved sword Chandrahasa at his belt. Ashen grey skin, all ten faces roaring at once, ten crowned heads and many arms. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Kumbhakarna
 
-`kumbhakarna.png` · 837 chars · 121 words
+`kumbhakarna.png` · 873 chars · 126 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kumbhakarna, a mountainous tusked giant, in a wide battle stance, holding a huge sharp iron pike, a shula. Ashen grey skin, teeth bared in a snarl, half-shut eyes heavy with sleep. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kumbhakarna, a mountainous tusked giant, in a wide battle stance, turned three-quarters to his right, holding a huge sharp iron pike, a shula. Ashen grey skin, teeth bared in a snarl, half-shut eyes heavy with sleep. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Kumbhakarna, a mountainous tusked giant, in a wide battle stance, holding a huge sharp iron pike, a shula. Ashen grey skin, teeth bared in a snarl, half-shut eyes heavy with sleep. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Kumbhakarna, a mountainous tusked giant, in a wide battle stance, turned three-quarters to his right, holding a huge sharp iron pike, a shula. Ashen grey skin, teeth bared in a snarl, half-shut eyes heavy with sleep. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Indrajit
 
-`indrajit.png` · 890 chars · 122 words
+`indrajit.png` · 925 chars · 127 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Indrajit, powerfully built, in a wide battle stance, holding a gold-adorned bow, serpent-arrows nocked. Ashen grey skin, serene merciless expression, half-dissolved into thundercloud, only his bow solid. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Indrajit, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a gold-adorned bow, serpent-arrows nocked. Ashen grey skin, serene merciless expression, half-dissolved into thundercloud, only his bow solid. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Indrajit, powerfully built, in a wide battle stance, holding a gold-adorned bow, serpent-arrows nocked. Ashen grey skin, serene merciless expression, half-dissolved into thundercloud, only his bow solid. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Indrajit, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a gold-adorned bow, serpent-arrows nocked. Ashen grey skin, serene merciless expression, half-dissolved into thundercloud, only his bow solid. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Hiranyakashipu
 
-`hiranyakashipu.png` · 856 chars · 123 words
+`hiranyakashipu.png` · 891 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Hiranyakashipu, powerfully built, in a wide battle stance, holding a heavy mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Hiranyakashipu, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a heavy mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Hiranyakashipu, powerfully built, in a wide battle stance, holding a heavy mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Hiranyakashipu, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a heavy mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Hiranyaksha
 
-`hiranyaksha.png` · 862 chars · 123 words
+`hiranyaksha.png` · 897 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Hiranyaksha, hard-muscled, in a wide battle stance, holding a massive mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Hiranyaksha, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a massive mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Hiranyaksha, hard-muscled, in a wide battle stance, holding a massive mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Hiranyaksha, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a massive mace. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Bali
 
-`bali.png` · 883 chars · 130 words
+`bali.png` · 933 chars · 137 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bali, powerfully built, in a wide battle stance, holding a water-pot, poised to pour the water of the gift. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Bali, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a water-pot, poised to pour the water of the gift. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Bali, powerfully built, in a wide battle stance, holding a water-pot, poised to pour the water of the gift. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Bali, powerfully built, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a water-pot, poised to pour the water of the gift. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Prahlada
 
-`prahlada.png` · 497 chars · 71 words
+`prahlada.png` · 525 chars · 75 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prahlada, a slight boy. Warm brown skin, serene, wholly unafraid, empty palms pressed together at his chest. Plain undyed cloth and no armour. Simple white dhoti, bare feet. A pillared hall, lamps guttering. Eye-level camera, quiet and close. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prahlada, a slight boy, squarely facing the viewer. Warm brown skin, serene, wholly unafraid, empty palms pressed together at his chest. Plain undyed cloth and no armour. Simple white dhoti, bare feet. A pillared hall, lamps guttering. Eye-level camera, quiet and close. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Prahlada, a slight boy. Warm brown skin, serene, wholly unafraid, empty palms pressed together at his chest. Plain undyed cloth and no armour. Simple white dhoti, bare feet. A pillared hall, lamps guttering. Eye-level camera, quiet and close. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Prahlada, a slight boy, squarely facing the viewer. Warm brown skin, serene, wholly unafraid, empty palms pressed together at his chest. Plain undyed cloth and no armour. Simple white dhoti, bare feet. A pillared hall, lamps guttering. Eye-level camera, quiet and close. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Narakasura
 
-`narakasura.png` · 891 chars · 130 words
+`narakasura.png` · 927 chars · 135 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Narakasura, powerfully built, in a wide battle stance, holding a spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Narakasura, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Narakasura, powerfully built, in a wide battle stance, holding a spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Narakasura, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath an ornate golden crown. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and tusks filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Mahishasura
 
-`mahishasura.png` · 946 chars · 142 words
+`mahishasura.png` · 996 chars · 149 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Mahishasura, a huge warrior emerging from the neck of a slain buffalo, in a wide battle stance, holding a sword and shield. Ashen grey skin, teeth bared in a snarl, buffalo horns and a heavy black muzzle behind him. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Mahishasura, a huge warrior emerging from the neck of a slain buffalo, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a sword and shield. Ashen grey skin, teeth bared in a snarl, buffalo horns and a heavy black muzzle behind him. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Mahishasura, a huge warrior emerging from the neck of a slain buffalo, in a wide battle stance, holding a sword and shield. Ashen grey skin, teeth bared in a snarl, buffalo horns and a heavy black muzzle behind him. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Mahishasura, a huge warrior emerging from the neck of a slain buffalo, in a wide battle stance, squarely facing the viewer, head slightly turned, holding a sword and shield. Ashen grey skin, teeth bared in a snarl, buffalo horns and a heavy black muzzle behind him. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shumbha
 
-`shumbha.png` · 890 chars · 130 words
+`shumbha.png` · 918 chars · 134 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shumbha, powerfully built, in a wide battle stance, holding a scimitar and a shield blazoned with a hundred moons. Ashen grey skin, teeth bared in a snarl, eight arms lifted high, each grasping a weapon. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shumbha, powerfully built, in a wide battle stance, squarely facing the viewer, holding a scimitar and a shield blazoned with a hundred moons. Ashen grey skin, teeth bared in a snarl, eight arms lifted high, each grasping a weapon. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shumbha, powerfully built, in a wide battle stance, holding a scimitar and a shield blazoned with a hundred moons. Ashen grey skin, teeth bared in a snarl, eight arms lifted high, each grasping a weapon. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shumbha, powerfully built, in a wide battle stance, squarely facing the viewer, holding a scimitar and a shield blazoned with a hundred moons. Ashen grey skin, teeth bared in a snarl, eight arms lifted high, each grasping a weapon. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Nishumbha
 
-`nishumbha.png` · 842 chars · 119 words
+`nishumbha.png` · 878 chars · 124 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Nishumbha, hard-muscled, in a wide battle stance, holding a sharp scimitar and a glittering shield. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Nishumbha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a sharp scimitar and a glittering shield. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Nishumbha, hard-muscled, in a wide battle stance, holding a sharp scimitar and a glittering shield. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Nishumbha, hard-muscled, in a wide battle stance, turned three-quarters to his right, holding a sharp scimitar and a glittering shield. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Raktabija
 
-`raktabija.png` · 824 chars · 116 words
+`raktabija.png` · 859 chars · 121 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Raktabija, hard-muscled, in a wide battle stance, holding a heavy iron club. Ashen grey skin, teeth bared in a snarl, blood running from many wounds, drops falling. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Raktabija, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a heavy iron club. Ashen grey skin, teeth bared in a snarl, blood running from many wounds, drops falling. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Raktabija, hard-muscled, in a wide battle stance, holding a heavy iron club. Ashen grey skin, teeth bared in a snarl, blood running from many wounds, drops falling. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Raktabija, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding a heavy iron club. Ashen grey skin, teeth bared in a snarl, blood running from many wounds, drops falling. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Vritra
 
-`vritra.png` · 597 chars · 88 words
+`vritra.png` · 625 chars · 92 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vritra, a vast limbless serpent-dragon, coiled on a mountain. Dull green-black scales, jaws parted, eyes cold, a blunt reptilian head, no arms and no legs. No armour, bare hide. Coils heaped across the rock. Mountain crag under a withheld storm, dry riverbeds below. Low camera angle looking up at him from below, towering heroic perspective. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Vritra, a vast limbless serpent-dragon, coiled on a mountain, squarely facing the viewer. Dull green-black scales, jaws parted, eyes cold, a blunt reptilian head, no arms and no legs. No armour, bare hide. Coils heaped across the rock. Mountain crag under a withheld storm, dry riverbeds below. Low camera angle looking up at him from below, towering heroic perspective. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Vritra, a vast limbless serpent-dragon, coiled on a mountain. Dull green-black scales, jaws parted, eyes cold, a blunt reptilian head, no arms and no legs. No armour, bare hide. Coils heaped across the rock. Mountain crag under a withheld storm, dry riverbeds below. Low camera angle looking up at him from below, towering heroic perspective. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Vritra, a vast limbless serpent-dragon, coiled on a mountain, squarely facing the viewer. Dull green-black scales, jaws parted, eyes cold, a blunt reptilian head, no arms and no legs. No armour, bare hide. Coils heaped across the rock. Mountain crag under a withheld storm, dry riverbeds below. Low camera angle looking up at him from below, towering heroic perspective. Whole figure inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Tarakasura
 
-`tarakasura.png` · 816 chars · 115 words
+`tarakasura.png` · 844 chars · 119 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Tarakasura, hard-muscled, in a wide battle stance, holding a great spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Tarakasura, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a great spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Tarakasura, hard-muscled, in a wide battle stance, holding a great spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Tarakasura, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a great spear. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Asura Horde
 
-`asura_horde.png` · 768 chars · 112 words
+`asura_horde.png` · 804 chars · 117 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Asura Horde, wiry, in a wide battle stance, holding an iron spear and a round bossed shield. Ashen grey skin, teeth bared in a snarl, long black hair bound in a topknot. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Asura Horde, wiry, in a wide battle stance, turned three-quarters to his right, holding an iron spear and a round bossed shield. Ashen grey skin, teeth bared in a snarl, long black hair bound in a topknot. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Asura Horde, wiry, in a wide battle stance, holding an iron spear and a round bossed shield. Ashen grey skin, teeth bared in a snarl, long black hair bound in a topknot. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Asura Horde, wiry, in a wide battle stance, turned three-quarters to his right, holding an iron spear and a round bossed shield. Ashen grey skin, teeth bared in a snarl, long black hair bound in a topknot. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a black tunic. Torn black battle scarf, dark loincloth, heavy leather sandals. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ## Those Who Stood Apart (6)
 
 ### Barbarika
 
-`barbarika.png` · 860 chars · 126 words
+`barbarika.png` · 895 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Barbarika, powerfully built, in a wide battle stance, holding a bow with three arrows and nothing else in his quiver. Deep bronze skin, calm, already resigned, three arrows and nothing else in his quiver. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Barbarika, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a bow with three arrows and nothing else in his quiver. Deep bronze skin, calm, already resigned, three arrows and nothing else in his quiver. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Barbarika, powerfully built, in a wide battle stance, holding a bow with three arrows and nothing else in his quiver. Deep bronze skin, calm, already resigned, three arrows and nothing else in his quiver. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Barbarika, powerfully built, in a wide battle stance, turned three-quarters to his left, holding a bow with three arrows and nothing else in his quiver. Deep bronze skin, calm, already resigned, three arrows and nothing else in his quiver. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Jarasandha
 
-`jarasandha.png` · 860 chars · 125 words
+`jarasandha.png` · 896 chars · 130 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jarasandha, immense and thick-limbed, in a wide battle stance, holding a heavy iron mace in both hands. Deep bronze skin, level unreadable expression, a faint vertical seam running the length of his body. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jarasandha, immense and thick-limbed, in a wide battle stance, turned three-quarters to his right, holding a heavy iron mace in both hands. Deep bronze skin, level unreadable expression, a faint vertical seam running the length of his body. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Jarasandha, immense and thick-limbed, in a wide battle stance, holding a heavy iron mace in both hands. Deep bronze skin, level unreadable expression, a faint vertical seam running the length of his body. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Jarasandha, immense and thick-limbed, in a wide battle stance, turned three-quarters to his right, holding a heavy iron mace in both hands. Deep bronze skin, level unreadable expression, a faint vertical seam running the length of his body. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Balarama
 
-`balarama.png` · 846 chars · 126 words
+`balarama.png` · 882 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Balarama, powerfully built, in a wide battle stance, holding a plough in one hand and a heavy pestle-club in the other. Fair skin, turned away, refusing the field, long dark hair, a drinking horn at his belt. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall war-standard bearing a palmyra palm. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Balarama, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a plough in one hand and a heavy pestle-club in the other. Fair skin, turned away, refusing the field, long dark hair, a drinking horn at his belt. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall war-standard bearing a palmyra palm. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Balarama, powerfully built, in a wide battle stance, holding a plough in one hand and a heavy pestle-club in the other. Fair skin, turned away, refusing the field, long dark hair, a drinking horn at his belt. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall war-standard bearing a palmyra palm. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Balarama, powerfully built, in a wide battle stance, turned three-quarters to his right, holding a plough in one hand and a heavy pestle-club in the other. Fair skin, turned away, refusing the field, long dark hair, a drinking horn at his belt. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall war-standard bearing a palmyra palm. Low camera angle looking up at him from below, towering heroic perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Ekalavya
 
-`ekalavya.png` · 736 chars · 109 words
+`ekalavya.png` · 772 chars · 114 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ekalavya, hard-muscled, in a wide battle stance, drawing a bow, fingers cased in a leather guard, right thumb gone. Deep bronze skin, unbowed, jaw set, the right thumb missing from his draw hand. Plain forest dress and no armour. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Ekalavya, hard-muscled, in a wide battle stance, turned three-quarters to his right, drawing a bow, fingers cased in a leather guard, right thumb gone. Deep bronze skin, unbowed, jaw set, the right thumb missing from his draw hand. Plain forest dress and no armour. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Ekalavya, hard-muscled, in a wide battle stance, drawing a bow, fingers cased in a leather guard, right thumb gone. Deep bronze skin, unbowed, jaw set, the right thumb missing from his draw hand. Plain forest dress and no armour. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ekalavya, hard-muscled, in a wide battle stance, turned three-quarters to his right, drawing a bow, fingers cased in a leather guard, right thumb gone. Deep bronze skin, unbowed, jaw set, the right thumb missing from his draw hand. Plain forest dress and no armour. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Shishupala
 
-`shishupala.png` · 855 chars · 122 words
+`shishupala.png` · 883 chars · 126 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shishupala, hard-muscled, in a wide battle stance, holding a great bow he strains at and cannot string. Deep bronze skin, level unreadable expression, a faint vestigial third-eye mark on his brow, pale scars at both shoulders. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shishupala, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a great bow he strains at and cannot string. Deep bronze skin, level unreadable expression, a faint vestigial third-eye mark on his brow, pale scars at both shoulders. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Shishupala, hard-muscled, in a wide battle stance, holding a great bow he strains at and cannot string. Deep bronze skin, level unreadable expression, a faint vestigial third-eye mark on his brow, pale scars at both shoulders. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Shishupala, hard-muscled, in a wide battle stance, squarely facing the viewer, holding a great bow he strains at and cannot string. Deep bronze skin, level unreadable expression, a faint vestigial third-eye mark on his brow, pale scars at both shoulders. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ### Rukmi
 
-`rukmi.png` · 817 chars · 113 words
+`rukmi.png` · 852 chars · 118 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Rukmi, hard-muscled, in a wide battle stance, holding an ornate golden celestial longbow, unstrung. Deep bronze skin, level unreadable expression, long black hair beneath a golden circlet. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Rukmi, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding an ornate golden celestial longbow, unstrung. Deep bronze skin, level unreadable expression, long black hair beneath a golden circlet. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-Rukmi, hard-muscled, in a wide battle stance, holding an ornate golden celestial longbow, unstrung. Deep bronze skin, level unreadable expression, long black hair beneath a golden circlet. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Rukmi, hard-muscled, in a wide battle stance, turned three-quarters to his left, holding an ornate golden celestial longbow, unstrung. Deep bronze skin, level unreadable expression, long black hair beneath a golden circlet. Engraved silver armour, sculpted breastplate, layered pauldrons, vambraces, greaves and jewelled belt, over a grey tunic. Billowing grey battle scarf, white dhoti, plain sandals. Empty battlefield, drifting ash, one broken banner. A tall plain grey war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ## Astras (14)
