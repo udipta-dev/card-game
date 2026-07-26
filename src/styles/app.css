@@ -43,7 +43,12 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: min(360px, 90vw);
+  /* Sized against its CONTAINER, never the viewport. This block also sits
+     inside .panel, which adds 26px of padding a side, so a 90vw width pushed
+     the victory panel 37px past the right edge of a 375px phone and clipped
+     the text. Percentage plus a cap does the same job from inside anything. */
+  width: 100%;
+  max-width: 360px;
 }
 
 .btn {
@@ -573,6 +578,12 @@
    than the screen so the action buttons are always reachable (mobile fix). */
 .overlay > * {
   margin: auto;
+  /* A grid item's automatic minimum size is its MIN-CONTENT width, so one
+     stubborn child can push a dialog wider than the screen no matter what
+     max-width the dialog itself carries. This is what let the victory panel
+     overflow. Belt and braces against the next one. */
+  min-width: 0;
+  max-width: 100%;
 }
 .panel {
   position: relative;
