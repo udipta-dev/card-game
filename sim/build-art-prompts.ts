@@ -117,10 +117,47 @@ const MARK: Record<string, string> = {
   rathi: 'long black hair bound in a topknot',
 };
 
-// Rule 4: held, never in transit. The quiver does the work the drawn bow used
-// to fail at.
-const WEAPON: Record<string, string> = {
-  ratha: 'holding a massive ornate golden bow, a full quiver of arrows on his back',
+// ------------------------------------------------------------------ weapons
+// A weapon is a CHARACTER fact. The board row is a MECHANICS category saying
+// where a card fights, and the two are not the same thing. Keying weapons off
+// the row put the identical bow in the hands of 64 of 81 warriors, including
+// Yudhishthira, who carries a spear, and the twins, who carry swords.
+//
+// Rule 4 still applies to every entry: HELD, never in transit.
+const WEAPON_BY_ID: Record<string, string> = {
+  // --- Sourced against the Ganguli text (Project Gutenberg 12058/15474/15476).
+  // The bow is UNIVERSAL in the epic: the Virata Parva shami-tree inventory
+  // gives every Pandava both a bow and a sword. So a man's default loadout
+  // cannot distinguish him. What can is his signature KILL or epithet, which is
+  // how Yudhishthira's spear surfaced: Adi Parva calls him only a car-warrior,
+  // but in Shalya Parva he kills Shalya with a golden-handled dart Tvashtri
+  // forged. That is the drawable fact.
+  arjuna: 'holding the Gandiva, a great celestial longbow, a full quiver on his back',
+  bhima: 'holding a massive golden gada mace',
+  yudhishthira: 'holding a gem-studded spear with a golden handle',
+  // The twins' blades differ in the text, so they can differ in the picture.
+  nakula: 'holding a straight sword in a goat-skin sheath',
+  sahadeva: 'holding a huge curved scimitar in a cow-skin sheath',
+  duryodhana: 'holding a colossal gold-banded war-mace',
+  // He shoots on after paying the tuition-fee, so: a bow AND the maimed hand.
+  ekalavya: 'holding a bow, drawing with the remaining fingers of a thumbless hand',
+
+  // --- Not from the epic's own catalogue, but unmistakable and uncontested.
+  karna: 'holding a massive ornate dark bow, a full quiver of arrows on his back',
+  ghatotkacha: 'holding an enormous studded iron club',
+  shakuni: 'holding a pair of ivory dice and no weapon',
+  balarama: 'holding a great iron plough planted upright like a wall',
+  krishna_charioteer: 'holding chariot reins and a white conch, no weapon',
+  // Ashwatthama is deliberately ABSENT. The only thing sourced for him is that
+  // he excelled in "the science of arms", which is astra mastery, not an object
+  // an illustrator can draw. He takes the fallback until that is settled.
+};
+
+// Last resort, for the two generic infantry cards and anyone the epic never
+// arms explicitly. A chariot-fighter with a bow is a reasonable default; it is
+// just not a substitute for knowing.
+const WEAPON_FALLBACK: Record<string, string> = {
+  ratha: 'holding a war-bow, a full quiver of arrows on his back',
   gaja: 'holding a long iron war-lance braced across his body',
   padati: 'holding an iron spear and a round bossed shield',
 };
@@ -224,7 +261,6 @@ interface Marquee {
   camera?: string;
   mount?: string;
   stance?: string;
-  weapon?: string;
   skin?: string;
   face?: string;
   mark?: string;
@@ -259,7 +295,6 @@ const M: Record<string, Marquee> = {
   },
   arjuna: {
     skin: 'Blue-grey skin',
-    weapon: 'holding a massive ornate golden bow, a full quiver of arrows on his back',
   },
   bhima: {
     build: 'hyper-muscular',
@@ -267,7 +302,6 @@ const M: Record<string, Marquee> = {
     tunic: 'a black tunic', // the blue belongs on the loincloth, not twice over
     mark: 'wild black hair and a thick black beard beneath a spiked golden crown',
     face: 'screaming, teeth bared',
-    weapon: 'holding a massive golden gada mace',
     cloth: 'Torn blue loincloth, heavy black boots',
     scene: 'Ruined battlefield, flying dust, rock debris',
   },
@@ -276,7 +310,6 @@ const M: Record<string, Marquee> = {
     // him in the wrong metal on the wrong field, which lost the whole reading.
     metal: 'Engraved gold armour',
     mark: 'long black hair beneath a golden diadem, huge ornate golden earrings',
-    weapon: 'holding a massive ornate dark bow, a full quiver of arrows on his back',
     face: 'grim resolute expression',
     scene: 'Dusty battlefield under a low sun, drifting smoke, distant broken chariots',
   },
@@ -294,7 +327,6 @@ const M: Record<string, Marquee> = {
   },
   duryodhana: {
     mark: 'long black hair beneath a heavy jewelled crown',
-    weapon: 'holding a colossal gold-banded war-mace',
   },
   ashwatthama: {
     mark: 'a burning jewel set into his forehead, blood-flecked armour',
@@ -305,7 +337,6 @@ const M: Record<string, Marquee> = {
     build: 'a towering tusked half-rakshasa',
     skin: 'Dark grey skin',
     mark: 'a wild black mane',
-    weapon: 'holding an enormous studded iron club',
   },
   abhimanyu: {
     camera: 'High camera angle looking down at him, hemmed in and overwhelmed.',
@@ -319,7 +350,6 @@ const M: Record<string, Marquee> = {
     build: 'lean and stooped',
     metal: 'Rich unarmoured court silks with rings on every finger',
     tunic: 'no armour at all',
-    weapon: 'holding a pair of ivory dice and no weapon',
     mark: 'a thin smile, grey hair',
     face: 'smiling, eyes cold with calculation',
   },
@@ -346,7 +376,6 @@ const M: Record<string, Marquee> = {
     tunic: 'no armour at all',
     skin: 'Blue skin',
     mark: 'a peacock feather in his crown',
-    weapon: 'holding chariot reins and a white conch, no weapon',
     face: 'serene, faintly smiling',
   },
   barbarika: {
@@ -361,7 +390,6 @@ const M: Record<string, Marquee> = {
     mount: '',
     skin: 'Fair skin',
     mark: 'long dark hair, a drinking horn at his belt',
-    weapon: 'holding a great iron plough planted upright like a wall',
     face: 'turned away, refusing the field',
   },
   ekalavya: {
@@ -433,7 +461,8 @@ function bodyOf(card: U): string {
 
   const camera = m.camera ?? CAMERA[tier] ?? CAMERA.rathi;
   const stance = m.stance ?? 'a wide battle stance';
-  const weapon = m.weapon ?? WEAPON[row] ?? WEAPON.padati;
+  const weapon =
+    WEAPON_BY_ID[card.id] ?? WEAPON_FALLBACK[row] ?? WEAPON_FALLBACK.padati;
   const skin = m.skin ?? SKIN[card.house] ?? SKIN.neutral;
   const face = m.face ?? FACE[card.house] ?? FACE.neutral;
   const mark = m.mark ?? MARK[tier] ?? MARK.rathi;
@@ -543,7 +572,7 @@ for (const g of GROUPS) {
     if (w > 110) overWords++;
     out.push(`### ${c.name}`);
     out.push('');
-    out.push(`\`${c.id}.webp\` · ${full.length} chars · ${w} words`);
+    out.push(`\`${c.id}.png\` · ${full.length} chars · ${w} words`);
     out.push('');
     out.push('Standalone:');
     out.push('');
