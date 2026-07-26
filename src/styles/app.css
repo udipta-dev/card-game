@@ -537,6 +537,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* The art slot is SQUARE (measured 51x50 on a hand card) but the source art
+     is 4:5 portrait, so `cover` scales to width and crops 20% of the height.
+     Centred, that takes 10% off the top and 10% off the bottom: the crown and
+     the feet. Biasing upward spends that crop on the legs instead, because at
+     51px a face is worth more than a pair of sandals. */
+  object-position: 50% var(--art-focus, 30%);
   border-radius: 6px;
 }
 .card__foot {
@@ -933,6 +939,37 @@
 }
 .sheet__card {
   flex: 0 0 auto;
+}
+/* The full portrait, uncropped. `contain` rather than `cover` on purpose: this
+   is the view that exists so nothing is lost, so letterboxing beats cropping. */
+.sheet__art {
+  flex: 0 0 auto;
+  width: 172px;
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--panel-edge);
+  background: var(--bg-1);
+}
+.sheet__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Side by side leaves ~157px for the rules text on a 375px phone, which is not
+   enough to read. Stack instead. */
+@media (max-width: 480px) {
+  .sheet {
+    flex-direction: column;
+    align-items: center;
+  }
+  .sheet__art {
+    width: min(200px, 56vw);
+  }
+  .sheet__info {
+    width: 100%;
+  }
 }
 .sheet__info {
   flex: 1;

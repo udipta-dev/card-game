@@ -1,6 +1,7 @@
 import { provisionOf } from '@content/cards';
 import type { Card, CardInstance } from '@engine/types';
 import { CardFrame } from './CardFrame';
+import { artFor } from './cardArt';
 import { ROW_GLOSS, TIER_GLOSS, TIER_LABEL, TYPE_GLOSS, TYPE_LABEL, rulesText } from './cardTheme';
 
 const ROW_LABEL_OF: Record<string, string> = { ratha: 'Ratha', gaja: 'Gaja', padati: 'Padati' };
@@ -16,12 +17,21 @@ export function InspectSheet({
   onClose: () => void;
 }) {
   const rules = rulesText(card);
+  // The board card crops the art to a square. This is the one place the whole
+  // picture is shown, uncropped, at a size worth the effort of making it.
+  const art = artFor(card);
   return (
     <div className="overlay" onClick={onClose}>
       <div className="sheet" onClick={(e) => e.stopPropagation()}>
-        <div className="sheet__card">
-          <CardFrame card={card} instance={inst} />
-        </div>
+        {art ? (
+          <div className="sheet__art">
+            <img src={art} alt="" />
+          </div>
+        ) : (
+          <div className="sheet__card">
+            <CardFrame card={card} instance={inst} />
+          </div>
+        )}
         <div className="sheet__info">
           <div className="sheet__name">{card.name}</div>
           <div className="sheet__meta">
