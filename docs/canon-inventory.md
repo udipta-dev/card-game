@@ -357,3 +357,133 @@ document: the Brahmastra as an act of adharma, Karna's chariot-wheel curse
 firing on fear, Maitreya's curse voidable by making peace, Bhishma's targeting
 vows, and Krishna's own list of kills accomplished "by the employment of means".
 The epic's whole moral architecture is a rules system waiting to be written.
+
+---
+
+# Shastras: the named physical weapons
+
+Full Ganguli (15474-15477), Griffith's Ramayana (24869) and Wilson's Vishnu
+Purana, grepped locally with a script resolving every line number to its
+Book/Section heading.
+
+## 13. The surprise: named weapons are RARE
+
+A systematic sweep for "mace/discus/sword/dart **called** X" across all
+eighteen books returns exactly **three**: Kaumodaki, Sudarsana, Kausika. Add
+the named bows and the handful below and you have close to the complete set.
+
+We assumed this list would be long. It is not. Which is good news: a dozen
+legendary named arms is a clean, ownable content type, not a sprawl.
+
+| weapon | type | owner | how obtained |
+|---|---|---|---|
+| **Gandiva** | bow | Arjuna | created by Brahman, owned by Varuna, procured by **Agni** at Khandava with two inexhaustible quivers |
+| **Vijaya** | bow | **Karna** (disputed, see below) | Viswakarman made it for Indra, Indra to Parashurama, Parashurama to Karna |
+| **Sarnga** | bow | Vishnu, held by Krishna | won when he slew Naraka |
+| **Pinaka** | bow | Shiva | **no origin given anywhere.** Explicitly distinct from his trident |
+| **Ajagava** | bow | Prithu, later Mandhata | appeared spontaneously the day Mandhata gained all knowledge |
+| **Asi** | **the primordial sword** | Manu, then a 30-king succession down to the Pandavas | see below |
+| **Nandaka** | sword | Vishnu | taken from the demon Loha, whose body became the material of earthly weapons (Agni P.) |
+| **Chandrahasa** | sword | Ravana | Shiva, after the Kailasa-lifting. **Uttara Kanda 16** - absent from Griffith, who omits that book entirely |
+| **Kausika** | sword | Sahadeva | no origin; snatched back from Jatasura |
+| **Sudarsana** | discus | Krishna | **handheld and thrown, returns to the hand.** Agni at Khandava; Shiva claims to have made it (Anusasana XIV); Vishvakarman ground it from the Sun (VP 3.2) |
+| **Kaumodaki** | mace | Krishna | **Varuna** at Khandava; "a roar like that of the thunder" |
+| **Parasu** | axe | Shiva to Parashurama | Shiva's own axe. His epithet **Khandaparasu** commemorates parting with it |
+| **Vajra** | **handheld and hurled, not an astra** | Indra | **Twashtri forged it from the bones of the Rishi Dadhicha**, who renounced his body for it |
+| **Antarddhana** | named weapon | Kubera to **Arjuna** | Kubera's own favourite; what Shiva shot to destroy Tripura |
+| **Saunanda** | club | Balarama | Puranas only; summoned at will |
+| **Panchajanya** / **Devadatta** | conches | Krishna / Arjuna | from the sea / from Varuna |
+
+**Bhima's mace, Duryodhana's mace, Bhishma's bow and Drona's bow are never
+named** in any of the eighteen books.
+
+## 14. Asi, the primordial sword, has a full origin myth
+
+Shanti Parva CLXVI, and it is the best single card in this entire document.
+
+Brahman created a dark, keen-toothed **Being** from his sacrificial fire -
+*"his name is Asi"* - which then took the shape of a sword. It descends:
+Brahman, Rudra, Vishnu, Marichi, the Rishis, Indra, the Lokapalas, then **Manu,
+the first man**, with a governance charter attached:
+
+> *"Protect all creatures with this sword... they should be protected
+> conformably to the ordinances but never according to caprice... Loss of limb
+> or death should never be inflicted for slight reasons."*
+
+Eight secret names, a constellation (Krittika), a deity (Agni), a preceptor
+(Rudra). Then a thirty-king succession down through Bharadwaja to Drona to
+Kripa to the Pandavas.
+
+The same section states that **the bow was first created by Prithu son of Vena**.
+
+## 15. Conditions of use: the best mechanics in the corpus
+
+Every one verbatim.
+
+**Srutayudha's mace** is the model conditional weapon (Drona XCI). Varuna's
+terms: *"This mace should not be hurled at one who is not engaged in fight. If
+hurled at such a person, it will come back and fall upon thyself."* He throws it
+at Krishna, who is **driving, not fighting** - and it rebounds and kills him.
+The narrator spells the moral out.
+
+**Karna's Vasavi dart** carries two stacked clauses. One use: *"it will slay
+only one powerful enemy of thine... it will, roaring and blazing, return to
+me."* And misuse: *"if, maddened by wrath, thou hurlest this dart, while there
+are still other weapons with thee, and when thy life also is not in imminent
+peril, it will fall even on thyself."* In Indra's own hand it kills by hundreds
+and returns - the nerf is specific to the mortal holder.
+
+**Narayana astra** has the richest rule-set in the epic: never in haste, never
+against those who abandon weapons or seek quarter, a **published**
+countermeasure ordained by Narayana himself, strictly one use, and *"if brought
+back, it will without doubt slay the person calling it back."*
+
+**Pashupata**: *"This must never be hurled at mortals... And when all thy
+weapons have been completely baffled, thou mayst hurl it."* A weapon of last
+resort with a target-class restriction.
+
+**Chandrahasa** has a loyalty condition rather than a target one, which is
+unusual and very usable: *"Never treat this weapon with contempt, if thou dost
+disregard it, it will assuredly return to me."*
+
+**Sudarsana** can be **arrested by a rival god's prior boon** - Krishna: *"Since
+you, Sankara, have given a boon unto Bana, let him live... my discus is
+arrested"* - and dispatches itself autonomously to protect a devotee.
+
+## 16. THE two-card mechanic, sitting in the text
+
+The **mantras for hurling and withdrawing** are consistently a *separate
+transferable asset* from the weapon itself. Every Lokapala grants his arm
+"along with the mysteries of hurling and withdrawing it" (Vana XLI).
+
+So: you can hold a weapon and **not know how to use it**, or know the mantra and
+lack the weapon. That is a ready-made two-card combo the epic hands us, and it
+is a far better gate than a standing threshold.
+
+## 17. How mortals earn arms, with the price stated
+
+| who | what | the price |
+|---|---|---|
+| **Arjuna** | Pashupata, Yama's mace, Varuna's nooses, Kubera's Antarddhana | penance, then **fighting Shiva in single combat** while Shiva was disguised as a Kirata |
+| **Karna** | Vasavi dart | **cut his natural armour and earrings off his living flesh** without flinching |
+| **Parashurama** | Shiva's axe | adored Shiva for years, then fought the Daityas **unarmed at Shiva's order** and took wounds |
+| **Srutayudha** | Varuna's mace | **his mother petitioned for him.** Granted invincibility-by-object, explicitly not immortality: *"No man can have immortality"* |
+| **Rama** | Vishnu's bow, Indra's shaft, endless quiver | given by **Agastya, a sage not a god**, as a guest-gift |
+| **Ambarisha** | Sudarsana | pure devotion, no feat at all |
+
+## 18. Shastra refuse list
+
+- **Kodanda: 0 occurrences.** Rama's bow is never named in Griffith
+- **Vidyudabhi: 0 occurrences** anywhere. Parashurama's axe is simply *parasu*.
+  A wiki artifact
+- **Trishula as a proper name** - not attested. It is the common noun for trident
+- **Musala as Balarama's weapon: 0 in Ganguli.** The Mausala Parva's iron bolt is
+  Samba's curse-born club that destroys the Vrishnis, a different object. His
+  club is **Saunanda**, and only in the Puranas
+- **Halayudha is an epithet** ("plough-armed"), not a weapon name
+
+**Vijaya's disputed owner**, settled by weight: Karna claims it in six passages
+across his own Parva; Rukmi gets one genealogical aside. Both root it in Indra
+but the transmission chains are irreconcilable. Note also that "Vijaya" is one of
+Arjuna's ten names AND the name of Shiva's trident in the Shiva Purana - three
+unrelated referents.
