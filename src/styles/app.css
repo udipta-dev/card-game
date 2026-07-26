@@ -499,6 +499,45 @@
   opacity: 0.85;
   white-space: nowrap;
 }
+
+/* ---------------------------------------------------------------- rank ---
+   Standing, read from the frame itself. The tier chevron in the header is
+   ~4px on a board card, which is no signal at all; border weight is legible
+   at any size and does not compete with the art.
+
+   Rank MODULATES the house colour rather than replacing it. The obvious
+   version (gold for maharathi) is broken: the Pandava edge is already
+   #e8b923, exactly --gold, so an Arjuna and an Uttara came out with the same
+   border. Mixing against the house edge instead means the hierarchy works for
+   every house, including any added later, and a card still says which host it
+   belongs to. */
+.card--maharathi {
+  border-width: 2.5px;
+  border-color: color-mix(in srgb, var(--pal-edge) 100%, #fff 22%);
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--pal-edge) 35%, transparent),
+    0 0 14px color-mix(in srgb, var(--pal-edge) 22%, transparent);
+}
+.card--maharathi .card__tier {
+  color: color-mix(in srgb, var(--pal-edge) 100%, #fff 30%);
+  opacity: 1;
+  text-shadow: 0 0 6px color-mix(in srgb, var(--pal-edge) 45%, transparent);
+}
+.card--atirathi {
+  border-width: 1.5px;
+  border-color: color-mix(in srgb, var(--pal-edge) 72%, transparent);
+}
+.card--atirathi .card__tier {
+  opacity: 0.95;
+}
+/* A rathi is deliberately plain. The hierarchy only reads if the bottom of it
+   is actually unadorned. */
+.card--rathi {
+  border-width: 1px;
+  border-color: color-mix(in srgb, var(--pal-edge) 42%, transparent);
+}
+.card--rathi .card__tier {
+  opacity: 0.6;
+}
 .card__power {
   position: absolute;
   left: 6px;

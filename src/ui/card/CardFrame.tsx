@@ -45,6 +45,10 @@ export function CardFrame({
 
   const classes = [
     'card',
+    // Rank rides on the FRAME, not on colour: house already owns colour, so
+    // layering rank as weight and ornament keeps both readable at once, and
+    // keeps working at 51px where the tier chevron is far too small to see.
+    card.tier ? `card--${card.tier}` : '',
     mini ? 'card--mini' : '',
     onClick ? 'card--hand' : '',
     selected ? 'card--selected' : '',
