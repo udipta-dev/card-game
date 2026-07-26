@@ -47,6 +47,7 @@ type Policy =
   | 'penance-t1'
   | 'penance-t2'
   | 'penance-t3'
+  | 'chain'
   | 'greedy-best';
 
 interface Funnel {
@@ -67,7 +68,7 @@ interface Result {
   funnel: Funnel;
 }
 
-function pick(offers: ShrineOffer[], policy: Policy): ShrineOffer | null {
+function pick(offers: ShrineOffer[], policy: Policy, run?: RunState): ShrineOffer | null {
   const pen = offers.filter((o): o is PenanceOffer => o.kind === 'penance');
   const gifts = offers.filter((o) => o.kind === 'vardaan');
   switch (policy) {
@@ -85,6 +86,24 @@ function pick(offers: ShrineOffer[], policy: Policy): ShrineOffer | null {
       return pen.filter((p) => topTier(p) === 2).sort((a, b) => a.battles - b.battles)[0] ?? null;
     case 'penance-t3':
       return pen.filter((p) => topTier(p) === 3).sort((a, b) => b.battles - a.battles)[0] ?? null;
+    // Walks the tapasya CHAIN, which is the only way an ultimate can be reached
+    // now that tier 3 requires a prior grant. Every other penance policy takes
+    // one KIND of offer, so 'penance-t3' walks past the first shrine (which can
+    // never offer a tier 3) and then has nothing to take at the second. Its
+    // zero was an artefact of the policy, not a fact about the engine.
+    case 'chain': {
+      const earned = Object.values(run?.astraGrants ?? {}).flat().length > 0;
+      if (!earned) {
+        // First, go and fetch anything at all: shortest wager that can pay.
+        return pen.sort((a, b) => a.battles - b.battles)[0] ?? null;
+      }
+      // Chain walked. Now reach as high as the gods will allow.
+      return (
+        pen.filter((p) => topTier(p) === 3).sort((a, b) => b.battles - a.battles)[0] ??
+        pen.filter((p) => topTier(p) === 2)[0] ??
+        null
+      );
+    }
     case 'greedy-best':
       // Take the highest tier available, else a free gift, else walk.
       return (
@@ -118,7 +137,7 @@ function runScenario(policy: Policy, runs: number): Result {
       if (run.phase === 'shrine') {
         const offers = run.shrineOffers ?? [];
         if (offers.some((o) => o.kind === 'penance')) r.funnel.offered++;
-        const want = pick(offers, policy);
+        const want = pick(offers, policy, run);
         if (want?.kind === 'penance') r.funnel.taken++;
         run = chooseShrineOffer(run, want);
         continue;
@@ -156,6 +175,7 @@ const policies: Policy[] = [
   'penance-t1',
   'penance-t2',
   'penance-t3',
+  'chain',
   'penance-any',
   'greedy-best',
 ];

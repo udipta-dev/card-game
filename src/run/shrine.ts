@@ -6,7 +6,7 @@
 import { getCard } from '@content/cards';
 import { VARDAAN_CARDS } from '@content/cards/vardaan';
 import { nextRandom } from '@engine/ids';
-import type { CardId, CurseId } from '@engine/types';
+import type { CardId, CurseId, House } from '@engine/types';
 import type { RunState } from './types';
 
 /** A god who may be approached, and what tapasya to them yields. */
@@ -23,6 +23,20 @@ export interface Deity {
   domain: Partial<Record<1 | 2 | 3, CardId[]>>;
   /** The least standing this god will even receive. */
   minWorth: number;
+  /**
+   * Which hosts may approach at all. Omit for "anyone". Used sparingly, and
+   * NOT as a blanket deva/asura split: Shiva gave Ravana his boons and the
+   * Chandrahasa, and Brahma armed Hiranyakashipu. Only Vishnu's weapons are
+   * genuinely closed to the asuras, being the ones made to end them.
+   */
+  houses?: House[];
+  /**
+   * A god who will only teach a warrior already bearing an ultimate. This is
+   * the chain that makes the greatest weapons the END of a path rather than a
+   * purchase: you cannot buy your way to the Pashupat-Astra in one wager,
+   * however long you sit.
+   */
+  requiresPriorTier3?: boolean;
 }
 
 export const DEITIES: Deity[] = [
@@ -51,7 +65,7 @@ export const DEITIES: Deity[] = [
     id: 'indra',
     name: 'Indra',
     epithet: 'king of the devas',
-    domain: { 1: ['aindrastra'], 3: ['vasavi_shakti'] },
+    domain: { 1: ['aindrastra'], 2: ['sammohana'], 3: ['vasavi_shakti'] },
     minWorth: 10,
   },
   {
@@ -62,18 +76,37 @@ export const DEITIES: Deity[] = [
     minWorth: 11,
   },
   {
+    id: 'parashurama',
+    name: 'Parashurama',
+    epithet: 'the axe-bearer, who taught Karna',
+    // Tier 2 had exactly one weapon in any god's gift (the Brahma-Astra), and
+    // every starting deck already holds it, so the tier could never pay out:
+    // measured at 0% offered across 1200 shrines. The Bhargavastra existed as
+    // a card belonging to nobody. It belongs here.
+    domain: { 2: ['bhargavastra'] },
+    minWorth: 11,
+  },
+  {
     id: 'narayana',
     name: 'Narayana',
     epithet: 'Vishnu, who preserves',
     domain: { 3: ['narayanastra', 'vaishnavastra'] },
     minWorth: 11,
+    // The weapons made to end the asuras are not lent to them.
+    houses: ['pandava', 'kaurava', 'legend', 'neutral'],
   },
   {
     id: 'shiva',
     name: 'Shiva',
     epithet: 'the destroyer, who tests those who dare seek him',
     domain: { 3: ['pashupatastra'] },
-    minWorth: 13,
+    // 14, not 13. At 13 both Ravana and Indrajit qualified, and an asura host
+    // could earn the Pashupat-Astra. At 14 the door is Arjuna, Bhishma and
+    // Karna, which is the "three or four in the books" the tiering is meant to
+    // reflect. This is a truer gate than a house rule would be, since Shiva
+    // demonstrably DOES give to asuras; it is this one weapon that is not theirs.
+    minWorth: 14,
+    requiresPriorTier3: true,
   },
 ];
 
@@ -100,13 +133,28 @@ export interface PenanceOdds {
  * true astra-master AND a long absence, so the ultimates stay rare by design
  * rather than by price.
  */
-export function penanceOdds(warrior: CardId, battles: number): PenanceOdds {
+export function penanceOdds(
+  warrior: CardId,
+  battles: number,
+  /** Astras this warrior has ALREADY earned through an earlier tapasya. */
+  earned: readonly CardId[] = [],
+): PenanceOdds {
   const worth = worthOf(warrior);
-  // Both gates are AND, never OR. Length alone must not substitute for standing:
-  // a rathi who sits in penance for a year is still a rathi, and no god hands
-  // the Brahma line to a warrior who was never taught the mantras.
-  const canReachThree = worth >= 12 && battles >= 3;
-  const canReachTwo = worth >= 9 && battles >= 2;
+  const mastery = getCard(warrior).astraMastery ?? 0;
+  // Each tier is now a different KIND of undertaking, not the same errand at a
+  // different length. Before this, all three tiers were bought with the same
+  // currency and differed only in how many battles they cost, which is exactly
+  // what made a world-ender feel like a longer chore.
+  //
+  // TIER 2, the Brahma line: a TRAINED astra-master, full stop. Standing 9 let
+  // through anyone merely strong, so Bhima qualified for weapons he was never
+  // taught the mantras for. Mastery is the thing the tier actually implies.
+  const canReachTwo = mastery >= 2 && battles >= 2;
+  // TIER 3, the ultimates: a CHAIN. Standing and length are necessary but no
+  // longer sufficient. The warrior must already have come back from a tapasya
+  // bearing something, so the ultimates sit at the end of a path rather than at
+  // a price. You cannot buy one in a single wager, however long you sit.
+  const canReachThree = worth >= 13 && battles >= 3 && earned.length > 0;
 
   const w3 = canReachThree ? (worth - 10) * 2 + (battles - 2) * 6 : 0;
   const w2 = canReachTwo ? 10 + battles * 3 : 0;
@@ -132,8 +180,9 @@ export function effectiveOdds(
   warrior: CardId,
   battles: number,
   held: ReadonlySet<CardId> = new Set(),
+  earned: readonly CardId[] = [],
 ): PenanceOdds {
-  const raw = penanceOdds(warrior, battles);
+  const raw = penanceOdds(warrior, battles, earned);
   const out: PenanceOdds = { fail: raw.fail, t1: 0, t2: 0, t3: 0 };
   for (const tier of [3, 2, 1] as const) {
     const share = tier === 3 ? raw.t3 : tier === 2 ? raw.t2 : raw.t1;
@@ -145,6 +194,26 @@ export function effectiveOdds(
     else out.t1 += share;
   }
   return out;
+}
+
+/**
+ * Whether this host and this warrior may approach at all, before any odds are
+ * computed. Kept separate from the odds so an ineligible pairing is never
+ * OFFERED, rather than being offered at zero and reading as bad luck.
+ */
+export function mayApproach(
+  deity: Deity,
+  warrior: CardId,
+  house: House,
+  earned: readonly CardId[] = [],
+): boolean {
+  if (worthOf(warrior) < deity.minWorth) return false;
+  if (deity.houses && !deity.houses.includes(house)) return false;
+  if (deity.requiresPriorTier3) {
+    // Shiva teaches only a warrior who has already been taught an ultimate.
+    if (!earned.some((a) => (getCard(a).astraTier ?? 1) >= 3)) return false;
+  }
+  return true;
 }
 
 /**
@@ -170,8 +239,9 @@ export function rollPenanceOutcome(
   battles: number,
   seed: number,
   exclude: ReadonlySet<CardId>,
+  earned: readonly CardId[] = [],
 ): { astra: CardId | null; seed: number } {
-  const odds = penanceOdds(warrior, battles);
+  const odds = penanceOdds(warrior, battles, earned);
   const [next, roll] = nextRandom(seed);
   let acc = odds.t3;
   let tier: 1 | 2 | 3 | null = null;
@@ -287,14 +357,18 @@ export function rollShrine(run: RunState): ShrineOffer[] {
   // Gather every god this host could actually reach, then choose among them by
   // seed. Taking the first match in a fixed order let the elemental gods, who
   // receive almost anyone, crowd out Brahma and Shiva entirely.
+  // Every gate now runs through mayApproach, so a warrior who cannot satisfy a
+  // god is never OFFERED him. An impossible wager shown at zero would read as
+  // bad luck rather than as a door that was never open.
+  const earnedBy = (id: CardId): readonly CardId[] => run.astraGrants[id] ?? [];
   const reachable = DEITIES.filter((d) => {
-    const eligible = candidates.filter((id) => worthOf(id) >= d.minWorth);
+    const eligible = candidates.filter((id) => mayApproach(d, id, run.house, earnedBy(id)));
     const teachable = Object.values(d.domain).flat().filter((a) => !held.has(a));
     return eligible.length > 0 && teachable.length > 0;
   });
 
   for (const deity of seededOrder(reachable, seed)) {
-    const eligible = candidates.filter((id) => worthOf(id) >= deity.minWorth);
+    const eligible = candidates.filter((id) => mayApproach(deity, id, run.house, earnedBy(id)));
     const best = eligible[0];
     const lesser = eligible.find((id) => worthOf(id) < worthOf(best));
     const durations = uniqueNums([maxBattles, Math.ceil(maxBattles / 2), 1]);
@@ -310,7 +384,7 @@ export function rollShrine(run: RunState): ShrineOffer[] {
     // elemental tier, so a short penance to him would be a guaranteed nothing:
     // that is not a wager, it is a trap, and it does not get shown.
     const viable = wagers
-      .map((w) => ({ ...w, odds: effectiveOdds(deity, w.warrior, w.battles, held) }))
+      .map((w) => ({ ...w, odds: effectiveOdds(deity, w.warrior, w.battles, held, earnedBy(w.warrior)) }))
       .filter((w) => w.odds.t1 + w.odds.t2 + w.odds.t3 >= MIN_VIABLE_CHANCE)
       .slice(0, 3);
     if (!viable.length) continue;

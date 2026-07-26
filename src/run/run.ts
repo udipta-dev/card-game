@@ -175,7 +175,14 @@ export function chooseShrineOffer(run: RunState, offer: ShrineOffer | null): Run
   const deity = getDeity(offer.deityId);
   const held = new Set([...run.roster, ...run.banned]);
   const rolled = deity
-    ? rollPenanceOutcome(deity, offer.warrior, offer.battles, mixSeed(run.seed, run.index + 997), held)
+    ? rollPenanceOutcome(
+        deity,
+        offer.warrior,
+        offer.battles,
+        mixSeed(run.seed, run.index + 997),
+        held,
+        run.astraGrants[offer.warrior] ?? [],
+      )
     : { astra: null };
 
   next.away = [

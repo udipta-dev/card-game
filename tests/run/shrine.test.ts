@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import { canInvokeAstra } from '@engine/queries';
 import type { GameState } from '@engine/types';
 import { chooseReward, chooseShrineOffer, createRun, fieldedRoster, planBattle, resolveBattle } from '@run/run';
-import { DEITIES, effectiveOdds, isShrineIndex, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
+import { DEITIES, effectiveOdds, isShrineIndex, mayApproach, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
 import type { PenanceOffer, VardaanOffer } from '@run/shrine';
 import type { RunState } from '@run/types';
 import { makeState } from '../engine/helpers';
@@ -187,29 +187,37 @@ describe('penance is a wager, and the terms are legible', () => {
     expect(worthOf(arjuna)).toBeGreaterThan(worthOf(bhima));
   });
 
+  // A prior tapasya, which tier 3 now requires. The ultimates are the END of a
+  // path, so every tier-3 assertion below has to have walked it first.
+  const chained = ['agneyastra'];
+
   it('a longer penance reaches higher', () => {
-    const short = penanceOdds(arjuna, 1);
-    const long = penanceOdds(arjuna, 4);
+    const short = penanceOdds(arjuna, 1, chained);
+    const long = penanceOdds(arjuna, 4, chained);
     expect(long.t3).toBeGreaterThan(short.t3);
     expect(long.fail).toBeLessThan(short.fail);
   });
 
   it('a worthier warrior reaches higher for the same penance', () => {
-    const great = penanceOdds(arjuna, 3);
-    const lesser = penanceOdds(bhima, 3);
+    const great = penanceOdds(arjuna, 3, chained);
+    const lesser = penanceOdds(bhima, 3, chained);
     expect(great.t3).toBeGreaterThan(lesser.t3);
   });
 
-  it('the ultimates are walled behind BOTH a master and a long absence', () => {
-    expect(penanceOdds(arjuna, 2).t3).toBe(0);  // long enough? no
-    expect(penanceOdds(bhima, 4).t3).toBe(0);   // worthy enough? no
-    expect(penanceOdds(nakula, 4).t3).toBe(0);
-    expect(penanceOdds(arjuna, 3).t3).toBeGreaterThan(0);
+  it('the ultimates need standing, a long absence AND a prior tapasya', () => {
+    expect(penanceOdds(arjuna, 2, chained).t3).toBe(0); // long enough? no
+    expect(penanceOdds(bhima, 4, chained).t3).toBe(0); // worthy enough? no
+    expect(penanceOdds(nakula, 4, chained).t3).toBe(0);
+    // The gate that makes an ultimate a path rather than a purchase: even
+    // Arjuna, at full standing and a full absence, gets nothing on his FIRST
+    // tapasya. He has to have come back bearing something once already.
+    expect(penanceOdds(arjuna, 3, []).t3).toBe(0);
+    expect(penanceOdds(arjuna, 3, chained).t3).toBeGreaterThan(0);
   });
 
   it('is never a certainty, however great the wager', () => {
     for (const battles of [1, 2, 3, 4]) {
-      const o = penanceOdds(arjuna, battles);
+      const o = penanceOdds(arjuna, battles, chained);
       expect(o.t3).toBeLessThan(0.6);
       expect(o.fail).toBeGreaterThan(0);
       expect(o.fail + o.t1 + o.t2 + o.t3).toBeCloseTo(1, 5);
@@ -218,7 +226,7 @@ describe('penance is a wager, and the terms are legible', () => {
 
   it('Shiva gives the Pashupatastra or nothing at all', () => {
     const shiva = DEITIES.find((d) => d.id === 'shiva')!;
-    const o = effectiveOdds(shiva, arjuna, 3);
+    const o = effectiveOdds(shiva, arjuna, 3, new Set(), chained);
     // He holds nothing at the lesser tiers, so every lesser roll comes to nothing.
     expect(o.t1).toBe(0);
     expect(o.t2).toBe(0);
@@ -251,9 +259,15 @@ describe('length never substitutes for standing', () => {
     expect(penanceOdds('ghatotkacha', 4).t2).toBe(0);
   });
 
-  it('Bhima may earn a great weapon but never an ultimate, being untrained', () => {
-    const o = penanceOdds('bhima', 4); // standing 9: power without the mantras
-    expect(o.t2).toBeGreaterThan(0);
+  it('Bhima earns the elements but never the Brahma line, being untaught', () => {
+    // Deliberate, and a change: tier 2 is now gated on astraMastery, not on
+    // standing. Bhima stands at 9 on raw might with no mantras at all, so the
+    // Brahma line closes to him. He can still go to Agni, Varuna or Vayu (his
+    // own father) and come back bearing an elemental astra, which is what
+    // "can Bhima do penance and get a divyastra" was really asking.
+    const o = penanceOdds('bhima', 4, ['agneyastra']);
+    expect(o.t1).toBeGreaterThan(0);
+    expect(o.t2).toBe(0);
     expect(o.t3).toBe(0);
   });
 });
@@ -319,5 +333,49 @@ describe('the shrine cannot advertise what it will not deliver', () => {
         expect(real.t1 + real.t2 + real.t3).toBeGreaterThan(0.15);
       }
     }
+  });
+});
+
+describe('the ultimates are a path, not a price', () => {
+  const shiva = DEITIES.find((d) => d.id === 'shiva')!;
+  const narayana = DEITIES.find((d) => d.id === 'narayana')!;
+  const agni = DEITIES.find((d) => d.id === 'agni')!;
+  const ULTIMATE = ['brahmashirsha'];
+
+  it('Shiva receives only a warrior already bearing an ultimate', () => {
+    // Standing alone is not enough, however great. Arjuna at full standing is
+    // turned away until he has come back from a tapasya bearing a tier 3.
+    expect(mayApproach(shiva, 'arjuna', 'pandava', [])).toBe(false);
+    expect(mayApproach(shiva, 'arjuna', 'pandava', ['agneyastra'])).toBe(false);
+    expect(mayApproach(shiva, 'arjuna', 'pandava', ULTIMATE)).toBe(true);
+  });
+
+  it('the Pashupatastra door is Arjuna, Bhishma and Karna, and no one else', () => {
+    const open = ['arjuna', 'bhishma', 'karna', 'drona', 'ashwatthama', 'bhima', 'duryodhana']
+      .filter((id) => mayApproach(shiva, id, 'pandava', ULTIMATE));
+    expect(open).toEqual(['arjuna', 'bhishma', 'karna']);
+  });
+
+  it('shuts the asura kings out of the Pashupatastra, who used to qualify', () => {
+    // Regression on the audit: both stood at 13, which cleared the old gate, so
+    // an asura host could earn Shiva's weapon. The gate is standing 14, not a
+    // house rule, because Shiva demonstrably DOES give to asuras. It is this
+    // one weapon that was never theirs.
+    for (const id of ['ravana', 'indrajit']) {
+      expect(worthOf(id)).toBe(13);
+      expect(mayApproach(shiva, id, 'asura', ULTIMATE)).toBe(false);
+    }
+  });
+
+  it('closes Vishnu’s weapons to the asuras, being the ones made to end them', () => {
+    expect(mayApproach(narayana, 'ravana', 'asura', [])).toBe(false);
+    expect(mayApproach(narayana, 'arjuna', 'pandava', [])).toBe(true);
+  });
+
+  it('still lets an untaught warrior walk to an elemental god', () => {
+    // The thing the whole tapasya system was asked for: can Bhima, who wields a
+    // mace, go and come back with a divyastra? Yes. Just not the Brahma line.
+    expect(mayApproach(agni, 'bhima', 'pandava', [])).toBe(true);
+    expect(penanceOdds('bhima', 2).t1).toBeGreaterThan(0);
   });
 });
