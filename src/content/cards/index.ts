@@ -33,7 +33,12 @@ export function allCards(): Card[] {
   return ALL.slice();
 }
 
-const TIER_PROVISION = { maharathi: 10, atirathi: 7, rathi: 4 } as const;
+// Rank is now a pyramid (10 maharathi / 28 atirathi / 43 rathi), so the top of
+// it should cost like it is rare. Demoting 58 units to their power-derived rank
+// dropped every deck 31-45 under the 170 budget, which would have silently let
+// each one add five to ten more cards. Repricing keeps the budget meaningful
+// and lands the three starters at 167 / 170 / 157.
+const TIER_PROVISION = { maharathi: 14, atirathi: 9, rathi: 6 } as const;
 
 /** A card's deck-budget cost. Explicit `provision` wins; else derived from tier. */
 export function provisionOf(card: Card): number {
