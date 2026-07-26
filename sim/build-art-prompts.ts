@@ -142,6 +142,73 @@ const SCENE: Record<string, string> = {
   neutral: 'Dusty battlefield, drifting smoke, distant fires',
 };
 
+// ------------------------------------------------------------------ banners
+// The dhvaja is the best fix for a roster where 67 of 81 units are chariot
+// archers who would otherwise all hold the same bow. Every emblem below is
+// attested in the Ganguli translation, from the three passages where the epic
+// systematically inventories standards: Virata Parva LV/LVII-LVIII, Bhishma
+// Parva XVI-XVII, and Drona Parva XXIII (Pandava) and CIV (Kaurava), where
+// Dhritarashtra asks outright to have the standards described.
+//
+// NOT INVENTED. Anyone the epic does not give a device falls back to a house
+// standard rather than getting a plausible guess. Dushasana's standard is cut
+// down repeatedly and never described; Bhagadatta's likewise, though his
+// elephant Supratika IS named.
+//
+// Duryodhana's serpent banner, which is all over fan wikis and folk art, is
+// NOT in the epic. All three catalogue passages give him a jewelled elephant.
+const BANNER: Record<string, string> = {
+  arjuna: 'a golden ape with a lion’s tail',
+  bhishma: 'a golden palmyra palm and five stars on a silver staff',
+  yudhishthira: 'a golden moon circled by planets, two kettledrums lashed to the staff',
+  bhima: 'a giant silver lion with lapis-blue eyes',
+  nakula: 'a gold-backed sarabha, the eight-legged beast',
+  sahadeva: 'a silver swan hung with small bells',
+  karna: 'a gold elephant-girth rope set with pearls',
+  duryodhana: 'an elephant worked in gems, tinkling with a hundred bells',
+  drona: 'a golden altar with a water-pot and bow, a black deerskin waving from the top',
+  ashwatthama: 'a golden lion’s tail',
+  kripa: 'a great bovine bull',
+  abhimanyu: 'a karnikara flower in pure gold',
+  jayadratha: 'a silver boar on a silver staff, decked with golden chains',
+  bhurishravas: 'a golden sacrificial stake',
+  vrishasena: 'a golden peacock caught mid-cry',
+  ghatotkacha: 'a vulture',
+  uttara: 'a lion',
+  // MEDIUM. Drona CIV gives Shalya "an image like the presiding goddess of
+  // corn"; the golden ploughshare in the adjacent sentence is Ganguli's
+  // punctuation, but plough and furrow-goddess pair naturally.
+  shalya: 'the corn-goddess with a golden ploughshare',
+  // Draupadi's five sons carry images of Dharma, Marut, Sakra and the twin
+  // Ashwins (Drona XXIII). The epic names the group, not who carries which;
+  // this follows the standard father-order and is an INFERENCE, not canon.
+  prativindhya: 'the image of Dharma',
+  sutasoma: 'the image of Marut, lord of winds',
+  shrutakarma: 'the image of Sakra, lord of thunder',
+  shatanika: 'the image of an Ashwin horseman',
+  shrutasena: 'the image of an Ashwin horseman',
+};
+// Full phrases, not emblems: "a war-standard bearing the gold standard" reads
+// as a standard carrying a standard. These slot in whole.
+const HOUSE_BANNER: Record<string, string> = {
+  pandava: 'A tall plain white war-standard',
+  kaurava: 'A tall plain gold war-standard',
+  asura: 'A tall ragged black war-standard',
+  legend: 'A tall plain grey war-standard',
+  neutral: 'A tall plain war-standard',
+};
+
+// -------------------------------------------------------------------- mounts
+// Beside or behind, never ridden. The board's rows are literally chariot,
+// elephant and infantry, so the mount reinforces the game's own structure, but
+// a man ON an elephant at 51px is a speck. Put the animal's head in frame and
+// keep his face readable.
+const MOUNT: Record<string, string> = {
+  ratha: 'a war-chariot behind him',
+  gaja: 'a great war-elephant beside him, its head and trunk filling one side',
+  padati: '',
+};
+
 const SKIN: Record<string, string> = {
   pandava: 'Deep bronze skin',
   kaurava: 'Deep bronze skin',
@@ -155,6 +222,7 @@ const SKIN: Record<string, string> = {
 // rule 1, so anything the house look already handles is left alone.
 interface Marquee {
   camera?: string;
+  mount?: string;
   stance?: string;
   weapon?: string;
   skin?: string;
@@ -166,7 +234,29 @@ interface Marquee {
   build?: string;
   scene?: string;
 }
+// Each Pandava's sky is his divine father's. Costs nothing, because `scene` is
+// already a slot, and it makes five brothers in near-identical armour read as
+// five different men.
 const M: Record<string, Marquee> = {
+  sahadeva: {
+    scene: 'Battlefield at first light, low dawn mist',
+    build: 'lithe and watchful',
+    face: 'quiet knowing expression',
+  },
+  nakula: {
+    // Son of an Ashwin, the twin horsemen of dawn.
+    scene: 'Battlefield at first light, low dawn mist',
+    build: 'lithe and handsome',
+  },
+  yudhishthira: {
+    // Son of Dharma/Yama: no wind, no drama, judgement.
+    scene: 'Still grey battlefield, falling ash, dead air',
+    face: 'calm sorrowful expression',
+  },
+  bhagadatta: {
+    // Supratika is named in the epic (Bhishma XCVI); his BANNER device never is.
+    mount: 'the great war-elephant Supratika beside him, its head and tusks filling one side',
+  },
   arjuna: {
     skin: 'Blue-grey skin',
     weapon: 'holding a massive ornate golden bow, a full quiver of arrows on his back',
@@ -191,6 +281,7 @@ const M: Record<string, Marquee> = {
     scene: 'Dusty battlefield under a low sun, drifting smoke, distant broken chariots',
   },
   bhishma: {
+    scene: 'Battlefield beside a wide river, drifting mist',
     camera: 'Slightly low camera angle, grave and monumental.',
     build: 'tall and straight-backed',
     mark: 'a long white beard beneath a high silver crown',
@@ -210,6 +301,7 @@ const M: Record<string, Marquee> = {
     face: 'wild-eyed and snarling',
   },
   ghatotkacha: {
+    mount: '',
     build: 'a towering tusked half-rakshasa',
     skin: 'Dark grey skin',
     mark: 'a wild black mane',
@@ -222,6 +314,7 @@ const M: Record<string, Marquee> = {
     scene: 'A closing ring of spears and shields on every side',
   },
   shakuni: {
+    mount: '',
     camera: 'Eye-level camera, close and conspiratorial.',
     build: 'lean and stooped',
     metal: 'Rich unarmoured court silks with rings on every finger',
@@ -236,6 +329,7 @@ const M: Record<string, Marquee> = {
     face: 'all ten faces roaring at once',
   },
   kumbhakarna: {
+    mount: '',
     build: 'a mountainous tusked giant',
     mark: 'half-shut eyes heavy with sleep',
   },
@@ -244,6 +338,7 @@ const M: Record<string, Marquee> = {
     face: 'serene merciless expression',
   },
   krishna_charioteer: {
+    mount: '',
     camera: 'Eye-level camera, calm and steady.',
     // The peacock feather belongs HERE and nowhere else. Putting it on Arjuna
     // is what produced the calendar art we spent a week blaming on his name.
@@ -263,6 +358,7 @@ const M: Record<string, Marquee> = {
     mark: 'a faint vertical seam running the length of his body',
   },
   balarama: {
+    mount: '',
     skin: 'Fair skin',
     mark: 'long dark hair, a drinking horn at his belt',
     weapon: 'holding a great iron plough planted upright like a wall',
@@ -346,6 +442,11 @@ function bodyOf(card: U): string {
   const cloth = m.cloth ?? CLOTH[card.house] ?? CLOTH.neutral;
   const build = m.build ?? BUILD[tier] ?? BUILD.rathi;
   const scene = m.scene ?? SCENE[card.house] ?? SCENE.neutral;
+  const emblem = BANNER[card.id];
+  const banner = emblem
+    ? `A tall war-standard bearing ${emblem}`
+    : (HOUSE_BANNER[card.house] ?? HOUSE_BANNER.neutral);
+  const mount = m.mount ?? MOUNT[row] ?? '';
 
   // The unarmoured (Shakuni, Krishna, Ekalavya) skip the coverage list, which
   // would otherwise put a breastplate on a man in court silks.
@@ -357,6 +458,7 @@ function bodyOf(card: U): string {
     `${card.name}, ${build}, in ${stance}, ${weapon}. ` +
     `${skin}, ${face}, ${mark}. ` +
     `${armour} ${cloth}. ${scene}. ` +
+    `${banner}${mount ? `, and ${mount}` : ''}. ` +
     `${camera} ${FRAME('Full figure from head to feet, entire weapon')} ${NEG}`
   );
 }
@@ -383,6 +485,26 @@ out.push('');
 out.push(`${cards.length} prompts, generated from the live card data. Regenerate with \`npx vite-node sim/build-art-prompts.ts\`.`);
 out.push('');
 out.push('Generated for **meta.ai**, which honours negated qualities. Firefly does not, and caps prompts at 1024 characters.');
+out.push('');
+out.push('## Where the files go');
+out.push('');
+out.push('Save each image as the card id shown above its prompt, into:');
+out.push('');
+out.push('```');
+out.push('src/assets/art/cards/<card_id>.png');
+out.push('```');
+out.push('');
+out.push('So Arjuna is `src/assets/art/cards/arjuna.png`. `png`, `webp`, `jpg` and `avif` all work. Art resolves by convention, so a file dropped in that folder appears on its card with no code change and nothing to register. A card with no file keeps its placeholder glyph, so a half-finished set degrades quietly.');
+out.push('');
+out.push('**Aspect ratio: 4:5 portrait.** Measured, not assumed: the art slot is `flex: 1`, so its shape is whatever is left after the card header and footer, and that varies with card size. It is 35x43.8 (exactly 4:5, nothing cropped) on a codex card and 51x50 (square, 20% of the height cropped) on a hand card. Where it does crop, the loss is biased downward so it falls on the legs rather than the crown. Tapping a card shows the whole image uncropped at 192x240.');
+out.push('');
+out.push('## Banners');
+out.push('');
+out.push('The dhvaja is what stops 67 chariot archers looking like the same man. Every emblem used here is attested in the Kisari Mohan Ganguli translation, from the passages where the epic inventories standards: Virata Parva LV and LVII-LVIII, Bhishma Parva XVI-XVII, and Drona Parva XXIII (Pandava side) and CIV (Kaurava side), where Dhritarashtra asks outright to have the standards described.');
+out.push('');
+out.push('Anyone the epic gives no device gets a plain house standard instead of a plausible guess. Dushasana\'s standard is cut down repeatedly and never described; the same is true of Bhagadatta, though his elephant Supratika **is** named.');
+out.push('');
+out.push('One trap worth recording: **Duryodhana\'s serpent banner is not in the epic.** It is everywhere in fan wikis and folk art, and all three catalogue passages give him a jewelled elephant instead.');
 out.push('');
 out.push('## What testing taught us');
 out.push('');
