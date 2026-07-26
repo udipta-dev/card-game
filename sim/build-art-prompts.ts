@@ -151,6 +151,28 @@ const WEAPON_BY_ID: Record<string, string> = {
   // Ashwatthama is deliberately ABSENT. The only thing sourced for him is that
   // he excelled in "the science of arms", which is astra mastery, not an object
   // an illustrator can draw. He takes the fallback until that is settled.
+  // --- Pandava allies, verified verbatim against Ganguli (PG 15474-15476).
+  // Only three of the fifteen have a genuinely distinctive weapon. Four more
+  // have a memorable dart or lance thrown AFTER their bow is cut, which is the
+  // standard Ganguli combat beat and differentiates them without invention.
+  dhrishtadyumna: 'holding a drawn sword, the blade that took Drona’s head',
+  chekitana: 'holding a hero-slaying iron mace',
+  uttara: 'holding an elephant-hook and a lance',
+  shikhandi: 'holding a bow, sun-hued arrows nocked',
+  satyaki: 'holding a great bow tall as a sala tree, a full quiver on his back',
+  yuyutsu: 'holding a bow, a broad-headed arrow nocked',
+  drupada: 'holding a gold-decked iron dart, his bow cut away',
+  virata: 'holding a sheaf of ten lances',
+  sweta: 'holding a gold-decked dart, his bow left behind on the car',
+  dhrishtaketu: 'holding an iron dart with a golden staff',
+  kekaya_brothers: 'holding bows, a full quiver each on their backs',
+  // Bow is genuinely all the text supports for these. Their identity has to
+  // come from elsewhere: the two below are stationed at Arjuna's chariot
+  // wheels, which is their canonical role.
+  yudhamanyu: 'holding a bow and gold-decked arrows',
+  uttamaujas: 'holding a bow and gold-decked arrows',
+  sankha: 'holding a bow, a full quiver of arrows on his back',
+  kuntibhoja: 'holding a bow, a full quiver of arrows on his back',
 };
 
 // Last resort, for the two generic infantry cards and anyone the epic never
@@ -212,6 +234,7 @@ const BANNER: Record<string, string> = {
   vrishasena: 'a golden peacock caught mid-cry',
   ghatotkacha: 'a vulture',
   uttara: 'a lion',
+  kekaya_brothers: 'five red standards together',
   // MEDIUM. Drona CIV gives Shalya "an image like the presiding goddess of
   // corn"; the golden ploughshare in the adjacent sentence is Ganguli's
   // punctuation, but plough and furrow-goddess pair naturally.
@@ -274,6 +297,12 @@ interface Marquee {
 // already a slot, and it makes five brothers in near-identical armour read as
 // five different men.
 const M: Record<string, Marquee> = {
+  uttara: {
+    // Bhishma XLVII has him on a tusker, killed by Shalya's dart and falling
+    // from the elephant's neck. The game files him under Ratha; canon wins here.
+    mount: 'a great war-elephant beside him, its head and trunk filling one side',
+    build: 'a slight young prince',
+  },
   sahadeva: {
     scene: 'Battlefield at first light, low dawn mist',
     build: 'lithe and watchful',
