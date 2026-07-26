@@ -21,7 +21,9 @@ console.log(
 
 const t0 = Date.now();
 const b = simulateBattles(battles);
-const runs = (['vardaan', 'penance', 'walk'] as ShrinePolicy[]).map((p) => simulateRuns(runsEach, p));
+const runs = (['vardaan', 'penance-long', 'penance-short', 'walk'] as ShrinePolicy[]).map((p) =>
+  simulateRuns(runsEach, p),
+);
 const secs = ((Date.now() - t0) / 1000).toFixed(1);
 
 console.log(`\nFACTIONS                 win rate         95% interval     games`);

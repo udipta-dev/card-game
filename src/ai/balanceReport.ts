@@ -158,8 +158,13 @@ export function simulateBattles(games: number): BattleReport {
 
 // ------------------------------------------------------------------ run side
 
-/** How the simulated player behaves at a shrine. This is what we are testing. */
-export type ShrinePolicy = 'vardaan' | 'penance' | 'walk';
+/**
+ * How the simulated player behaves at a shrine. Short and long penance are
+ * separate policies ON PURPOSE. Offers arrive longest-first, so a naive
+ * "take the penance" policy always picks the most expensive wager available
+ * and measures the worst case, not the mechanic.
+ */
+export type ShrinePolicy = 'vardaan' | 'penance-long' | 'penance-short' | 'walk';
 
 export interface RunReport {
   policy: ShrinePolicy;
@@ -181,10 +186,16 @@ function playRun(seed: number, house: 'pandava' | 'kaurava' | 'asura', policy: S
     }
     if (run.phase === 'shrine') {
       const offers = run.shrineOffers ?? [];
-      const want =
-        policy === 'walk'
-          ? null
-          : offers.find((o) => o.kind === policy) ?? (policy === 'penance' ? null : offers[0] ?? null);
+      const penances = offers.filter((o) => o.kind === 'penance');
+      let want = null;
+      if (policy === 'vardaan') {
+        want = offers.find((o) => o.kind === 'vardaan') ?? null;
+      } else if (policy === 'penance-long') {
+        // Offers arrive longest-first: the deepest, most expensive wager.
+        want = penances[0] ?? null;
+      } else if (policy === 'penance-short') {
+        want = penances.length ? penances[penances.length - 1] : null;
+      }
       run = chooseShrineOffer(run, want);
       continue;
     }
