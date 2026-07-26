@@ -7,6 +7,7 @@ import '@fontsource/cinzel/700.css';
 import { App } from './app/App';
 import './styles/tokens.css';
 import './styles/app.css';
+import './styles/polish.css';
 
 registerSW({ immediate: true });
 

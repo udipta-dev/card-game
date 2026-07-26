@@ -1,0 +1,248 @@
+/* ============================================================================
+   Polish: the difference between a web page and an app.
+   Loaded last, so it refines what app.css establishes rather than fighting it.
+
+   Almost nothing here is about the framework. What reads as "a website" on a
+   phone is a short, specific list: a grey flash on every tap, text selecting
+   when you drag a card, a long-press menu over artwork, things appearing
+   instantly instead of arriving, and a 300ms delay before a tap registers.
+   ========================================================================== */
+
+/* ---------------------------------------------------------- 1. Native feel */
+
+/* The single biggest tell. Every tap on a phone browser flashes a translucent
+   grey box over the element; no native app does this. */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Dragging a card should move a card, not select the words printed on it, and
+   a long press should not raise the browser's copy/share sheet over the art. */
+.app {
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Anything tappable opts out of the browser's wait-and-see for a double-tap
+   zoom, which is where the classic ~300ms of input lag comes from. */
+button,
+.card,
+.row,
+.rung,
+.reward__card,
+.shrine__card,
+.faction-btn {
+  touch-action: manipulation;
+}
+
+/* Give keyboard users a visible, on-brand focus ring, without putting one on
+   every mouse click. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------- 2. Things should ARRIVE */
+
+/* A card appearing from nowhere reads as a page redraw. A card that lands
+   reads as a card being played. Deliberately fast: this fires constantly, and
+   anything slower than about 180ms starts to feel like waiting. */
+@keyframes card-land {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.row__cards .card {
+  animation: card-land 0.18s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+/* Cards drawn into hand slide up rather than blink into place. */
+@keyframes hand-deal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hand .card {
+  animation: hand-deal 0.2s ease-out both;
+}
+
+/* Whole screens crossfade, so moving between the menu, the setup and a battle
+   feels like navigation instead of a reload. */
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.menu,
+.codex,
+.run,
+.match {
+  animation: screen-in 0.22s ease-out both;
+}
+
+/* Dialogs come forward rather than cutting in. */
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.overlay > * {
+  animation: dialog-in 0.16s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+.overlay {
+  animation: fade-in 0.16s ease-out both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------ 3. Everything responds */
+
+/* A press that produces no change of state feels broken on touch, where there
+   is no cursor and no hover to fall back on. */
+button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+}
+.card--hand:active {
+  transform: translateY(-2px) scale(1.02);
+}
+.reward__card:active,
+.shrine__card:active,
+.rung:active {
+  transform: scale(0.99);
+}
+.reward__card,
+.shrine__card {
+  transition: border-color 0.12s ease, transform 0.12s ease, background 0.12s ease;
+}
+
+/* A warrior with an unspent skill breathes, so the eye finds him without a
+   label. Slow and low-contrast on purpose: this sits under a card the player
+   is reading. */
+@keyframes ready-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(240, 196, 90, 0.55), 0 0 10px rgba(240, 196, 90, 0.22);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(240, 196, 90, 0.8), 0 0 18px rgba(240, 196, 90, 0.42);
+  }
+}
+.card--ready {
+  animation: ready-breathe 2.4s ease-in-out infinite;
+}
+
+/* A card that can be targeted should look like it wants to be tapped. */
+@keyframes targetable-pulse {
+  0%,
+  100% {
+    outline-color: rgba(232, 185, 35, 0.55);
+  }
+  50% {
+    outline-color: rgba(232, 185, 35, 1);
+  }
+}
+.card--targetable {
+  animation: targetable-pulse 1.4s ease-in-out infinite;
+}
+
+/* ------------------------------------------- 4. Numbers that change, show it */
+
+/* Power shifting is the whole game. A number that silently becomes a different
+   number is the easiest thing in the world to miss. */
+@keyframes power-hit {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.card__power--buffed,
+.card__power--damaged {
+  animation: power-hit 0.32s ease-out;
+}
+
+/* The running board totals matter as much as the cards. */
+.score-num {
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+/* ------------------------------------------------------- 5. Quieter chrome */
+
+/* Scrollbars in the hand tray and the codex are pure browser furniture. */
+.hand,
+.codex__scroll,
+.overlay {
+  scrollbar-width: thin;
+  scrollbar-color: var(--panel-edge) transparent;
+}
+.hand::-webkit-scrollbar,
+.codex__scroll::-webkit-scrollbar,
+.overlay::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.hand::-webkit-scrollbar-thumb,
+.codex__scroll::-webkit-scrollbar-thumb,
+.overlay::-webkit-scrollbar-thumb {
+  background: var(--panel-edge);
+  border-radius: 3px;
+}
+.hand::-webkit-scrollbar-track,
+.codex__scroll::-webkit-scrollbar-track,
+.overlay::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Art should never be draggable off the card as an image. */
+.card__art img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------ 6. Respect the user */
+
+/* One block, covering everything above. Motion sensitivity is not a niche
+   preference, and a game that ignores it is unplayable for those people. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
