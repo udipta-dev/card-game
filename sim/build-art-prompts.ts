@@ -50,11 +50,16 @@ const STYLE =
   'Ink-and-gouache fantasy illustration, bold black linework, opaque gouache ' +
   'brushwork, muted earthy palette, dramatic chiaroscuro.';
 
-/** The camera. Its own sentence, because a bare "Low-angle view" tucked into
- *  the framing clause did not land: Karna came back near eye-level. Three
- *  reinforcing terms and a full stop of its own. Looking UP at a warrior is
- *  most of what makes him imposing rather than merely present. */
-const CAMERA = 'Low camera angle looking up at him from below, towering heroic perspective.';
+/** The camera gets its own sentence, because a bare "Low-angle view" tucked
+ *  into the framing clause did not land and Karna came back near eye-level.
+ *  But it must NOT be universal: a worm's-eye view says "this one towers over
+ *  you", which is true of Bhima and false of Shakuni, who schemes at your
+ *  elbow. Default by rank, override per character. */
+const CAMERA: Record<string, string> = {
+  maharathi: 'Low camera angle looking up at him from below, towering heroic perspective.',
+  atirathi: 'Slightly low camera angle, imposing perspective.',
+  rathi: 'Eye-level camera.',
+};
 /** Same idea where there is no "him" to look up at. */
 const CAMERA_SCENE = 'Low camera angle looking up from below, towering scale.';
 
@@ -149,6 +154,7 @@ const SKIN: Record<string, string> = {
 // Only what DIFFERS from the house default. Every override costs words against
 // rule 1, so anything the house look already handles is left alone.
 interface Marquee {
+  camera?: string;
   stance?: string;
   weapon?: string;
   skin?: string;
@@ -185,11 +191,13 @@ const M: Record<string, Marquee> = {
     scene: 'Dusty battlefield under a low sun, drifting smoke, distant broken chariots',
   },
   bhishma: {
+    camera: 'Slightly low camera angle, grave and monumental.',
     build: 'tall and straight-backed',
     mark: 'a long white beard beneath a high silver crown',
     face: 'expression heavy with sorrow',
   },
   drona: {
+    camera: 'Eye-level camera.',
     mark: 'a grey beard, ash marks on his brow, a sacred thread across the armour',
     face: 'cold measuring expression',
   },
@@ -208,11 +216,13 @@ const M: Record<string, Marquee> = {
     weapon: 'holding an enormous studded iron club',
   },
   abhimanyu: {
+    camera: 'High camera angle looking down at him, hemmed in and overwhelmed.',
     build: 'a beardless youth, slight beside grown men',
     mark: 'bright unscarred golden armour, no crown',
     scene: 'A closing ring of spears and shields on every side',
   },
   shakuni: {
+    camera: 'Eye-level camera, close and conspiratorial.',
     build: 'lean and stooped',
     metal: 'Rich unarmoured court silks with rings on every finger',
     tunic: 'no armour at all',
@@ -234,6 +244,7 @@ const M: Record<string, Marquee> = {
     face: 'serene merciless expression',
   },
   krishna_charioteer: {
+    camera: 'Eye-level camera, calm and steady.',
     // The peacock feather belongs HERE and nowhere else. Putting it on Arjuna
     // is what produced the calendar art we spent a week blaming on his name.
     metal: 'Flowing yellow silks and no armour',
@@ -324,6 +335,7 @@ function bodyOf(card: U): string {
   const tier = card.tier ?? 'rathi';
   const row = card.rows[0] ?? 'padati';
 
+  const camera = m.camera ?? CAMERA[tier] ?? CAMERA.rathi;
   const stance = m.stance ?? 'a wide battle stance';
   const weapon = m.weapon ?? WEAPON[row] ?? WEAPON.padati;
   const skin = m.skin ?? SKIN[card.house] ?? SKIN.neutral;
@@ -345,7 +357,7 @@ function bodyOf(card: U): string {
     `${card.name}, ${build}, in ${stance}, ${weapon}. ` +
     `${skin}, ${face}, ${mark}. ` +
     `${armour} ${cloth}. ${scene}. ` +
-    `${CAMERA} ${FRAME('Full figure from head to feet, entire weapon')} ${NEG}`
+    `${camera} ${FRAME('Full figure from head to feet, entire weapon')} ${NEG}`
   );
 }
 
