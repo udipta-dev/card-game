@@ -132,19 +132,19 @@ const WEAPON_BY_ID: Record<string, string> = {
   // how Yudhishthira's spear surfaced: Adi Parva calls him only a car-warrior,
   // but in Shalya Parva he kills Shalya with a golden-handled dart Tvashtri
   // forged. That is the drawable fact.
-  arjuna: 'holding the Gandiva, a great celestial longbow, a full quiver on his back',
-  bhima: 'holding a massive golden gada mace',
-  yudhishthira: 'holding a gem-studded spear with a golden handle',
+  arjuna: 'holding Gandiva, a huge golden-backed longbow, a full quiver on his back',
+  bhima: 'holding a heavy gold-decked iron mace in both hands',
+  yudhishthira: 'holding a long gold-hafted spear hung with bells',
   // The twins' blades differ in the text, so they can differ in the picture.
-  nakula: 'holding a straight sword in a goat-skin sheath',
-  sahadeva: 'holding a huge curved scimitar in a cow-skin sheath',
+  nakula: 'holding a straight steel sword and a shield decked with a thousand stars',
+  sahadeva: 'holding a broad curved scimitar and a shield',
   duryodhana: 'holding a colossal gold-banded war-mace',
   // He shoots on after paying the tuition-fee, so: a bow AND the maimed hand.
   ekalavya: 'holding a bow, drawing with the remaining fingers of a thumbless hand',
 
   // --- Not from the epic's own catalogue, but unmistakable and uncontested.
   karna: 'holding a massive ornate dark bow, a full quiver of arrows on his back',
-  ghatotkacha: 'holding an enormous studded iron club',
+  ghatotkacha: 'holding a huge blazing spear upraised overhead',
   shakuni: 'holding a pair of ivory dice and no weapon',
   balarama: 'holding a great iron plough planted upright like a wall',
   krishna_charioteer: 'holding chariot reins and a white conch, no weapon',
@@ -173,6 +173,37 @@ const WEAPON_BY_ID: Record<string, string> = {
   uttamaujas: 'holding a bow and gold-decked arrows',
   sankha: 'holding a bow, a full quiver of arrows on his back',
   kuntibhoja: 'holding a bow, a full quiver of arrows on his back',
+  // --- Pandava core and the Upapandavas. Sauptika Parva 8 is the only place in
+  // the epic that individuates Draupadi's five sons by weapon, and it is
+  // unusually explicit, so all five come from that one night.
+  abhimanyu: 'raising a chariot wheel overhead in both arms',
+  iravan: 'holding a sword and a battle-axe',
+  anjanaparvan: 'holding a scimitar decked with golden stars',
+  prativindhya: 'holding a drawn bow, arrows nocked',
+  sutasoma: 'holding an uplifted sword, a lance in his other hand',
+  shrutakarma: 'holding a spiked iron bludgeon',
+  // Sauptika has Shatanika lift a car-wheel too, but Abhimanyu's wheel is THE
+  // image of the epic and two wheel cards would read as a duplicate. He keeps
+  // the bow his brothers carry, which the text also supports.
+  shatanika: 'holding a bow, a full quiver of arrows on his back',
+  shrutasena: 'holding a drawn bow, pouring showers of arrows',
+
+  // --- Kaurava allies. Several have the Ganguli beat of a dart or mace taken
+  // up once the bow or the car is gone, which is what makes them drawable.
+  bhagadatta: 'holding an iron elephant-hook, the ankusa',
+  srutayudha: 'holding the mace Varuna gave him, hero-slaying',
+  alayudha: 'holding a gigantic iron-bound parigha club',
+  anuvinda: 'holding a mace, his car destroyed beneath him',
+  jalasandha: 'holding a scimitar and a bull’s-hide shield decked with a hundred moons',
+  jayadratha: 'holding a sword and a peacock shield hung with a hundred small bells',
+  bhurishravas: 'holding an upraised sword',
+  alambusha: 'holding a bow and the sword that beheaded Iravan',
+  bahlika: 'holding a great bow and a gold-decked iron dart',
+  sudakshina: 'holding a bow and an iron dart decked with bells',
+  susharma: 'holding a bow, his bowstring worn as a girdle over kusa-grass robes',
+  somadatta: 'holding a large bow, a full quiver of arrows on his back',
+  vinda: 'holding a great bow, a full quiver of arrows on his back',
+  vrishasena: 'holding a bow, a full quiver of arrows on his back',
 };
 
 // Last resort, for the two generic infantry cards and anyone the epic never
