@@ -429,6 +429,83 @@ interface Marquee {
 // already a slot, and it makes five brothers in near-identical armour read as
 // five different men.
 const M: Record<string, Marquee> = {
+  bahlika: {
+    mark: 'the eldest man on the field, his face still unwithered',
+  },
+  vrishasena: {
+    build: 'a young man',
+    mark: 'youthful, barely past boyhood',
+  },
+  alayudha: {
+    skin: 'Elephant-hide black skin',
+    // Drona CLXXVI: "In form, he was more handsome than Ghatotkacha".
+    // Contradicts the standard fanged-monster rakshasa depiction.
+    mark: 'strikingly handsome for a rakshasa, jewelled armlets and diadem',
+  },
+  alambusha: {
+    skin: 'Jet-black skin',
+    mark: 'a heaped mass of black antimony, huge and dark',
+  },
+  jalasandha: {
+    mark: 'body smeared with red sandal-paste, a blazing gold chain round his head',
+  },
+  sudakshina: {
+    build: 'young and thick-necked',
+    mark: 'young and bull-necked, arms like spiked maces, smeared with sandal',
+  },
+  anuvinda: {
+    mark: 'bull-like eyes, gold armour and gold Angadas, twin to his brother',
+  },
+  vinda: {
+    mark: 'bull-like eyes, gold armour and gold Angadas, twin to his brother',
+  },
+  jayadratha: {
+    mark: 'his head shaved bald but for five tufts of hair',
+  },
+  bhurishravas: {
+    mark: 'his right arm hacked away, blue-black locks, eyes red as a pigeon\'s',
+  },
+  sutasoma: {
+    mark: 'a boy, a blue-lotus scimitar with an ivory handle at his belt',
+  },
+  shatanika: {
+    mark: 'the youngest-looking of five brothers, still a boy',
+  },
+  iravan: {
+    mark: 'a diadem and heavy ear-rings, handsome and young',
+  },
+  shikhandi: {
+    mark: 'a powerful man, no softness in the face',
+  },
+  kekaya_brothers: {
+    skin: 'Deep red skin',
+    mark: 'five alike in scarlet mail, red weapons, skin red as cochineal',
+  },
+  dhrishtaketu: {
+    build: 'of giant stature',
+    mark: 'of giant stature, long fair locks and big earrings',
+  },
+  satyaki: {
+    mark: 'long hair loose to the shoulder, heavy ear-rings',
+  },
+  sankha: {
+    mark: 'burnished steel mail studded with a hundred golden eyes',
+  },
+  virata: {
+    mark: 'an old king beneath a white umbrella',
+  },
+  drupada: {
+    mark: 'an old king, white-bearded and straight-backed',
+  },
+  anjanaparvan: {
+    build: 'hill-huge',
+    skin: 'Jet-black skin',
+    mark: 'hill-huge, jet black as a mass of antimony',
+  },
+  dhrishtadyumna: {
+    skin: 'Fire-hued skin',
+    mark: 'round cheeks, huge eyes, steel armour he was born wearing',
+  },
   vritra: {
     banner: '',
     skin: 'Dull green-black scales',
@@ -473,9 +550,13 @@ const M: Record<string, Marquee> = {
   shishupala: {
     // Sabha XLII: born with three eyes and four arms, which fall away in
     // Krishna's lap. The remnants are what make him drawable.
-    mark: 'a faint vestigial third-eye mark on his brow, pale scars at both shoulders',
+    // Sabha XLII: the third eye and two extra arms fall away in infancy on
+    // Krishna's lap. The adult is an ordinary two-armed man, so the only
+    // drawable cue is the copper-red eyes he shows in rage (Sabha XXXVII).
+    mark: 'ordinary and two-armed, eyes copper-red with rage',
   },
   uttara: {
+    mark: 'a frightened boy prince in heavy ear-rings',
     // Bhishma XLVII has him on a tusker, killed by Shalya's dart and falling
     // from the elephant's neck. The game files him under Ratha; canon wins here.
     mount: 'a great war-elephant beside him, its head and trunk filling one side',
@@ -487,27 +568,37 @@ const M: Record<string, Marquee> = {
     face: 'quiet knowing expression',
   },
   nakula: {
+    skin: 'Coppery dark skin',
+    mark: 'a leonine neck, red eyes, the handsomest man on the field',
     // Son of an Ashwin, the twin horsemen of dawn.
     scene: 'Battlefield at first light, low dawn mist',
     build: 'lithe and handsome',
   },
   yudhishthira: {
+    // Vana Parva: "a complexion like that of pure gold, possessed of a
+    // prominent nose and large eyes, and endued with a slender make".
+    // He is the LEAST muscular of the five, not a broad heroic build.
+    build: 'tall and slender',
+    skin: 'Pale gold complexion',
+    mark: 'a prominent nose, large eyes, long black hair beneath a golden crown',
     // Son of Dharma/Yama: no wind, no drama, judgement.
     scene: 'Still grey battlefield, falling ash, dead air',
     face: 'calm sorrowful expression',
   },
   bhagadatta: {
+    mark: 'very old, a cloth turban over white hair, a gold garland on it',
     // Supratika is named in the epic (Bhishma XCVI); his BANNER device never is.
     mount: 'the great war-elephant Supratika beside him, its head and tusks filling one side',
   },
   arjuna: {
+    mark: 'curly black hair beneath a golden diadem, forearms scarred by the bowstring',
     skin: 'Blue-grey skin',
   },
   bhima: {
     build: 'hyper-muscular',
     metal: 'Engraved black armour hung with heavy gold chains',
     tunic: 'a black tunic', // the blue belongs on the loincloth, not twice over
-    mark: 'wild black hair and a thick black beard beneath a spiked golden crown',
+    mark: 'tall as a sala tree, long-armed, bitten lip and three deep furrows across his brow',
     face: 'screaming, teeth bared',
     cloth: 'Torn blue loincloth, heavy black boots',
     scene: 'Ruined battlefield, flying dust, rock debris',
@@ -548,7 +639,7 @@ const M: Record<string, Marquee> = {
   abhimanyu: {
     camera: 'High camera angle looking down at him, hemmed in and overwhelmed.',
     build: 'a beardless youth, slight beside grown men',
-    mark: 'bright unscarred golden armour, no crown',
+    mark: 'a boy\'s moon-round face, raven-black lashes, three conch-lines on his neck',
     scene: 'A closing ring of spears and shields on every side',
   },
   shakuni: {
@@ -591,18 +682,21 @@ const M: Record<string, Marquee> = {
   },
   jarasandha: {
     build: 'immense and thick-limbed',
-    mark: 'a faint vertical seam running the length of his body',
+    // Sabha XXIII. The two halves are the INFANT; no seam is ever described
+    // on the adult. The seam I had here was invented.
+    mark: 'his crown set aside, hair bound up in a wrestler’s knot',
   },
   balarama: {
     mount: '',
     skin: 'Fair skin',
-    mark: 'long dark hair, a drinking horn at his belt',
+    mark: 'fair-skinned in blue silk, eyes red-rimmed with wine',
     face: 'turned away, refusing the field',
   },
   ekalavya: {
+    skin: 'Dark skin',
     metal: 'Plain forest dress and no armour',
     tunic: 'no armour at all',
-    mark: 'the right thumb missing from his draw hand',
+    mark: 'dark-skinned, body caked in filth, matted locks, black rags',
     face: 'unbowed, jaw set',
   },
 };
