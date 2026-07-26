@@ -3,9 +3,16 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// base must match the GitHub Pages repo path for a project site.
+// The base path depends on WHERE this is served from, and getting it wrong
+// 404s every asset:
+//   GitHub Pages project site -> https://user.github.io/card-game/  -> '/card-game/'
+//   Cloudflare Pages          -> https://<project>.pages.dev/       -> '/'
+// Cloudflare sets CF_PAGES during its build, so both hosts work from the same
+// repo with no manual editing and no separate branch.
+const base = process.env.CF_PAGES ? '/' : '/card-game/';
+
 export default defineConfig({
-  base: '/card-game/',
+  base,
   server: {
     port: Number(process.env.PORT) || 5173,
   },
