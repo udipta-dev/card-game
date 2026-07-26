@@ -407,6 +407,167 @@ const SKIN: Record<string, string> = {
   neutral: 'Deep bronze skin',
 };
 
+
+// ============================================================================
+// VARIATION
+//
+// One prompt per card produced one LOOK per card: every warrior in the same
+// stance, the same scarf, the same white dhoti, under the same thunderstorm.
+// At 103 cards that reads as a template with the names swapped.
+//
+// So the incidental slots draw from pools instead of constants. Two rules make
+// it safe:
+//
+//   1. DETERMINISTIC, never random. The pick is a hash of (card id + slot
+//      name), so regenerating this file never changes a prompt you have
+//      already made art from, and two slots on the same card do not correlate.
+//   2. CANON ALWAYS WINS. Anything in the marquee table overrides the pool.
+//      Age, build, complexion and distinguishing marks are NOT varied at all:
+//      Ghatotkacha stays bald and rotund, Bhishma stays white-bearded, Drona
+//      stays eighty-five. Only the incidentals move.
+//
+// House still constrains the palettes, so a Kaurava does not come back in
+// Pandava blue. Variety WITHIN identity, not instead of it.
+// ============================================================================
+
+/** Stable hash of a card id plus a slot name, so slots decorrelate. */
+function vary<T>(id: string, slot: string, pool: readonly T[]): T {
+  let h = 2166136261;
+  const key = `${id}:${slot}`;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return pool[(h >>> 0) % pool.length];
+}
+
+const STANCE_POOL = [
+  'in a wide battle stance',
+  'in a planted, braced stance',
+  'mid-stride, advancing',
+  'one foot set on a broken chariot wheel',
+  'standing at his full height, feet apart',
+  'half-turned, weight on his back foot',
+  'in a low crouch, ready to spring',
+  'standing square and unmoving',
+  'leaning forward, shoulders set',
+] as const;
+
+/** An eighty-five-year-old Drona does not crouch ready to spring. Stance has to
+ *  respect the age the canon slots already fixed, or the variation contradicts
+ *  the very thing it is forbidden to touch. */
+const ELDER_STANCE_POOL = [
+  'standing square and unmoving',
+  'standing at his full height, feet apart',
+  'in a planted, braced stance',
+  'straight-backed and still',
+  'half-turned, weight on his back foot',
+] as const;
+const YOUTH_STANCE_POOL = [
+  'mid-stride, advancing',
+  'in a low crouch, ready to spring',
+  'leaning forward, shoulders set',
+  'in a wide battle stance',
+  'one foot set on a broken chariot wheel',
+] as const;
+const AGED = /\bold\b|aged|eighty|venerable|white-bearded|white beard|grey beard|eldest/i;
+const YOUNG = /\bboy\b|youth|youthful|child|young|beardless/i;
+
+const FACING_POOL = [
+  'turned three-quarters to his right',
+  'turned three-quarters to his left',
+  'squarely facing the viewer',
+  'squarely facing the viewer, head slightly turned',
+  'in near profile, gaze off to one side',
+  'head lowered, eyes up at the viewer',
+] as const;
+
+/** Expression stays house-flavoured: a Kaurava should not smile like a Pandava. */
+const FACE_POOL: Record<string, readonly string[]> = {
+  pandava: ['calm focused expression', 'eyes narrowed in cold anger', 'jaw set and unafraid',
+            'a grave, steady look', 'lips parted, breathing hard'],
+  kaurava: ['hard contemptuous expression', 'a curled sneer', 'cold and measuring',
+            'brows drawn, furious', 'proud and unsmiling'],
+  asura: ['teeth bared in a snarl', 'roaring, mouth wide open', 'a wide cruel grin',
+          'eyes burning, jaw clenched', 'silent and hungry'],
+  legend: ['level unreadable expression', 'looking past you into the distance',
+           'weary but resolute', 'calm to the point of coldness'],
+  neutral: ['grim expression', 'set and watchful'],
+};
+
+const METAL_POOL: Record<string, readonly string[]> = {
+  pandava: ['Engraved gold armour', 'Polished silver-white armour chased with gold',
+            'Bright bronze armour inlaid with gold', 'Blue-lacquered armour banded with gold'],
+  kaurava: ['Engraved dark iron armour banded with gold', 'Deep crimson-lacquered armour with brass fittings',
+            'Blackened steel armour chased with copper', 'Heavy bronze armour darkened with age'],
+  asura: ['Engraved blackened bronze armour', 'Green-lacquered armour banded with dark iron',
+          'Rough unpolished dark scale armour', 'Ash-grey iron armour with bone fittings'],
+  legend: ['Engraved silver armour', 'Plain burnished steel armour', 'Weathered grey-green bronze armour'],
+  neutral: ['Engraved bronze armour', 'Plain iron armour'],
+};
+
+/** The COVERAGE is what keeps chests covered (rule 3), so every variant still
+ *  names chest, shoulders, forearms and shins. Only the construction changes. */
+const PLATES_POOL = [
+  'sculpted breastplate, layered pauldrons, vambraces, greaves and a jewelled belt',
+  'scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt',
+  'lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt',
+  'banded chest-plate, ridged shoulder-cops, arm-guards, greaves and a knotted sash-belt',
+  'embossed cuirass with a lion-face boss, layered shoulder-plates, bracers, greaves and a gem-set belt',
+  'quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt',
+] as const;
+
+const TUNIC_POOL: Record<string, readonly string[]> = {
+  pandava: ['a dark blue tunic', 'a deep indigo tunic', 'a cream tunic', 'a slate-grey tunic'],
+  kaurava: ['a deep crimson tunic', 'a maroon tunic', 'a black tunic', 'a burnt-orange tunic'],
+  asura: ['a black tunic', 'a dark green tunic', 'a rust-brown tunic'],
+  legend: ['a grey tunic', 'an undyed linen tunic'],
+  neutral: ['a russet tunic', 'a dun tunic'],
+};
+
+/** Empty entries are deliberate and weighted: most warriors wear NO scarf.
+ *  Everyone billowing the same white scarf was half the cookie-cutter look. */
+const DRAPE_POOL = [
+  '', '', '', '', '', '',
+  'A billowing white battle scarf',
+  'A billowing dark ochre battle scarf',
+  'A short crimson cloak thrown back from one shoulder',
+  'A heavy dark cloak clasped at the throat',
+  'A long sash knotted at the hip, ends flying',
+  'A coarse wool shawl over one shoulder',
+] as const;
+
+const DHOTI_POOL = ['white dhoti', 'cream dhoti', 'saffron dhoti', 'deep red dhoti',
+                    'undyed dhoti', 'dark blue dhoti', 'ochre dhoti'] as const;
+
+const FOOT_POOL = ['gold sandals', 'leather sandals', 'heavy boots', 'bare feet',
+                   'strapped shin-boots', 'plain sandals'] as const;
+
+/** Rule 7 still holds inside every one of these: no hue is ever named for the
+ *  air. Weather objects and values only. */
+const SCENE_POOL: Record<string, readonly string[]> = {
+  pandava: ['Stormy battlefield, dark thunderclouds, lightning',
+            'Dawn mist over a wide river, reeds bent flat',
+            'A howling dust-storm, splintered shields in the air',
+            'Heavy rain, the ground churned to mud',
+            'A field of tall grass flattened by wind'],
+  kaurava: ['Burning battlefield, rolling smoke, broken banners',
+            'Night field lit by torches, long shadows',
+            'A low red sun through haze, dust hanging',
+            'A field of broken chariots and dead horses',
+            'Ash falling steadily on a still field'],
+  asura: ['Ruined battlefield at night, drifting embers, shattered stone',
+          'A cracked plain under a starless sky',
+          'Smoke pouring from a fissure in the ground',
+          'A burnt forest, black trunks still standing'],
+  legend: ['Empty battlefield, drifting ash, one broken banner',
+           'A bare plain at first light',
+           'Still water and reeds, nothing moving',
+           'A cold mountain pass, snow on the rocks'],
+  neutral: ['Dusty battlefield, drifting smoke, distant fires',
+            'A trampled field under a flat grey sky'],
+};
+
 // ------------------------------------------------------- marquee characters
 // Only what DIFFERS from the house default. Every override costs words against
 // rule 1, so anything the house look already handles is left alone.
@@ -443,6 +604,7 @@ const M: Record<string, Marquee> = {
     mark: 'handsome despite his name, which means foul-faced',
   },
   kripa: {
+    build: 'old and spare',
     mark: 'an old brahmana, white-haired, a sacred thread over the armour',
   },
   vivimsati: {
@@ -459,6 +621,7 @@ const M: Record<string, Marquee> = {
     mark: 'a smooth moon-like face, lotus-petal eyes, brow drawn into three lines',
   },
   bahlika: {
+    build: 'the eldest man on the field, still unbent',
     mark: 'the eldest man on the field, his face still unwithered',
   },
   vrishasena: {
@@ -521,9 +684,11 @@ const M: Record<string, Marquee> = {
     mark: 'burnished steel mail studded with a hundred golden eyes',
   },
   virata: {
+    build: 'old and heavy-set',
     mark: 'an old king beneath a white umbrella',
   },
   drupada: {
+    build: 'old but straight-backed',
     mark: 'an old king, white-bearded and straight-backed',
   },
   anjanaparvan: {
@@ -614,6 +779,7 @@ const M: Record<string, Marquee> = {
     face: 'calm sorrowful expression',
   },
   bhagadatta: {
+    build: 'very old, still broad',
     mark: 'very old, a cloth turban over white hair, a gold garland on it',
     // Supratika is named in the epic (Bhishma XCVI); his BANNER device never is.
     mount: 'the great war-elephant Supratika beside him, its head and tusks filling one side',
@@ -650,6 +816,7 @@ const M: Record<string, Marquee> = {
     face: 'expression heavy with sorrow',
   },
   drona: {
+    build: 'lean and old, still upright',
     skin: 'Dark skin',
     camera: 'Eye-level camera.',
     mark: 'eighty-five years old, white locks to his ears, a grabbable topknot',
@@ -801,19 +968,33 @@ function bodyOf(card: U): string {
   const row = card.rows[0] ?? 'padati';
 
   const camera = m.camera ?? CAMERA[tier] ?? CAMERA.rathi;
-  const stance = m.stance ?? 'a wide battle stance';
-  const facing = m.facing ?? facingOf(card);
+  // Resolve build and mark FIRST: the stance pool depends on how old the canon
+  // says he is. Varying stance blind put a white-bearded king in a crouch.
+  const build0 = m.build ?? BUILD[tier] ?? BUILD.rathi;
+  const mark0 = m.mark ?? MARK[tier] ?? MARK.rathi;
+  const age = `${build0} ${mark0}`;
+  const stancePool = AGED.test(age) ? ELDER_STANCE_POOL : YOUNG.test(age) ? YOUTH_STANCE_POOL : STANCE_POOL;
+  const stance = m.stance ?? vary(card.id, 'stance', stancePool);
+  const facing = m.facing ?? vary(card.id, 'facing', FACING_POOL);
   const weapon: string =
     WEAPON_BY_ID[card.id] ?? WEAPON_FALLBACK[row] ?? WEAPON_FALLBACK.padati;
   // An explicit '' means the character canonically holds nothing.
   const skin = m.skin ?? SKIN[card.house] ?? SKIN.neutral;
-  const face = m.face ?? FACE[card.house] ?? FACE.neutral;
-  const mark = m.mark ?? MARK[tier] ?? MARK.rathi;
-  const metal = m.metal ?? METAL[card.house] ?? METAL.neutral;
-  const tunic = m.tunic ?? TUNIC[card.house] ?? TUNIC.neutral;
-  const cloth = m.cloth ?? CLOTH[card.house] ?? CLOTH.neutral;
-  const build = m.build ?? BUILD[tier] ?? BUILD.rathi;
-  const scene = m.scene ?? SCENE[card.house] ?? SCENE.neutral;
+  const face = m.face ?? vary(card.id, 'face', FACE_POOL[card.house] ?? FACE_POOL.neutral);
+  const mark = mark0;
+  const metal = m.metal ?? vary(card.id, 'metal', METAL_POOL[card.house] ?? METAL_POOL.neutral);
+  const tunic = m.tunic ?? vary(card.id, 'tunic', TUNIC_POOL[card.house] ?? TUNIC_POOL.neutral);
+  // Drape is often nothing at all. Dhoti and footwear vary independently, so
+  // two men in the same armour still read as different people.
+  const drape = vary(card.id, 'drape', DRAPE_POOL);
+  const cloth =
+    m.cloth ??
+    [drape, `${vary(card.id, 'dhoti', DHOTI_POOL)}`, vary(card.id, 'foot', FOOT_POOL)]
+      .filter(Boolean)
+      .join(', ')
+      .replace(/^([a-z])/, (c) => c.toUpperCase());
+  const build = build0;
+  const scene = m.scene ?? vary(card.id, 'scene', SCENE_POOL[card.house] ?? SCENE_POOL.neutral);
   const emblem = BANNER[card.id];
   const banner =
     m.banner !== undefined
@@ -827,13 +1008,14 @@ function bodyOf(card: U): string {
   // would otherwise put a breastplate on a man in court silks.
   // Commas, not "with ... with ...". Metals that already carry a "banded with
   // gold" clause were producing a doubled preposition on every armoured card.
-  const armour = tunic === 'no armour at all' ? `${metal}.` : `${metal}, ${PLATES}, over ${tunic}.`;
+  const plates = vary(card.id, 'plates', PLATES_POOL);
+  const armour = tunic === 'no armour at all' ? `${metal}.` : `${metal}, ${plates}, over ${tunic}.`;
 
   // A few characters canonically hold nothing (Vritra has no hands at all;
   // Prahlada has his palms together). They must not inherit a battle stance, a
   // war-standard, or a frame guard promising a weapon that is not there.
   const opening = weapon
-    ? `${card.name}, ${build}, in ${stance}, ${facing}, ${weapon}.`
+    ? `${card.name}, ${build}, ${stance}, ${facing}, ${weapon}.`
     : `${card.name}, ${build}, ${facing}.`;
   const bannerClause = [banner, mount].filter(Boolean).join(', and ');
   return (
