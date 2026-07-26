@@ -46,7 +46,22 @@ export type House = 'pandava' | 'kaurava' | 'neutral' | 'asura' | 'legend';
  */
 export type Tier = 'rathi' | 'atirathi' | 'maharathi';
 
-export type CardType = 'unit' | 'astra' | 'boon' | 'curse';
+/**
+ * What a card IS. The taxonomy was three types doing five jobs: the 'curse'
+ * type held five cards of which four were boons and one was a stratagem, and
+ * there were no real curse cards at all (curses live in the run layer, in
+ * engine/curses.ts).
+ *
+ *  unit      a warrior on the field
+ *  astra     a missile invoked by mantra. Deity- or effect-named
+ *  shastra   a NAMED physical weapon carried by hand: Gandiva, Asi, Sudarsana.
+ *            Rarer than astras: a sweep of the whole epic for "sword/mace/
+ *            discus called X" returns only three names
+ *  boon      a vardaan, a divine gift taken at a shrine
+ *  curse     a shrap bound to a card. Reserved; nothing uses it yet
+ *  stratagem a trick rather than a weapon: "Ashwatthama is dead"
+ */
+export type CardType = 'unit' | 'astra' | 'shastra' | 'boon' | 'curse' | 'stratagem';
 
 /** Stable content id, e.g. 'bhishma'. */
 export type CardId = string;

@@ -156,7 +156,7 @@ const GLYPHS: Record<string, string> = {
   tarakasura: '⭐',
   asura_horde: '👹',
   // Vardaan: gifts of the gods
-  gandhari_gaze: '👁️',
+  brahmas_bargain: '🪷',
   kunti_invocation: '🕉️',
   surya_kavacha: '🌞',
   ashwins_draught: '⚕️',
@@ -174,8 +174,10 @@ const GLYPHS: Record<string, string> = {
 const TYPE_FALLBACK: Record<Card['type'], string> = {
   unit: '⚔️',
   astra: '✴️',
+  shastra: '🗡️',
   boon: '🪷',
   curse: '🕯️',
+  stratagem: '🎭',
 };
 
 export function cardGlyph(card: Card): string {
@@ -185,8 +187,10 @@ export function cardGlyph(card: Card): string {
 export const TYPE_LABEL: Record<Card['type'], string> = {
   unit: 'Warrior',
   astra: 'Astra',
+  shastra: 'Shastra',
   boon: 'Vardaan',
-  curse: 'Fate',
+  curse: 'Shrap',
+  stratagem: 'Stratagem',
 };
 
 // The game keeps its Sanskrit names, and explains every one of them in plain
@@ -195,9 +199,11 @@ export const TYPE_LABEL: Record<Card['type'], string> = {
 // never see it watered down.
 export const TYPE_GLOSS: Record<Card['type'], string> = {
   unit: 'a warrior of the host',
-  astra: 'a divine long-range weapon',
+  astra: 'a divine weapon invoked by mantra',
+  shastra: 'a named weapon, carried in the hand',
   boon: 'a divine gift, granted at a shrine',
-  curse: 'a curse, or a turn of fate',
+  curse: 'a curse bound to a gift',
+  stratagem: 'a trick of war, not a weapon',
 };
 
 export const TIER_GLOSS: Record<Tier, string> = {

@@ -323,7 +323,7 @@ export const ASTRA_CARDS: Card[] = [
     id: 'ashwatthama_elephant',
     name: '"Ashwatthama is Dead"',
     house: 'neutral',
-    type: 'curse',
+    type: 'stratagem',
     basePower: 0,
     provision: 4,
     rows: ['ratha'],

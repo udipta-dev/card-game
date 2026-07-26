@@ -9,8 +9,20 @@ import type { Card } from '@engine/types';
 // gods give is free, which is the whole point of the epic.
 export const VARDAAN_CARDS: Card[] = [
   {
-    id: 'gandhari_gaze',
-    name: 'Gandhari’s Gaze',
+    // WAS Gandhari's Gaze, which is not in the Mahabharata. Zero hits across all
+    // four Ganguli volumes for the episode where Duryodhana comes to his mother
+    // naked and she hardens his body with a look. What IS there: she blindfolds
+    // herself at her MARRIAGE out of devotion, and her one gaze-power scene
+    // turns Yudhishthira's toe. The vajra-torso claim is spoken by the Danavas
+    // talking Duryodhana out of suicide, not by the narrator.
+    //
+    // Replaced with the best-sourced invulnerability boon in the epic, and the
+    // best mechanic in it: Brahma REFUSES Sunda and Upasunda immortality and
+    // makes them name their own death clause, so they choose to fear nothing
+    // "except only from each other" (Adi CCXI-CCXIV). Tilottama exists purely
+    // to trigger it. The loophole IS the card.
+    id: 'brahmas_bargain',
+    name: 'Brahma’s Bargain',
     house: 'neutral',
     type: 'boon',
     basePower: 0,
@@ -19,7 +31,7 @@ export const VARDAAN_CARDS: Card[] = [
     keywords: [],
     cost: {
       consequence:
-        'She unbinds her blindfold once. What her eyes fall upon turns adamant, and no weapon may fell it.',
+        'Brahma will not grant immortality. He makes you name your own death: this warrior fears nothing in the three worlds, save what stands beside him in his own host.',
     },
     effects: [
       {
@@ -30,15 +42,15 @@ export const VARDAAN_CARDS: Card[] = [
           { kind: 'buff', amount: 2 },
         ],
       },
-      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'banFromRun', card: 'gandhari_gaze' }] },
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'banFromRun', card: 'brahmas_bargain' }] },
     ],
-    flavor: 'Blindfolded for a lifetime, so that the one look she spent would be worth a kingdom.',
+    flavor: 'They asked to fear nothing that lives. Brahma made them add: except each other.',
   },
   {
     id: 'kunti_invocation',
     name: 'Kunti’s Invocation',
     house: 'neutral',
-    type: 'curse',
+    type: 'boon',
     basePower: 0,
     provision: 13,
     rows: ['ratha', 'gaja', 'padati'],
@@ -80,7 +92,7 @@ export const VARDAAN_CARDS: Card[] = [
     id: 'ashwins_draught',
     name: 'The Ashwins’ Draught',
     house: 'neutral',
-    type: 'curse',
+    type: 'boon',
     basePower: 0,
     provision: 10,
     rows: ['ratha', 'gaja', 'padati'],
@@ -96,7 +108,7 @@ export const VARDAAN_CARDS: Card[] = [
     id: 'vayu_fury',
     name: 'The Fury of Vayu',
     house: 'neutral',
-    type: 'curse',
+    type: 'boon',
     basePower: 0,
     provision: 11,
     rows: ['ratha', 'gaja', 'padati'],
@@ -112,7 +124,7 @@ export const VARDAAN_CARDS: Card[] = [
     id: 'yama_summons',
     name: 'Yama’s Summons',
     house: 'neutral',
-    type: 'curse',
+    type: 'boon',
     basePower: 0,
     provision: 11,
     rows: ['ratha', 'gaja', 'padati'],

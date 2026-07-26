@@ -5,7 +5,7 @@ card. Nothing to register, no code to change.
 
     src/assets/art/cards/arjuna.webp          -> Arjuna
     src/assets/art/cards/vasavi_shakti.webp   -> Vasavi Shakti
-    src/assets/art/cards/gandhari_gaze.webp   -> Gandhari's Gaze
+    src/assets/art/cards/brahmas_bargain.png  -> Brahma's Bargain
 
 Accepted: `.webp` `.avif` `.png` `.jpg`. WebP is preferred, it is roughly a
 third the size of PNG at the same quality and every target browser supports it.

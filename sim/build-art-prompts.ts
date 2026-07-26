@@ -938,7 +938,7 @@ const PHENOMENON: Record<string, string> = {
   aindrastra: 'A sky-blackening rain of arrows falling in a solid sheet',
   bhargavastra: 'Countless arrows loosed at once from a single point, a fan of fire',
   sammohana: 'A soft grey haze rolling over an army, weapons falling from slack hands',
-  gandhari_gaze: 'A blindfold lifted from a queen’s eyes for the first time, terrible light beneath it',
+  brahmas_bargain: 'Two asura brothers kneeling before a four-faced god, one boon between them, each already watching the other',
   kunti_invocation: 'A woman with closed eyes speaking a mantra, a god half-formed in the air above her',
   surya_kavacha: 'Golden armour and earrings glowing with sunlight, worn by no one, floating in darkness',
   ashwins_draught: 'Twin physician-gods pouring a luminous draught, horses behind them',
@@ -956,7 +956,7 @@ const PHENOMENON: Record<string, string> = {
  *  queen, a woman speaking a mantra, twin gods and a lord of death. */
 const HAS_FIGURE = new Set([
   'krishna_charioteer',
-  'gandhari_gaze',
+  'brahmas_bargain',
   'kunti_invocation',
   'ashwins_draught',
   'yama_summons',
