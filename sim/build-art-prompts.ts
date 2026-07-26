@@ -140,13 +140,13 @@ const WEAPON_BY_ID: Record<string, string> = {
   sahadeva: 'holding a broad curved scimitar and a shield',
   duryodhana: 'holding a colossal gold-banded war-mace',
   // He shoots on after paying the tuition-fee, so: a bow AND the maimed hand.
-  ekalavya: 'holding a bow, drawing with the remaining fingers of a thumbless hand',
+  ekalavya: 'drawing a bow, fingers cased in a leather guard, right thumb gone',
 
   // --- Not from the epic's own catalogue, but unmistakable and uncontested.
   karna: 'holding a massive ornate dark bow, a full quiver of arrows on his back',
   ghatotkacha: 'holding a huge blazing spear upraised overhead',
   shakuni: 'holding a pair of ivory dice and no weapon',
-  balarama: 'holding a great iron plough planted upright like a wall',
+  balarama: 'holding a plough in one hand and a heavy pestle-club in the other',
   krishna_charioteer: 'holding chariot reins and a white conch, no weapon',
   // Ashwatthama is deliberately ABSENT. The only thing sourced for him is that
   // he excelled in "the science of arms", which is astra mastery, not an object
@@ -204,6 +204,75 @@ const WEAPON_BY_ID: Record<string, string> = {
   somadatta: 'holding a large bow, a full quiver of arrows on his back',
   vinda: 'holding a great bow, a full quiver of arrows on his back',
   vrishasena: 'holding a bow, a full quiver of arrows on his back',
+
+  // --- Kaurava core.
+  bhishma: 'holding a huge longbow six cubits long, an arrow nocked',
+  // Gandhari over his corpse, Stri XXIII: "The handle of the bow is yet in his
+  // grasp. The leathern fences, O Madhava, still encase his fingers."
+  drona: 'holding a bow, worn leather fences encasing his fingers',
+  // Sauptika VI-VIII, the night raid: Mahadeva enters him and gives him the
+  // sword. This is far better than the bow I had left him without.
+  ashwatthama: 'holding a gold-hilted celestial sword and a shield of a thousand moons',
+  // Shalya IX: "The mace of Shalya, wrapped round with a resplendent cloth of
+  // gold that looked like a sheet of fire."
+  shalya: 'holding an iron mace wrapped in a cloth of gold',
+  kritavarma: 'holding a formidable bow, its staff decked with gold',
+  kripa: 'holding a bow, a full quiver of arrows on his back',
+  // Stri XIX, Gandhari: his broad palm "cased in leathern fence, and scarred by
+  // constant wielding of the bow".
+  vikarna: 'holding a bow, his palm cased in a scarred leather fence',
+  chitrasena: 'holding a bow, the model of all bowmen',
+  // Drona XIV gives him shield and sword once unhorsed, which is the only thing
+  // that separates him from three identical brothers.
+  vivimsati: 'holding a sword and a shield, his horse gone',
+  durmukha: 'holding a large bow, a full quiver of arrows on his back',
+  dushasana: 'holding a bow, a full quiver of arrows on his back',
+  // Udyoga CLXI is literally the Uluka Dutagamana Parva. He is the herald.
+  uluka: 'holding a bow slung and a message in his hand',
+
+  // --- Asuras, from the Ramayana, the Devi Mahatmya and the Puranas.
+  ravana: 'holding a great bow, the curved sword Chandrahasa at his belt',
+  kumbhakarna: 'holding a huge sharp iron pike, a shula',
+  indrajit: 'holding a gold-adorned bow, serpent-arrows nocked',
+  hiranyakashipu: 'holding a heavy mace',
+  hiranyaksha: 'holding a massive mace',
+  mahishasura: 'holding a sword and shield',
+  shumbha: 'holding a scimitar and a shield blazoned with a hundred moons',
+  nishumbha: 'holding a sharp scimitar and a glittering shield',
+  raktabija: 'holding a heavy iron club',
+  tarakasura: 'holding a great spear',
+  narakasura: 'holding a spear',
+  // Bali's war gear is a scattergun (bow, shakti, shula, prasa). His ICONIC
+  // image is the other moment: pouring the water of the gift that undoes him.
+  bali: 'holding a water-pot, poised to pour the water of the gift',
+  // Rig Veda 1.32.7: "Footless and handless still he challenged Indra." The
+  // Vedic Vritra has no hands to hold anything. The vajra is INDRA'S, not his.
+  vritra: '',
+  // A devotee, not a combatant. Bhagavata 7.9.4 has him prostrate with folded
+  // palms. Arming him would be the single most wrong thing on this card.
+  prahlada: '',
+
+  // --- Legend tier.
+  // The epic says outright that if Jarasandha had held his mace, "the very gods
+  // with Indra at their head could not have slain him" (Drona CLXXX). He is
+  // wrestled to death only because he had already been parted from it.
+  jarasandha: 'holding a heavy iron mace in both hands',
+  // Ganguli gives Balarama ONLY the plough, ten times over, as a formula:
+  // "the hero having the plough for his weapon". The pestle is Bhagavata
+  // 10.79.5, where he uses both in a single action. He carries both.
+  rukmi: 'holding an ornate golden celestial longbow, unstrung',
+  // NOT canon, and knowingly so. Barbarika does not appear in the Mahabharata
+  // at all (zero hits across all four Ganguli volumes); he is Skanda Purana,
+  // Kaumarika-khanda 60-66, where he has a bow, inexhaustible quivers and a
+  // sword from the goddess. The THREE ARROWS are not in that text either: they
+  // are Rajasthani Khatushyamji devotional tradition. Kept anyway, because it
+  // is the iconography a viewer will actually recognise, but labelled.
+  barbarika: 'holding a bow with three arrows and nothing else in his quiver',
+  // LOW: he has no signature weapon. He never lifts one at the Rajasuya and is
+  // unarmed when Krishna beheads him; his only weapon scene is failing to
+  // string the bow at Draupadi's svayamvara. His real cue is the vestigial
+  // third eye, so the weapon stays plain on purpose.
+  shishupala: 'holding a great bow he strains at and cannot string',
 };
 
 // Last resort, for the two generic infantry cards and anyone the epic never
@@ -265,6 +334,7 @@ const BANNER: Record<string, string> = {
   vrishasena: 'a golden peacock caught mid-cry',
   ghatotkacha: 'a vulture',
   uttara: 'a lion',
+  balarama: 'a palmyra palm',
   kekaya_brothers: 'five red standards together',
   // MEDIUM. Drona CIV gives Shalya "an image like the presiding goddess of
   // corn"; the golden ploughshare in the adjacent sentence is Ganguli's
@@ -312,6 +382,7 @@ const SKIN: Record<string, string> = {
 // Only what DIFFERS from the house default. Every override costs words against
 // rule 1, so anything the house look already handles is left alone.
 interface Marquee {
+  banner?: string;
   camera?: string;
   mount?: string;
   stance?: string;
@@ -328,6 +399,52 @@ interface Marquee {
 // already a slot, and it makes five brothers in near-identical armour read as
 // five different men.
 const M: Record<string, Marquee> = {
+  vritra: {
+    banner: '',
+    skin: 'Dull green-black scales',
+    // Not a man in armour. A dragon lying on the mountain, hoarding the waters.
+    build: 'a vast limbless serpent-dragon, coiled on a mountain',
+    metal: 'No armour, bare hide',
+    tunic: 'no armour at all',
+    cloth: 'Coils heaped across the rock',
+    mark: 'a blunt reptilian head, no arms and no legs',
+    face: 'jaws parted, eyes cold',
+    mount: '',
+    scene: 'Mountain crag under a withheld storm, dry riverbeds below',
+  },
+  prahlada: {
+    banner: '',
+    skin: 'Warm brown skin',
+    build: 'a slight boy',
+    metal: 'Plain undyed cloth and no armour',
+    tunic: 'no armour at all',
+    cloth: 'Simple white dhoti, bare feet',
+    mark: 'empty palms pressed together at his chest',
+    face: 'serene, wholly unafraid',
+    mount: '',
+    camera: 'Eye-level camera, quiet and close.',
+    scene: 'A pillared hall, lamps guttering',
+  },
+  mahishasura: {
+    // The Mahishasuramardini composition: half out of the severed buffalo neck.
+    build: 'a huge warrior emerging from the neck of a slain buffalo',
+    mark: 'buffalo horns and a heavy black muzzle behind him',
+  },
+  raktabija: {
+    mark: 'blood running from many wounds, drops falling',
+  },
+  narakasura: {
+    // Bhagavata 10.59: Krishna beheads him while he rides an elephant.
+    mount: 'a great war-elephant beside him, its head and tusks filling one side',
+  },
+  shumbha: {
+    mark: 'eight arms lifted high, each grasping a weapon',
+  },
+  shishupala: {
+    // Sabha XLII: born with three eyes and four arms, which fall away in
+    // Krishna's lap. The remnants are what make him drawable.
+    mark: 'a faint vestigial third-eye mark on his brow, pale scars at both shoulders',
+  },
   uttara: {
     // Bhishma XLVII has him on a tusker, killed by Shalya's dart and falling
     // from the elephant's neck. The game files him under Ratha; canon wins here.
@@ -521,8 +638,9 @@ function bodyOf(card: U): string {
 
   const camera = m.camera ?? CAMERA[tier] ?? CAMERA.rathi;
   const stance = m.stance ?? 'a wide battle stance';
-  const weapon =
+  const weapon: string =
     WEAPON_BY_ID[card.id] ?? WEAPON_FALLBACK[row] ?? WEAPON_FALLBACK.padati;
+  // An explicit '' means the character canonically holds nothing.
   const skin = m.skin ?? SKIN[card.house] ?? SKIN.neutral;
   const face = m.face ?? FACE[card.house] ?? FACE.neutral;
   const mark = m.mark ?? MARK[tier] ?? MARK.rathi;
@@ -532,9 +650,12 @@ function bodyOf(card: U): string {
   const build = m.build ?? BUILD[tier] ?? BUILD.rathi;
   const scene = m.scene ?? SCENE[card.house] ?? SCENE.neutral;
   const emblem = BANNER[card.id];
-  const banner = emblem
-    ? `A tall war-standard bearing ${emblem}`
-    : (HOUSE_BANNER[card.house] ?? HOUSE_BANNER.neutral);
+  const banner =
+    m.banner !== undefined
+      ? m.banner
+      : emblem
+        ? `A tall war-standard bearing ${emblem}`
+        : (HOUSE_BANNER[card.house] ?? HOUSE_BANNER.neutral);
   const mount = m.mount ?? MOUNT[row] ?? '';
 
   // The unarmoured (Shakuni, Krishna, Ekalavya) skip the coverage list, which
@@ -543,12 +664,20 @@ function bodyOf(card: U): string {
   // gold" clause were producing a doubled preposition on every armoured card.
   const armour = tunic === 'no armour at all' ? `${metal}.` : `${metal}, ${PLATES}, over ${tunic}.`;
 
+  // A few characters canonically hold nothing (Vritra has no hands at all;
+  // Prahlada has his palms together). They must not inherit a battle stance, a
+  // war-standard, or a frame guard promising a weapon that is not there.
+  const opening = weapon
+    ? `${card.name}, ${build}, in ${stance}, ${weapon}.`
+    : `${card.name}, ${build}.`;
+  const bannerClause = [banner, mount].filter(Boolean).join(', and ');
   return (
-    `${card.name}, ${build}, in ${stance}, ${weapon}. ` +
+    `${opening} ` +
     `${skin}, ${face}, ${mark}. ` +
     `${armour} ${cloth}. ${scene}. ` +
-    `${banner}${mount ? `, and ${mount}` : ''}. ` +
-    `${camera} ${FRAME('Full figure from head to feet, entire weapon')} ${NEG}`
+    (bannerClause ? `${bannerClause}. ` : '') +
+    `${camera} ` +
+    `${FRAME(weapon ? 'Full figure from head to feet, entire weapon' : 'Whole figure')} ${NEG}`
   );
 }
 
