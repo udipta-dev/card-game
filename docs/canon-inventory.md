@@ -165,7 +165,52 @@ which a Griffith-only search would miss.
 
 ---
 
-## 6. REFUSE LIST: widely cited online, absent from both epics
+## 6a. POLICY: three buckets, not one refuse list
+
+The original framing conflated "this is miscategorised" with "this is fake".
+Those are different problems and only one of them is a reason to leave a thing
+out.
+
+**Bucket 1 - USE, as a shastra.** Real, important, just not mantra-invoked
+missiles. All three belong in the game.
+
+| thing | what it actually is |
+|---|---|
+| **Anjalika** | the broad-headed arrow that **beheads Karna**. One of the epic's decisive moments. It is an arrow, not an astra, so it is a shastra card |
+| **Sudarshana** | summoned by thought, thrown by hand, returns to the hand. Handheld |
+| **Nagapasha** | Indrajit's serpent-noose. Real, just Ramayana-only rather than Mahabharata |
+
+**Bucket 2 - USE, under the real name.** Every popular invented name has a
+genuine weapon behind it. Nothing is lost by using the real word.
+
+| the internet's name | the actual weapon | source |
+|---|---|---|
+| Suryastra | **Aditya** (dries conjured water), **Saura**, **Savitra** | Drona P. XXVIII |
+| Chandrastra / Somastra | **Saumya**; Ramayana **Shishira**, the Moon-god's | Vana P. CCXLIII |
+| Kaalastra | **Kala-chakra**, **Kala-pasha** | Ram. Bala K. 27 |
+| Sailastra | **Parvatya** (raises mountains), **Asmavarsha** (stone-shower) | Adi P. CXXXVII |
+| Kandarpastra | **Madana**, of Manmatha | Ram. Bala K. 27 |
+| Mrityuastra | **Yamya**, and Yama's mace | Drona P. CLVI |
+| Sarpastra | **Naga** (binds the legs) | Karna P. 53 |
+
+**Bucket 3 - DO NOT USE.** Fake name *and* fake effect.
+
+- **Mohini astra.** Zero occurrences in either epic, and the "dispels maya"
+  description attached to it online is itself invented.
+- **Kartikeya / Skanda has no astra.** Do not invent one for him.
+
+There is no scarcity forcing the issue: ~27 unused Mahabharata astras and ~60
+more in the Ramayana are sitting in the sections above. Nothing needs filling
+with a made-up name.
+
+If we ever DO adopt a popular name because players will recognise it, that
+should be a deliberate call recorded here, the way the maharathi ladder
+divergence is recorded on the Tier type - not something that happens by
+accident.
+
+---
+
+## 6b. Reference: names absent from both epics
 
 Do not add these, however many results a search returns.
 
@@ -301,3 +346,14 @@ All re-verified on normalised text.
   *appendix*, not the Valmiki verse
 - **Hiranyakashipu's loophole is real but PURANIC** (Bhagavata 7.3), not epic.
   Label it rather than presenting it as Mahabharata
+
+---
+
+## 12. Parked for later
+
+**The dharma system.** A morality layer - acts of adharma carrying weight beyond
+a single battle. Nothing built yet. The material for it is already in this
+document: the Brahmastra as an act of adharma, Karna's chariot-wheel curse
+firing on fear, Maitreya's curse voidable by making peace, Bhishma's targeting
+vows, and Krishna's own list of kills accomplished "by the employment of means".
+The epic's whole moral architecture is a rules system waiting to be written.
