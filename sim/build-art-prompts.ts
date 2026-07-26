@@ -50,11 +50,20 @@ const STYLE =
   'Ink-and-gouache fantasy illustration, bold black linework, opaque gouache ' +
   'brushwork, muted earthy palette, dramatic chiaroscuro.';
 
-/** Rule 8: the frame instruction, with nothing in the prompt fighting it.
- *  Takes the whole subject phrase: "full figure" is wrong on a card that has
- *  no figure, and most astras do not. */
-const FRAME = (subject: string) =>
-  `Low-angle view, ${subject} inside the frame with clear margin, nothing cropped.`;
+/** The camera. Its own sentence, because a bare "Low-angle view" tucked into
+ *  the framing clause did not land: Karna came back near eye-level. Three
+ *  reinforcing terms and a full stop of its own. Looking UP at a warrior is
+ *  most of what makes him imposing rather than merely present. */
+const CAMERA = 'Low camera angle looking up at him from below, towering heroic perspective.';
+/** Same idea where there is no "him" to look up at. */
+const CAMERA_SCENE = 'Low camera angle looking up from below, towering scale.';
+
+/** Rule 8: framing, kept in a separate sentence from the camera because the two
+ *  genuinely fight. A low angle wants to crop the feet or the crown, so the
+ *  guard has to be explicit about the extremities rather than saying "nothing
+ *  cropped" and hoping. Takes the subject phrase: "full figure" is wrong on a
+ *  card that has no figure, and most astras do not. */
+const FRAME = (subject: string) => `${subject} inside the frame, clear margin, nothing cropped.`;
 
 /** Rule 5: qualities only. Never negate an object. */
 const NEG = 'No photorealism, no 3D rendering, no glossy surfaces, no bloom.';
@@ -308,7 +317,7 @@ function bodyOf(card: U): string {
   if (card.type !== 'unit') {
     const p = PHENOMENON[card.id] || hookOf(card) || card.name;
     const figure = HAS_FIGURE.has(card.id) ? '' : 'No human figure. ';
-    return `${p}. ${figure}${FRAME('the whole subject')} ${NEG}`;
+    return `${p}. ${figure}${CAMERA_SCENE} ${FRAME('Whole subject')} ${NEG}`;
   }
 
   const m = M[card.id] ?? {};
@@ -336,7 +345,7 @@ function bodyOf(card: U): string {
     `${card.name}, ${build}, in ${stance}, ${weapon}. ` +
     `${skin}, ${face}, ${mark}. ` +
     `${armour} ${cloth}. ${scene}. ` +
-    `${FRAME('full figure and entire weapon')} ${NEG}`
+    `${CAMERA} ${FRAME('Full figure from head to feet, entire weapon')} ${NEG}`
   );
 }
 
