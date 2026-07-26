@@ -3,7 +3,7 @@
 // something, and the worst of them take your own host with them.
 import { describe, expect, it } from 'vitest';
 import { reduce, isLegalAbility, isLegalPlay } from '@engine/reducer';
-import { unitsOf } from '@engine/queries';
+import { canInvokeAstra, unitsOf } from '@engine/queries';
 import { legalMoves } from '@engine/selectors';
 import { hasEvent, makeState } from './helpers';
 
@@ -134,5 +134,38 @@ describe('a warrior’s skill at arms', () => {
     });
     const moves = legalMoves(s, 'player');
     expect(moves.some((m) => m.type === 'USE_ABILITY')).toBe(true);
+  });
+});
+
+describe('an astra earned through tapasya is the host’s, not one man’s', () => {
+  // Regression: canInvokeAstra required the GRANTED warrior on the board, which
+  // turned a reward already paid for with his absence into a two-card combo out
+  // of an eighteen-card deck. Measured collection was 13% at tier 1 and exactly
+  // zero at tiers 2 and 3, across 147 tier-3 penances.
+  it('can be loosed while the warrior who fetched it is not on the field', () => {
+    const s = makeState({ playerBoard: { padati: ['pandava_infantry'] } });
+    s.astraGrants.player = { bhima: ['vayavyastra'] };
+    // Bhima is nowhere on the board, and a footman knows no astras at all.
+    expect(canInvokeAstra(s, 'player', 'vayavyastra')).toBe(true);
+  });
+
+  it('is not loosed by a host that has been wiped from the field', () => {
+    const s = makeState({});
+    s.astraGrants.player = { bhima: ['vayavyastra'] };
+    expect(canInvokeAstra(s, 'player', 'vayavyastra')).toBe(false);
+  });
+
+  it('grants nothing beyond the weapon actually learned', () => {
+    const s = makeState({ playerBoard: { padati: ['pandava_infantry'] } });
+    s.astraGrants.player = { bhima: ['vayavyastra'] };
+    expect(canInvokeAstra(s, 'player', 'pashupatastra')).toBe(false);
+    expect(canInvokeAstra(s, 'player', 'agneyastra')).toBe(false);
+  });
+
+  it('leaves the ordinary rules alone: no grant, no astra without a wielder', () => {
+    const s = makeState({ playerBoard: { padati: ['pandava_infantry'] } });
+    expect(canInvokeAstra(s, 'player', 'agneyastra')).toBe(false);
+    const withMaster = makeState({ playerBoard: { ratha: ['arjuna'] } });
+    expect(canInvokeAstra(withMaster, 'player', 'agneyastra')).toBe(true);
   });
 });

@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import { canInvokeAstra } from '@engine/queries';
 import type { GameState } from '@engine/types';
 import { chooseReward, chooseShrineOffer, createRun, fieldedRoster, planBattle, resolveBattle } from '@run/run';
-import { DEITIES, effectiveOdds, isShrineIndex, penanceOdds, rollShrine, worthOf } from '@run/shrine';
+import { DEITIES, effectiveOdds, isShrineIndex, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
 import type { PenanceOffer, VardaanOffer } from '@run/shrine';
 import type { RunState } from '@run/types';
 import { makeState } from '../engine/helpers';
@@ -268,6 +268,55 @@ describe('no god offers a wager he cannot honour', () => {
           const success = o.odds.t1 + o.odds.t2 + o.odds.t3;
           expect(success).toBeGreaterThan(0.15);
         }
+      }
+    }
+  });
+});
+
+describe('the shrine cannot advertise what it will not deliver', () => {
+  // Regression: effectiveOdds ignored the host's inventory while
+  // rollPenanceOutcome respected it. Every starting deck carries the
+  // Brahma-Astra and Brahma's tier-2 domain holds only the Brahma-Astra, so the
+  // shrine offered 50% at a weapon the roll could never hand over. Observed as
+  // 39 penances, 14 returns, zero astras.
+  const brahma = DEITIES.find((d) => d.id === 'brahma')!;
+
+  it('shows no chance at a tier whose every weapon the host already holds', () => {
+    const held = new Set(['brahmastra']);
+    const shown = effectiveOdds(brahma, 'arjuna', 2, held);
+    expect(shown.t2).toBe(0);
+    expect(shown.fail).toBeCloseTo(1, 5);
+  });
+
+  it('still shows the chance when the host does not hold it', () => {
+    expect(effectiveOdds(brahma, 'arjuna', 2, new Set()).t2).toBeGreaterThan(0);
+  });
+
+  it('agrees with what rolling actually returns, which is the whole bug', () => {
+    for (const held of [new Set<string>(), new Set(['brahmastra']), new Set(['brahmastra', 'brahmashirsha'])]) {
+      const shown = effectiveOdds(brahma, 'arjuna', 3, held);
+      let seed = 4242;
+      let got = 0;
+      const N = 4000;
+      for (let i = 0; i < N; i++) {
+        const o = rollPenanceOutcome(brahma, 'arjuna', 3, seed, held);
+        seed = o.seed;
+        if (o.astra) got++;
+      }
+      const advertised = shown.t1 + shown.t2 + shown.t3;
+      expect(got / N).toBeCloseTo(advertised, 1);
+    }
+  });
+
+  it('never offers a wager the host cannot actually win', () => {
+    for (let seed = 1; seed <= 40; seed++) {
+      const run = advanceTo(createRun(seed, 'pandava'), 2);
+      const held = new Set([...run.roster, ...run.banned]);
+      for (const o of run.shrineOffers ?? []) {
+        if (o.kind !== 'penance') continue;
+        const deity = DEITIES.find((d) => d.id === o.deityId)!;
+        const real = effectiveOdds(deity, o.warrior, o.battles, held);
+        expect(real.t1 + real.t2 + real.t3).toBeGreaterThan(0.15);
       }
     }
   });

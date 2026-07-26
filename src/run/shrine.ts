@@ -117,14 +117,28 @@ export function penanceOdds(warrior: CardId, battles: number): PenanceOdds {
   return { t3: w3 / total, t2: w2 / total, t1: w1 / total, fail: wFail / total };
 }
 
-/** Odds as this god will actually pay them, after his domain is applied. */
-export function effectiveOdds(deity: Deity, warrior: CardId, battles: number): PenanceOdds {
+/**
+ * Odds as this god will ACTUALLY pay them, after his domain and after what the
+ * host already owns.
+ *
+ * `held` is not optional in spirit. Every starting deck carries the
+ * Brahma-Astra, and Brahma's tier-2 domain contains only the Brahma-Astra, so
+ * without it this function advertised a 50% chance at a weapon the roll could
+ * never hand over: 39 penances, 14 returns, zero astras in simulation. Display
+ * and roll must consult exactly the same information.
+ */
+export function effectiveOdds(
+  deity: Deity,
+  warrior: CardId,
+  battles: number,
+  held: ReadonlySet<CardId> = new Set(),
+): PenanceOdds {
   const raw = penanceOdds(warrior, battles);
   const out: PenanceOdds = { fail: raw.fail, t1: 0, t2: 0, t3: 0 };
   for (const tier of [3, 2, 1] as const) {
     const share = tier === 3 ? raw.t3 : tier === 2 ? raw.t2 : raw.t1;
     if (share <= 0) continue;
-    const given = stepDown(deity, tier);
+    const given = stepDown(deity, tier, held);
     if (given === null) out.fail += share;
     else if (given === 3) out.t3 += share;
     else if (given === 2) out.t2 += share;
@@ -133,10 +147,15 @@ export function effectiveOdds(deity: Deity, warrior: CardId, battles: number): P
   return out;
 }
 
-/** A god gives what is his: the rolled tier, or the greatest lesser one he holds. */
-function stepDown(deity: Deity, tier: 1 | 2 | 3): 1 | 2 | 3 | null {
+/**
+ * A god gives what is his AND what you do not already have: the rolled tier, or
+ * the greatest lesser one he can still hand over. A tier whose every weapon is
+ * already in your host is not something he can give.
+ */
+function stepDown(deity: Deity, tier: 1 | 2 | 3, held: ReadonlySet<CardId>): 1 | 2 | 3 | null {
   for (let t = tier; t >= 1; t--) {
-    if (deity.domain[t as 1 | 2 | 3]?.length) return t as 1 | 2 | 3;
+    const pool = deity.domain[t as 1 | 2 | 3] ?? [];
+    if (pool.some((a) => !held.has(a))) return t as 1 | 2 | 3;
   }
   return null;
 }
@@ -150,7 +169,7 @@ export function rollPenanceOutcome(
   warrior: CardId,
   battles: number,
   seed: number,
-  exclude: Set<CardId>,
+  exclude: ReadonlySet<CardId>,
 ): { astra: CardId | null; seed: number } {
   const odds = penanceOdds(warrior, battles);
   const [next, roll] = nextRandom(seed);
@@ -161,7 +180,8 @@ export function rollPenanceOutcome(
   else if (roll < acc + odds.t1) tier = 1;
 
   if (tier === null) return { astra: null, seed: next };
-  const given = stepDown(deity, tier);
+  // Same held-aware walk the displayed odds use, so the two can never disagree.
+  const given = stepDown(deity, tier, exclude);
   if (given === null) return { astra: null, seed: next };
 
   const pool = (deity.domain[given] ?? []).filter((a) => !exclude.has(a));
@@ -290,7 +310,7 @@ export function rollShrine(run: RunState): ShrineOffer[] {
     // elemental tier, so a short penance to him would be a guaranteed nothing:
     // that is not a wager, it is a trap, and it does not get shown.
     const viable = wagers
-      .map((w) => ({ ...w, odds: effectiveOdds(deity, w.warrior, w.battles) }))
+      .map((w) => ({ ...w, odds: effectiveOdds(deity, w.warrior, w.battles, held) }))
       .filter((w) => w.odds.t1 + w.odds.t2 + w.odds.t3 >= MIN_VIABLE_CHANCE)
       .slice(0, 3);
     if (!viable.length) continue;

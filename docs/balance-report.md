@@ -29,9 +29,9 @@ Four things, in the order I would fix them:
 
 ---
 
-## 1. The shrine displays odds it cannot honour
+## 1. The shrine displays odds it cannot honour — FIXED
 
-**Severity: high. This is a bug, not tuning.**
+**Was: high severity bug. Now fixed and locked with regression tests.**
 
 All three starting decks contain the Brahma-Astra. Brahma's tier-2 domain
 contains only the Brahma-Astra. `rollPenanceOutcome` filters out anything you
@@ -51,16 +51,20 @@ Observed in play: **39 tier-2 penances taken, 14 warriors returned, 0 astras.**
 If the true rate were the advertised 50%, zero successes in fourteen returns has
 a probability under 0.01%.
 
-**Recommendation.** `effectiveOdds` must take the held set, exactly as
-`rollPenanceOutcome` does, and a wager whose real chance falls under
-`MIN_VIABLE_CHANCE` must not be offered at all. The existing viability filter
-is correct in intent and simply blind to inventory.
+**Fixed.** `effectiveOdds` now takes the held set and `stepDown` walks past any
+tier whose every weapon the host already owns, so display and roll consult
+exactly the same information. The existing viability filter, correct in intent
+and merely blind to inventory, now sees the truth.
+
+**Result:** tier-2 wagers have disappeared from the offer pool entirely. Where
+Brahma cannot deliver, he is no longer asked. That is the correct behaviour: an
+offer that cannot pay is not a wager, it is a lie.
 
 ---
 
-## 2. A weapon earned through penance cannot be fired
+## 2. A weapon earned through penance cannot be fired — FIXED
 
-**Severity: high. This is a bug in the shape of a reward.**
+**Was: high severity bug. Now fixed and locked with regression tests.**
 
 `canInvokeAstra` requires the granted warrior to be **on the board**. So using
 a penance-earned astra is a two-card combo: draw the warrior *and* draw the
@@ -80,10 +84,25 @@ Read the tier-3 row again. One hundred and forty-seven investments of your best
 warrior, nine weapons actually earned, **and not one of them ever reached the
 table.**
 
-**Recommendation.** Drop the on-board requirement for astras earned through
-tapasya. He went, he learned it, he brought it back to the host: the fiction
-supports it, and a reward paid for in advance should not also demand a combo.
-This is a one-line change in `canInvokeAstra`.
+**Fixed.** `canInvokeAstra` no longer demands the granting warrior on the
+board. He went, he learned it, he brought it back to the host. Someone must
+still be on the field to loose it, so an empty board cannot fire anything.
+
+**Result:** tier-1 collection rose from **13.1% to 21.8%**.
+
+**Tier 3 remains at zero, and this turned out NOT to be a bug.** Instrumenting
+it further: across 400 runs, twelve battles were fought while holding an earned
+tier-3 astra and it reached hand zero times. Not a legality problem, not the AI
+refusing it. The cause is LADDER GEOMETRY. Shrines stand before rungs 2 and 4
+of a six-rung ladder, so a three-battle penance taken at the first shrine
+returns the warrior at rung 5, leaving exactly one battle to draw the weapon
+and fire it. Verified directly: the astra is in the roster, in the fielded
+roster, unbanned, and in the deck handed to the battle. There is simply almost
+no run left in which to use it.
+
+That is a design parameter, not a defect, and it belongs with the tiering
+question below: either shrines move earlier, the ladder grows, or a tier-3
+weapon arrives by a route other than waiting.
 
 ---
 
@@ -182,16 +201,17 @@ not just battle win rate.
 
 ## 5. Every shrine option still loses to walking past it
 
-Even before the fixes above, this is the shape of the problem:
+Measured AFTER both fixes. Tier-2 now exactly matches walking because the
+policy no longer finds an offer to take, which is the fix working as intended.
 
 | Policy | Completed | Avg depth | vs walking |
 | --- | --- | --- | --- |
 | **Walk past** | 15.6% ±4.5 | **3.02** | baseline |
+| Tier-2 penance | 15.6% ±4.5 | 3.02 | +0.00 (no longer offered) |
 | Free vardaan | 14.4% ±4.4 | 2.96 | -0.06 |
-| Tier-2 penance | 14.8% ±4.4 | 2.94 | -0.08 |
-| Tier-1 penance | 11.2% ±3.9 | 2.87 | -0.15 |
+| Tier-1 penance | 12.4% ±4.1 | 2.90 | -0.12 |
 | Tier-3 penance | 11.2% ±3.9 | 2.79 | -0.23 |
-| Greedy best | 10.4% ±3.8 | 2.76 | -0.26 |
+| Greedy best | 10.8% ±3.9 | 2.77 | -0.25 |
 
 Note the free vardaan also loses, by a small margin. Taking a free card should
 not cost you anything, which points at **deck dilution**: a situational one-shot

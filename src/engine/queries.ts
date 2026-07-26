@@ -97,13 +97,24 @@ export function isFinalRound(state: GameState): boolean {
  */
 export function canInvokeAstra(state: GameState, seat: Seat, astraId: CardId): boolean {
   const tier = getCard(astraId).astraTier ?? 1;
+  const units = unitsOf(state, seat);
+  // Someone has to be on the field to loose it, whoever that is.
+  if (!units.length) return false;
+
+  // Learned through tapasya: the host knows this weapon now, and does not need
+  // the particular warrior who went to fetch it standing on the board.
+  // Requiring him turned a reward already paid for, with his absence, into a
+  // two-card combo out of an eighteen-card deck: measured collection was 13%
+  // at tier 1 and zero at tiers 2 and 3.
   const granted = state.astraGrants?.[seat] ?? {};
-  return unitsOf(state, seat).some((u) => {
+  for (const learned of Object.values(granted)) {
+    if (learned.includes(astraId)) return true;
+  }
+
+  return units.some((u) => {
     const w = getCard(u.cardId);
     if ((w.astraMastery ?? 0) >= tier) return true;
-    if (w.knownAstras?.includes(astraId)) return true;
-    // Learned through tapasya during a run, not born with it.
-    return !!granted[u.cardId]?.includes(astraId);
+    return !!w.knownAstras?.includes(astraId);
   });
 }
 
