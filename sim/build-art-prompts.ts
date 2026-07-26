@@ -429,6 +429,25 @@ interface Marquee {
 // already a slot, and it makes five brothers in near-identical armour read as
 // five different men.
 const M: Record<string, Marquee> = {
+  durmukha: {
+    mark: 'handsome despite his name, which means foul-faced',
+  },
+  kripa: {
+    mark: 'an old brahmana, white-haired, a sacred thread over the armour',
+  },
+  vivimsati: {
+    mark: 'a smiling moon face, fine nose and fair brows, conspicuously young',
+  },
+  vikarna: {
+    build: 'a youth',
+    mark: 'the youngest-looking, his bow-palm scarred inside a leather fence',
+  },
+  dushasana: {
+    mark: 'tawny yellow-brown eyes, handsome, massive arms',
+  },
+  shalya: {
+    mark: 'a smooth moon-like face, lotus-petal eyes, brow drawn into three lines',
+  },
   bahlika: {
     mark: 'the eldest man on the field, his face still unwithered',
   },
@@ -604,30 +623,37 @@ const M: Record<string, Marquee> = {
     scene: 'Ruined battlefield, flying dust, rock debris',
   },
   karna: {
+    build: 'broad-chested, arms like elephant trunks',
+    skin: 'Sun-gold skin, unscarred',
     // Sun-born, and the kavacha is golden. The Kaurava dark-iron default put
     // him in the wrong metal on the wrong field, which lost the whole reading.
     metal: 'Engraved gold armour',
-    mark: 'long black hair beneath a golden diadem, huge ornate golden earrings',
+    mark: 'leonine eyes, bull shoulders, huge ornate golden earrings',
     face: 'grim resolute expression',
     scene: 'Dusty battlefield under a low sun, drifting smoke, distant broken chariots',
   },
   bhishma: {
+    skin: 'Pale skin',
     scene: 'Battlefield beside a wide river, drifting mist',
     camera: 'Slightly low camera angle, grave and monumental.',
     build: 'tall and straight-backed',
-    mark: 'a long white beard beneath a high silver crown',
+    mark: 'dressed wholly in white, white turban and white mail, an old man',
     face: 'expression heavy with sorrow',
   },
   drona: {
+    skin: 'Dark skin',
     camera: 'Eye-level camera.',
-    mark: 'a grey beard, ash marks on his brow, a sacred thread across the armour',
+    mark: 'eighty-five years old, white locks to his ears, a grabbable topknot',
     face: 'cold measuring expression',
   },
   duryodhana: {
-    mark: 'long black hair beneath a heavy jewelled crown',
+    mark: 'enormous thighs like plantain stems, a heavy jewelled crown',
   },
   ashwatthama: {
-    mark: 'a burning jewel set into his forehead, blood-flecked armour',
+    skin: 'Pale lotus-coloured skin',
+    // Adi Parva calls it "the jewel-like excrescence on his head": a growth
+    // he was born with, not a jewel someone set into him.
+    mark: 'a jewel-like growth on his brow he was born with, a leonine neck',
     face: 'wild-eyed and snarling',
   },
   ghatotkacha: {
@@ -645,7 +671,11 @@ const M: Record<string, Marquee> = {
   shakuni: {
     mount: '',
     camera: 'Eye-level camera, close and conspiratorial.',
-    build: 'lean and stooped',
+    // Ganguli gives Shakuni no physical description whatsoever, and the
+    // famous limp is NOT in it: zero hits for lame/limp/crooked/deformed
+    // near his name across all four volumes. That is the TV serial. He
+    // fights normally from a chariot. 'Lean' is a design choice, not canon.
+    build: 'lean and sharp-featured',
     metal: 'Rich unarmoured court silks with rings on every finger',
     tunic: 'no armour at all',
     mark: 'a thin smile, grey hair',
