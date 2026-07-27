@@ -20,19 +20,38 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: ['brahmastra'],
     cost: {
       consequence:
-        'Scorches the land where it falls and singes your own adjacent ranks. Loosing it is an act of adharma: a curse follows you for it. Only another Brahmastra can answer it.',
+        'It devastates the line it is aimed at, and it does not care whose men stand in it. Where it falls no rain will come for twelve years. Loosing it is an act of adharma: a curse follows you for it. Only another Brahma-Astra can answer it.',
     },
     effects: [
-      { on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'damage', amount: 6 }] },
+      // AIMED AT A LINE, AND IT DOES NOT CARE WHOSE LINE IT IS. This measured
+      // 66.6% win / 44.9% played, by far the strongest card in the game, for
+      // one reason: it was the only great weapon that did not hurt you. Six
+      // damage to the enemy row and a scratch to your own adjacent ranks is
+      // not a decision, it is free value, so it was the only ultimate anyone
+      // ever fired.
+      //
+      // A divyastra devastates a formation. The chariots burn, whoever's
+      // chariots they are. Now the question is which line you can afford to
+      // lose men in, which is a real choice and a canonical one: the whole
+      // horror of these weapons is that they do not discriminate.
+      { on: 'onPlay', target: { pick: 'lineBothSidesSameAsPlayed' }, actions: [{ kind: 'damage', amount: 6 }] },
       {
         on: 'onPlay',
         target: { pick: 'none' },
         actions: [
-          { kind: 'debuffRow', amount: -3, rows: [{ side: 'enemy', sameAsPlayed: true }], duration: 'lingering' },
+          {
+            // No rain for twelve years, on both sides of the line.
+            kind: 'debuffRow',
+            amount: -3,
+            rows: [
+              { side: 'enemy', sameAsPlayed: true },
+              { side: 'own', sameAsPlayed: true },
+            ],
+            duration: 'lingering',
+          },
         ],
       },
-      { on: 'onPlay', target: { pick: 'ownAdjacentToPlayed' }, actions: [{ kind: 'damage', amount: 2 }] },
-      // The weapon wins you the row. The adharma of loosing it stays with you.
+      // The weapon wins you the line. The adharma of loosing it stays with you.
       { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'afflict', side: 'own', pool: ADHARMA }] },
     ],
     flavor: 'Brahma’s weapon; where it strikes, no rain falls for twelve years.',
