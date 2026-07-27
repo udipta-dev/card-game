@@ -1,6 +1,6 @@
 import { afflict } from '../curses';
 import { nextRandom } from '../ids';
-import { attemptDestroy } from '../keywords';
+import { attemptDestroy, powerFloor } from '../keywords';
 import { opponentOf } from '../queries';
 import type { EffectAction, EffectActionKind, InstanceId } from '../types';
 import type { EffectCtx } from './context';
@@ -12,6 +12,7 @@ import { resolveRowRefs } from './targeting';
 export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'damage',
   'setPower',
+  'reduceTo',
   'buff',
   'destroy',
   'debuffRow',
@@ -28,6 +29,7 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
 const TARGET_ACTIONS: ReadonlySet<EffectActionKind> = new Set<EffectActionKind>([
   'damage',
   'setPower',
+  'reduceTo',
   'buff',
   'destroy',
   'addFlag',
@@ -58,18 +60,29 @@ export function applyTargetAction(
         u.counters.armor = armor - soak;
         remaining -= soak;
       }
-      u.currentPower = Math.max(0, u.currentPower - remaining);
+      u.currentPower = Math.max(powerFloor(state, u), u.currentPower - remaining);
       emit(ctx, { t: 'damage', iid, amount: remaining, power: u.currentPower });
       break;
     }
     case 'setPower': {
-      u.currentPower = Math.max(0, action.value);
+      u.currentPower = Math.max(powerFloor(state, u), action.value);
       emit(ctx, { t: 'setPower', iid, value: u.currentPower });
+      break;
+    }
+    // Lowers, never raises: the Naga weapon binds a great warrior down to
+    // nothing much, but it cannot make a weak one stronger. Distinct from
+    // setPower for exactly that reason.
+    case 'reduceTo': {
+      const target = Math.max(powerFloor(state, u), action.value);
+      if (u.currentPower > target) {
+        u.currentPower = target;
+        emit(ctx, { t: 'setPower', iid, value: u.currentPower });
+      }
       break;
     }
     case 'buff': {
       // Floor at 0 so a negative buff (Shalya sapping Karna) never goes below zero.
-      u.currentPower = Math.max(0, u.currentPower + action.amount);
+      u.currentPower = Math.max(powerFloor(state, u), u.currentPower + action.amount);
       emit(ctx, { t: 'buff', iid, amount: action.amount, power: u.currentPower });
       break;
     }

@@ -191,6 +191,9 @@ export type TriggerEvent =
 export type EffectAction =
   | { kind: 'damage'; amount: number }
   | { kind: 'setPower'; value: number }
+  // Lowers only, never raises, and respects the undying floor. The Naga weapon
+  // binds a great warrior down; it cannot make a weak one stronger.
+  | { kind: 'reduceTo'; value: number }
   | { kind: 'buff'; amount: number }
   | { kind: 'destroy' }
   | {
@@ -234,6 +237,12 @@ export type TargetSelector =
   | { pick: 'enemyRow'; row: Row }
   // Enemy units in the row this astra was played into.
   | { pick: 'enemyRowSameAsPlayed' }
+  // A divyastra devastates a LINE, and it does not care whose line it is: the
+  // chariots burn, whoever's chariots they are. This is what makes an astra a
+  // real decision (which formation can I afford to lose men in?) rather than a
+  // targeted spell.
+  | { pick: 'lineBothSides'; row: Row }
+  | { pick: 'lineBothSidesSameAsPlayed' }
   // Own units in the row(s) adjacent to where this astra was played.
   | { pick: 'ownAdjacentToPlayed' }
   // A specific named card on a given side (Shalya finds Karna, Dhrishtadyumna finds Drona).

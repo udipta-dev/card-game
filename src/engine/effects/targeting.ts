@@ -36,6 +36,19 @@ export function resolveTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[
       return rowUnits(state, enemy, sel.row).map((u) => u.iid);
     case 'enemyRowSameAsPlayed':
       return playedRow ? rowUnits(state, enemy, playedRow).map((u) => u.iid) : [];
+    // Both sides of one line. Enemy first so that if a handler ever stops early
+    // the enemy is hit before the firer's own men, which is the order the
+    // player will expect from a weapon he aimed.
+    case 'lineBothSides':
+      return [...rowUnits(state, enemy, sel.row), ...rowUnits(state, actorOwner, sel.row)].map(
+        (u) => u.iid,
+      );
+    case 'lineBothSidesSameAsPlayed':
+      return playedRow
+        ? [...rowUnits(state, enemy, playedRow), ...rowUnits(state, actorOwner, playedRow)].map(
+            (u) => u.iid,
+          )
+        : [];
     case 'ownAdjacentToPlayed':
       if (!playedRow) return [];
       return adjacentRows(playedRow).flatMap((r) =>

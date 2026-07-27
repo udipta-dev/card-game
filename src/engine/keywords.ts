@@ -8,6 +8,30 @@ import { cardOnBoard } from './queries';
 import { ROWS } from './types';
 import type { CardInstance, GameState, InstanceId, Seat } from './types';
 
+/**
+ * The lowest power a warrior may be driven to.
+ *
+ * Normally 0. But a warrior who CANNOT BE KILLED must not be reducible to
+ * nothing either: floored at 0, Bhishma could be ground to zero and left
+ * standing on the field contributing nothing, which is unkillable AND useless,
+ * the worst of both. At a floor of 1 he can be worn down to a single point and
+ * still stands there until Shikhandi walks on.
+ *
+ * This also gives the effect ladder a clean rung: "reduce to 1" becomes the
+ * strongest thing that works on EVERYONE, including the undying, while outright
+ * destruction stays the privilege of the ultimates and some warriors are simply
+ * immune to it.
+ */
+export function powerFloor(state: GameState, u: CardInstance): number {
+  const card = getCard(u.cardId);
+  for (const kw of card.keywords) {
+    if (kw.kind === 'deathless') return 1;
+    if (kw.kind === 'icchamrityu' && !cardOnBoard(state, u.owner, kw.unlessCardOnBoard, 'any')) return 1;
+    if (kw.kind === 'immuneUntilPlayed' && !u.flags.has('disarmed')) return 1;
+  }
+  return 0;
+}
+
 /** Remove an instance from wherever it lives, and detach its boons. Pure-ish. */
 export function removeInstance(state: GameState, iid: InstanceId): void {
   const u = state.instances[iid];
