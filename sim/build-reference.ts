@@ -51,7 +51,7 @@ const ASTRA_TEXT: Record<string, string> = {
   varunastra: 'Varuna’s deluge: −4 to the mightiest foe; it quenches Agni.',
   vayavyastra: 'Vayu’s gale: −3 to the struck row.',
   nagastra: 'Slays the mightiest foe, unless Garuda answers from the hand.',
-  garudastra: '−5 to the mightiest foe; its shadow scatters every naga.',
+  sauparna: '−5 to the mightiest foe; birds devour the serpents.',
 };
 const TIER_META: Record<number, { label: string; name: string; desc: string }> = {
   3: { label: 'Tier III', name: 'Divine Ultimates', desc: 'Loosed only by their named master. No rank alone unlocks them.' },
@@ -61,7 +61,7 @@ const TIER_META: Record<number, { label: string; name: string; desc: string }> =
 const ORDER: Record<string, number> = {
   pashupatastra: 0, narayanastra: 1, brahmashirsha: 2, vasavi_shakti: 3, vaishnavastra: 4,
   brahmastra: 0, bhargavastra: 1, sammohanastra: 2,
-  nagastra: 0, garudastra: 1, aindrastra: 2, agneyastra: 3, varunastra: 4, vayavyastra: 5,
+  nagastra: 0, sauparna: 1, aindrastra: 2, agneyastra: 3, varunastra: 4, vayavyastra: 5,
 };
 
 function wielders(a: U): string {

@@ -49,7 +49,7 @@ describe('Brahmastra is an act of adharma', () => {
 });
 
 describe('Brahmashirsha is utter destruction', () => {
-  it('takes both hosts, including the wielder’s own army', () => {
+  it('takes the enemy host entire, and poisons the ground you keep', () => {
     const s = makeState({
       playerHand: ['brahmashirsha'],
       playerBoard: { ratha: ['arjuna'], gaja: ['bhima'] },
@@ -57,10 +57,18 @@ describe('Brahmashirsha is utter destruction', () => {
     });
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
 
-    // Nobody who can die is left standing on either side.
+    // The enemy host is gone.
     expect(unitsOf(s1, 'ai').length).toBe(0);
-    expect(unitsOf(s1, 'player').length).toBe(0);
-    // And the firer wears the consequence.
+    // WAS: our own host died too. That was a symmetric wipe, which destroys
+    // cards already played and so changes nobody's hand size: it cost a card
+    // to reset the board to nothing, and measured a 17.2% win rate, the worst
+    // in the game. The price is now paid AFTERWARDS instead.
+    expect(unitsOf(s1, 'player').length).toBeGreaterThan(0);
+    // Every one of our lines withers for the rest of the battle...
+    const withered = s1.rowMods.filter((m) => m.seat === 'player' && m.amount < 0);
+    expect(withered.length).toBe(3); // all three of our own lines
+    expect(withered.every((m) => m.duration === 'lingering')).toBe(true);
+    // ...and the firer still wears the curse.
     expect(s1.curses.player.length).toBe(1);
   });
 

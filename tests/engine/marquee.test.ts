@@ -8,43 +8,60 @@ const preventReasons = (s: GameState) =>
   s.log.filter((e) => e.t === 'preventDestroy').map((e) => (e.t === 'preventDestroy' ? e.reason : ''));
 
 describe('Bhishma — icchamrityu', () => {
+  // These used Nagastra as a convenient destroy. It binds rather than kills
+  // now, so they use Vasavi Shakti, which really does destroy the highest.
   it('survives removal while Shikhandi is absent', () => {
     const s0 = makeState({
-      playerHand: ['nagastra'],
-      playerBoard: { padati: ['karna'] }, // Karna lets the player invoke Nagastra
+      playerHand: ['vasavi_shakti'],
+      playerBoard: { padati: ['karna'] }, // Karna is the one who may loose it
       aiBoard: { ratha: ['bhishma'] },
     });
     const bhishma = firstOf(s0, 'ai', 'bhishma');
-    const nagastra = firstOf(s0, 'player', 'nagastra');
-    const s1 = reduce(s0, { type: 'PLAY_CARD', iid: nagastra.iid, row: 'ratha' });
+    const shakti = firstOf(s0, 'player', 'vasavi_shakti');
+    const s1 = reduce(s0, { type: 'PLAY_CARD', iid: shakti.iid, row: 'ratha' });
     expect(s1.instances[bhishma.iid]).toBeDefined();
     expect(preventReasons(s1)).toContain('icchamrityu');
   });
 
   it('dies once Shikhandi stands on the board', () => {
     const s0 = makeState({
-      playerHand: ['nagastra'],
-      playerBoard: { ratha: ['shikhandi', 'karna'] }, // Karna invokes, Shikhandi unlocks Bhishma
+      playerHand: ['vasavi_shakti'],
+      playerBoard: { ratha: ['shikhandi', 'karna'] },
       aiBoard: { ratha: ['bhishma'] },
     });
     const bhishma = firstOf(s0, 'ai', 'bhishma');
-    const nagastra = firstOf(s0, 'player', 'nagastra');
-    const s1 = reduce(s0, { type: 'PLAY_CARD', iid: nagastra.iid, row: 'ratha' });
+    const shakti = firstOf(s0, 'player', 'vasavi_shakti');
+    const s1 = reduce(s0, { type: 'PLAY_CARD', iid: shakti.iid, row: 'ratha' });
     expect(s1.instances[bhishma.iid]).toBeUndefined();
     expect(hasEvent(s1, (e) => e.t === 'destroy' && e.cardId === 'bhishma')).toBe(true);
   });
+
+  it('can be worn down to 1, but never to nothing', () => {
+    // The other half of unkillable: he must not become a 0-power ornament.
+    const s0 = makeState({
+      playerHand: ['nagastra'],
+      playerBoard: { padati: ['karna'] },
+      aiBoard: { ratha: ['bhishma'] },
+    });
+    const bhishma = firstOf(s0, 'ai', 'bhishma');
+    const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'nagastra').iid, row: 'ratha' });
+    expect(s1.instances[bhishma.iid].currentPower).toBe(1);
+  });
 });
 
-describe('Nagastra — Krishna redirect', () => {
-  it('destroys the highest enemy unit', () => {
+describe('Nagastra — binds, and Krishna redirects', () => {
+  it('reduces the mightiest foe to 1 rather than killing him', () => {
     const s0 = makeState({
       playerHand: ['nagastra'],
       playerBoard: { padati: ['karna'] },
       aiBoard: { ratha: ['arjuna'] },
     });
     const arjuna = firstOf(s0, 'ai', 'arjuna');
+    expect(s0.instances[arjuna.iid].currentPower).toBeGreaterThan(1);
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'nagastra').iid, row: 'ratha' });
-    expect(s1.instances[arjuna.iid]).toBeUndefined();
+    // It was loosed at his head; Krishna gave it his crown instead.
+    expect(s1.instances[arjuna.iid]).toBeDefined();
+    expect(s1.instances[arjuna.iid].currentPower).toBe(1);
   });
 
   it('fizzles against a Krishna-guarded unit', () => {

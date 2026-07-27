@@ -51,7 +51,7 @@ describe('AI imperfect information', () => {
       aiBoard: { ratha: ['karna'] }, // invoker for Nagastra
       aiHand: ['nagastra'],
       playerBoard: { ratha: ['arjuna'] }, // the target
-      playerHand: ['garudastra'], // the counter the AI must not peek at
+      playerHand: ['sauparna'], // the counter the AI must not peek at
     });
     const action = chooseAction(s, 'ai');
     expect(action.type).toBe('PLAY_CARD');

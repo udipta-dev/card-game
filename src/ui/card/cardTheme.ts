@@ -95,7 +95,7 @@ const GLYPHS: Record<string, string> = {
   sammohana: '💤',
   agneyastra: '🔥',
   varunastra: '🌊',
-  garudastra: '🦅',
+  sauparna: '🦅',
   narayanastra: '🌀',
   // Pandava allies
   iravan: '🐍',

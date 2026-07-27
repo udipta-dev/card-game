@@ -34,13 +34,13 @@ describe('Astra counter-web', () => {
       playerHand: ['nagastra'],
       playerBoard: { padati: ['karna'] }, // invoker
       aiBoard: { ratha: ['arjuna'] }, // target
-      aiHand: ['garudastra'], // defender's counter
+      aiHand: ['sauparna'], // defender's counter
     });
     const arjuna = firstOf(s, 'ai', 'arjuna');
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'nagastra').iid, row: 'ratha' });
     expect(s1.instances[arjuna.iid]).toBeDefined(); // survived
-    expect(hasEvent(s1, (e) => e.t === 'countered' && e.astra === 'nagastra' && e.by === 'garudastra')).toBe(true);
-    expect(s1.hands.ai.some((iid) => s1.instances[iid]?.cardId === 'garudastra')).toBe(false); // spent
+    expect(hasEvent(s1, (e) => e.t === 'countered' && e.astra === 'nagastra' && e.by === 'sauparna')).toBe(true);
+    expect(s1.hands.ai.some((iid) => s1.instances[iid]?.cardId === 'sauparna')).toBe(false); // spent
   });
 
   it('Brahmastra answering Brahmastra scours both hosts, and only the untrained side is cursed', () => {
@@ -75,6 +75,7 @@ describe('Astra counter-web', () => {
     });
     const arjuna = firstOf(s, 'ai', 'arjuna');
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'nagastra').iid, row: 'ratha' });
-    expect(s1.instances[arjuna.iid]).toBeUndefined(); // destroyed
+    // Nagastra binds rather than kills now: the crown, not the head.
+    expect(s1.instances[arjuna.iid].currentPower).toBe(1); // destroyed
   });
 });

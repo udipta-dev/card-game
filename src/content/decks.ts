@@ -33,12 +33,17 @@ export const PANDAVA_DECK: DeckList = {
     'drupada',
     'virata',
     'brahmastra',
-    'garudastra',
+    'sauparna',
     'agneyastra',
     'varunastra',
     'aindrastra',
     // Arjuna alone in this host can loose it, and it takes his own army too.
-    'brahmashirsha',
+    // Brahmashirsha removed from the opening hand. At 16 provisions it put the
+    // deck 4 over budget, and more importantly the ultimates are meant to be
+    // EARNED at a shrine, not dealt. Sammohan takes the slot: Indra's weapon,
+    // which Indra's son loosed on the Kuru host at Virata, and which was in no
+    // deck at all.
+    'sammohana',
   ],
 };
 
@@ -64,7 +69,10 @@ export const KAURAVA_DECK: DeckList = {
     'brahmastra',
     'agneyastra',
     'varunastra',
-    'bhargavastra',
+    // Bhargavastra removed: Karna was TAUGHT it by Parashurama, so it belongs
+    // in the shrine pool Parashurama presides over rather than an opening hand.
+    // Vayavyastra takes the slot; it was in no deck at all and so invisible.
+    'vayavyastra',
     // Karna's spear, traded for his armour. One throw, then it is gone.
     'vasavi_shakti',
   ],
@@ -91,7 +99,7 @@ export const ASURA_DECK: DeckList = {
     'asura_horde',
     'brahmastra',
     'nagastra',
-    'garudastra',
+    'sauparna',
     'agneyastra',
     // Indrajit bears it, as he did against Rama's host.
     'vaishnavastra',

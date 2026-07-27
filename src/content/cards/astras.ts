@@ -44,30 +44,37 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 9,
+    // 16, not 9. A world-ender was the CHEAPEST great weapon in the game, less
+    // than the tier-2 Brahma-Astra at 11.
+    provision: 16,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     counteredBy: ['brahmashirsha', 'brahmastra'],
     cost: {
       consequence:
-        'Utter destruction. Every warrior on the field falls, yours among them. Only the deathless walk out of it, and the one who loosed it is cursed for the act.',
+        'The four-headed weapon takes the enemy host entire. Only the deathless walk out of it. The land it touched is poisoned: your own lines wither for the rest of the battle, and the one who loosed it is cursed for the act.',
     },
     effects: [
-      // Brahma himself told Drona this should never be loosed. It takes the
-      // whole field: both hosts. The chiranjivis (Ashwatthama, Kripa, Bali)
-      // survive it, exactly as they survived the night of the Sauptika Parva.
-      { on: 'onPlay', target: { pick: 'allUnits' }, actions: [{ kind: 'destroy' }] },
+      // WAS: destroy allUnits, both hosts. It measured a 17.2% win rate, the
+      // worst card in the game, and the reason is structural rather than a
+      // tuning error: a SYMMETRIC board wipe destroys cards that were already
+      // played, so it changes nobody's hand size. You simply spent a card and
+      // the enemy did not. It cost a card to reset to nothing.
+      //
+      // Now it takes the enemy host and bills you afterwards instead: the
+      // aftermath is the price, not instant friendly fire. That is closer to
+      // the epic anyway - twelve years of barren land, not your own men
+      // dropping dead beside you.
+      { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'destroy' }] },
       {
         on: 'onPlay',
         target: { pick: 'none' },
         actions: [
           {
+            // The land is poisoned. Your OWN lines, for the rest of the battle.
             kind: 'debuffRow',
             amount: -3,
             rows: [
-              { side: 'enemy', row: 'ratha' },
-              { side: 'enemy', row: 'gaja' },
-              { side: 'enemy', row: 'padati' },
               { side: 'own', row: 'ratha' },
               { side: 'own', row: 'gaja' },
               { side: 'own', row: 'padati' },
@@ -86,7 +93,7 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 15,
+    provision: 18,
     rows: ['ratha'],
     keywords: [],
     cost: {
@@ -116,7 +123,7 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 13,
+    provision: 15,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     cost: {
@@ -133,7 +140,7 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 12,
+    provision: 14,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     cost: {
@@ -159,7 +166,7 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 3,
     basePower: 0,
-    provision: 12,
+    provision: 14,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     cost: {
@@ -239,26 +246,37 @@ export const ASTRA_CARDS: Card[] = [
     name: 'Nag-Astra',
     house: 'neutral',
     type: 'astra',
-    astraTier: 1,
+    // BINDS, does not kill, and is tier 2 rather than 1.
+    //
+    // There is no "nagastra" in the Mahabharata. Karna's famous serpent-arrow
+    // is the snake Aswasena hiding inside an ordinary shaft, and Shalya tells
+    // him to pick a different arrow. The weapon the epic calls Naga BINDS THE
+    // LEGS (Karna P. 53) - snakes encircle the lower limbs. And the arrow that
+    // was meant for Arjuna's head took his crown instead, because Krishna
+    // pressed the chariot into the earth. He survived, diminished.
+    //
+    // So: reduce to 1. That is the crown, not the head. Hard removal at tier 1
+    // left the ultimates nothing to escalate to.
+    astraTier: 2,
     basePower: 0,
-    provision: 8,
+    provision: 9,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    counteredBy: ['garudastra'],
-    cost: { consequence: 'The serpent-arrow seeks the head. Garuda is its bane, and Krishna its shield.' },
+    counteredBy: ['sauparna'],
+    cost: { consequence: 'The serpents take him by the legs. Sauparna is their bane, and Krishna his shield.' },
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'highestEnemyUnit' },
         condition: { q: 'not', c: { q: 'targetHasBoon', boon: 'krishna_charioteer' } },
-        actions: [{ kind: 'destroy' }],
+        actions: [{ kind: 'reduceTo', value: 1 }],
       },
     ],
-    flavor: "Ashwasena's serpent-son, sworn to Arjuna's ruin.",
+    flavor: 'It was loosed at his head, and Krishna gave it his crown instead.',
   },
   {
-    id: 'garudastra',
-    name: 'Garud-Astra',
+    id: 'sauparna',
+    name: 'Sauparn-Astra',
     house: 'neutral',
     type: 'astra',
     astraTier: 1,
@@ -268,7 +286,7 @@ export const ASTRA_CARDS: Card[] = [
     keywords: [],
     cost: { consequence: 'The eagle devours serpents. Hold it to answer a Nagastra.' },
     effects: [{ on: 'onPlay', target: { pick: 'highestEnemyUnit' }, actions: [{ kind: 'damage', amount: 5 }] }],
-    flavor: 'Vishnu’s eagle, whose shadow scatters every naga.',
+    flavor: 'Birds descend and devour the serpents. The bane of the Naga weapon.',
   },
 
   // ---- Parashurama's line + disablers ----
