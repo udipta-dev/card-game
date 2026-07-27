@@ -39,9 +39,21 @@ export function rowModTotal(state: GameState, seat: Seat, row: Row): number {
     .reduce((sum, m) => sum + m.amount, 0);
 }
 
-/** Row power = unit powers + row mods, floored at 0. */
+/**
+ * Row power = unit powers + row mods, floored at 0.
+ *
+ * A STUPEFIED warrior contributes nothing. He is not damaged and not removed,
+ * he simply is not fighting: Sanmohana robs an army of its senses and the
+ * weapons fall out of its hands (Virata Parva LXV). The flag is cleared at the
+ * end of the round, so it costs the enemy a round of a whole line rather than
+ * killing anyone, which is a different KIND of effect from damage and the
+ * reason the astra exists.
+ */
 export function rowPower(state: GameState, seat: Seat, row: Row): number {
-  const units = rowUnits(state, seat, row).reduce((s, u) => s + u.currentPower, 0);
+  const units = rowUnits(state, seat, row).reduce(
+    (s, u) => s + (u.flags.has('stupefied') ? 0 : u.currentPower),
+    0,
+  );
   return Math.max(0, units + rowModTotal(state, seat, row));
 }
 

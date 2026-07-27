@@ -7,6 +7,7 @@
 // made attacking him pointless rather than costly.
 import { describe, expect, it } from 'vitest';
 import { powerFloor } from '@engine/keywords';
+import { rowPower } from '@engine/queries';
 import { applyTargetAction } from '@engine/effects/handlers';
 import { resolveTargets } from '@engine/effects/targeting';
 import type { EffectCtx } from '@engine/effects/context';
@@ -117,5 +118,35 @@ describe('a divyastra devastates a line, not a side', () => {
     });
     const hit = resolveTargets(ctx(s), { pick: 'lineBothSides', row: 'ratha' });
     expect(hit[0]).toBe(s.board.ai.ratha[0]);
+  });
+});
+
+describe('Sanmohana stupefies rather than kills', () => {
+  it('a stupefied line contributes nothing, without anyone being hurt', () => {
+    const s = makeState({ aiBoard: { ratha: ['karna', 'drona'] } });
+    const before = rowPower(s, 'ai', 'ratha');
+    expect(before).toBeGreaterThan(0);
+
+    for (const iid of s.board.ai.ratha) {
+      applyTargetAction(ctx(s), { kind: 'addFlag', flag: 'stupefied' }, iid);
+    }
+    // The line is worth nothing this round...
+    expect(rowPower(s, 'ai', 'ratha')).toBe(0);
+    // ...but nobody has been damaged, and nobody has been removed.
+    for (const iid of s.board.ai.ratha) {
+      expect(s.instances[iid]).toBeDefined();
+      expect(s.instances[iid].currentPower).toBeGreaterThan(0);
+    }
+  });
+
+  it('works on a warrior no damage could shift', () => {
+    // Bhishma floors at 1 and cannot be removed, so damage can never take him
+    // off the scoreboard. Stupefaction can.
+    const s = makeState({ aiBoard: { ratha: ['bhishma'] } });
+    const iid = s.board.ai.ratha[0];
+    applyTargetAction(ctx(s), { kind: 'damage', amount: 99 }, iid);
+    expect(rowPower(s, 'ai', 'ratha')).toBe(1); // still scoring
+    applyTargetAction(ctx(s), { kind: 'addFlag', flag: 'stupefied' }, iid);
+    expect(rowPower(s, 'ai', 'ratha')).toBe(0);
   });
 });

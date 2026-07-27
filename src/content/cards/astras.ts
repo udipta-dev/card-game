@@ -330,29 +330,30 @@ export const ASTRA_CARDS: Card[] = [
     type: 'astra',
     astraTier: 2,
     basePower: 0,
-    provision: 8,
+    provision: 10,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'A stupor that unstrings the whole enemy line for the round.' },
+    // Ganguli's own note pairs Prajna against it, and Bhishma is explicitly
+    // "not stupefied, for he knoweth how to counteract this weapon".
+    counteredBy: ['sammohana'],
+    cost: {
+      consequence:
+        'No one falls. The line simply stops: senses gone, weapons slack in their hands, for this round only.',
+    },
     effects: [
+      // NO DAMAGE AT ALL, which is the point. Sanmohana "robs the enemy army
+      // of its senses" so that "weapons drop from their hands" (Virata P. LXV).
+      // It is NOT sleep: that is Praswapa, a different weapon owned by
+      // Prajapati and forged by Twashtri, with a named waking counterpart.
+      // A whole line contributing nothing for a round is a different kind of
+      // effect from damage, and it works on warriors no damage could shift.
       {
         on: 'onPlay',
-        target: { pick: 'none' },
-        actions: [
-          {
-            kind: 'debuffRow',
-            amount: -2,
-            rows: [
-              { side: 'enemy', row: 'ratha' },
-              { side: 'enemy', row: 'gaja' },
-              { side: 'enemy', row: 'padati' },
-            ],
-            duration: 'round',
-          },
-        ],
+        target: { pick: 'enemyRowSameAsPlayed' },
+        actions: [{ kind: 'addFlag', flag: 'stupefied' }],
       },
     ],
-    flavor: 'The weapon of sleep Arjuna loosed on the Kuru host at Virata.',
+    flavor: 'Arjuna loosed it on the Kuru host at Virata, and the whole army stood dreaming.',
   },
 
   // ---- Battlefield trick (not an astra, needs no invoker) ----
