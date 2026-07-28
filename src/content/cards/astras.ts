@@ -145,12 +145,24 @@ export const ASTRA_CARDS: Card[] = [
     provision: 15,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
+    // Drona CC: it "never comes back without effecting the destruction of the
+    // foe", and it cannot be answered by another weapon at all.
+    counteredBy: [],
     cost: {
       consequence:
-        'It rains death on every foe. In legend only surrender survives it, and the one who looses it is cursed for the act.',
+        'It does not strike and end. It hangs over their host and comes again every round, harder each time. The only escape is the one Krishna ordered: lay down arms and pass.',
     },
-    effects: [{ on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 5 }] }],
-    flavor: 'Vishnu’s storm of weapons, fiercer the harder you fight it.',
+    effects: [
+      // THE ONLY WEAPON IN THE GAME THAT DOES NOT RESOLVE. It becomes a
+      // standing threat: 4, then 6, then 8 to a random enemy at the start of
+      // every round, because the epic's Narayanastra grows with resistance.
+      // Passing lifts it, which is Krishna's published countermeasure: "Speedily
+      // lay down your weapons, all of you, and alight from your vehicles... If
+      // you stand weaponless on the earth, this weapon will not slay you."
+      // Bhima refused, kept fighting, and was mauled.
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'hazard', hazard: 'narayana' }] },
+    ],
+    flavor: 'Vishnu’s storm. The harder you fight it, the harder it comes.',
   },
   {
     id: 'vaishnavastra',

@@ -313,6 +313,17 @@ export function reduce(state: GameState, action: Action): GameState {
       } else {
         s.activeSeat = opponentOf(seat);
       }
+
+      // KRISHNA'S ORDER. The Narayanastra is answered only by laying down
+      // arms: "if you stand weaponless on the earth, this weapon will not
+      // slay you" (Drona Parva CC). Passing costs you the round and lifts it.
+      const lifted = s.hazards.filter((h) => h.victim === action.seat);
+      if (lifted.length) {
+        s.hazards = s.hazards.filter((h) => h.victim !== action.seat);
+        for (const h of lifted) {
+          s.log.push({ t: 'hazardLifted', kind: h.kind, seat: action.seat, reason: 'submission' });
+        }
+      }
       return s;
     }
   }

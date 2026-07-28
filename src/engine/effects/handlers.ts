@@ -13,6 +13,7 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'damage',
   'setPower',
   'reduceTo',
+  'hazard',
   'buff',
   'destroy',
   'debuffRow',
@@ -107,6 +108,16 @@ export function applyTargetAction(
 
 /** Apply a row/global action once (not per target). */
 export function applyGlobalAction(ctx: EffectCtx, action: EffectAction): void {
+  if (action.kind === 'hazard') {
+    const victim = opponentOf(ctx.actorOwner);
+    // One at a time. A second Narayanastra does not stack, it re-arms.
+    ctx.state.hazards = ctx.state.hazards.filter(
+      (h) => !(h.kind === action.hazard && h.victim === victim),
+    );
+    ctx.state.hazards.push({ kind: action.hazard, victim, struck: 0 });
+    ctx.state.log.push({ t: 'hazard', kind: action.hazard, seat: victim });
+    return;
+  }
   const state = ctx.state;
   switch (action.kind) {
     case 'debuffRow': {

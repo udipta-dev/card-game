@@ -194,6 +194,8 @@ export type EffectAction =
   // Lowers only, never raises, and respects the undying floor. The Naga weapon
   // binds a great warrior down; it cannot make a weak one stronger.
   | { kind: 'reduceTo'; value: number }
+  // Leaves a standing threat on the enemy side rather than resolving now.
+  | { kind: 'hazard'; hazard: 'narayana' }
   | { kind: 'buff'; amount: number }
   | { kind: 'destroy' }
   | {
@@ -320,6 +322,26 @@ export type Phase =
   | 'roundEnd'
   | 'battleEnd';
 
+/**
+ * A weapon that does not resolve and end, but STAYS on the field.
+ *
+ * The Narayanastra is the only thing in either epic that works like this: it
+ * grows stronger the more you resist it, and Krishna's order was to drop every
+ * weapon and lie down, because "if you stand weaponless on the earth, this
+ * weapon will not slay you" (Drona Parva CC). Bhima refused, kept fighting,
+ * and was mauled.
+ *
+ * So it is not damage. It is a standing threat with a published way out that
+ * costs you the round.
+ */
+export interface Hazard {
+  kind: 'narayana';
+  /** The side it hangs over. */
+  victim: Seat;
+  /** How many times it has already struck. Damage climbs with each. */
+  struck: number;
+}
+
 /** An astra in flight, waiting on the defender's decision. */
 export interface PendingCounter {
   /** The astra that was played. */
@@ -339,6 +361,8 @@ export interface GameState {
   phase: Phase;
   /** Set while phase === 'awaitingCounter'. */
   pendingCounter?: PendingCounter;
+  /** Weapons still hanging over the field. See Hazard. */
+  hazards: Hazard[];
   activeSeat: Seat;
   /** The seat that moved first in round 1 (gets a catch-up draw). */
   firstMover: Seat;
@@ -399,6 +423,8 @@ export type GameEvent =
   | { t: 'unanswered'; astra: CardId; seat: Seat }
   /** A warrior took the field and brought the astra that is his by name. */
   | { t: 'granted'; seat: Seat; cardId: CardId; by: CardId }
+  | { t: 'hazard'; kind: string; seat: Seat; iid?: InstanceId; amount?: number }
+  | { t: 'hazardLifted'; kind: string; seat: Seat; reason: string }
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }

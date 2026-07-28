@@ -82,6 +82,7 @@ export function createMatch(
     bannedThisRun: init?.banned ? [...init.banned] : [],
     curses: { player: init?.playerCurses ? [...init.playerCurses] : [], ai: [] },
     astraGrants: { player: init?.astraGrants ? { ...init.astraGrants } : {}, ai: {} },
+    hazards: [],
     forcedWinner: null,
     winner: null,
     mulliganDone: { player: false, ai: false },

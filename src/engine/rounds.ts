@@ -1,6 +1,7 @@
 import { runBoardTrigger } from './events';
-import { removeInstance } from './keywords';
-import { MAX_ROUNDS, WINS_NEEDED, seatPower } from './queries';
+import { lowerPower, removeInstance } from './keywords';
+import { nextRandom } from './ids';
+import { MAX_ROUNDS, WINS_NEEDED, seatPower, unitsOf } from './queries';
 import { ROUND_DRAW } from './createMatch';
 import type { GameState, Seat } from './types';
 import { ROWS } from './types';
@@ -80,5 +81,29 @@ export function resolveRound(state: GameState): void {
   state.activeSeat = roundWinner === 'ai' ? 'ai' : 'player';
   state.phase = 'playing';
   state.log.push({ t: 'roundStart', round: state.round });
+  tickHazards(state);
   runBoardTrigger(state, 'onRoundStart');
+}
+
+/**
+ * Weapons still hanging over the field strike at the start of each round.
+ *
+ * The Narayanastra grows with resistance: 4, then 6, then 8. Krishna's order
+ * was to drop every weapon and lie down, so the only way out is to PASS, which
+ * costs you the round and is handled where PASS is (see reducer).
+ */
+export function tickHazards(state: GameState): void {
+  for (const h of state.hazards) {
+    if (h.kind !== 'narayana') continue;
+    const men = unitsOf(state, h.victim);
+    if (!men.length) continue;
+    const amount = 4 + h.struck * 2;
+    // Random, but off the SEEDED stream, so a replay is still a replay.
+    const [next, roll] = nextRandom(state.seed);
+    state.seed = next;
+    const target = men[Math.floor(roll * men.length)];
+    lowerPower(state, target, amount);
+    h.struck += 1;
+    state.log.push({ t: 'hazard', kind: 'narayana', seat: h.victim, iid: target.iid, amount });
+  }
 }
