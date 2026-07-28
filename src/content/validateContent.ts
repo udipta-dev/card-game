@@ -8,6 +8,7 @@ import type {
 } from '@engine/types';
 import { EFFECT_ACTION_KINDS } from '@engine/effects/handlers';
 import { CARD_DB, allCards } from './cards';
+import { DECKS } from './decks';
 
 // Runtime guardrail: every card references only real CardIds and known effect
 // action kinds. Runs as a unit test so a malformed card fails CI, not a match.
@@ -102,5 +103,49 @@ export function validateContent(): ContentError[] {
       eff.actions.forEach((a) => checkAction(card, a, errs));
     }
   }
+  errs.push(...checkDecksCanWieldTheirAstras());
   return errs;
+}
+
+/**
+ * NO ASTRA WITHOUT A WIELDER.
+ *
+ * An astra is not a spell. It has to be loosed by a warrior trained to its
+ * tier, or by one who holds it by name. So a deck containing the Brahma-Astra
+ * and nobody who can invoke it is holding a brick: the card can never be
+ * played, and the deck is quietly a card short all game.
+ *
+ * Every starter satisfies this today, but by luck rather than by rule, and
+ * nothing stopped the next deck edit from breaking it silently. Two are only
+ * one warrior deep already: Vasavi Shakti needs Karna and Vaishnava needs
+ * Indrajit, so losing that one man bricks the card.
+ *
+ * NOTE the deliberate gap: this checks the DECK, not the hand. Drawing an
+ * astra while its wielder is still in the deck is a real risk and it is
+ * supposed to be. This only rules out the deck that could never work at all.
+ */
+export function checkDeckAstras(deck: { id: string; cards: CardId[] }): ContentError[] {
+  const errs: ContentError[] = [];
+  {
+    const units = deck.cards.map((id) => CARD_DB[id]).filter((c) => c?.type === 'unit');
+    for (const id of deck.cards) {
+      const card = CARD_DB[id];
+      if (!card || card.type !== 'astra') continue;
+      const tier = card.astraTier ?? 1;
+      const canWield = units.some(
+        (u) => (u.astraMastery ?? 0) >= tier || (u.knownAstras ?? []).includes(id),
+      );
+      if (!canWield) {
+        errs.push({
+          cardId: id,
+          message: `deck '${deck.id}' holds ${card.name} (tier ${tier}) but no warrior in it can invoke it`,
+        });
+      }
+    }
+  }
+  return errs;
+}
+
+export function checkDecksCanWieldTheirAstras(): ContentError[] {
+  return Object.values(DECKS).flatMap((d) => checkDeckAstras(d));
 }
