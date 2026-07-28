@@ -8,6 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { powerFloor } from '@engine/keywords';
 import { rowPower } from '@engine/queries';
+import { afflict } from '@engine/curses';
 import { applyTargetAction } from '@engine/effects/handlers';
 import { resolveTargets } from '@engine/effects/targeting';
 import type { EffectCtx } from '@engine/effects/context';
@@ -148,5 +149,43 @@ describe('Sanmohana stupefies rather than kills', () => {
     expect(rowPower(s, 'ai', 'ratha')).toBe(1); // still scoring
     applyTargetAction(ctx(s), { kind: 'addFlag', flag: 'stupefied' }, iid);
     expect(rowPower(s, 'ai', 'ratha')).toBe(0);
+  });
+});
+
+describe('the undying floor holds on EVERY path, not just the handlers', () => {
+  // Found by audit: five places wrote currentPower and only the effect handlers
+  // respected the floor. A curse could grind Bhishma to nothing when no weapon
+  // in the game could. An invariant enforced in four places out of seven is
+  // not an invariant.
+  it('survives Broken Bowstring, which took 4 straight off the top', () => {
+    const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
+    const iid = s.board.player.ratha[0];
+    s.instances[iid].currentPower = 2;
+    afflict(s, 'player', ['broken_bowstring']);
+    expect(s.instances[iid].currentPower).toBe(1);
+  });
+
+  it('survives Withered Host', () => {
+    const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
+    const iid = s.board.player.ratha[0];
+    s.instances[iid].currentPower = 1;
+    afflict(s, 'player', ['withered_host']);
+    expect(s.instances[iid].currentPower).toBe(1);
+  });
+
+  it('survives the Forgotten Mantra', () => {
+    const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
+    const iid = s.board.player.ratha[0];
+    s.instances[iid].currentPower = 2;
+    afflict(s, 'player', ['forgotten_mantra']);
+    expect(s.instances[iid].currentPower).toBe(1);
+  });
+
+  it('and an ordinary warrior still reaches zero on those same paths', () => {
+    const s = makeState({ playerBoard: { ratha: ['nakula'] } });
+    const iid = s.board.player.ratha[0];
+    s.instances[iid].currentPower = 1;
+    afflict(s, 'player', ['withered_host']);
+    expect(s.instances[iid].currentPower).toBe(0);
   });
 });

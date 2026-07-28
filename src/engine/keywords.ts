@@ -32,6 +32,18 @@ export function powerFloor(state: GameState, u: CardInstance): number {
   return 0;
 }
 
+/**
+ * Lower a warrior's power, respecting the undying floor.
+ *
+ * Every site that reduces power must go through here. Found by audit: the astra
+ * clash and three of the five curses each did their own Math.max(0, ...), so a
+ * curse could grind Bhishma to nothing when no weapon in the game could. An
+ * invariant enforced in four places out of seven is not an invariant.
+ */
+export function lowerPower(state: GameState, u: CardInstance, by: number): void {
+  u.currentPower = Math.max(powerFloor(state, u), u.currentPower - by);
+}
+
 /** Remove an instance from wherever it lives, and detach its boons. Pure-ish. */
 export function removeInstance(state: GameState, iid: InstanceId): void {
   const u = state.instances[iid];

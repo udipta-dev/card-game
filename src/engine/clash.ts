@@ -5,6 +5,7 @@
 // withdraw his weapon and Ashwatthama did not, and so only one of them paid.
 import { getCard } from '@content/cards';
 import { afflict } from './curses';
+import { lowerPower } from './keywords';
 import { opponentOf, unitsOf } from './queries';
 import type { Card, CurseId, GameState, Seat } from './types';
 
@@ -49,7 +50,7 @@ export function resolveClash(
   const defender = opponentOf(firer);
   for (const seat of [firer, defender] as Seat[]) {
     for (const u of unitsOf(state, seat)) {
-      u.currentPower = Math.max(0, u.currentPower - blast);
+      lowerPower(state, u, blast);
     }
   }
 

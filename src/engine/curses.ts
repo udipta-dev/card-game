@@ -3,6 +3,7 @@
 // struck. Curses are data + a small pure payload, resolved like every other
 // mechanic in this engine, never a bespoke branch in the reducer.
 import { nextRandom } from './ids';
+import { lowerPower } from './keywords';
 import { highestUnit, unitsOf } from './queries';
 import { ROWS } from './types';
 import type { CurseId, GameState, Seat } from './types';
@@ -35,7 +36,7 @@ const DEFS: CurseDef[] = [
     text: 'Your mightiest warrior falters, his bowstring snapping at the draw (-4).',
     onAfflict: (s, seat) => {
       const u = highestUnit(s, seat);
-      if (u) u.currentPower = Math.max(0, u.currentPower - 4);
+      if (u) lowerPower(s, u, 4);
     },
   },
   {
@@ -43,7 +44,7 @@ const DEFS: CurseDef[] = [
     name: 'Withered Host',
     text: 'The weapon’s ash settles on your own army. Every warrior you hold weakens (-1).',
     onAfflict: (s, seat) => {
-      for (const u of unitsOf(s, seat)) u.currentPower = Math.max(0, u.currentPower - 1);
+      for (const u of unitsOf(s, seat)) lowerPower(s, u, 1);
     },
   },
   {
@@ -59,7 +60,7 @@ const DEFS: CurseDef[] = [
     barsAstras: true,
     onAfflict: (s, seat) => {
       const u = highestUnit(s, seat);
-      if (u) u.currentPower = Math.max(0, u.currentPower - 2);
+      if (u) lowerPower(s, u, 2);
     },
   },
 ];
