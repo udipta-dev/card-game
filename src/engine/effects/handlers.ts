@@ -14,6 +14,9 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'setPower',
   'reduceTo',
   'hazard',
+  'discard',
+  'draw',
+  'denyPlay',
   'buff',
   'destroy',
   'debuffRow',
@@ -108,6 +111,11 @@ export function applyTargetAction(
 
 /** Apply a row/global action once (not per target). */
 export function applyGlobalAction(ctx: EffectCtx, action: EffectAction): void {
+  // ---- guile: operate on hands and decks --------------------------------
+  if (action.kind === 'discard' || action.kind === 'draw' || action.kind === 'denyPlay') {
+    applyGuile(ctx, action);
+    return;
+  }
   if (action.kind === 'hazard') {
     const victim = opponentOf(ctx.actorOwner);
     // One at a time. A second Narayanastra does not stack, it re-arms.
@@ -172,5 +180,57 @@ export function applyGlobalAction(ctx: EffectCtx, action: EffectAction): void {
     }
     default:
       break; // target actions handled elsewhere
+  }
+}
+
+/**
+ * Guile: the hand and the deck.
+ *
+ * Discards and denials come off the SEEDED stream, so a replay is a replay,
+ * and a random discard is never quietly the best card the engine could find.
+ */
+function applyGuile(ctx: EffectCtx, action: EffectAction): void {
+  const s = ctx.state;
+  const me = ctx.actorOwner;
+  const foe = opponentOf(me);
+
+  if (action.kind === 'discard') {
+    const sides = action.side === 'both' ? [me, foe] : action.side === 'own' ? [me] : [foe];
+    for (const seat of sides) {
+      for (let i = 0; i < action.count && s.hands[seat].length; i++) {
+        const [next, roll] = nextRandom(s.seed);
+        s.seed = next;
+        const at = Math.floor(roll * s.hands[seat].length);
+        const [gone] = s.hands[seat].splice(at, 1);
+        const cardId = s.instances[gone]?.cardId;
+        delete s.instances[gone];
+        s.log.push({ t: 'discard', seat, cardId: cardId ?? '?' });
+      }
+    }
+    return;
+  }
+
+  if (action.kind === 'draw') {
+    const seat = action.side === 'own' ? me : foe;
+    for (let i = 0; i < action.count && s.decks[seat].length; i++) {
+      const iid = s.decks[seat].shift()!;
+      s.hands[seat].push(iid);
+      s.log.push({ t: 'draw', seat, cardId: s.instances[iid]?.cardId ?? '?' });
+    }
+    return;
+  }
+
+  if (action.kind === 'denyPlay') {
+    // Not damage and not removal: named men simply cannot be committed this
+    // round. This is the targeting restriction the epic keeps reaching for.
+    for (let i = 0; i < action.count && s.hands[foe].length; i++) {
+      const [next, roll] = nextRandom(s.seed);
+      s.seed = next;
+      const pool = s.hands[foe].filter((h) => !s.instances[h]?.flags.has('denied'));
+      if (!pool.length) break;
+      const iid = pool[Math.floor(roll * pool.length)];
+      s.instances[iid]!.flags.add('denied');
+      s.log.push({ t: 'denied', seat: foe, cardId: s.instances[iid]!.cardId });
+    }
   }
 }

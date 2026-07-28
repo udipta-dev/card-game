@@ -196,6 +196,18 @@ export type EffectAction =
   | { kind: 'reduceTo'; value: number }
   // Leaves a standing threat on the enemy side rather than resolving now.
   | { kind: 'hazard'; hazard: 'narayana' }
+  // ---- GUILE: the hand and the deck, not the board -----------------------
+  // Every action above operates on warriors standing on the field, which is
+  // why every schemer in the game collapsed into a debuff: reducing enemy
+  // power was the only thing the engine could express. The epic's answer to
+  // strength is almost never more strength - it is a disarm, a legalism or a
+  // targeting restriction. Krishna calls his own engineered kills
+  // "the employment of means" (Drona CLXXXI).
+  | { kind: 'discard'; count: number; side: 'own' | 'enemy' | 'both' }
+  | { kind: 'draw'; count: number; side: 'own' | 'enemy' }
+  // Deny a specific enemy warrior for the rest of the round: he cannot be
+  // committed. The targeting restriction, not damage.
+  | { kind: 'denyPlay'; count: number }
   | { kind: 'buff'; amount: number }
   | { kind: 'destroy' }
   | {
@@ -425,6 +437,9 @@ export type GameEvent =
   | { t: 'granted'; seat: Seat; cardId: CardId; by: CardId }
   | { t: 'hazard'; kind: string; seat: Seat; iid?: InstanceId; amount?: number }
   | { t: 'hazardLifted'; kind: string; seat: Seat; reason: string }
+  | { t: 'discard'; seat: Seat; cardId: CardId }
+  | { t: 'draw'; seat: Seat; cardId: CardId }
+  | { t: 'denied'; seat: Seat; cardId: CardId }
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }

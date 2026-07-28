@@ -72,6 +72,8 @@ export function resolveRound(state: GameState): void {
   state.round += 1;
   clearBoard(state);
   state.rowMods = state.rowMods.filter((m) => m.duration === 'lingering');
+  // Denials last the round that laid them, like the stupefaction they rhyme with.
+  for (const inst of Object.values(state.instances)) inst.flags.delete('denied');
   state.passed = { player: false, ai: false };
   drawCards(state, 'player', ROUND_DRAW);
   drawCards(state, 'ai', ROUND_DRAW);

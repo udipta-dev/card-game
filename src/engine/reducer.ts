@@ -34,6 +34,10 @@ export function isLegalPlay(
   if (!u) return false;
   const card = getCard(u.cardId);
   if (!card.rows.includes(row)) return false;
+  // Denied by guile: this man cannot be committed this round. Not damage and
+  // not removal - a targeting restriction, which is how the epic actually
+  // answers strength.
+  if (u.flags.has('denied')) return false;
   // Spent for the run. A great astra fires once and the arsenal is empty.
   if (state.bannedThisRun.includes(card.id)) return false;
   if (card.type === 'astra') {
