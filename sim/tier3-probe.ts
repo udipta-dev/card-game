@@ -6,6 +6,14 @@
 // "tier 3 averages X%" claim rests entirely on Vasavi and Vaishnava. This
 // forces each one into a deck so its rewrite can be measured before we commit
 // to it. THROWAWAY DECKS, not a balance proposal.
+//
+// IMPORTANT CAVEAT ON THE ZEROES. These are quickplay battles, so astraGrants
+// is empty and only a warrior with the astra in knownAstras can invoke it.
+// Narayana's is Ashwatthama and Vaishnava's is Bhagadatta, so a Pandava deck
+// fires neither and both read 0%. That is the NO-PENANCE case and it is
+// correct behaviour, not a limit on the design: in a run, a warrior who
+// completes tapasya grants the weapon to the whole HOST, and anyone may loose
+// it. See canInvokeAstra, and the tapasya tests in consequences.test.ts.
 import { getCard, provisionOf } from '@content/cards';
 import { DECKS } from '@content/decks';
 import { createMatch } from '@engine/createMatch';

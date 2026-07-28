@@ -177,3 +177,32 @@ describe('an astra earned through tapasya is the host’s, not one man’s', () 
     expect(canInvokeAstra(withMaster, 'player', 'agneyastra')).toBe(true);
   });
 });
+
+describe('a maharathi who completes tapasya may loose what he earned', () => {
+  // The whole point of the penance system: ANY warrior who goes and comes back
+  // bearing an ultimate can fire it, whether or not the epic gave it to him.
+  // Narayana's canonical wielder is Ashwatthama and Vaishnava's is Bhagadatta,
+  // both Kauravas, so without this a Pandava host could never use either
+  // however long it sat in penance.
+  it('lets a Pandava host fire Narayana, whose wielder is a Kaurava', () => {
+    const s = makeState({ playerBoard: { ratha: ['arjuna'] } });
+    expect(canInvokeAstra(s, 'player', 'narayanastra')).toBe(false); // not his
+    s.astraGrants.player = { arjuna: ['narayanastra'] };
+    expect(canInvokeAstra(s, 'player', 'narayanastra')).toBe(true);
+  });
+
+  it('and Vaishnava, whose wielder is Bhagadatta', () => {
+    const s = makeState({ playerBoard: { ratha: ['bhima'] } });
+    expect(canInvokeAstra(s, 'player', 'vaishnavastra')).toBe(false);
+    // Bhima himself went, untrained in the mantras though he is.
+    s.astraGrants.player = { bhima: ['vaishnavastra'] };
+    expect(canInvokeAstra(s, 'player', 'vaishnavastra')).toBe(true);
+  });
+
+  it('grants the HOST the weapon, not just the man who fetched it', () => {
+    // He paid for it with his absence. Someone else may loose it.
+    const s = makeState({ playerBoard: { ratha: ['yudhishthira'] } });
+    s.astraGrants.player = { arjuna: ['pashupatastra'] };
+    expect(canInvokeAstra(s, 'player', 'pashupatastra')).toBe(true);
+  });
+});
