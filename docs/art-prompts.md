@@ -1,6 +1,6 @@
 # Kurukshetra: card art prompts
 
-109 prompts, generated from the live card data. Regenerate with `npx vite-node sim/build-art-prompts.ts`.
+114 prompts, generated from the live card data. Regenerate with `npx vite-node sim/build-art-prompts.ts`.
 
 Generated for **meta.ai**, which honours negated qualities. Firefly does not, and caps prompts at 1024 characters.
 
@@ -1350,7 +1350,7 @@ With style reference:
 Rukmi, wiry, standing square and unmoving, squarely facing the viewer, head slightly turned, holding an ornate golden celestial longbow, unstrung. Deep bronze skin, weary but resolute, long black hair bound in a topknot. Weathered grey-green bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and a jewelled belt, over a grey tunic. A billowing white battle scarf, deep red dhoti, sandals laced with crossed leather thongs to the ankle, toes visible. A bare plain at first light. A tall plain grey war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
-## Astras (14)
+## Astras (19)
 
 ### Brahma-Astra
 
@@ -1574,6 +1574,86 @@ With style reference:
 
 ```
 A soft grey haze rolling over an army, weapons falling from slack hands. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Tvashtra-Astra
+
+`tvashtra.png` · 411 chars · 61 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. One of you, then a hundred, then a thousand, and they cannot tell which to strike. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+One of you, then a hundred, then a thousand, and they cannot tell which to strike. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Praswapa-Astra
+
+`praswapa.png` · 396 chars · 56 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prajapati’s weapon, given to Bhishma in a dream by eight Brahmanas. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Prajapati’s weapon, given to Bhishma in a dream by eight Brahmanas. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Samvodhan-Astra
+
+`samvodhana.png` · 381 chars · 54 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. The waking that Prajapati gave along with the sleep. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+The waking that Prajapati gave along with the sleep. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Prajna-Astra
+
+`prajna.png` · 400 chars · 57 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. The weapon of wakefulness, which is why Bhishma could not be stupefied. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+The weapon of wakefulness, which is why Bhishma could not be stupefied. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Antardhan-Astra
+
+`antardhana.png` · 406 chars · 59 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. What Shiva shot to unmake Tripura, and Kubera gave to Arjuna on the mountain. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+What Shiva shot to unmake Tripura, and Kubera gave to Arjuna on the mountain. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ## Vardaan and Fates (7)

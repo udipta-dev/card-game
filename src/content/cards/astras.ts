@@ -392,4 +392,111 @@ export const ASTRA_CARDS: Card[] = [
     effects: [{ on: 'onPlay', target: { pick: 'none' }, actions: [] }],
     flavor: 'Naro va kunjaro va, the man, or the elephant.',
   },
+  // ---------------------------------------------------------------------
+  // From the canon sweep. Each is HIGH confidence in Ganguli, each does the
+  // thing the text says it does, and none of them is a bigger number than the
+  // last: the point of the sweep was that the epic's arsenal is varied, not
+  // escalating. See docs/canon-inventory.md.
+  // ---------------------------------------------------------------------
+  {
+    // Drona XIX, CLVI. Twashtri's weapon spawns thousands of duplicate forms
+    // and the enemy kills each other in the confusion.
+    id: 'tvashtra',
+    name: 'Tvashtra-Astra',
+    house: 'neutral',
+    type: 'astra',
+    astraTier: 2,
+    basePower: 0,
+    provision: 10,
+    rows: ['ratha', 'gaja', 'padati'],
+    keywords: [],
+    counteredBy: ['prajna'],
+    cost: { consequence: 'The host sees a thousand of you, and strikes at every one of them.' },
+    effects: [
+      // They cut each other down: the whole enemy line takes it, not one man.
+      { on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'damage', amount: 3 }] },
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'denyPlay', count: 1 }] },
+    ],
+    flavor: 'One of you, then a hundred, then a thousand, and they cannot tell which to strike.',
+  },
+  {
+    // Udyoga CLXXXVI-VIII. Prajapati's, forged by Twashtri. Bhishma received
+    // it and its waking counterpart from eight Brahmanas in a dream. It puts
+    // the target to sleep WITHOUT killing, which is the whole distinction.
+    id: 'praswapa',
+    name: 'Praswapa-Astra',
+    house: 'neutral',
+    type: 'astra',
+    astraTier: 2,
+    basePower: 0,
+    provision: 10,
+    rows: ['ratha', 'gaja', 'padati'],
+    keywords: [],
+    counteredBy: ['samvodhana'],
+    cost: { consequence: 'They sleep where they stand. Nobody dies. Samvodhana is the waking.' },
+    effects: [
+      { on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'addFlag', flag: 'stupefied' }] },
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'denyPlay', count: 1 }] },
+    ],
+    flavor: 'Prajapati’s weapon, given to Bhishma in a dream by eight Brahmanas.',
+  },
+  {
+    // Udyoga CLXXXVI. The named waking counterpart, which is why Praswapa is
+    // not simply a better Sanmohana: the text supplies its own answer.
+    id: 'samvodhana',
+    name: 'Samvodhan-Astra',
+    house: 'neutral',
+    type: 'astra',
+    astraTier: 1,
+    basePower: 0,
+    provision: 5,
+    rows: ['ratha', 'gaja', 'padati'],
+    keywords: [],
+    cost: { consequence: 'It wakes whoever the sleep-weapon felled, on either side.' },
+    effects: [
+      { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'removeFlag', flag: 'stupefied' }] },
+      { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'removeFlag', flag: 'denied' }] },
+    ],
+    flavor: 'The waking that Prajapati gave along with the sleep.',
+  },
+  {
+    // Bhishma LXXVII. Restores the senses and dispels bewildering illusion:
+    // Ganguli's own note pairs it against Sanmohana.
+    id: 'prajna',
+    name: 'Prajna-Astra',
+    house: 'neutral',
+    type: 'astra',
+    astraTier: 1,
+    basePower: 0,
+    provision: 5,
+    rows: ['ratha', 'gaja', 'padati'],
+    keywords: [],
+    cost: { consequence: 'Sense returns. Whatever was clouding your host lifts.' },
+    effects: [
+      { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'removeFlag', flag: 'stupefied' }] },
+      { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'buff', amount: 1 }] },
+    ],
+    flavor: 'The weapon of wakefulness, which is why Bhishma could not be stupefied.',
+  },
+  {
+    // Vana XLI. KUBERA's own favourite, given to Arjuna on Himavat. Ganguli
+    // contradicts himself on the effect (vanishing in Adi, sleep in Vana);
+    // the name means vanishing, so that is what it does here.
+    id: 'antardhana',
+    name: 'Antardhan-Astra',
+    house: 'neutral',
+    type: 'astra',
+    astraTier: 2,
+    basePower: 0,
+    provision: 9,
+    rows: ['ratha', 'gaja', 'padati'],
+    keywords: [],
+    cost: { consequence: 'Kubera’s weapon. What it touches is simply not there to be struck.' },
+    effects: [
+      // Vanishing as protection: your own line cannot be found this round.
+      { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'addFlag', flag: 'hidden' }] },
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'draw', count: 1, side: 'own' }] },
+    ],
+    flavor: 'What Shiva shot to unmake Tripura, and Kubera gave to Arjuna on the mountain.',
+  },
 ];

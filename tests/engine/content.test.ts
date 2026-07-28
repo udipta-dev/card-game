@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { validateContent , checkDeckAstras, checkDecksCanWieldTheirAstras } from '@content/validateContent';
 import { CARD_DB, allCards } from '@content/cards';
+import { CARD_DB } from '@content/cards';
 import { DECKS } from '@content/decks';
 
 describe('content', () => {
@@ -36,5 +37,34 @@ describe('no astra without a wielder', () => {
     );
     expect(errs.length).toBe(1);
     expect(errs[0].message).toContain('no warrior in it can invoke it');
+  });
+});
+
+describe('the canon sweep landed in the game, and the refuse list did not', () => {
+  it('holds the astras the research actually sourced', () => {
+    for (const id of ['tvashtra', 'praswapa', 'samvodhana', 'prajna', 'antardhana']) {
+      expect(CARD_DB[id], `${id} missing`).toBeDefined();
+      expect(CARD_DB[id].type).toBe('astra');
+    }
+  });
+
+  it('holds NONE of the names that are in neither epic', () => {
+    // Every one of these is all over the internet and in no primary text.
+    // docs/canon-inventory.md section 6b. Mohini in particular has a fake
+    // name AND a fake effect.
+    const invented = [
+      'mohini', 'mohiniastra', 'sailastra', 'kandarpastra', 'mrityuastra',
+      'kaalastra', 'suryastra', 'chandrastra', 'somastra', 'shivastra',
+      'sarpastra', 'adityastra', 'anjalikastra',
+    ];
+    for (const id of invented) {
+      expect(CARD_DB[id], `${id} is not in either epic and must not be a card`).toBeUndefined();
+    }
+  });
+
+  it('gives Praswapa its own named answer, so sleep is not simply better', () => {
+    // Udyoga CLXXXVI: the epic supplies the counter itself.
+    expect(CARD_DB['praswapa'].counteredBy).toContain('samvodhana');
+    expect(CARD_DB['samvodhana']).toBeDefined();
   });
 });
