@@ -206,12 +206,22 @@ export const ASTRA_CARDS: Card[] = [
     name: 'Aindra-Astra',
     house: 'neutral',
     type: 'astra',
-    astraTier: 1,
+    // PROMOTED to tier 2, not nerfed. At tier 1 it measured 63.3% win, higher
+    // than anything in tier 2, which is the same inversion we had just fixed
+    // one rung up: nerfing Brahma-Astra did not cause this, it revealed it.
+    //
+    // Reclassifying is the right fix rather than cutting the numbers, because
+    // the text already puts it in that company: Aindra is what ANSWERS the
+    // Brahmastra (Karna P. 90). A weapon that can meet the Brahma line is not
+    // an elemental. It was also already priced at 9, above the tier-1 band.
+    astraTier: 2,
     basePower: 0,
     provision: 9,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'A sky-blackening rain of arrows on a whole rank.' },
+    // The counter the epic actually names.
+    counteredBy: ['aindrastra', 'brahmastra'],
+    cost: { consequence: 'A sky-blackening rain of arrows on a whole rank. It is the weapon that can answer even the Brahma-Astra.' },
     effects: [{ on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'damage', amount: 4 }] }],
     flavor: 'Indra’s shower, loosed by his son Arjuna.',
   },
