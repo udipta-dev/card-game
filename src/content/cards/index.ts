@@ -35,16 +35,30 @@ export function allCards(): Card[] {
   return ALL.slice();
 }
 
-// Rank is now a pyramid (10 maharathi / 28 atirathi / 43 rathi), so the top of
-// it should cost like it is rare. Demoting 58 units to their power-derived rank
-// dropped every deck 31-45 under the 170 budget, which would have silently let
-// each one add five to ten more cards. Repricing keeps the budget meaningful
-// and lands the three starters at 167 / 170 / 157.
-const TIER_PROVISION = { maharathi: 14, atirathi: 9, rathi: 6 } as const;
+// WAS a flat price per rank. That is an exploit, because a rank is a BAND: a
+// rathi covers power 2 through 6, so a 6-power rathi and a 2-power footman cost
+// the same. The Pandava roster is dense at the top of every band (atirathis of
+// 8,8,8,7,7,7,7,7 and rathis of 6,5) while the Asura roster sits at the bottom
+// (atirathis all 7, rathis including 2,2) - so for the same budget the Pandavas
+// simply bought more power. They measured 59.1% against an Asura 41.4%, with
+// seven of the eight hottest cards in the game.
+//
+// Price now tracks POWER directly. Rank keeps its own job, which is standing:
+// it drives the frame, the art and who may invoke which astra.
+/**
+ * A warrior's cost. basePower + 2, so every point of power is paid for.
+ *
+ * The +2 is the floor: a body on the field is worth something regardless, and
+ * it keeps the three starters within a few provisions of where the flat bands
+ * had them, so this is a fairness fix rather than a silent budget change.
+ */
+function unitProvision(power: number): number {
+  return Math.max(1, power + 2);
+}
 
 /** A card's deck-budget cost. Explicit `provision` wins; else derived from tier. */
 export function provisionOf(card: Card): number {
   if (card.provision != null) return card.provision;
-  if (card.type === 'unit' && card.tier) return TIER_PROVISION[card.tier];
+  if (card.type === 'unit') return unitProvision(card.basePower);
   return 5;
 }

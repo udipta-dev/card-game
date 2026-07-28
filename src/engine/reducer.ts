@@ -200,7 +200,21 @@ export function reduce(state: GameState, action: Action): GameState {
         // measured 95.2% win when played against a 36-63% spread across the
         // three factions. On top of the deck you still get his weapon, it is
         // still his, and it costs you a draw instead of being a gift.
-        for (const astraId of getCard(card.id).knownAstras ?? []) {
+        // ONE weapon, not the whole armoury. A warrior who knows several
+        // grants only the first, which is his signature: Arjuna the Pashupata
+        // he won from Shiva, Ashwatthama the Narayana his father gave him.
+        //
+        // Granting all of them stacked the top of the deck with ultimates the
+        // host often could not fire, so committing the man clogged his own
+        // draw. Ashwatthama, who knows two, measured 36.6% win when played and
+        // dragged the whole Kaurava deck to a 45.0% average card.
+        // Only what he physically CARRIES. Arjuna knows the Pashupata; he
+        // does not have it in a bag. Handing him the card put a
+        // battle-winning weapon on top of his deck every time he was
+        // committed, and he measured 64.1% win when played.
+        for (const astraId of (getCard(card.id).knownAstras ?? []).filter(
+          (a) => getCard(a).carried,
+        )) {
           if (s.bannedThisRun.includes(astraId)) continue; // already spent for the run
           const known = (h: string) => s.instances[h]?.cardId === astraId;
           if (s.hands[seat].some(known) || s.decks[seat].some(known)) continue;

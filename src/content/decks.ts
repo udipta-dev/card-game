@@ -79,13 +79,18 @@ export const KAURAVA_DECK: DeckList = {
     'karna',
     'duryodhana',
     'ashwatthama',
-    'vikarna',
+    // Vikarna at power 5 was dead weight the Pandava deck does not carry.
+    // Bhurishravas is 8, and his severed sword-arm is one of the best images
+    // in the set. Kaurava measured 45.9% against a Pandava 59.1%.
+    'bhurishravas',
     'shalya',
     'bhagadatta',
     'dushasana',
     'jayadratha',
     'shakuni',
-    'kaurava_infantry',
+    // The Pandava deck carries NO chaff: twelve warriors, none below power 5.
+    // Carrying a power-2 footman against that is a card given away.
+    'bahlika',
     'somadatta',
     'nagastra',
     'brahmastra',
@@ -120,9 +125,10 @@ export const ASURA_DECK: DeckList = {
     'nishumbha',
     'raktabija',
     'tarakasura',
-    'prahlada',
-    'asura_horde',
-    'asura_horde',
+    // One horde traded for a king. Two power-2 chaff cards against a Pandava
+    // rathi floor of 5 is most of why this deck measured 41.4%.
+    'shumbha',
+    'narakasura',
     'brahmastra',
     'nagastra',
     'sauparna',

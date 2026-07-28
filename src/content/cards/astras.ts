@@ -170,6 +170,8 @@ export const ASTRA_CARDS: Card[] = [
     house: 'neutral',
     type: 'astra',
     astraTier: 3,
+    // A THING, not a mantra: it changed hands, so it arrives with its bearer.
+    carried: true,
     basePower: 0,
     provision: 14,
     rows: ['ratha', 'gaja', 'padati'],
@@ -196,6 +198,8 @@ export const ASTRA_CARDS: Card[] = [
     house: 'neutral',
     type: 'astra',
     astraTier: 3,
+    // A THING, not a mantra: it changed hands, so it arrives with its bearer.
+    carried: true,
     basePower: 0,
     provision: 14,
     rows: ['ratha', 'gaja', 'padati'],

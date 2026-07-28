@@ -114,6 +114,22 @@ export interface Card {
    */
   knownAstras?: CardId[];
   /**
+   * TAUGHT or CARRIED.
+   *
+   * Most divyastras are knowledge: a mantra, learned from a god or a master.
+   * Arjuna does not carry the Pashupata about, he KNOWS it, so there is no
+   * object to hand him and knowing it is already enough (see canInvokeAstra).
+   *
+   * A few are physical things that changed hands. Karna's Vasavi is a dart
+   * Indra gave him in exchange for the armour off his body. Bhagadatta's
+   * Vaishnava was hurled as an ankusha and came down to him by inheritance.
+   * Those, and only those, arrive with their bearer.
+   *
+   * Without the distinction, committing Arjuna put a battle-winning Pashupata
+   * on top of his own deck and he measured 64.1% win when played.
+   */
+  carried?: boolean;
+  /**
    * For astras: the astra ids that negate this one. If the defender holds any
    * of them in hand when this resolves, theirs is spent and this one fizzles
    * (the canonical counter-web: Naga vs Garuda, Agni vs Varuna, Brahma vs Brahma).
