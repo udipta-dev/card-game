@@ -11,10 +11,16 @@ export function InspectSheet({
   card,
   inst,
   onClose,
+  onPlay,
+  blockedReason,
 }: {
   card: Card;
   inst?: CardInstance;
   onClose: () => void;
+  /** Present when this card can be played from here. */
+  onPlay?: () => void;
+  /** Why it cannot be, if it cannot. Shown instead of the play button. */
+  blockedReason?: string;
 }) {
   const rules = rulesText(card);
   // The board card crops the art to a square. This is the one place the whole
@@ -56,8 +62,19 @@ export function InspectSheet({
             </div>
           ))}
           {card.flavor && <div className="sheet__flavor">{card.flavor}</div>}
-          <button className="btn btn--primary btn--sm sheet__close" onClick={onClose}>
-            Close
+          {/* You should never have to commit a card to find out what it does.
+              The play action lives HERE, after you have read it. */}
+          {blockedReason && <div className="sheet__blocked">{blockedReason}</div>}
+          {onPlay && (
+            <button className="btn btn--primary btn--sm sheet__close" onClick={onPlay}>
+              Play {card.name}
+            </button>
+          )}
+          <button
+            className={`btn ${onPlay ? 'btn--ghost' : 'btn--primary'} btn--sm sheet__close`}
+            onClick={onClose}
+          >
+            {onPlay ? 'Back' : 'Close'}
           </button>
         </div>
       </div>

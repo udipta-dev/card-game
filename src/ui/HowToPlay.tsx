@@ -20,7 +20,7 @@ const RULES: Rule[] = [
   },
   {
     icon: '✋',
-    title: 'Pass to bank your cards',
+    title: 'Passing keeps your cards',
     body: 'You do not get a fresh hand each round. You draw only two cards between rounds, so one hand must last all three. Pass to stop and save your cards. When both sides pass, the round ends.',
   },
   {

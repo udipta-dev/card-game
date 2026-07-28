@@ -6,8 +6,8 @@ import { chooseAction } from '@ai/ai';
 import { createMatch } from '@engine/createMatch';
 import type { BattleInit } from '@engine/createMatch';
 import { isLegalAbility, reduce } from '@engine/reducer';
-import { isFinalRound, rowPower, seatPower } from '@engine/queries';
-import { getCurse } from '@engine/curses';
+import { canInvokeAstra, isFinalRound, rowPower, seatPower } from '@engine/queries';
+import { cursedAgainstAstras, getCurse } from '@engine/curses';
 import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, House, InstanceId, Row, Seat } from '@engine/types';
@@ -47,7 +47,12 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   const [selected, setSelected] = useState<InstanceId | null>(null);
   const [mSel, setMSel] = useState<InstanceId[]>([]);
   const [showHelp, setShowHelp] = useState(false);
-  const [inspect, setInspect] = useState<{ card: Card; inst?: GameState['instances'][string] } | null>(null);
+  const [inspect, setInspect] = useState<{
+    card: Card;
+    inst?: GameState['instances'][string];
+    onPlay?: () => void;
+    blockedReason?: string;
+  } | null>(null);
   const [tip, setTip] = useState<{ card: Card; inst?: GameState['instances'][string]; x: number; y: number } | null>(null);
   const [banner, setBanner] = useState<string | null>(null);
   const [awaitingSanction, setAwaitingSanction] = useState<{ action: Action; card: Card } | null>(null);
@@ -156,7 +161,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     // field asks once, and says plainly what it will cost you.
     if (action.type === 'PLAY_CARD') {
       const card = getCard(state.instances[action.iid]!.cardId);
-      // Any Brahma-line weapon or greater warns before it is loosed, so its
+      // Any Brahma-line weapon or greater warns before it is fired, so its
       // price is known and chosen, never sprung on you after the fact.
       if (card.type === 'astra' && (card.astraTier ?? 1) >= 2) {
         setAwaitingSanction({ action, card });
@@ -174,13 +179,18 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     setSelected(null);
   }
   function onHandClick(iid: InstanceId) {
+    // ALWAYS show the card first. You should never have to commit a warrior or
+    // an astra to find out what it does; the play action lives inside the
+    // detail sheet, after you have read it.
+    const inst = state.instances[iid]!;
+    const card = getCard(inst.cardId);
     const canPlay = myTurn && myMoves.some((m) => m.type === 'PLAY_CARD' && m.iid === iid);
-    if (canPlay) {
-      setSelected((cur) => (cur === iid ? null : iid));
-    } else {
-      // Not playable (locked astra, or not your turn): show its details instead.
-      setInspect({ card: getCard(state.instances[iid]!.cardId), inst: state.instances[iid] });
-    }
+    setInspect({
+      card,
+      inst,
+      onPlay: canPlay ? () => { setInspect(null); setSelected(iid); } : undefined,
+      blockedReason: canPlay ? undefined : whyNotPlayable(state, iid, myTurn),
+    });
   }
   function onRowClick(seat: Seat, row: Row) {
     if (!plan || !selected) return;
@@ -352,7 +362,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
             title="Stop playing and save your remaining cards for later rounds"
             onClick={() => dispatch({ type: 'PASS', seat: 'player' })}
           >
-            Pass &amp; bank{state.passed.ai ? ' (enemy passed)' : ''}
+            Pass, keep my cards{state.passed.ai ? ' (enemy passed)' : ''}
           </button>
         </div>
       </div>
@@ -403,7 +413,13 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
         />
       )}
       {inspect && (
-        <InspectSheet card={inspect.card} inst={inspect.inst} onClose={() => setInspect(null)} />
+        <InspectSheet
+          card={inspect.card}
+          inst={inspect.inst}
+          onPlay={inspect.onPlay}
+          blockedReason={inspect.blockedReason}
+          onClose={() => setInspect(null)}
+        />
       )}
       {state.phase === 'mulligan' && (
         <MulliganOverlay
@@ -575,9 +591,9 @@ function MulliganOverlay({
   return (
     <div className="overlay">
       <div className="panel">
-        <h2>Muster your host</h2>
+        <h2>Your opening hand</h2>
         <p className="panel__sub">
-          Choose up to two cards to return to the deck and redraw. Your opening hand carries across the first round.
+          Swap up to two cards you do not want. Whatever you keep stays with you into the first round.
         </p>
         <div className="mulligan__hand">
           {state.hands.player.map((iid) => (
@@ -681,7 +697,7 @@ function buildUnitPlay(state: GameState, iid: InstanceId, row: Row): Action {
 }
 
 /**
- * Shiva stands in the way. Before an ultimate astra is loosed, the player is
+ * Shiva stands in the way. Before an ultimate astra is fired, the player is
  * told exactly what it costs and made to say yes. The drama of these weapons
  * comes from choosing the consequence, not from a dice roll springing it.
  */
@@ -701,17 +717,17 @@ function SanctionGate({
           <span className="sanction__trident">ॐ</span>
         </div>
         <div className="sanction__who">
-          {(card.astraTier ?? 1) >= 3 ? 'Shiva stays your hand' : 'Know the price before you loose it'}
+          {(card.astraTier ?? 1) >= 3 ? 'Shiva stays your hand' : 'Know the price before you fire it'}
         </div>
         <h2 className="sanction__name">{card.name}</h2>
         <p className="sanction__warn">{card.cost?.consequence}</p>
-        <p className="sanction__ask">Loose it anyway?</p>
+        <p className="sanction__ask">Fire it anyway?</p>
         <div className="sanction__actions">
           <button className="btn btn--ghost" onClick={onCancel} autoFocus>
             Withdraw
           </button>
           <button className="btn btn--danger" onClick={onConfirm}>
-            Loose the {card.name}
+            Fire the {card.name}
           </button>
         </div>
       </div>
@@ -748,7 +764,7 @@ function hintText(state: GameState, myTurn: boolean, plan: Plan | null, card: Ca
   if (state.phase === 'battleEnd') return '';
   if (state.phase === 'mulligan') return '';
   if (!myTurn) return 'The enemy deliberates…';
-  if (!plan) return 'Click a card to play it, or pass to bank your hand for later rounds.';
+  if (!plan) return 'Tap a card to see it, tap again to play it. Or pass, and keep the rest of your hand for the next round.';
   switch (plan.mode) {
     case 'drop-own':
       return `Choose a row to deploy ${card?.name}.`;
@@ -761,4 +777,44 @@ function hintText(state: GameState, myTurn: boolean, plan: Plan | null, card: Ca
     case 'cast':
       return `Invoke ${card?.name} when ready.`;
   }
+}
+
+/**
+ * Why a card in hand cannot be played right now, in plain words.
+ *
+ * The question this exists to answer came from a real playtest: "I don't have
+ * anyone above 8, so why is the Brahma-Astra in my deck?" The answer is that
+ * POWER is not what gates an astra - training is - and nothing on screen said
+ * so. An astra sat greyed out with no reason given, so the only available
+ * explanation was that the deck was wrong.
+ */
+function whyNotPlayable(state: GameState, iid: InstanceId, myTurn: boolean): string | undefined {
+  if (!myTurn) return 'Not your turn.';
+  const card = getCard(state.instances[iid]!.cardId);
+  if (state.bannedThisRun.includes(card.id)) {
+    return 'Already spent. A great weapon fires once for the whole campaign.';
+  }
+  if (card.type === 'astra') {
+    if (cursedAgainstAstras(state, 'player')) {
+      return 'A curse has stopped your mouth. You can fire no astra this battle.';
+    }
+    if (!canInvokeAstra(state, 'player', card.id)) {
+      const tier = card.astraTier ?? 1;
+      const able = state.board.player.ratha
+        .concat(state.board.player.gaja, state.board.player.padati)
+        .map((i) => getCard(state.instances[i]!.cardId))
+        .filter((c) => (c.astraMastery ?? 0) >= tier || (c.knownAstras ?? []).includes(card.id));
+      if (able.length) return 'Nothing blocks it. Play a warrior first.';
+      // Who in the WHOLE roster could, so the player knows what to field.
+      const inDeck = state.decks.player
+        .concat(state.hands.player)
+        .map((i) => getCard(state.instances[i]!.cardId))
+        .filter((c) => c.type === 'unit' && ((c.astraMastery ?? 0) >= tier || (c.knownAstras ?? []).includes(card.id)));
+      const names = [...new Set(inDeck.map((c) => c.name))].slice(0, 3);
+      return names.length
+        ? `No one on the field is trained to fire this. Rank does not decide it: ${names.join(', ')} can.`
+        : 'No warrior left in your host is trained to fire this.';
+    }
+  }
+  return undefined;
 }

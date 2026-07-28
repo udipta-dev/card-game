@@ -251,12 +251,12 @@ export function rulesText(card: Card): string[] {
     if (tier >= 3) {
       const holders = astraWielders(card.id);
       lines.push(
-        `An ultimate astra. Loosed only by ${holders.length ? holders.join(', ') : 'a named boon'}.`,
+        `An ultimate astra. Only ${holders.length ? holders.join(', ') : 'a warrior granted it by a god'} can fire it.`,
       );
     } else if (tier === 2) {
-      lines.push('A Brahma-line astra. A maharathi astra-master can loose it.');
+      lines.push('A great astra. Only a warrior trained in the Brahma line can fire it.');
     } else {
-      lines.push('An elemental astra. Any astra-adept warrior can loose it.');
+      lines.push('An elemental astra. Any astra-trained warrior can fire it.');
     }
     if (card.counteredBy?.length)
       lines.push(`Answered by: ${card.counteredBy.map(titleize).join(', ')} in the enemy hand.`);
