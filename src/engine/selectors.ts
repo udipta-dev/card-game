@@ -41,6 +41,15 @@ function candidateTargets(state: GameState, seat: Seat, filter: UnitFilter): Ins
 
 /** Every legal action for the active seat (PASS always included). */
 export function legalMoves(state: GameState, seat: Seat): Action[] {
+  // An astra is in flight and this seat is the one it is aimed at. Answering
+  // or letting it through are the only two things anyone can do right now.
+  if (state.phase === 'awaitingCounter' && state.pendingCounter) {
+    if (seat !== opponentOf(state.pendingCounter.firer)) return [];
+    return [
+      { type: 'ANSWER_ASTRA', seat, counter: true },
+      { type: 'ANSWER_ASTRA', seat, counter: false },
+    ];
+  }
   if (state.phase !== 'playing' || state.activeSeat !== seat) return [];
   const moves: Action[] = [{ type: 'PASS', seat }];
 

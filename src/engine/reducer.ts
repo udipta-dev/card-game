@@ -73,10 +73,71 @@ function advanceTurn(s: GameState, seat: Seat): void {
   s.activeSeat = s.passed[opp] ? seat : opp;
 }
 
+
+/**
+ * Finish an astra that was left in flight while the defender decided.
+ *
+ * Both outcomes end with the fired astra spent and banned, because it WAS
+ * fired either way: the only question was whether anything met it.
+ */
+function resolvePendingCounter(s: GameState, counter: boolean): void {
+  const p = s.pendingCounter;
+  if (!p) return;
+  const card = getCard(p.astraCardId);
+  const inst = s.instances[p.astraIid];
+  s.phase = 'playing';
+  s.pendingCounter = undefined;
+
+  if (counter) {
+    const defender = opponentOf(p.firer);
+    const counterCard = getCard(p.counterCardId);
+    const at = s.hands[defender].indexOf(p.counterHid);
+    if (at >= 0) s.hands[defender].splice(at, 1);
+    delete s.instances[p.counterHid];
+    s.log.push({ t: 'countered', astra: card.id, by: counterCard.id, seat: defender });
+    // Two great weapons meeting is not a clean cancellation.
+    resolveClash(s, p.firer, card, counterCard);
+    banForRun(s, counterCard);
+  } else {
+    // Let through: it resolves in full on the row it was aimed at.
+    const ctx: EffectCtx = {
+      state: s,
+      actorOwner: p.firer,
+      actorCardId: card.id,
+      playedRow: p.row,
+      actorIid: p.astraIid,
+      chosen: [],
+    };
+    s.log.push({ t: 'unanswered', astra: card.id, seat: opponentOf(p.firer) });
+    runCardEffects(ctx, 'onPlay');
+    if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
+      afflict(s, p.firer, ADHARMA_CURSES);
+    }
+  }
+
+  if (inst) delete s.instances[p.astraIid];
+  banForRun(s, card);
+  applyImmuneDisarm(s, card.id);
+  if (s.forcedWinner) {
+    s.phase = 'battleEnd';
+    s.winner = s.forcedWinner;
+    s.log.push({ t: 'battleEnd', winner: s.forcedWinner, reason: 'astra' });
+    return;
+  }
+  advanceTurn(s, p.firer);
+}
+
 export function reduce(state: GameState, action: Action): GameState {
   const s = clone(state);
 
   switch (action.type) {
+    case 'ANSWER_ASTRA': {
+      if (s.phase !== 'awaitingCounter' || !s.pendingCounter) return state;
+      // Only the side being fired AT may answer.
+      if (action.seat !== opponentOf(s.pendingCounter.firer)) return state;
+      resolvePendingCounter(s, action.counter);
+      return s;
+    }
     case 'MULLIGAN': {
       if (s.phase !== 'mulligan' || s.mulliganDone[action.seat]) return state;
       const seat = action.seat;
@@ -138,15 +199,27 @@ export function reduce(state: GameState, action: Action): GameState {
               )
             : undefined;
         if (counterHid) {
-          const defender = opponentOf(seat);
-          const counterCard = getCard(s.instances[counterHid]!.cardId);
-          s.hands[defender].splice(s.hands[defender].indexOf(counterHid), 1);
-          delete s.instances[counterHid];
-          s.log.push({ t: 'countered', astra: card.id, by: counterCard.id, seat: defender });
-          // Two great weapons meeting is not a clean cancellation.
-          resolveClash(s, seat, card, counterCard);
-          // The answering weapon is spent for the run too.
-          banForRun(s, counterCard);
+          // STOP AND ASK. Answering costs the defender the card, scours BOTH
+          // hosts, and may curse him. Spending all of that without consent is
+          // indefensible: in playtesting a player's Brahma-Astra was spent, his
+          // army scoured and his host cursed, all from a card he never chose
+          // to play. The battle now suspends here and the defender decides.
+          s.phase = 'awaitingCounter';
+          // Hand the turn to the defender while the astra hangs in the air, so
+          // every driver (UI, AI, fuzz harness) can keep asking "whose move?"
+          // and get the right answer without knowing about this phase at all.
+          s.activeSeat = opponentOf(seat);
+          s.pendingCounter = {
+            astraIid: iid,
+            astraCardId: card.id,
+            firer: seat,
+            counterHid,
+            counterCardId: getCard(s.instances[counterHid]!.cardId).id,
+            row: action.row,
+          };
+          // The astra stays in flight: it is neither spent nor resolved until
+          // the defender answers. resolvePendingCounter finishes the job.
+          return s;
         } else {
           runCardEffects(ctx, 'onPlay');
           // The ultimates ALWAYS cost the one who looses them. Making this a

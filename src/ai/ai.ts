@@ -9,7 +9,8 @@
 // mechanical consequences of curses and abilities land in seatPower, and the
 // obvious deeper search is poisoned by the hidden-hand determinization.
 import { reduce } from '@engine/reducer';
-import { isFinalRound, opponentOf, seatPower } from '@engine/queries';
+import { getCard } from '@content/cards';
+import { isFinalRound, opponentOf, seatPower, unitsOf } from '@engine/queries';
 import { legalMoves } from '@engine/selectors';
 import type { Action, GameState, Seat } from '@engine/types';
 import { evaluate } from './evaluate';
@@ -140,6 +141,12 @@ export function chooseAction(
 ): Action {
   // The returned action references the AI's own card ids, which are unchanged,
   // so it is valid to apply against the real state.
+  // An astra is in the air and we are the target. Decide before anything else:
+  // spending the answer costs us the card, scours both hosts, and can curse
+  // whichever side fielded the lesser astra-master.
+  if (realState.phase === 'awaitingCounter' && realState.pendingCounter) {
+    return { type: 'ANSWER_ASTRA', seat, counter: shouldAnswer(realState, seat) };
+  }
   const state = hideOpponentHand(realState, seat);
   const moves = legalMoves(state, seat);
   const plays = moves.filter(isPlay);
@@ -148,4 +155,29 @@ export function chooseAction(
   if (state.passed[opponentOf(seat)]) return chooseWhenOppPassed(state, seat, plays, w, look);
 
   return greedy(state, seat, moves, w, look);
+}
+
+/**
+ * Whether to spend an answer on an astra in flight.
+ *
+ * Answering is NOT free: the counter is gone for the run, the clash scours
+ * both hosts, and the side with the lesser fielded astra-master takes a curse.
+ * So the question is whether letting it through costs more than that.
+ */
+function shouldAnswer(state: GameState, seat: Seat): boolean {
+  const p = state.pendingCounter!;
+  const incoming = getCard(p.astraCardId);
+  const tier = incoming.astraTier ?? 1;
+  const mine = seatPower(state, seat);
+
+  // An elemental weapon is rarely worth a card and a scouring. Eat it.
+  if (tier < 2) return false;
+  // A tier-3 ultimate will usually take the board outright. Always answer.
+  if (tier >= 3) return true;
+
+  // Tier 2: answer only if there is enough of our host standing to be worth
+  // saving. The clash costs us 2 off every warrior either way, so with almost
+  // nothing on the field we would be paying a card to protect nothing.
+  const blastCost = unitsOf(state, seat).length * 2;
+  return mine > 8 && mine - blastCost > 0;
 }

@@ -65,7 +65,9 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
 
   // --- AI turns (fires repeatedly while it is the AI's turn) ---
   useEffect(() => {
-    if (state.phase === 'playing' && state.activeSeat === 'ai') {
+    const aiToMove =
+      (state.phase === 'playing' || state.phase === 'awaitingCounter') && state.activeSeat === 'ai';
+    if (aiToMove) {
       const t = setTimeout(() => dispatch(chooseAction(state, 'ai')), AI_DELAY);
       return () => clearTimeout(t);
     }
@@ -412,6 +414,44 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           onCancel={() => setAwaitingSanction(null)}
         />
       )}
+      {/* An astra is in the air and it is aimed at us. Nothing is spent until
+          this is answered: the card, the scouring and the curse are all on the
+          other side of this button. */}
+      {state.phase === 'awaitingCounter' &&
+        state.pendingCounter &&
+        state.pendingCounter.firer === 'ai' && (
+          <div className="overlay">
+            <div className="panel sanction">
+              <div className="sanction__who">An astra is in the air</div>
+              <h2 className="sanction__name">
+                {getCard(state.pendingCounter.astraCardId).name} is fired at your host
+              </h2>
+              <p className="sanction__warn">
+                You hold the {getCard(state.pendingCounter.counterCardId).name}, which answers it.
+                Spending it costs you that weapon for the whole campaign, and two great weapons
+                meeting is not a clean cancellation: the blast scours <strong>both</strong> hosts,
+                and whichever side fields the lesser astra-master is cursed for failing to withdraw
+                in time.
+              </p>
+              <p className="sanction__ask">Answer it?</p>
+              <div className="sanction__actions">
+                <button
+                  className="btn btn--primary btn--sm"
+                  onClick={() => dispatch({ type: 'ANSWER_ASTRA', seat: 'player', counter: true })}
+                >
+                  Answer with the {getCard(state.pendingCounter.counterCardId).name}
+                </button>
+                <button
+                  className="btn btn--ghost btn--sm"
+                  onClick={() => dispatch({ type: 'ANSWER_ASTRA', seat: 'player', counter: false })}
+                >
+                  Let it strike
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       {inspect && (
         <InspectSheet
           card={inspect.card}

@@ -308,11 +308,37 @@ export interface RowModifier {
 // Whole-match state, the reducer's value. Fully serializable & deterministic.
 // ---------------------------------------------------------------------------
 
-export type Phase = 'mulligan' | 'playing' | 'roundEnd' | 'battleEnd';
+export type Phase =
+  | 'mulligan'
+  | 'playing'
+  /**
+   * An astra is in the air and the defender holds something that answers it.
+   * The battle STOPS here and asks. Spending a counter costs the card, scours
+   * both hosts, and may curse you, so it must never happen without consent.
+   */
+  | 'awaitingCounter'
+  | 'roundEnd'
+  | 'battleEnd';
+
+/** An astra in flight, waiting on the defender's decision. */
+export interface PendingCounter {
+  /** The astra that was played. */
+  astraIid: InstanceId;
+  astraCardId: CardId;
+  /** Who fired it. */
+  firer: Seat;
+  /** The card in the defender's hand that could answer. */
+  counterHid: InstanceId;
+  counterCardId: CardId;
+  /** The row it was played into, needed to resolve effects if not countered. */
+  row: Row;
+}
 
 export interface GameState {
   seed: number; // PRNG state, advances deterministically
   phase: Phase;
+  /** Set while phase === 'awaitingCounter'. */
+  pendingCounter?: PendingCounter;
   activeSeat: Seat;
   /** The seat that moved first in round 1 (gets a catch-up draw). */
   firstMover: Seat;
@@ -353,7 +379,9 @@ export type Action =
   | { type: 'PLAY_CARD'; iid: InstanceId; row: Row; targets?: InstanceId[] }
   | { type: 'USE_ABILITY'; iid: InstanceId; targets?: InstanceId[] }
   | { type: 'PASS'; seat: Seat }
-  | { type: 'MULLIGAN'; seat: Seat; iids: InstanceId[] };
+  | { type: 'MULLIGAN'; seat: Seat; iids: InstanceId[] }
+  /** The defender answers an astra in flight, or lets it through. */
+  | { type: 'ANSWER_ASTRA'; seat: Seat; counter: boolean };
 
 export type GameEvent =
   | { t: 'roundStart'; round: number }
@@ -367,6 +395,8 @@ export type GameEvent =
   | { t: 'preventDestroy'; iid: InstanceId; reason: string }
   | { t: 'redirected'; source: CardId; reason: string }
   | { t: 'countered'; astra: CardId; by: CardId; seat: Seat }
+  /** The defender held an answer and chose not to spend it. */
+  | { t: 'unanswered'; astra: CardId; seat: Seat }
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }
