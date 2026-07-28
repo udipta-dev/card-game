@@ -1269,6 +1269,47 @@
   font-size: 16px;
   color: #f6efe0;
 }
+/* The two numbers that decide who eats the curse in an astra clash. */
+.clash-odds {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0 auto 14px;
+}
+.clash-odds__side {
+  min-width: 92px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--panel-edge);
+  background: rgba(255, 255, 255, 0.03);
+}
+.clash-odds__side--risk {
+  border-color: rgba(224, 85, 91, 0.55);
+  background: rgba(224, 85, 91, 0.12);
+}
+.clash-odds__side--safe {
+  border-color: rgba(120, 200, 140, 0.45);
+  background: rgba(120, 200, 140, 0.1);
+}
+.clash-odds__n {
+  font-family: var(--font-display, serif);
+  font-size: 26px;
+  line-height: 1;
+  color: #f6efe0;
+}
+.clash-odds__label {
+  margin-top: 3px;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #cfc4b4;
+}
+.clash-odds__vs {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: #9a9080;
+}
 .sanction__actions {
   display: flex;
   gap: 10px;

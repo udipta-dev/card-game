@@ -8,6 +8,7 @@ import type { BattleInit } from '@engine/createMatch';
 import { isLegalAbility, reduce } from '@engine/reducer';
 import { canInvokeAstra, isFinalRound, rowPower, seatPower } from '@engine/queries';
 import { cursedAgainstAstras, getCurse } from '@engine/curses';
+import { fieldedMastery } from '@engine/clash';
 import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
 import type { Action, Card, GameState, House, InstanceId, Row, Seat } from '@engine/types';
@@ -62,6 +63,9 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   const logSeen = useRef(0);
 
   const myTurn = state.phase === 'playing' && state.activeSeat === 'player';
+  // Shown in the counter dialog so the curse is never a surprise.
+  const myMastery = fieldedMastery(state, 'player');
+  const foeMastery = fieldedMastery(state, 'ai');
 
   // --- AI turns (fires repeatedly while it is the AI's turn) ---
   useEffect(() => {
@@ -432,6 +436,30 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
                 meeting is not a clean cancellation: the blast scours <strong>both</strong> hosts,
                 and whichever side fields the lesser astra-master is cursed for failing to withdraw
                 in time.
+              </p>
+              {/* THE NUMBERS, ON SCREEN. The curse used to land on whichever
+                  side fielded the lesser astra-master, which is a real rule
+                  and was completely invisible: in playtesting a player was
+                  cursed because Drona carries Brahmashirsha BY NAME and so
+                  counted as fully trained, against Abhimanyu's 2. You cannot
+                  make a decision about a number you cannot see. */}
+              <div className="clash-odds">
+                <div className={`clash-odds__side${myMastery > foeMastery ? ' clash-odds__side--safe' : myMastery < foeMastery ? ' clash-odds__side--risk' : ''}`}>
+                  <div className="clash-odds__n">{myMastery}</div>
+                  <div className="clash-odds__label">your astra-master</div>
+                </div>
+                <div className="clash-odds__vs">vs</div>
+                <div className={`clash-odds__side${foeMastery > myMastery ? ' clash-odds__side--safe' : ''}`}>
+                  <div className="clash-odds__n">{foeMastery}</div>
+                  <div className="clash-odds__label">theirs</div>
+                </div>
+              </div>
+              <p className="sanction__ask">
+                {myMastery < foeMastery
+                  ? 'The lesser master cannot withdraw in time. YOU would take the curse.'
+                  : myMastery > foeMastery
+                    ? 'Theirs is the lesser. THEY would take the curse.'
+                    : 'Equally matched. Neither side is cursed.'}
               </p>
               <p className="sanction__ask">Answer it?</p>
               <div className="sanction__actions">
