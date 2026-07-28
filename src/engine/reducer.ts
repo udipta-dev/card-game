@@ -205,7 +205,10 @@ export function reduce(state: GameState, action: Action): GameState {
           s.hands[seat].push(inst.iid);
           s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
         }
-      } else if (card.type === 'boon') {
+      } else if (card.type === 'boon' || card.type === 'shastra') {
+        // A shastra is a NAMED WEAPON put into a warrior's hands, so it rides
+        // the same attachment the boons use. Gandiva is not a spell, it is a
+        // bow, and it belongs to whoever is holding it.
         const host = action.targets?.[0];
         if (host && s.instances[host]) {
           s.instances[host].boons.push(iid);

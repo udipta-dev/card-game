@@ -4,6 +4,7 @@ import { KAURAVA_CARDS } from './kaurava';
 import { ASURA_CARDS } from './asura';
 import { LEGEND_CARDS } from './legends';
 import { ASTRA_CARDS } from './astras';
+import { SHASTRA_CARDS } from './shastras';
 import { VARDAAN_CARDS } from './vardaan';
 
 const ALL: Card[] = [
@@ -12,6 +13,7 @@ const ALL: Card[] = [
   ...ASURA_CARDS,
   ...LEGEND_CARDS,
   ...ASTRA_CARDS,
+  ...SHASTRA_CARDS,
   ...VARDAAN_CARDS,
 ];
 

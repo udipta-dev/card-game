@@ -1,6 +1,6 @@
 # Kurukshetra: card art prompts
 
-103 prompts, generated from the live card data. Regenerate with `npx vite-node sim/build-art-prompts.ts`.
+109 prompts, generated from the live card data. Regenerate with `npx vite-node sim/build-art-prompts.ts`.
 
 Generated for **meta.ai**, which honours negated qualities. Firefly does not, and caps prompts at 1024 characters.
 
@@ -1514,23 +1514,23 @@ A screaming spiral of wind tearing a battle line apart. No human figure. Low cam
 
 ### Nag-Astra
 
-`nagastra.png` · 401 chars · 56 words
+`nagastra.png` · 410 chars · 60 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A serpent of living arrow-fire striking through smoke, hood spread wide. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Serpents rising from the ground to bind a warrior by the legs, hoods spread wide. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 With style reference:
 
 ```
-A serpent of living arrow-fire striking through smoke, hood spread wide. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Serpents rising from the ground to bind a warrior by the legs, hoods spread wide. No human figure. Low camera angle looking up from below, towering scale. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
-### Garud-Astra
+### Sauparn-Astra
 
-`garudastra.png` · 411 chars · 59 words
+`sauparna.png` · 411 chars · 59 words
 
 Standalone:
 
