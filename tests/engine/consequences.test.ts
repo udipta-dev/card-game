@@ -206,3 +206,36 @@ describe('a maharathi who completes tapasya may loose what he earned', () => {
     expect(canInvokeAstra(s, 'player', 'pashupatastra')).toBe(true);
   });
 });
+
+describe('a named astra arrives with its warrior', () => {
+  it('Karna takes the field and the Vasavi Shakti comes to hand', () => {
+    // It was hand-listed in the deck beside him, as if the two were unrelated.
+    // The spear is his, traded for the armour off his own body.
+    const s = makeState({ playerHand: ['karna'] });
+    expect(s.hands.player.some((i) => s.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(true);
+    expect(hasEvent(s1, (e) => e.t === 'granted' && e.cardId === 'vasavi_shakti')).toBe(true);
+  });
+
+  it('a warrior with no named astra brings nothing', () => {
+    const s = makeState({ playerHand: ['nakula'] });
+    const before = s.hands.player.length;
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    expect(s1.hands.player.length).toBe(before - 1); // just the card he spent
+  });
+
+  it('does not hand it back once it has been spent for the run', () => {
+    const s = makeState({ playerHand: ['karna'] });
+    s.bannedThisRun.push('vasavi_shakti');
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
+  });
+
+  it('does not duplicate one already in hand', () => {
+    const s = makeState({ playerHand: ['karna', 'vasavi_shakti'] });
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    const held = s1.hands.player.filter((i) => s1.instances[i]?.cardId === 'vasavi_shakti');
+    expect(held.length).toBe(1);
+  });
+});

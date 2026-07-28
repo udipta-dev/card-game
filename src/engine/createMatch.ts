@@ -12,7 +12,7 @@ function emptyRows(): Record<Row, InstanceId[]> {
   return { ratha: [], gaja: [], padati: [] };
 }
 
-function makeInstance(cardId: string, owner: Seat): CardInstance {
+export function makeInstance(cardId: string, owner: Seat): CardInstance {
   const card = getCard(cardId);
   return {
     iid: newInstanceId(cardId),

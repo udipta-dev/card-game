@@ -9,7 +9,7 @@ import { runCardEffects, runEffect } from './events';
 import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime } from './keywords';
 import { canInvokeAstra, isFinalRound, opponentOf } from './queries';
 import { resolveRound } from './rounds';
-import { MULLIGAN_MAX } from './createMatch';
+import { MULLIGAN_MAX, makeInstance } from './createMatch';
 import type { Action, Card, GameState, Row, Seat } from './types';
 
 function clone(state: GameState): GameState {
@@ -181,6 +181,26 @@ export function reduce(state: GameState, action: Action): GameState {
         s.board[seat][action.row].push(iid);
         initInstanceRuntime(s, iid);
         runCardEffects(ctx, 'onPlay');
+
+        // A NAMED ASTRA ARRIVES WITH ITS WARRIOR. Karna's spear is his, traded
+        // for the armour off his own body; it has no business in a hand that
+        // does not hold him. Listing it in the deck separately meant a weapon
+        // could sit there with its wielder cut, which is where "why is this in
+        // my deck?" came from in playtesting.
+        //
+        // It comes to hand only when he takes the FIELD, so the ultimates are
+        // still not simply dealt to you: you have to draw the man and commit
+        // him first, and if he dies before you spend it, you spent a card to
+        // get a card.
+        for (const astraId of getCard(card.id).knownAstras ?? []) {
+          if (s.bannedThisRun.includes(astraId)) continue; // already spent for the run
+          const held = s.hands[seat].some((h) => s.instances[h]?.cardId === astraId);
+          if (held) continue;
+          const inst = makeInstance(astraId, seat);
+          s.instances[inst.iid] = inst;
+          s.hands[seat].push(inst.iid);
+          s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
+        }
       } else if (card.type === 'boon') {
         const host = action.targets?.[0];
         if (host && s.instances[host]) {
@@ -189,6 +209,7 @@ export function reduce(state: GameState, action: Action): GameState {
           s.log.push({ t: 'attach', boon: iid, to: host });
         }
         runCardEffects(ctx, 'onPlay');
+
       } else {
         // astra / curse. First, the counter-web: if the defender holds an astra
         // that answers this one, theirs is spent and this fizzles.

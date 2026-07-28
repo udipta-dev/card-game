@@ -397,6 +397,8 @@ export type GameEvent =
   | { t: 'countered'; astra: CardId; by: CardId; seat: Seat }
   /** The defender held an answer and chose not to spend it. */
   | { t: 'unanswered'; astra: CardId; seat: Seat }
+  /** A warrior took the field and brought the astra that is his by name. */
+  | { t: 'granted'; seat: Seat; cardId: CardId; by: CardId }
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }

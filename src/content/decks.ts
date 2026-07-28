@@ -12,6 +12,28 @@ export interface DeckList {
 /** Deck-building budget. A deck's total provisions must not exceed this. */
 export const DECK_BUDGET = 170;
 
+/**
+ * A NAMED ASTRA FOLLOWS ITS WARRIOR.
+ *
+ * Karna's Vasavi Shakti used to be hand-listed in the Kaurava deck beside him,
+ * as if the two were unrelated. They are not: the spear is his, traded for the
+ * armour off his own body, and it has no business in a host that does not
+ * include him. Hand-listing also meant the weapon could sit in a deck its
+ * wielder had been cut from, which is where "why is this in my deck?" came
+ * from in playtesting.
+ *
+ * The weapon is NOT in the deck. It arrives in hand the moment the warrior
+ * takes the field, and only then. So:
+ *   - you can never hold an astra whose wielder you do not have
+ *   - cutting the man cuts the weapon
+ *   - the ultimates are still not DEALT to you, which was the other rule:
+ *     you have to draw the man and commit him first
+ * See the onPlay grant in the reducer.
+ */
+export function namedAstrasOf(cardId: CardId): CardId[] {
+  return getCard(cardId).knownAstras ?? [];
+}
+
 // Starter decks for Quickplay, drawn from the full roster. Each deck only runs
 // astras its own warriors can invoke, plus counter-astras it can hold in reserve.
 export const PANDAVA_DECK: DeckList = {
@@ -73,8 +95,7 @@ export const KAURAVA_DECK: DeckList = {
     // in the shrine pool Parashurama presides over rather than an opening hand.
     // Vayavyastra takes the slot; it was in no deck at all and so invisible.
     'vayavyastra',
-    // Karna's spear, traded for his armour. One throw, then it is gone.
-    'vasavi_shakti',
+
   ],
 };
 
@@ -102,7 +123,6 @@ export const ASURA_DECK: DeckList = {
     'sauparna',
     'agneyastra',
     // Indrajit bears it, as he did against Rama's host.
-    'vaishnavastra',
   ],
 };
 
