@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { validateContent , checkDeckAstras, checkDecksCanWieldTheirAstras } from '@content/validateContent';
 import { CARD_DB, allCards } from '@content/cards';
-import { CARD_DB } from '@content/cards';
 import { DECKS } from '@content/decks';
 
 describe('content', () => {
