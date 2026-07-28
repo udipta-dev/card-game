@@ -50,10 +50,14 @@ export function rowModTotal(state: GameState, seat: Seat, row: Row): number {
  * reason the astra exists.
  */
 export function rowPower(state: GameState, seat: Seat, row: Row): number {
-  const units = rowUnits(state, seat, row).reduce(
-    (s, u) => s + (u.flags.has('stupefied') ? 0 : u.currentPower),
-    0,
-  );
+  const men = rowUnits(state, seat, row);
+  // AN EMPTY LINE SCORES NOTHING. A row modifier is a thing that happens TO a
+  // formation, so with nobody standing in it there is nothing to modify: a +2
+  // on an empty Padati row was quietly adding 2 to the battle score, which is
+  // where "the numbers do not add up" came from in playtesting. The score was
+  // correct arithmetic over a wrong premise.
+  if (men.length === 0) return 0;
+  const units = men.reduce((s, u) => s + (u.flags.has('stupefied') ? 0 : u.currentPower), 0);
   return Math.max(0, units + rowModTotal(state, seat, row));
 }
 

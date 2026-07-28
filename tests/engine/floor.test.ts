@@ -189,3 +189,26 @@ describe('the undying floor holds on EVERY path, not just the handlers', () => {
     expect(s.instances[iid].currentPower).toBe(0);
   });
 });
+
+describe('an empty line scores nothing', () => {
+  it('a row modifier on an empty row adds no points', () => {
+    // Found in playtesting: an empty Padati row was showing 2 and the battle
+    // total included it. The arithmetic was right over a wrong premise.
+    const s = makeState({});
+    s.rowMods.push({ seat: 'player', row: 'padati', amount: 2, duration: 'round', source: 'test' });
+    expect(rowPower(s, 'player', 'padati')).toBe(0);
+  });
+
+  it('but the same modifier counts once a warrior stands there', () => {
+    const s = makeState({ playerBoard: { padati: ['pandava_infantry'] } });
+    const base = rowPower(s, 'player', 'padati');
+    s.rowMods.push({ seat: 'player', row: 'padati', amount: 2, duration: 'round', source: 'test' });
+    expect(rowPower(s, 'player', 'padati')).toBe(base + 2);
+  });
+
+  it('a debuff cannot drive an occupied row below zero either', () => {
+    const s = makeState({ playerBoard: { padati: ['pandava_infantry'] } });
+    s.rowMods.push({ seat: 'player', row: 'padati', amount: -99, duration: 'round', source: 'test' });
+    expect(rowPower(s, 'player', 'padati')).toBe(0);
+  });
+});
