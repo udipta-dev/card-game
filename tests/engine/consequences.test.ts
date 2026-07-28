@@ -208,13 +208,19 @@ describe('a maharathi who completes tapasya may loose what he earned', () => {
 });
 
 describe('a named astra arrives with its warrior', () => {
-  it('Karna takes the field and the Vasavi Shakti comes to hand', () => {
+  it('Karna takes the field and the Vasavi Shakti goes on top of his deck', () => {
     // It was hand-listed in the deck beside him, as if the two were unrelated.
     // The spear is his, traded for the armour off his own body.
-    const s = makeState({ playerHand: ['karna'] });
-    expect(s.hands.player.some((i) => s.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
+    //
+    // It goes to the DECK, not the hand. Into the hand it was free card
+    // advantage, and Arjuna, who knows two ultimates, measured 95.2% win when
+    // played because committing him simply drew you two extra cards.
+    const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima'] });
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
-    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(true);
+    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
+    expect(s1.decks.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(true);
+    // On TOP, so it is the next thing he draws.
+    expect(s1.instances[s1.decks.player[0]]?.cardId).toBe('vasavi_shakti');
     expect(hasEvent(s1, (e) => e.t === 'granted' && e.cardId === 'vasavi_shakti')).toBe(true);
   });
 
@@ -229,13 +235,14 @@ describe('a named astra arrives with its warrior', () => {
     const s = makeState({ playerHand: ['karna'] });
     s.bannedThisRun.push('vasavi_shakti');
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
-    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
+    expect(s1.decks.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
   });
 
   it('does not duplicate one already in hand', () => {
     const s = makeState({ playerHand: ['karna', 'vasavi_shakti'] });
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
-    const held = s1.hands.player.filter((i) => s1.instances[i]?.cardId === 'vasavi_shakti');
+    const held = [...s1.hands.player, ...s1.decks.player]
+      .filter((i) => s1.instances[i]?.cardId === 'vasavi_shakti');
     expect(held.length).toBe(1);
   });
 });

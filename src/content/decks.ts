@@ -95,6 +95,11 @@ export const KAURAVA_DECK: DeckList = {
     // in the shrine pool Parashurama presides over rather than an opening hand.
     // Vayavyastra takes the slot; it was in no deck at all and so invisible.
     'vayavyastra',
+    // Vasavi Shakti left this list when named astras began following their
+    // wielder, and nothing replaced it: the deck ran 14 provisions under and
+    // measured 44.1% against a Pandava 59.9%. Praswapa is Bhishma's own, given
+    // to him in a dream by eight Brahmanas (Udyoga CLXXXVI).
+    'praswapa',
 
   ],
 };
@@ -122,6 +127,11 @@ export const ASURA_DECK: DeckList = {
     'nagastra',
     'sauparna',
     'agneyastra',
+    // Vaishnava left this list with the same change and took 24 provisions of
+    // slack with it. Tvashtra suits a host of illusionists: Indrajit fought
+    // Rama's army from behind exactly this kind of trick.
+    'tvashtra',
+    'antardhana',
     // Indrajit bears it, as he did against Rama's host.
   ],
 };

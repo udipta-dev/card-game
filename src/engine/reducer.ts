@@ -192,17 +192,21 @@ export function reduce(state: GameState, action: Action): GameState {
         // could sit there with its wielder cut, which is where "why is this in
         // my deck?" came from in playtesting.
         //
-        // It comes to hand only when he takes the FIELD, so the ultimates are
-        // still not simply dealt to you: you have to draw the man and commit
-        // him first, and if he dies before you spend it, you spent a card to
-        // get a card.
+        // It goes on top of the DECK, not into the hand.
+        //
+        // Into the hand it was free card advantage, and in a game decided by
+        // card economy that is the strongest thing a card can do. Arjuna knows
+        // TWO ultimates, so committing him drew you two extra cards, and he
+        // measured 95.2% win when played against a 36-63% spread across the
+        // three factions. On top of the deck you still get his weapon, it is
+        // still his, and it costs you a draw instead of being a gift.
         for (const astraId of getCard(card.id).knownAstras ?? []) {
           if (s.bannedThisRun.includes(astraId)) continue; // already spent for the run
-          const held = s.hands[seat].some((h) => s.instances[h]?.cardId === astraId);
-          if (held) continue;
+          const known = (h: string) => s.instances[h]?.cardId === astraId;
+          if (s.hands[seat].some(known) || s.decks[seat].some(known)) continue;
           const inst = makeInstance(astraId, seat);
           s.instances[inst.iid] = inst;
-          s.hands[seat].push(inst.iid);
+          s.decks[seat].unshift(inst.iid);
           s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
         }
       } else if (card.type === 'boon' || card.type === 'shastra') {
