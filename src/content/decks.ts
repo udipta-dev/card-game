@@ -91,7 +91,14 @@ export const KAURAVA_DECK: DeckList = {
     // The Pandava deck carries NO chaff: twelve warriors, none below power 5.
     // Carrying a power-2 footman against that is a card given away.
     'bahlika',
-    'somadatta',
+    // Somadatta (6) out, Vikarna (5) in, paying for Bhagadatta's rise to 9.
+    // An earlier pass cut Vikarna as a power-5 body the Pandava deck would not
+    // carry, and by raw power that was correct. But this sweep is about men who
+    // changed the war without fighting, and Vikarna is the ONE son of
+    // Dhritarashtra who stood up in the dice hall and said the wager was void
+    // and Draupadi unwon (Sabha P. LXVIII). Somadatta is in the set because he
+    // fathered Bhurishravas. One of those is worth a slot.
+    'vikarna',
     'nagastra',
     'brahmastra',
     'agneyastra',

@@ -11,6 +11,21 @@ import type { EffectCtx } from './context';
 
 /** Resolve a target selector to concrete instance ids. Pure read over state. */
 export function resolveTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[] {
+  // A vanished warrior is not there to be struck. Enforced HERE, once, on the
+  // way out of every selector, rather than inside each case: the undying floor
+  // taught us what happens to an invariant that four of seven code paths
+  // remember. A hidden man is unreachable by allEnemyUnits, by a row sweep, by
+  // highestEnemyUnit and by a hand-picked target alike, and the same rule
+  // cannot be true for some weapons and false for others.
+  return selectTargets(ctx, sel).filter((iid) => {
+    const u = ctx.state.instances[iid];
+    if (!u || !u.flags.has('hidden')) return true;
+    // Hidden only hides you from the enemy. Your own boons still find you.
+    return u.owner === ctx.actorOwner;
+  });
+}
+
+function selectTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[] {
   const { state, actorOwner, playedRow } = ctx;
   const enemy = opponentOf(actorOwner);
   switch (sel.pick) {

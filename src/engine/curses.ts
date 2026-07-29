@@ -4,7 +4,7 @@
 // mechanic in this engine, never a bespoke branch in the reducer.
 import { nextRandom } from './ids';
 import { lowerPower } from './keywords';
-import { highestUnit, unitsOf } from './queries';
+import { highestUnit, isFinalRound, unitsOf } from './queries';
 import { ROWS } from './types';
 import type { CurseId, GameState, Seat } from './types';
 
@@ -15,8 +15,18 @@ export interface CurseDef {
   text: string;
   /** One-shot mechanical payload, applied the moment the curse takes hold. */
   onAfflict?: (state: GameState, seat: Seat) => void;
-  /** While carried, this seat cannot invoke astras for the rest of the battle. */
-  barsAstras?: boolean;
+  /**
+   * While carried, this seat cannot invoke astras: either for the whole battle,
+   * or only when it actually matters.
+   *
+   * The second mode exists because the text is specific and we were not.
+   * Parashurama's curse on Karna is not a blanket ban, it is a delayed-action
+   * one: "in consequence of the deception by which thou hast obtained this
+   * weapon, it will never, AT THE TIME OF NEED, WHEN THE HOUR OF THY DEATH
+   * COMES, occur to thy memory" (Karna P. XLII). Karna keeps his weapons all
+   * war and loses them at the one moment he needs them.
+   */
+  barsAstras?: 'battle' | 'finalRound';
 }
 
 const DEFS: CurseDef[] = [
@@ -51,16 +61,41 @@ const DEFS: CurseDef[] = [
     id: 'shivas_gaze',
     name: 'Shiva’s Gaze',
     text: 'The three-eyed god has seen what you did. You may loose no astra for the rest of this battle.',
-    barsAstras: true,
+    barsAstras: 'battle',
   },
   {
+    // WAS a flat battle-long ban, which is Shiva's Gaze with different words on
+    // it. Parashurama cursed Karna far more precisely than that: the weapon
+    // fails "at the time of need, when the hour of thy death comes". So the
+    // mantras answer you all battle and desert you in the round that decides
+    // it, which is both the sourced reading and the more frightening card.
     id: 'forgotten_mantra',
     name: 'The Forgotten Mantra',
-    text: 'As Karna was cursed, the words flee you when you reach for them. No astra this battle, and your mightiest falters (-2).',
-    barsAstras: true,
+    text: 'As Karna was cursed, the words come when you do not need them. In the deciding round you will reach for an astra and find nothing, and your mightiest falters now (-2).',
+    barsAstras: 'finalRound',
     onAfflict: (s, seat) => {
       const u = highestUnit(s, seat);
       if (u) lowerPower(s, u, 2);
+    },
+  },
+  {
+    // Gandhari to Krishna over the bodies of her hundred sons, Stri Parva
+    // XXV: "thou shalt be the slayer of thy own kinsmen!" She curses him for
+    // standing by, and the Vrishnis end by killing each other.
+    //
+    // Canonically it detonates in the thirty-sixth year, and a battle has no
+    // thirty-sixth year, so what carries over is the kin-slaying rather than
+    // the delay: the strongest man in your host turns on the next strongest.
+    id: 'kin_slayer',
+    name: 'The Kin-Slayer’s Curse',
+    text: 'As Gandhari cursed Krishna for standing by: you shall be the slayer of your own kinsmen. Your mightiest warrior turns on the next mightiest (-5).',
+    onAfflict: (s, seat) => {
+      const first = highestUnit(s, seat);
+      if (!first) return;
+      const rest = unitsOf(s, seat).filter((u) => u.iid !== first.iid);
+      if (!rest.length) return;
+      const second = rest.reduce((a, b) => (b.currentPower > a.currentPower ? b : a));
+      lowerPower(s, second, 5);
     },
   },
 ];
@@ -99,5 +134,9 @@ export function afflict(state: GameState, seat: Seat, pool: CurseId[]): CurseDef
 
 /** Is this seat barred from invoking astras by something it carries? */
 export function cursedAgainstAstras(state: GameState, seat: Seat): boolean {
-  return (state.curses?.[seat] ?? []).some((id) => CURSES[id]?.barsAstras);
+  return (state.curses?.[seat] ?? []).some((id) => {
+    const bars = CURSES[id]?.barsAstras;
+    if (!bars) return false;
+    return bars === 'battle' || isFinalRound(state);
+  });
 }

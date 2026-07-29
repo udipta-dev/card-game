@@ -223,7 +223,12 @@ export type EffectAction =
   | { kind: 'draw'; count: number; side: 'own' | 'enemy' }
   // Deny a specific enemy warrior for the rest of the round: he cannot be
   // committed. The targeting restriction, not damage.
-  | { kind: 'denyPlay'; count: number }
+  //
+  // `sparingStrongest` never denies the enemy's best card, which is Shiva's
+  // boon to Jayadratha word for word: "Except Dhananjaya, the son of Pritha,
+  // thou shalt in battle check the four other sons of Pandu" (Drona P. XLI).
+  // A blocker with a named hole in it is a different card from a blocker.
+  | { kind: 'denyPlay'; count: number; sparingStrongest?: boolean }
   | { kind: 'buff'; amount: number }
   | { kind: 'destroy' }
   | {

@@ -1,8 +1,9 @@
+import { getCard } from '@content/cards';
 import { afflict } from '../curses';
 import { nextRandom } from '../ids';
 import { attemptDestroy, powerFloor } from '../keywords';
 import { opponentOf } from '../queries';
-import type { EffectAction, EffectActionKind, InstanceId } from '../types';
+import type { EffectAction, EffectActionKind, GameState, InstanceId, Seat } from '../types';
 import type { EffectCtx } from './context';
 import { emit } from './context';
 import { resolveRowRefs } from './targeting';
@@ -223,14 +224,38 @@ function applyGuile(ctx: EffectCtx, action: EffectAction): void {
   if (action.kind === 'denyPlay') {
     // Not damage and not removal: named men simply cannot be committed this
     // round. This is the targeting restriction the epic keeps reaching for.
+    //
+    // The strongest card in hand can be exempted, so the block has a hole in
+    // it by design. Shiva gave Jayadratha exactly that and no more.
+    const spared = action.sparingStrongest ? strongestInHand(s, foe) : null;
     for (let i = 0; i < action.count && s.hands[foe].length; i++) {
       const [next, roll] = nextRandom(s.seed);
       s.seed = next;
-      const pool = s.hands[foe].filter((h) => !s.instances[h]?.flags.has('denied'));
+      const pool = s.hands[foe].filter(
+        (h) => h !== spared && !s.instances[h]?.flags.has('denied'),
+      );
       if (!pool.length) break;
       const iid = pool[Math.floor(roll * pool.length)];
       s.instances[iid]!.flags.add('denied');
       s.log.push({ t: 'denied', seat: foe, cardId: s.instances[iid]!.cardId });
     }
   }
+}
+
+/**
+ * The single best warrior in a seat's hand, by current power. Ties break on
+ * hand order so the choice stays deterministic, like everything else here.
+ */
+function strongestInHand(s: GameState, seat: Seat): string | null {
+  let best: string | null = null;
+  let bestPower = -Infinity;
+  for (const iid of s.hands[seat]) {
+    const inst = s.instances[iid];
+    if (!inst || getCard(inst.cardId).type !== 'unit') continue;
+    if (inst.currentPower > bestPower) {
+      bestPower = inst.currentPower;
+      best = iid;
+    }
+  }
+  return best;
 }

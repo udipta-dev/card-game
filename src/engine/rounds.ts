@@ -72,7 +72,11 @@ export function resolveRound(state: GameState): void {
   state.round += 1;
   clearBoard(state);
   state.rowMods = state.rowMods.filter((m) => m.duration === 'lingering');
-  // Denials last the round that laid them, like the stupefaction they rhyme with.
+  // Denials last the round that laid them, like the stupefaction they rhyme
+  // with. Note this loop is only needed for flags that sit on cards in HAND:
+  // 'denied' does, and survives the board clear. Antardhana's 'hidden' sits on
+  // warriors standing on the field, and clearBoard has just destroyed every
+  // one of them, so vanishing cannot leak into the next round by construction.
   for (const inst of Object.values(state.instances)) inst.flags.delete('denied');
   state.passed = { player: false, ai: false };
   drawCards(state, 'player', ROUND_DRAW);

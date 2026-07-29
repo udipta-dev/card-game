@@ -92,8 +92,19 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     tags: ['kaurava-brother'],
+    // The mechanic was right and the story on it was wrong. Gandhari hardening
+    // her son's body with one unbandaged look is NOT in Ganguli: searched all
+    // four volumes, and her only demonstrated gaze-power is turning the nail
+    // of Yudhishthira's toe sore through the folds of the cloth (Stri P. XV).
+    //
+    // His invulnerability is real and much better sourced than the myth. It is
+    // ARMOUR, tied on him by Drona, and Arjuna gives its full chain of custody
+    // (Virata P. LXI): Indra to Angiras to Vrihaspati to Indra to Arjuna.
+    // "This armour is not capable of being pierced by my weapons. Maghavat
+    // himself cannot pierce it with his thunder." Then the contempt that makes
+    // the card: "He weareth it only like a woman."
     effects: [{ on: 'onPlay', target: { pick: 'self' }, actions: [{ kind: 'addFlag', flag: 'diamond-body' }] }],
-    flavor: 'Adamantine but for the thighs his mother never saw.',
+    flavor: 'Cased by Drona in mail that Indra’s own thunder could not pierce. He wore it like a man borrowing a coat.',
   },
   {
     id: 'dushasana',
@@ -288,14 +299,24 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 6,
     rows: ['ratha'],
     keywords: [],
+    // WAS a -2 to the enemy infantry row, which is any sapper in the game with
+    // his name on it, and which had nothing to do with the one thing he is
+    // remembered for: holding the gate while Abhimanyu died inside it.
+    //
+    // Shiva's boon, granted in a dream and quoted exactly (Drona P. XLI):
+    // "Except Dhananjaya, the son of Pritha, thou shalt in battle check the
+    // four other sons of Pandu." He asked to stop all five and was told he
+    // could stop four. So he holds four warriors out of the enemy's hand for
+    // the round, and their best man walks through the gate regardless.
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'none' },
-        actions: [{ kind: 'debuffRow', amount: -2, rows: [{ side: 'enemy', row: 'padati' }], duration: 'round' }],
+        actions: [{ kind: 'denyPlay', count: 4, sparingStrongest: true }],
       },
     ],
-    flavor: 'The gate-keeper who sealed Abhimanyu inside the wheel.',
+    flavor:
+      'He begged Shiva for all five and was granted four. The gate held for a day, and Abhimanyu died behind it.',
   },
   {
     id: 'bhagadatta',
@@ -303,13 +324,26 @@ export const KAURAVA_CARDS: Card[] = [
     house: 'kaurava',
     type: 'unit',
     tier: 'atirathi',
-    basePower: 8,
+    // 9, not 8. Bhishma runs through the whole host assigning every man a rank,
+    // Ratha or Atiratha or Maharatha, and when he reaches Bhagadatta he does
+    // not assign one: he says the man fights "like Vasava among the celestials,
+    // fighting from his Airavata", that he held Arjuna "for days together",
+    // and that he is the foremost elephant-fighter alive (Udyoga P. CLXVIII).
+    // Being compared to Indra instead of being graded is not a lower rating.
+    //
+    // And he put Bhima on the floor of his own car in a swoon with a single
+    // shaft to the chest, which took Ghatotkacha to undo (Bhishma P. LXIV).
+    // Bhima is a 9 here. The man who felled him should not have been an 8.
+    basePower: 9,
     rows: ['gaja'],
     keywords: [],
+    // Mastery 1, though he carries a tier-3 weapon: he did not train for the
+    // Vaishnava, he INHERITED it, Vishnu to Bhumi to Naraka to his son.
     astraMastery: 1,
     knownAstras: ['vaishnavastra'],
     effects: [{ on: 'onPlay', target: { pick: 'highestEnemyUnit' }, actions: [{ kind: 'damage', amount: 2 }] }],
-    flavor: 'The aged lord of Pragjyotisha, astride the great elephant Supratika.',
+    flavor:
+      'The aged lord of Pragjyotisha, astride Supratika. His eyelids sank with age, so he bound them up with a cloth to see, and fought Arjuna to a standstill for days.',
   },
   {
     id: 'vinda',

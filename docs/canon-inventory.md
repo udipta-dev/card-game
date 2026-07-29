@@ -1,11 +1,21 @@
 # Canon inventory: what exists, what we have, what we invented
 
-Sourced against Ganguli's Mahabharata (Gutenberg 7864, 12058, 13042, 15474-15477)
-and Valmiki's Ramayana (valmikiramayan.net Sanskrit + gloss, cross-checked
-against Griffith, Gutenberg 24869). Both grepped in full locally. No wikis, no
-listicles: those are exactly where invented astras come from.
+Sourced against Ganguli's Mahabharata (Gutenberg 15474-15477, the complete
+four-volume set) and Valmiki's Ramayana (valmikiramayan.net Sanskrit + gloss,
+cross-checked against Griffith, Gutenberg 24869). Both grepped in full locally.
+No wikis, no listicles: those are exactly where invented astras come from.
 
-Status: **astras done.** Shastras and boons/curses still being researched.
+Status: **astras done. shastras done. boons and curses done** (section 9).
+
+> **Method note, and it matters.** Ganguli's text is hard-wrapped at ~72
+> columns, so a plain `grep 'Gandhari' | grep 'curse'` finds almost nothing:
+> the two words land on different physical lines. An earlier pass concluded
+> Gandhari's curse on Krishna "returns zero hits across all four volumes". It
+> is in fact right there in Stri Parva XXV, quoted in full below. Anything
+> researched with line-oriented grep on this corpus should be assumed wrong
+> until re-run. The corpus is now rebuilt one-paragraph-per-line first
+> (`tr -d '\r'` then awk `RS=""`, since the files are CRLF and paragraph mode
+> silently collapses otherwise), and searched with proximity queries.
 
 ---
 
@@ -487,3 +497,107 @@ across his own Parva; Rukmi gets one genealogical aside. Both root it in Indra
 but the transmission chains are irreconcilable. Note also that "Vijaya" is one of
 Arjuna's ten names AND the name of Shiva's trident in the Shiva Purana - three
 unrelated referents.
+
+---
+
+## 9. Boons and curses
+
+Same treatment as the astras: every entry below was pulled from the paragraph
+corpus and is quoted, not paraphrased. Citations are Ganguli's section numbers.
+
+### 9a. REFUTED: Gandhari's gaze does not make Duryodhana invulnerable
+
+The single most repeated Mahabharata story that is not in the Mahabharata.
+Duryodhana comes to his blindfolded mother, she unbinds her eyes to make his
+body adamant, Krishna shames him into covering his loins, and the thighs stay
+mortal for Bhima's mace.
+
+Searched all four volumes for the episode and every component of it. It is not
+there. Her gaze DOES have power, and the text demonstrates it exactly once, at
+a much smaller scale (Stri XV):
+
+> the Kuru queen ... directed her eyes, from within the folds of the cloth that
+> covered them, to the tip of Yudhishthira's toe ... the king, whose nails had
+> before this been all very beautiful, came to have a sore nail on his toe.
+
+A sore toenail. That is the whole demonstrated range of it.
+
+**The invulnerability is real; the cause is different and better.** It is
+armour, and Arjuna gives the full chain of custody (Virata LXI):
+
+> I think, O Krishna, that this armour hath been put on Duryodhana's body by
+> Drona ... This armour is not capable of being pierced by my weapons. Maghavat
+> himself, O Govinda, cannot pierce it with his thunder.
+
+Indra to Angiras to Vrihaspati to Indra to Arjuna, and Drona ties it on
+Duryodhana. Arjuna then lands the contempt that makes the card: *"He weareth it
+only like a woman."* A man wearing the best armour in the three worlds who does
+not know what to do in it.
+
+We keep the `diamond-body` mechanic and re-source the story on it.
+
+### 9b. VERIFIED and now shipping
+
+| what | source | quoted |
+|---|---|---|
+| **Parashurama's curse on Karna** | Karna XLII | "it will never, **at the time of need, when the hour of thy death comes**, occur to thy memory" |
+| **Gandhari's curse on Krishna** | Stri XXV | "thou shalt be **the slayer of thy own kinsmen**! In the thirty-sixth year ... perish by disgusting means in the wilderness" |
+| **Shiva's boon to Jayadratha** | Drona XLI | "**Except Dhananjaya**, the son of Pritha, thou shalt in battle **check the four other sons of Pandu**" |
+| **Bhishma's death-at-will** | Anusasana (Yudhishthira to Bhishma) | "In consequence of the boon granted to thee by thy sire, the righteous Santanu, **thy death depends on thy own will**" |
+| **Krishna's curse on Ashwatthama** | Sauptika XVI | "For **3,000 years** thou shalt wander over this earth, without a companion ... The stench of pus and blood shall emanate from thee" |
+| **Krishna's boon re Sisupala** | Sabha XL | "even when he will deserve to be slain, I will **pardon an hundred offences** of his" |
+| **Kindama's curse on Pandu** | Adi CXVIII | "death shall certainly overtake thee **as soon as thou feelest the influence of sexual desire**" |
+| **Indra's loophole on Vritra** | Vana (Indra-Vritra) | "This is **neither dry, nor wet, nor is it a weapon**" — and "it is neither day, nor night" |
+
+Two of these changed cards immediately.
+
+**Parashurama's curse is not a blanket ban.** We had `forgotten_mantra` barring
+astras for the whole battle, which made it Shiva's Gaze with different flavour
+text. The text is precise: the weapon answers Karna all war and deserts him at
+the hour it decides things. It now bars astras **in the deciding round only**.
+Karna's own card already had `noAstrasInFinalRound`, so the curse and the man it
+is named for finally agree with each other.
+
+Worth recording that **Indra sent the worm himself**, "wishing to benefit
+Phalguna" (Karna XLII). Karna's greatest curse is a targeted operation by
+Arjuna's father, not bad luck.
+
+**Jayadratha was a -2 to the enemy infantry row**, which is any sapper in the
+game with his name on it. He now does the one thing he is remembered for. He
+asked Shiva to stop all five Pandavas and was granted four, so he holds four
+warriors out of the enemy hand and their best man walks through the gate. That
+is `denyPlay { sparingStrongest: true }`, and the exemption IS the card.
+
+### 9c. The loophole is the dominant mechanic and we underuse it
+
+Neither epic grants clean invulnerability. It is granted with a hole in it, and
+the story is the hole:
+
+- **Sunda and Upasunda** — Brahma refuses immortality outright, so they name
+  their own death clause and choose each other (Adi CCXI). Already shipping as
+  Brahma's Bargain.
+- **Jayadratha** — four of five, never Arjuna.
+- **Sisupala** — a hundred offences, then the discus.
+- **Vritra** — neither wet nor dry, neither day nor night, and no weapon. Indra
+  kills him with sea-foam at dusk.
+- **Duryodhana** — armour no thunderbolt can pierce, worn by a man who does not
+  know how to use it.
+
+Five instances, one implemented. This is the richest unmined vein in the
+research so far, and it is mechanically ideal for a card game because a
+loophole is a *condition*, which is the one thing this engine is built to
+express.
+
+### 9d. Still open
+
+- **Sisupala's hundred offences** wants a real charge counter on
+  `onDestroyAttempt`. His card currently promises "beyond harm until the
+  hundredth insult" in flavour text and delivers "immune until Krishna is
+  played", which is a trigger, not a count.
+- **Ashwatthama's 3,000 years** is the price of his `deathless` keyword and is
+  not represented at all. He is unkillable for free.
+- **Kunti's Invocation** destroys the highest enemy unit. Durvasa's mantra
+  *summons a god*; it does not kill anybody. Mis-mechanic'd, not mis-sourced.
+- **Gandhari's curse detonates in the thirty-sixth year.** A battle has no
+  thirty-sixth year, so we ship the kin-slaying and drop the delay. The run
+  layer has `pendingCurses` and could carry the real version across battles.
