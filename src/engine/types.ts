@@ -180,7 +180,17 @@ export type Keyword =
   // Grows in strength each round it survives (rakshasa night-strength, etc.).
   | { kind: 'nightGrowth'; amount: number }
   // +power for each other allied unit sharing a tag (squads, clans).
-  | { kind: 'bond'; tag: string; amount: number };
+  | { kind: 'bond'; tag: string; amount: number }
+  // The lightning rod. While he stands, an enemy astra that gets through takes
+  // HIM instead of what it was aimed at, and the weapon is spent doing it.
+  //
+  // This is the whole of Ghatotkacha. Indra built him "as a fit antagonist of
+  // Karna, IN CONSEQUENCE OF THE DART he had given unto Karna" (Adi CLV): the
+  // boy exists to make that weapon miss Arjuna. Krishna danced on the terrace
+  // of his own chariot when it worked, because "the man does not exist in this
+  // world that could not stay before Karna armed with that dart" (Drona CLXXX).
+  // The weapon was not wasted on a lesser target by accident. That was the plan.
+  | { kind: 'drawsAstra' };
 
 export type KeywordKind = Keyword['kind'];
 
@@ -413,6 +423,18 @@ export interface GameState {
    * empties. Enforced in isLegalPlay, so a banned card can never be played again.
    */
   bannedThisRun: CardId[];
+  /**
+   * Astras SUSPENDED rather than spent: banned like the above, but returned to
+   * the arsenal the next time a warrior comes home from penance. A weapon that
+   * Ghatotkacha drew onto himself was not used up, it was wasted, and going
+   * back up the mountain is how you recover from that.
+   *
+   * Always a subset of bannedThisRun, so nothing has to check two lists to
+   * decide whether a card is playable right now.
+   */
+  suspendedThisRun: CardId[];
+  /** Transient: an astra just drawn onto a lightning rod, awaiting suspension. */
+  wastedAstra?: CardId;
   /** Curses each seat carries from its own acts of adharma. */
   curses: Record<Seat, CurseId[]>;
   /**
@@ -464,6 +486,10 @@ export type GameEvent =
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }
+  // Ghatotkacha stepped in front of it. `cardId` is the man, `astra` the weapon.
+  | { t: 'drewAstra'; astra: CardId; cardId: CardId; seat: Seat }
+  // Banned, but recoverable: the next warrior home from penance brings it back.
+  | { t: 'suspended'; cardId: CardId }
   | { t: 'ability'; iid: InstanceId; cardId: CardId; name: string; left: number }
   | { t: 'afflict'; seat: Seat; curse: CurseId; name: string; text: string }
   | { t: 'burn'; seat: Seat; cardIds: CardId[] }

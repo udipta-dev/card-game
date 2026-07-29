@@ -36,6 +36,7 @@ export function createRun(seed: number, house: House): RunState {
     index: 0,
     phase: 'map',
     banned: [],
+    suspended: [],
     pendingCurses: [],
     depth: 0,
     away: [],
@@ -71,6 +72,7 @@ export function planBattle(run: RunState): BattlePlan {
     aiDeck: { id: enc.id, name: enc.name, house: enc.house, cards: enc.deckCards },
     init: {
       banned: run.banned,
+      suspended: run.suspended ?? [],
       playerCurses: run.pendingCurses,
       astraGrants: run.astraGrants,
     },
@@ -91,7 +93,15 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
   // Anything spent for the run (great astras loosed, warriors burnt) leaves the
   // pool for good. Elemental astras and abilities are never banned, so they stay.
   const banned = unique([...run.banned, ...finalState.bannedThisRun]);
-  const roster = run.roster.filter((id) => !banned.includes(id));
+  // Weapons wasted on a lightning rod rather than spent on a target. Still
+  // banned, but recoverable: see the penance return in advance().
+  // Both sides defaulted: a run persisted to localStorage before suspensions
+  // existed has no `suspended`, and a caller may hand us a partial final state.
+  // A returning player must not hit a crash because we added a field.
+  const suspended = unique([...(run.suspended ?? []), ...(finalState.suspendedThisRun ?? [])]);
+  // A suspended astra stays in the roster. It is unplayable while banned, and
+  // dropping it here would mean there was nothing left for penance to restore.
+  const roster = run.roster.filter((id) => !banned.includes(id) || suspended.includes(id));
 
   // A curse earned this battle clings through the next one, then fades. We only
   // carry what was freshly earned, so curses never pile up into a death spiral.
@@ -114,9 +124,21 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
     if (!withReturned.includes(p.astra)) withReturned.push(p.astra);
   }
 
+  // A warrior coming down off the mountain lifts every suspension, whether or
+  // not the god gave him anything. This is penance's SECOND job and the reason
+  // Ghatotkacha suspends rather than destroys: a weapon he drew onto himself
+  // was wasted, not consumed, and somebody has to go and ask for it back. An
+  // empty-handed return is still worth something now.
+  // Only what was already suspended when he set out. A weapon wasted in THIS
+  // battle was wasted while he was walking home, so it waits for the next one.
+  const lifted = returned.length ? (run.suspended ?? []) : [];
+  const stillBanned = banned.filter((id) => !lifted.includes(id));
+  const stillSuspended = suspended.filter((id) => !lifted.includes(id));
+
   const base: RunState = {
     ...run,
-    banned,
+    banned: stillBanned,
+    suspended: stillSuspended,
     roster: withReturned,
     pendingCurses,
     depth,

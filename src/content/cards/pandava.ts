@@ -148,10 +148,17 @@ export const PANDAVA_CARDS: Card[] = [
     tier: 'atirathi',
     basePower: 7,
     rows: ['gaja'],
-    keywords: [{ kind: 'nightGrowth', amount: 3 }],
+    // nightGrowth was 3, which took him to 13 by the deciding round: past
+    // Arjuna, Bhishma and Karna, all of whom are flat 10s. He measured 56.4%,
+    // the fourth best card in the game, off a printed 7 that told the player
+    // none of that. Now +1, so 7/8/9, and his weight moved into `drawsAstra`
+    // where it belongs. He is not supposed to out-muscle Arjuna. He is
+    // supposed to be the reason Arjuna is still alive.
+    keywords: [{ kind: 'nightGrowth', amount: 1 }, { kind: 'drawsAstra' }],
     tags: ['rakshasa'],
     effects: [],
-    flavor: 'The rakshasa son of Bhima, who waxes as the night deepens.',
+    flavor:
+      'Indra made him to be Karna’s match, because of the dart. When he fell, Krishna danced on the terrace of his chariot: the weapon meant for Arjuna had been spent on somebody else.',
   },
   {
     id: 'iravan',

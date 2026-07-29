@@ -6,11 +6,11 @@ import { ADHARMA_CURSES, resolveClash } from './clash';
 import { afflict } from './curses';
 import type { EffectCtx } from './effects/context';
 import { runCardEffects, runEffect } from './events';
-import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime } from './keywords';
-import { canInvokeAstra, isFinalRound, opponentOf } from './queries';
+import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime, removeInstance } from './keywords';
+import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
 import { resolveRound } from './rounds';
 import { MULLIGAN_MAX, makeInstance } from './createMatch';
-import type { Action, Card, GameState, Row, Seat } from './types';
+import type { Action, Card, CardInstance, GameState, Row, Seat } from './types';
 
 function clone(state: GameState): GameState {
   return structuredClone(state);
@@ -45,6 +45,46 @@ export function isLegalPlay(
     if (!canInvokeAstra(state, seat, card.id)) return false; // needs a warrior who knows it
   }
   return true;
+}
+
+/**
+ * The warrior on `seat`'s side who draws an incoming astra onto himself, if any.
+ * Highest power first: with two rods standing, the weapon finds the bigger
+ * threat, which is the one that provoked it.
+ */
+function drawsTheAstra(s: GameState, seat: Seat): CardInstance | undefined {
+  return unitsOf(s, seat)
+    .filter((u) => getCard(u.cardId).keywords.some((k) => k.kind === 'drawsAstra'))
+    .sort((a, b) => b.currentPower - a.currentPower)[0];
+}
+
+/**
+ * Send a weapon into the man who drew it. It never reaches what it was aimed
+ * at, so there are no row effects and no adharma curse: the firer did not hit
+ * his target, he hit the rakshasa who made him fire.
+ *
+ * Marks the weapon WASTED, which suspendIfWasted turns into a recoverable ban.
+ */
+function drewOntoRod(s: GameState, card: Card, firer: Seat): void {
+  const rod = drawsTheAstra(s, opponentOf(firer));
+  if (!rod) return;
+  removeInstance(s, rod.iid);
+  s.wastedAstra = card.id;
+  s.log.push({ t: 'drewAstra', astra: card.id, cardId: rod.cardId, seat: rod.owner });
+}
+
+/**
+ * Turn a wasted weapon into a suspension. Only ever suspends something the ban
+ * actually took, so suspendedThisRun stays a strict subset of bannedThisRun and
+ * nothing has to consult two lists to decide what is playable.
+ */
+function suspendIfWasted(s: GameState, card: Card): void {
+  if (s.wastedAstra !== card.id) return;
+  s.wastedAstra = undefined;
+  if (!s.bannedThisRun.includes(card.id)) return;
+  if (s.suspendedThisRun.includes(card.id)) return;
+  s.suspendedThisRun.push(card.id);
+  s.log.push({ t: 'suspended', cardId: card.id });
 }
 
 /**
@@ -102,6 +142,9 @@ function resolvePendingCounter(s: GameState, counter: boolean): void {
     // Two great weapons meeting is not a clean cancellation.
     resolveClash(s, p.firer, card, counterCard);
     banForRun(s, counterCard);
+  } else if (drawsTheAstra(s, opponentOf(p.firer))) {
+    // Declined the answer, but somebody stepped in front of it anyway.
+    drewOntoRod(s, card, p.firer);
   } else {
     // Let through: it resolves in full on the row it was aimed at.
     const ctx: EffectCtx = {
@@ -121,6 +164,7 @@ function resolvePendingCounter(s: GameState, counter: boolean): void {
 
   if (inst) delete s.instances[p.astraIid];
   banForRun(s, card);
+  suspendIfWasted(s, card);
   applyImmuneDisarm(s, card.id);
   if (s.forcedWinner) {
     s.phase = 'battleEnd';
@@ -266,6 +310,12 @@ export function reduce(state: GameState, action: Action): GameState {
           // The astra stays in flight: it is neither spent nor resolved until
           // the defender answers. resolvePendingCounter finishes the job.
           return s;
+        } else if (card.type === 'astra' && drawsTheAstra(s, opponentOf(seat))) {
+          // Unanswered, but somebody stepped in front of it. Same interception
+          // as the counter path in resolvePendingCounter, and it has to live in
+          // both: MOST astras have no counter in hand, so this is the ordinary
+          // case and the other is the rare one.
+          drewOntoRod(s, card, seat);
         } else {
           runCardEffects(ctx, 'onPlay');
           // The ultimates ALWAYS cost the one who looses them. Making this a
@@ -277,6 +327,7 @@ export function reduce(state: GameState, action: Action): GameState {
         }
         delete s.instances[iid]; // the astra is spent either way
         banForRun(s, card);
+        suspendIfWasted(s, card);
       }
 
       // A newly played card may disarm an immune enemy (Drona).

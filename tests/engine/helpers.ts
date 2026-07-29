@@ -87,6 +87,7 @@ export function makeState(spec: StateSpec = {}): GameState {
     },
     rowMods: [],
     bannedThisRun: [],
+    suspendedThisRun: [],
     curses: { player: [], ai: [] },
     astraGrants: { player: {}, ai: {} },
     hazards: [],

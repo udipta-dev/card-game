@@ -54,6 +54,12 @@ export interface RunState {
   phase: RunPhase;
   /** Cards spent for the whole run: great astras loosed, warriors burnt. */
   banned: CardId[];
+  /**
+   * Astras drawn onto a lightning rod rather than spent on a target. Banned
+   * like the rest, but the next warrior home from penance brings them back.
+   * Always a subset of `banned`.
+   */
+  suspended: CardId[];
   /** A curse earned last battle, clinging to the player through the next one. */
   pendingCurses: CurseId[];
   /** Battles won this run. */

@@ -32,6 +32,8 @@ export function makeInstance(cardId: string, owner: Seat): CardInstance {
  */
 export interface BattleInit {
   banned?: string[];
+  /** Subset of `banned` that a penance can recover. */
+  suspended?: string[];
   playerCurses?: string[];
   /** Astras the player's warriors learned through tapasya (warrior -> astras). */
   astraGrants?: Record<string, string[]>;
@@ -80,6 +82,7 @@ export function createMatch(
     decks: { player: playerDeckIds, ai: aiDeckIds },
     rowMods: [],
     bannedThisRun: init?.banned ? [...init.banned] : [],
+    suspendedThisRun: init?.suspended ? [...init.suspended] : [],
     curses: { player: init?.playerCurses ? [...init.playerCurses] : [], ai: [] },
     astraGrants: { player: init?.astraGrants ? { ...init.astraGrants } : {}, ai: {} },
     hazards: [],
