@@ -56,7 +56,13 @@ export const ASURA_CARDS: Card[] = [
     house: 'asura',
     type: 'unit',
     tier: 'maharathi',
-    basePower: 9,
+    // 10. His NAME is a trophy taken off a god: Indrajit, conqueror of Indra,
+    // the only being who beat the king of the devas in open battle. He fought
+    // from inside his own invisibility, felled Lakshmana twice, and could not
+    // be killed until his unfinished sacrifice was broken up. Level with
+    // Ravana: the father needed a boon to be unkillable, the son simply could
+    // not be caught.
+    basePower: 10,
     rows: ['ratha'],
     keywords: [],
     tags: ['rakshasa'],
@@ -203,8 +209,22 @@ export const ASURA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'nightGrowth', amount: 2 }],
     tags: ['daitya'],
-    effects: [],
-    flavor: 'From every drop of his blood, a thousand more of him rose.',
+    // Every drop of his blood that touched the ground stood up as another of
+    // him, and the gods could not fight him because hurting him MADE more of
+    // him. Durga's answer was Kali, drinking the blood before it landed.
+    //
+    // The true version is a spawn-on-damage trigger and the engine has no
+    // onDamage event, so this is the closest thing the existing triggers allow:
+    // he swells every round he is still standing. Not the mechanic, but the
+    // right shape, and it stops him being a vanilla 5 that measured 42.6%.
+    effects: [
+      {
+        on: 'onRoundStart',
+        target: { pick: 'self' },
+        actions: [{ kind: 'buff', amount: 3 }],
+      },
+    ],
+    flavor: 'From every drop of his blood, a thousand more of him rose. Wounding him was how you lost.',
   },
 
   // ---- Vedic / elder ----

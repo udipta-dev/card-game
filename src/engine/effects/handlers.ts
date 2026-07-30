@@ -19,6 +19,7 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'draw',
   'denyPlay',
   'dismount',
+  'cleanse',
   'buff',
   'destroy',
   'debuffRow',
@@ -37,6 +38,7 @@ const TARGET_ACTIONS: ReadonlySet<EffectActionKind> = new Set<EffectActionKind>(
   'setPower',
   'reduceTo',
   'dismount',
+  'cleanse',
   'buff',
   'destroy',
   'addFlag',
@@ -165,6 +167,14 @@ export function applyGlobalAction(ctx: EffectCtx, action: EffectAction): void {
         });
         emit(ctx, { t: 'debuffRow', seat, row, amount: action.amount });
       }
+      break;
+    }
+    case 'cleanse': {
+      const mine = ctx.actorOwner;
+      const before = state.rowMods.length;
+      state.rowMods = state.rowMods.filter((m) => !(m.seat === mine && m.amount < 0));
+      const cleared = before - state.rowMods.length;
+      if (cleared) emit(ctx, { t: 'cleanse', seat: mine, cleared });
       break;
     }
     case 'banFromRun': {

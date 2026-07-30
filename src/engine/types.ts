@@ -249,6 +249,11 @@ export type EffectAction =
   // three rows has somewhere to put him. (Ganguli says "car" throughout; that
   // is 1883 English for ratha, not a motor vehicle.)
   | { kind: 'dismount' }
+  // CLEANSE: strip every penalty laid on your own rows. Nothing in the game
+  // could undo a row debuff, so scorching a line was permanent by default and
+  // the whole `debuffRow` layer was one-directional. Gwent has had a card that
+  // clears hazards since the beginning, for the same reason.
+  | { kind: 'cleanse' }
   | { kind: 'buff'; amount: number }
   | { kind: 'destroy' }
   | {
@@ -498,6 +503,8 @@ export type GameEvent =
   | { t: 'ban'; cardId: CardId }
   // Unhorsed: he keeps his power and loses his chariot.
   | { t: 'dismount'; iid: InstanceId; cardId: CardId; from: Row }
+  // Penalties lifted off your own lines.
+  | { t: 'cleanse'; seat: Seat; cleared: number }
   // Krishna's counsel: this warrior's protections no longer apply.
   | { t: 'stripped'; iid: InstanceId; cardId: CardId }
   // Ghatotkacha stepped in front of it. `cardId` is the man, `astra` the weapon.

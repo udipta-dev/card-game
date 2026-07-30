@@ -10,6 +10,27 @@ fixing that, sourced the same way the astras and the boons were: against the
 full four-volume Ganguli, paragraph-level search, quoting rather than
 paraphrasing.
 
+## THE RULE, learned the hard way
+
+**A situational effect cannot carry a low-power card.** Measured three times:
+
+| card | blank | with a situational effect | with an unconditional floor |
+|---|---|---|---|
+| Bahlika (dismount) | 47.5% | 39.3% | 42.8% |
+| Vikarna (cleanse) | 43.6% | **36.4%** | **44.3%** |
+| Nakula (conch) | 38.2% | n/a, the conch is unconditional | **51.3%** |
+
+A game runs 2.45 rounds, so you never get to wait for the right moment, and it
+is worse than neutral: the AI plays the card at moments it otherwise would not,
+because the effect scores well in the games where it does apply.
+
+So a power-5 needs an effect worth power **every single time**, and any
+conditional cleverness has to sit on top of a floor. The conches worked
+immediately because +2 to a row is +2 power, unconditionally. Cleanse and
+dismount both measured the card DOWN until a floor was added underneath.
+
+---
+
 **Design rule:** none of these are astras. An astra is a divine weapon invoked
 by mantra. An ordinary shower of arrows is a good archer. Keeping that line
 sharp is why the astra tiers mean anything, so everything here is an `ability`

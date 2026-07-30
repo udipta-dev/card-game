@@ -129,7 +129,33 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     tags: ['kaurava-brother'],
-    effects: [],
+    // THE ONE WHO SAID IT WAS WRONG. In the dice hall, with a hundred brothers
+    // and every elder silent, Vikarna alone stood and argued that the wager was
+    // void and Draupadi unwon (Sabha P. LXVIII). He is the only Kaurava the
+    // Pandavas mourn by name.
+    //
+    // So he lifts what has been unjustly laid on his own side: every penalty on
+    // every one of your rows, gone. Nothing in the game could do that before,
+    // which meant a scorched line stayed scorched and the debuff layer only
+    // ever ran one way. It also happens to be what the Kaurava deck needs, as
+    // the deck most often on the receiving end of a Brahmastra's lingering
+    // scorch.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'none' },
+        // Cleanse ALONE measured him down from 43.6% to 36.4%. A purely
+        // situational effect cannot carry a low-power card: most games have no
+        // penalty to lift, so he is a bare 5, and worse, the AI plays him at
+        // moments it otherwise would not because the effect scores well when it
+        // does apply. A 5 needs its effect to be worth power every single time.
+        // So the cleanse now comes with a floor.
+        actions: [
+          { kind: 'cleanse' },
+          { kind: 'debuffRow', amount: 2, rows: [{ side: 'own', row: 'ratha' }], duration: 'round' },
+        ],
+      },
+    ],
     flavor: 'The only brother who named the wrong a wrong.',
   },
   {
@@ -395,7 +421,28 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'avanti', amount: 2 }],
     tags: ['avanti'],
-    effects: [],
+    // THE AVANTI BROTHERS. Ganguli never names one without the other: "the two
+    // princes of Avanti named Vinda and Anuvinda" is how they enter and how
+    // they die. So each is ordinary alone and dangerous with his brother, and
+    // cuts the bowstring of the strongest man facing him.
+    effects: [
+      // Unconditional floor first, for the reason Vikarna's cleanse taught us:
+      // a situational effect cannot carry a power-5 card.
+      {
+        on: 'onPlay',
+        target: { pick: 'none' },
+        actions: [{ kind: 'debuffRow', amount: 1, rows: [{ side: 'own', row: 'ratha' }], duration: 'round' }],
+      },
+      // The bowstring, and only when his brother is beside him. 28 paragraphs
+      // cut a bow and 28 more have the man take up another: it is a delay, not
+      // a kill, so the target is stupefied for the round and back next.
+      {
+        on: 'onPlay',
+        condition: { q: 'cardOnBoard', card: 'anuvinda', side: 'own' },
+        target: { pick: 'highestEnemyUnit' },
+        actions: [{ kind: 'addFlag', flag: 'stupefied' }],
+      },
+    ],
     flavor: 'One half of the Avanti brothers, never seen apart.',
   },
   {
@@ -408,7 +455,23 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'avanti', amount: 2 }],
     tags: ['avanti'],
-    effects: [],
+    // THE AVANTI BROTHERS. Ganguli never names one without the other: "the two
+    // princes of Avanti named Vinda and Anuvinda" is how they enter and how
+    // they die. So each is ordinary alone and dangerous with his brother, and
+    // covers his brother, and the line they stand in.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'none' },
+        actions: [{ kind: 'debuffRow', amount: 1, rows: [{ side: 'own', row: 'ratha' }], duration: 'round' }],
+      },
+      {
+        on: 'onPlay',
+        condition: { q: 'cardOnBoard', card: 'vinda', side: 'own' },
+        target: { pick: 'unitByCard', side: 'own', card: 'vinda' },
+        actions: [{ kind: 'buff', amount: 3 }],
+      },
+    ],
     flavor: 'The other half of the Avanti brothers.',
   },
   {

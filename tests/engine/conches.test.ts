@@ -9,7 +9,7 @@ import { reduce } from '@engine/reducer';
 import { cardOnBoard, rowPower } from '@engine/queries';
 import { attemptDestroy } from '@engine/keywords';
 import { runBoardTrigger } from '@engine/events';
-import { applyTargetAction } from '@engine/effects/handlers';
+import { applyGlobalAction, applyTargetAction } from '@engine/effects/handlers';
 import type { EffectCtx } from '@engine/effects/context';
 import type { GameState, Seat } from '@engine/types';
 
@@ -161,5 +161,51 @@ describe('deprived of his chariot: demotion, not death', () => {
     applyTargetAction(ctx(s, 'player'), { kind: 'dismount' }, iid);
     expect(s.board.ai.padati).toContain(iid);
     expect(s.board.ai.padati.filter((x) => x === iid), 'not duplicated').toHaveLength(1);
+  });
+});
+
+describe('Vikarna lifts what was unjustly laid on his own side', () => {
+  // In the dice hall, with a hundred brothers and every elder silent, he alone
+  // argued the wager was void and Draupadi unwon (Sabha P. LXVIII).
+  it('strips every penalty from your rows and leaves the enemy’s alone', () => {
+    const s = makeState({ playerBoard: { ratha: ['dushasana'] }, aiBoard: { ratha: ['arjuna'] } });
+    s.rowMods.push(
+      { seat: 'player', row: 'ratha', amount: -3, duration: 'lingering', source: 'brahmastra' },
+      { seat: 'player', row: 'gaja', amount: -2, duration: 'round', source: 'test' },
+      { seat: 'ai', row: 'ratha', amount: -4, duration: 'round', source: 'ours' },
+    );
+
+    applyGlobalAction(ctx(s, 'player'), { kind: 'cleanse' });
+
+    expect(s.rowMods.filter((m) => m.seat === 'player'), 'ours are gone').toHaveLength(0);
+    expect(s.rowMods.filter((m) => m.seat === 'ai'), 'theirs are not').toHaveLength(1);
+  });
+
+  it('never strips a BUFF, only a penalty', () => {
+    // Otherwise he undoes his own side's conches, which would be absurd.
+    const s = makeState({ playerBoard: { ratha: ['dushasana'] } });
+    s.rowMods.push(
+      { seat: 'player', row: 'ratha', amount: 4, duration: 'round', source: 'conch' },
+      { seat: 'player', row: 'ratha', amount: -4, duration: 'round', source: 'scorch' },
+    );
+
+    applyGlobalAction(ctx(s, 'player'), { kind: 'cleanse' });
+
+    expect(s.rowMods).toHaveLength(1);
+    expect(s.rowMods[0].amount).toBe(4);
+  });
+
+  it('restores the row power the penalty was costing', () => {
+    const s = makeState({ playerBoard: { ratha: ['dushasana'] } });
+    const clean = rowPower(s, 'player', 'ratha');
+    s.rowMods.push({ seat: 'player', row: 'ratha', amount: -4, duration: 'lingering', source: 'x' });
+    expect(rowPower(s, 'player', 'ratha')).toBeLessThan(clean);
+
+    applyGlobalAction(ctx(s, 'player'), { kind: 'cleanse' });
+    expect(rowPower(s, 'player', 'ratha')).toBe(clean);
+  });
+
+  it('is what the card does', () => {
+    expect(getCard('vikarna').effects[0].actions[0]).toEqual({ kind: 'cleanse' });
   });
 });

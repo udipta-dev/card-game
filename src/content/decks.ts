@@ -139,7 +139,12 @@ export const ASURA_DECK: DeckList = {
     'vritra',
     'bali',
     'hiranyaksha',
-    'nishumbha',
+    // Nishumbha (6, costs 8) out for Prahlada (4, costs 6), paying for
+    // Indrajit's rise to 10. Nishumbha is "the other brother, never seen apart
+    // from Shumbha" and does nothing Shumbha does not; Prahlada is
+    // Hiranyakashipu's son, and a host built around a king it promoted today
+    // may as well carry his heir.
+    'prahlada',
     'raktabija',
     'tarakasura',
     // One horde traded for a king. Two power-2 chaff cards against a Pandava
