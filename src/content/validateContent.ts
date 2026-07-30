@@ -36,6 +36,9 @@ function checkKeyword(card: Card, kw: Keyword, errs: ContentError[]): void {
     case 'deathless':
     case 'nightGrowth':
     case 'bond':
+    // Names no other card, so there is no reference to validate: it only makes
+    // the card carrying it the thing an enemy astra lands on.
+    case 'drawsAstra':
       break;
     default: {
       const _exhaustive: never = kw;
