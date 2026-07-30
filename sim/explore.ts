@@ -221,6 +221,7 @@ function randomDeckSearch(samplesPerHouse: number, gamesPerPairing: number) {
 
 function pairSynergy(gamesPerPairing: number) {
   const pairWins = new Map<string, { w: number; n: number }>();
+  const soloWins = new Map<string, { w: number; n: number }>();
   const deckBase = new Map<string, { w: number; n: number }>();
   const names = Object.keys(DECKS);
   let seed = 99;
@@ -238,6 +239,16 @@ function pairSynergy(gamesPerPairing: number) {
         deckBase.set(a, base);
 
         const list = [...played].filter((c) => getCard(c).type === 'unit').sort();
+        // Solo rates too, because raw pair lift is confounded: ANY pair
+        // containing a strong card inherits that card's strength and looks
+        // synergistic. The first run put four Ravana pairs in the top six at
+        // near-identical lift, which is not four synergies, it is Ravana.
+        for (const c of list) {
+          const s = soloWins.get(`${a}|${c}`) ?? { w: 0, n: 0 };
+          s.w += won;
+          s.n++;
+          soloWins.set(`${a}|${c}`, s);
+        }
         for (let x = 0; x < list.length; x++) {
           for (let y = x + 1; y < list.length; y++) {
             const k = `${a}|${list[x]}|${list[y]}`;
@@ -253,11 +264,19 @@ function pairSynergy(gamesPerPairing: number) {
   const rows = [...pairWins.entries()]
     .map(([k, v]) => {
       const [deck, x, y] = k.split('|');
-      const base = deckBase.get(deck)!;
-      return { deck, x, y, n: v.n, rate: v.w / v.n, lift: v.w / v.n - base.w / base.n };
+      const b = deckBase.get(deck)!.w / deckBase.get(deck)!.n;
+      const sx = soloWins.get(`${deck}|${x}`);
+      const sy = soloWins.get(`${deck}|${y}`);
+      const liftX = sx ? sx.w / sx.n - b : 0;
+      const liftY = sy ? sy.w / sy.n - b : 0;
+      const lift = v.w / v.n - b;
+      // EXCESS is the interaction: what the two do together beyond what each
+      // already does alone. Positive excess is real synergy; a pair that is
+      // merely carried by one strong member lands near zero.
+      return { deck, x, y, n: v.n, lift, liftX, liftY, excess: lift - (liftX + liftY) };
     })
     .filter((r) => r.n >= MIN_PAIR_N);
-  rows.sort((p, q) => q.lift - p.lift);
+  rows.sort((p, q) => q.excess - p.excess);
   return rows;
 }
 
@@ -331,15 +350,17 @@ for (const b of beaters.slice(0, 5)) {
 // --- 3
 const pairs = pairSynergy(60 * scale);
 L.push(`\n\n3. PAIRWISE CARD COVERAGE   ${pairs.length} card pairs seen together at least ${MIN_PAIR_N} times`);
-L.push('   Lift = win rate with BOTH committed, minus that deck\'s base rate.\n');
-L.push('   STRONGEST PAIRS');
-for (const r of pairs.slice(0, 6)) {
-  L.push(`     ${(r.lift * 100 >= 0 ? '+' : '') + (r.lift * 100).toFixed(1)}pp  ${pad(r.x + ' + ' + r.y, 40)} n=${r.n}  ${r.deck.replace('_starter', '')}`);
-}
-L.push('   WEAKEST PAIRS');
-for (const r of pairs.slice(-6).reverse()) {
-  L.push(`     ${(r.lift * 100 >= 0 ? '+' : '') + (r.lift * 100).toFixed(1)}pp  ${pad(r.x + ' + ' + r.y, 40)} n=${r.n}  ${r.deck.replace('_starter', '')}`);
-}
+L.push("   EXCESS = pair lift minus each card's own solo lift. That is the actual");
+L.push('   interaction: a pair merely carried by one strong member lands near zero.\n');
+const fmt = (r: (typeof pairs)[number]) =>
+  `     excess ${(r.excess * 100 >= 0 ? '+' : '') + (r.excess * 100).toFixed(1)}pp` +
+  `  (raw ${(r.lift * 100 >= 0 ? '+' : '') + (r.lift * 100).toFixed(1)}pp,` +
+  ` solo ${(r.liftX * 100).toFixed(0)}/${(r.liftY * 100).toFixed(0)})` +
+  `  ${pad(r.x + ' + ' + r.y, 34)} n=${r.n}  ${r.deck.replace('_starter', '')}`;
+L.push('   GENUINE SYNERGIES');
+for (const r of pairs.slice(0, 6)) L.push(fmt(r));
+L.push('   GENUINE ANTI-SYNERGIES');
+for (const r of pairs.slice(-6).reverse()) L.push(fmt(r));
 
 L.push(`\n\nElapsed ${((Date.now() - t0) / 1000).toFixed(0)}s`);
 process.stdout.write(L.join('\n') + '\n');
