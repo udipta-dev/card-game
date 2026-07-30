@@ -84,7 +84,16 @@ export const ASURA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'armor', amount: 2 }],
     tags: ['daitya'],
-    astraMastery: 1,
+    // Mastery 2. The Asura deck carried FOUR tier-2 astras and had exactly two
+    // men in thirteen who could fire any of them, against four of twelve for the
+    // Pandavas and four of thirteen for the Kauravas. The faction whose entire
+    // identity is mythical weapons was the worst in the game at casting them,
+    // and four of its six astras sat dead in hand unless you drew Ravana or
+    // Indrajit. Mastery is not priced into provisions, so this costs nothing.
+    //
+    // He ruled the three worlds behind a boon and took the devas' places from
+    // them. Reading him as untrained in the Brahma line was never defensible.
+    astraMastery: 2,
     effects: [],
     flavor: 'The boon-warded king, slain only in the loophole of his own wish.',
   },
@@ -152,7 +161,9 @@ export const ASURA_CARDS: Card[] = [
     rows: ['gaja'],
     keywords: [],
     tags: ['asura-lord'],
-    astraMastery: 1,
+    // Mastery 2: he broke the combined armies of the gods and held heaven, and
+    // fought Durga through nine days and a shifting sequence of forms.
+    astraMastery: 2,
     effects: [],
     flavor: 'The buffalo-demon who shifted shape faster than any blade could fall.',
   },
@@ -207,6 +218,13 @@ export const ASURA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'nightGrowth', amount: 1 }],
     tags: ['serpent'],
+    // Mastery 1, not 2. Raising all three of Vritra, Mahishasura and
+    // Hiranyakashipu put the host at five tier-2 wielders in thirteen against
+    // four in twelve for the Pandavas, and it flipped Asura from worst deck to
+    // best in one step (44.4% -> 51.7%). Vritra gives the point back: he is the
+    // Vedic adversary of Indra, but he fights as a devouring serpent and a
+    // drought, not as a man reciting mantras over a bow. The other two ruled
+    // the three worlds as kings and are the better readings.
     astraMastery: 1,
     effects: [],
     flavor: 'The drought-serpent who swallowed the rivers, until the Vajra fell.',
