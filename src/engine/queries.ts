@@ -94,7 +94,18 @@ export function cardOnBoard(
       : side === 'enemy'
         ? [opponentOf(actorOwner)]
         : ['player', 'ai'];
-  return seats.some((s) => unitsOf(state, s).some((u) => u.cardId === id));
+  // Units AND whatever rides with them. This walked board units only, which
+  // meant any condition naming an attached card could never be true: Krishna is
+  // a boon, so `cardOnBoard('krishna_charioteer')` was permanently false and
+  // every card written against him was silently inert. A card that is on the
+  // field is on the field, whether it stands in a row or rides in a chariot.
+  return seats.some((s) =>
+    unitsOf(state, s).some(
+      (u) =>
+        u.cardId === id ||
+        u.boons.some((b) => state.instances[b]?.cardId === id),
+    ),
+  );
 }
 
 /**

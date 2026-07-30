@@ -56,6 +56,11 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [],
     tags: ['pandava-brother'],
+    // ANANTAVIJAYA, "endless victory". He already had this effect and it was
+    // anonymous; the conch is named in the Gita's opening roll-call and the
+    // text states what the blare does: it "rent the hearts of the
+    // Dhartarashtras" (Bhishma P. XXV). A king rallying his foot is exactly
+    // what that passage describes him doing.
     effects: [
       {
         on: 'onPlay',
@@ -63,7 +68,7 @@ export const PANDAVA_CARDS: Card[] = [
         actions: [{ kind: 'debuffRow', amount: 2, rows: [{ side: 'own', row: 'padati' }], duration: 'round' }],
       },
     ],
-    flavor: 'The king of righteousness, whose one lie felled Drona.',
+    flavor: 'The king of righteousness. He blew Anantavijaya, endless victory, and the foot-soldiers stood straighter.',
   },
   {
     id: 'nakula',
@@ -75,8 +80,19 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha', 'padati'],
     keywords: [{ kind: 'bond', tag: 'twin', amount: 2 }],
     tags: ['pandava-brother', 'twin'],
-    effects: [],
-    flavor: 'Twin of the Ashvins, matchless with the sword.',
+    // SUGHOSA, "sweet-sounding", named in the Gita roll-call beside his twin's
+    // Manipushpaka (Bhishma P. XXV). He was a blank 6: a bond keyword and a
+    // number. The conches are the highest-value fix in the whole bottom tier
+    // because they are named, textual, and different for every brother, so the
+    // cards stop being interchangeable without inventing anything.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'none' },
+        actions: [{ kind: 'debuffRow', amount: 2, rows: [{ side: 'own', row: 'ratha' }], duration: 'round' }],
+      },
+    ],
+    flavor: 'Twin of the Ashvins, matchless with the sword. His conch Sughosa answers his brother’s across the line.',
   },
   {
     id: 'sahadeva',
@@ -95,8 +111,16 @@ export const PANDAVA_CARDS: Card[] = [
         target: { pick: 'unitByCard', side: 'enemy', card: 'shakuni' },
         actions: [{ kind: 'destroy' }],
       },
+      // MANIPUSHPAKA, "jewel-blossom", the answering half of Sughosa. Deliberately
+      // the enemy side of the ledger where Nakula's is the friendly one, so the
+      // twins read as a pair without being the same card twice.
+      {
+        on: 'onPlay',
+        target: { pick: 'none' },
+        actions: [{ kind: 'debuffRow', amount: -1, rows: [{ side: 'enemy', row: 'ratha' }], duration: 'round' }],
+      },
     ],
-    flavor: 'The wisest of the five, who knew what was to come.',
+    flavor: 'The wisest of the five, who knew what was to come. His conch Manipushpaka sounds where his brother’s answers.',
   },
 
   // ---- Krishna (does not fight) ----

@@ -404,10 +404,39 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'rathi',
     basePower: 6,
     rows: ['ratha'],
-    keywords: [],
-    effects: [],
-    flavor: 'His own boon-mace turned back and slew him.',
+    // VARUNA'S MACE, and the loophole he was warned about, quoted exactly
+    // (Drona P. XCII). His mother, the river Parnasa, begged Varuna to make her
+    // son unslayable, and Varuna gave him a mace with one condition:
+    //
+    //   "This mace should not be hurled at one who is not engaged in fight. If
+    //    hurled at such a person, it will come back and fall upon thyself...
+    //    it will then course in an opposite direction and slay the person
+    //    hurling it."
+    //
+    // He hurled it at Krishna, who had vowed not to raise a weapon. It bounced
+    // off his shoulder, came back, and killed him.
+    //
+    // So: genuinely unkillable, and he destroys himself the moment the enemy
+    // fields the one non-combatant in the game. A power-6 nobody with a real
+    // conditional invulnerability is worth more than another 8-power body, and
+    // it is the bottom tier carrying a loophole rather than the top tier.
+    keywords: [{ kind: 'deathless' }],
+    effects: [
+      {
+        on: 'onRoundEnd',
+        condition: { q: 'cardOnBoard', card: 'krishna_charioteer', side: 'enemy' },
+        target: { pick: 'self' },
+        // `stripped` first, then destroy. Without it his own deathless keyword
+        // blocks his own mace, which is correct engine behaviour and wrong
+        // canon: breaking Varuna's condition is precisely what LAPSES the boon.
+        // The weapon that made him unslayable is the weapon that kills him.
+        actions: [{ kind: 'addFlag', flag: 'stripped' }, { kind: 'destroy' }],
+      },
+    ],
+    flavor:
+      'Varuna gave his mother’s son a mace and one warning: never at a man who is not fighting. He threw it at Krishna.',
   },
+
   {
     id: 'jalasandha',
     name: 'Jalasandha',

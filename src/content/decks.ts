@@ -93,8 +93,13 @@ export const KAURAVA_DECK: DeckList = {
     'dushasana',
     'jayadratha',
     'shakuni',
-    // The Pandava deck carries NO chaff: twelve warriors, none below power 5.
-    // Carrying a power-2 footman against that is a card given away.
+    // Srutayudha was tried here in Bahlika's slot (same power, same cost) and
+    // measured 38.5%. The loophole fires passively whenever the enemy fields
+    // Krishna, which the Pandava deck does about a fifth of the time, so he is
+    // a liability in the one matchup that matters rather than a gamble. The
+    // canonical act was a CHOICE - he hurled the mace at a man he could see was
+    // not fighting - and until the engine can make it a choice he stays out of
+    // the starter deck and remains available as a run recruit.
     'bahlika',
     // Somadatta (6) out, Vikarna (5) in, paying for Bhagadatta's rise to 9.
     // An earlier pass cut Vikarna as a power-5 body the Pandava deck would not
