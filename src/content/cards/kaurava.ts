@@ -51,15 +51,36 @@ export const KAURAVA_CARDS: Card[] = [
     tags: ['sun-line'],
     astraMastery: 2,
     knownAstras: ['vasavi_shakti'],
+    // THE WHEEL TOOK HIS GUARD, NOT HIS STRENGTH.
+    //
+    // This used to setPower 0: commit Karna in the deciding round and your
+    // 10-power maharathi arrived as a nothing. He measured 44.1% with the
+    // LOWEST play rate of any warrior in his deck, because even the AI learned
+    // not to field him.
+    //
+    // Two things wrong with that. Mechanically it made the best card in the
+    // Kaurava deck a card you must not play in the round that decides the
+    // battle, which is a trap rather than a choice, and the card never said so
+    // anywhere (see rulesText - conditions were invisible on every card in the
+    // game until now). And it is not what happens: Karna was not made WEAK when
+    // the earth took his wheel, he was made HELPLESS. He got down to lift it
+    // and asked for the pause that the rules of war entitled him to, and Arjuna
+    // shot him while he stood there.
+    //
+    // So the wheel strips his armour instead. `damage` eats armour before
+    // power, so 4 removes exactly the Kavacha and leaves the man at his full
+    // ten. He is still the strongest thing on the field. He simply can be
+    // killed now, which he could not be a moment ago.
     effects: [
       {
         on: 'onPlay',
         condition: { q: 'isFinalRound' },
         target: { pick: 'self' },
-        actions: [{ kind: 'setPower', value: 0 }, { kind: 'addFlag', flag: 'wheel-sunk' }],
+        actions: [{ kind: 'damage', amount: 4 }, { kind: 'addFlag', flag: 'wheel-sunk' }],
       },
     ],
-    flavor: 'Son of the Sun, undone by two curses at the last.',
+    flavor:
+      'Son of the Sun. At the last the earth took his chariot wheel, and he stepped down to lift it and asked for the pause the rules allowed him.',
   },
   {
     id: 'shalya',

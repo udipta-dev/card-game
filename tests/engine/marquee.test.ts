@@ -115,11 +115,18 @@ describe('Karna — chariot-wheel curse in the final round', () => {
     expect(firstOf(s1, 'player', 'karna').currentPower).toBe(10);
   });
 
-  it('collapses to 0 power when deployed in the decider', () => {
+  it('loses his armour, not his strength, in the decider', () => {
+    // WAS: collapses to 0. Deliberately changed. Zeroing him made the best card
+    // in the Kaurava deck one you must not play in the round that decides the
+    // battle, and the card never said so, so it read as a trap rather than a
+    // choice: he measured 44.1% with the lowest play rate of any warrior there.
+    // He was not made weak when the earth took his wheel, he was made helpless.
+    // See tests/engine/karna.test.ts for the full behaviour.
     const s0 = makeState({ round: 3, playerHand: ['karna'] });
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'karna').iid, row: 'ratha' });
     const karna = firstOf(s1, 'player', 'karna');
-    expect(karna.currentPower).toBe(0);
+    expect(karna.currentPower, 'still the strongest man on the field').toBe(10);
+    expect(karna.counters.armor ?? 0, 'but the Kavacha is gone').toBe(0);
     expect(karna.flags.has('wheel-sunk')).toBe(true);
   });
 });

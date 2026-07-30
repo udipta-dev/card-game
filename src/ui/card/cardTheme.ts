@@ -220,6 +220,24 @@ export const ROW_GLOSS: Record<string, string> = {
 };
 
 /** Short human-readable rules text derived from a card's keywords/effects. */
+/** Plain-language gloss for the conditions a card's effects are gated on. */
+function conditionText(c: Card['effects'][number]['condition']): string | null {
+  if (!c) return null;
+  if (c.q === 'isFinalRound') return 'In the round that decides the battle:';
+  if (c.q === 'cardOnBoard')
+    return `While ${titleize(c.card)} stands${c.side === 'enemy' ? ' against you' : ''}:`;
+  if (c.q === 'targetHasFlag' && c.flag === 'diamond-body') return 'Against an armoured foe:';
+  if (c.q === 'and') {
+    const parts = c.cs.map(conditionText).filter(Boolean) as string[];
+    return parts.length ? parts.join(' ') : null;
+  }
+  if (c.q === 'not') {
+    const inner = conditionText(c.c);
+    return inner ? `Unless ${inner.replace(/:$/, '').toLowerCase()}:` : null;
+  }
+  return null;
+}
+
 export function rulesText(card: Card): string[] {
   const lines: string[] = [];
   for (const kw of card.keywords) {
@@ -231,6 +249,12 @@ export function rulesText(card: Card): string[] {
     if (kw.kind === 'noAstrasInFinalRound') lines.push(`His curse bars astras in the final round.`);
   }
   for (const eff of card.effects) {
+    // WHEN it happens, before what happens. No card in the game showed its
+    // conditions, so Karna read as a plain 10 and turned to nothing if you held
+    // him for the deciding round: the information existed only in the source.
+    // A drawback the player cannot see is a trap, not a decision.
+    const when = conditionText(eff.condition);
+    if (when) lines.push(when);
     for (const a of eff.actions) {
       if (a.kind === 'winBattle') lines.push('Wins the battle outright.');
       if (a.kind === 'banFromRun') lines.push('Then lost for the rest of the run.');
@@ -244,6 +268,10 @@ export function rulesText(card: Card): string[] {
         lines.push(`Devastates the struck row (−${a.amount}).`);
       if (a.kind === 'damage' && eff.target.pick === 'allEnemyUnits')
         lines.push(`Rains −${a.amount} on every foe.`);
+      if (a.kind === 'damage' && eff.target.pick === 'self')
+        lines.push(`He takes −${a.amount} himself, armour first.`);
+      if (a.kind === 'cleanse') lines.push('Lifts every penalty from your own lines.');
+      if (a.kind === 'dismount') lines.push('Puts a chariot-warrior on foot (−2).');
     }
   }
   if (card.type === 'astra') {
