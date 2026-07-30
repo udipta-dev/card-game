@@ -147,9 +147,24 @@ export const PANDAVA_CARDS: Card[] = [
       // the deciding round and take the greatest man on the other side with him.
       // Drona put down his bow, the thigh broke, the head came off. None of them
       // died to a better weapon.
+      //
+      // AND HE WILL NOT DO IT WHILE JARASANDHA STANDS. Krishna fled that man
+      // seventeen times and never once beat him in the field; the name Ranchhod,
+      // "he who left the battlefield", is from exactly this. He finally had the
+      // king killed by sending Bhima to wrestle him and hinting at how to tear
+      // the two halves apart, rather than face him. So Jarasandha is the one
+      // hard answer to Krishna in the game, and it is sourced rather than
+      // invented. The shield and the three astra answers still hold: Krishna
+      // still drives. He just will not make a move against that host.
       {
         on: 'onPlay',
-        condition: { q: 'isFinalRound' },
+        condition: {
+          q: 'and',
+          cs: [
+            { q: 'isFinalRound' },
+            { q: 'not', c: { q: 'cardOnBoard', card: 'jarasandha', side: 'enemy' } },
+          ],
+        },
         target: { pick: 'highestEnemyUnit' },
         actions: [{ kind: 'addFlag', flag: 'stripped' }, { kind: 'destroy' }],
       },

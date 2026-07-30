@@ -184,3 +184,55 @@ describe('an attached card can still act, which was a real bug', () => {
     expect(s.instances[boon].counters).toBeDefined();
   });
 });
+
+describe('Krishna will not face Jarasandha', () => {
+  // The one hard answer to him, and it is sourced rather than invented: Krishna
+  // fled that man seventeen times and never beat him in the field. The name
+  // Ranchhod, "he who left the battlefield", is from precisely this. He had
+  // Bhima wrestle the king apart instead of facing him.
+  function field(enemyBoard: string[]) {
+    const s = makeState({
+      playerHand: ['krishna_charioteer'],
+      playerBoard: { ratha: ['arjuna'] },
+      aiBoard: { ratha: enemyBoard },
+    });
+    s.round = 2;
+    s.roundWins = { player: 1, ai: 0 };
+    s.activeSeat = 'player';
+    return s;
+  }
+
+  function commitKrishna(s: GameState) {
+    const k = firstOf(s, 'player', 'krishna_charioteer');
+    return reduce(s, {
+      type: 'PLAY_CARD',
+      iid: k.iid,
+      row: 'ratha',
+      targets: [s.board.player.ratha[0]],
+    });
+  }
+
+  it('spares the whole host while the king of Magadha is on the field', () => {
+    const s = field(['jarasandha', 'bhishma']);
+    const before = s.board.ai.ratha.length;
+    const s1 = commitKrishna(s);
+
+    expect(hasEvent(s1, (e) => e.t === 'stripped'), 'no kill').toBe(false);
+    expect(s1.board.ai.ratha.length, 'nobody died').toBe(before);
+  });
+
+  it('but takes the same host apart the moment he is not there', () => {
+    // The control. Identical board minus Jarasandha, so the only difference
+    // that can explain the outcome is his presence.
+    const s = field(['dushasana', 'bhishma']);
+    const s1 = commitKrishna(s);
+    expect(hasEvent(s1, (e) => e.t === 'stripped')).toBe(true);
+  });
+
+  it('and still drives: the shield holds either way', () => {
+    const s = field(['jarasandha', 'bhishma']);
+    const host = s.board.player.ratha[0];
+    const s1 = commitKrishna(s);
+    expect(s1.instances[host].flags.has('krishna-guarded')).toBe(true);
+  });
+});

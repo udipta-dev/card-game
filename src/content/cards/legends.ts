@@ -44,7 +44,7 @@ export const LEGEND_CARDS: Card[] = [
     tags: ['magadha'],
     effects: [],
     flavor:
-      'The split-born king of Magadha. No weapon fells him; only Bhima, who can tear the two halves apart, may end him.',
+      'The split-born king of Magadha, who drove Krishna out of Mathura and beat him from the field seventeen times. No weapon fells him; only Bhima, who can tear the two halves apart, may end him.',
   },
   {
     id: 'balarama',
