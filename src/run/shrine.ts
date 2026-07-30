@@ -105,6 +105,18 @@ export const DEITIES: Deity[] = [
     // Karna, which is the "three or four in the books" the tiering is meant to
     // reflect. This is a truer gate than a house rule would be, since Shiva
     // demonstrably DOES give to asuras; it is this one weapon that is not theirs.
+    // Standing 14 no longer carries this on its own, and it should never have
+    // been asked to. The number was tuned to admit Arjuna, Bhishma and Karna at
+    // 14 while excluding Ravana and Indrajit at 13, which encoded a judgement
+    // about WHO as a fact about HOW STRONG. The moment Ravana went to 10 he
+    // became worth 14 himself and walked straight through, and raising the bar
+    // to 15 would have shut out all four.
+    //
+    // So the canon claim is now stated as one. Shiva's shrine offers exactly one
+    // weapon and it is the one weapon of his that no asura ever wields. He gave
+    // Ravana boons, and the Chandrahasa, and took his heads as an offering; he
+    // did not give him this. Everything else Shiva-flavoured stays open to them.
+    houses: ['pandava', 'kaurava', 'neutral', 'legend'],
     minWorth: 14,
     requiresPriorTier3: true,
   },

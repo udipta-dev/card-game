@@ -12,7 +12,13 @@ export const ASURA_CARDS: Card[] = [
     house: 'asura',
     type: 'unit',
     tier: 'maharathi',
-    basePower: 9,
+    // 10. He was set to 9 earlier by preference, and the reason for moving him
+    // is better than the reason he was moved down: Brahma's boon made him
+    // unkillable by gods, danavas, gandharvas, yakshas and rakshasas, and he
+    // did not trouble to ask about men. So Vishnu had to be BORN as one. Every
+    // other 10 in this set dies to a mortal with a bow. Bhishma falls to Arjuna
+    // behind Shikhandi, Karna to Arjuna outright. Ravana needed an avatar.
+    basePower: 10,
     rows: ['ratha'],
     keywords: [{ kind: 'armor', amount: 3 }],
     tags: ['rakshasa'],

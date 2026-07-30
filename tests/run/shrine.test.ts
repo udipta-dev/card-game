@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import { canInvokeAstra } from '@engine/queries';
 import type { GameState } from '@engine/types';
 import { chooseReward, chooseShrineOffer, createRun, fieldedRoster, planBattle, resolveBattle } from '@run/run';
-import { DEITIES, effectiveOdds, isShrineIndex, mayApproach, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
+import { DEITIES, effectiveOdds, getDeity, isShrineIndex, mayApproach, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
 import type { PenanceOffer, VardaanOffer } from '@run/shrine';
 import type { RunState } from '@run/types';
 import { makeState } from '../engine/helpers';
@@ -356,15 +356,29 @@ describe('the ultimates are a path, not a price', () => {
     expect(open).toEqual(['arjuna', 'bhishma', 'karna']);
   });
 
-  it('shuts the asura kings out of the Pashupatastra, who used to qualify', () => {
-    // Regression on the audit: both stood at 13, which cleared the old gate, so
-    // an asura host could earn Shiva's weapon. The gate is standing 14, not a
-    // house rule, because Shiva demonstrably DOES give to asuras. It is this
-    // one weapon that was never theirs.
+  it('shuts the asura kings out of the Pashupatastra', () => {
+    // This used to assert worthOf(id) === 13 and lean on a standing-14 gate to
+    // do the excluding. That tied a canon claim to a power number, and it broke
+    // the moment Ravana was correctly raised to 10: he became worth 14, the same
+    // as Arjuna, Bhishma and Karna, and walked through. The exclusion is now
+    // stated directly, so it survives any future rebalance.
     for (const id of ['ravana', 'indrajit']) {
-      expect(worthOf(id)).toBe(13);
       expect(mayApproach(shiva, id, 'asura', ULTIMATE)).toBe(false);
     }
+  });
+
+  it('still shuts Ravana out even though he is now strong enough', () => {
+    // The specific regression. If this ever passes for the wrong reason, it is
+    // because someone reintroduced a numeric gate.
+    expect(worthOf('ravana')).toBeGreaterThanOrEqual(shiva.minWorth);
+    expect(mayApproach(shiva, 'ravana', 'asura', ULTIMATE)).toBe(false);
+  });
+
+  it('but the devas still arm him, because only this weapon is closed', () => {
+    // Guard against the fix over-reaching into a blanket deva/asura split.
+    // Shiva armed Ravana; Brahma armed Hiranyakashipu. That has to stay true.
+    const indra = getDeity('indra')!;
+    expect(mayApproach(indra, 'ravana', 'asura', [])).toBe(true);
   });
 
   it('closes Vishnu’s weapons to the asuras, being the ones made to end them', () => {
