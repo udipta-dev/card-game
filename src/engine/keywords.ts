@@ -23,6 +23,11 @@ import type { CardInstance, GameState, InstanceId, Seat } from './types';
  * immune to it.
  */
 export function powerFloor(state: GameState, u: CardInstance): number {
+  // Stripped by Krishna's counsel: the undying floor is one of the protections
+  // that stops applying, so a man who could never be ground below 1 now can.
+  // Without this he would be killable but still unwearable-down, which is a
+  // strange half-state and not what "his protections do not apply" means.
+  if (u.flags.has('stripped')) return 0;
   const card = getCard(u.cardId);
   for (const kw of card.keywords) {
     if (kw.kind === 'deathless') return 1;
@@ -107,6 +112,18 @@ export function attemptDestroy(
   const u = state.instances[iid];
   if (!u) return false;
   const card = getCard(u.cardId);
+
+  // KRISHNA'S COUNSEL. Every protection below is off for this man, so he can be
+  // killed by ordinary means. This is not a bigger weapon, it is the removal of
+  // the reason a weapon was not enough: Drona laying down his bow because he was
+  // told his son was dead, Duryodhana's thighs, Jayadratha's sunset. Krishna
+  // calls his own engineered kills "the employment of means" (Drona CLXXXI).
+  if (u.flags.has('stripped')) {
+    state.log.push({ t: 'stripped', iid, cardId: card.id });
+    removeInstance(state, iid);
+    state.log.push({ t: 'destroy', iid, cardId: card.id });
+    return true;
+  }
 
   // Duryodhana's diamond body (removed by Bhima's vow before this fires).
   if (u.flags.has('diamond-body')) {

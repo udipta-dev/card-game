@@ -106,7 +106,12 @@ function banForRun(s: GameState, card: Card): void {
 export function isLegalAbility(state: GameState, seat: Seat, iid: string): boolean {
   if (state.phase !== 'playing' || state.activeSeat !== seat) return false;
   const u = state.instances[iid];
-  if (!u || u.owner !== seat || u.row === null) return false;
+  if (!u || u.owner !== seat) return false;
+  // On the field in his own right, OR riding with a warrior who is. A boon has
+  // no row of its own, so requiring one silently made every attached card's
+  // ability unusable, which is why Krishna could never have had one before.
+  const fielded = u.row !== null || (u.attachedTo != null && state.instances[u.attachedTo]?.row != null);
+  if (!fielded) return false;
   if (!getCard(u.cardId).ability) return false;
   return (u.counters.charges ?? 0) > 0;
 }
@@ -277,6 +282,11 @@ export function reduce(state: GameState, action: Action): GameState {
           u.attachedTo = host;
           s.log.push({ t: 'attach', boon: iid, to: host });
         }
+        // Attached cards need their runtime too. This was called in the unit
+        // branch ONLY, so an attached card's ability had no charges and could
+        // never be spent: Krishna's counsel would have been dead on arrival,
+        // and so would any named weapon we give an ability to later.
+        initInstanceRuntime(s, iid);
         runCardEffects(ctx, 'onPlay');
 
       } else {

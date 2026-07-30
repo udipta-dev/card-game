@@ -53,7 +53,12 @@ export const PANDAVA_DECK: DeckList = {
     'shikhandi',
     'krishna_charioteer',
     'drupada',
-    'virata',
+    // Virata (7, costs 9) out for Nakula (6, costs 8), paying the provision
+    // Krishna's rework costs. Virata measured 41.8%, near the bottom of the
+    // whole table, and his matsya bond did nothing because he was the only
+    // matsya here. Nakula also closes an oddity: Sahadeva was in this deck and
+    // his twin was not, and the two are never apart anywhere in the epic.
+    'nakula',
     'brahmastra',
     'sauparna',
     'agneyastra',

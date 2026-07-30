@@ -1,5 +1,6 @@
 import { getCard } from '@content/cards';
 import { newInstanceId, resetInstanceCounter } from '@engine/ids';
+import { initInstanceRuntime } from '@engine/keywords';
 import type { CardId, CardInstance, GameState, InstanceId, Row, Seat } from '@engine/types';
 
 export interface StateSpec {
@@ -112,6 +113,9 @@ export function attachBoon(state: GameState, hostIid: InstanceId, boonCardId: Ca
   const biid = place(boonCardId, state.instances[hostIid].owner, null, state.instances);
   state.instances[hostIid].boons.push(biid);
   state.instances[biid].attachedTo = hostIid;
+  // The reducer does this when a boon is played, so the helper must too, or a
+  // test can pass against a setup the real game never produces.
+  initInstanceRuntime(state, biid);
   return biid;
 }
 

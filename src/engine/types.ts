@@ -486,6 +486,8 @@ export type GameEvent =
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }
+  // Krishna's counsel: this warrior's protections no longer apply.
+  | { t: 'stripped'; iid: InstanceId; cardId: CardId }
   // Ghatotkacha stepped in front of it. `cardId` is the man, `astra` the weapon.
   | { t: 'drewAstra'; astra: CardId; cardId: CardId; seat: Seat }
   // Banned, but recoverable: the next warrior home from penance brings it back.

@@ -101,22 +101,61 @@ export const PANDAVA_CARDS: Card[] = [
 
   // ---- Krishna (does not fight) ----
   {
+    // KRISHNA IS NOT A NUMBER, and that was the whole problem. He was a +3
+    // attachment for 10 provisions and measured 36.5%, the worst card in the
+    // game, because no power value is right for Vishnu incarnate: anything fair
+    // is an insult and anything true decides the battle on sight.
+    //
+    // So he adds almost nothing and changes the rules instead, which is what he
+    // actually does in the epic. He never lifts a weapon. He drives, and he
+    // knows things, and at the crisis he tells someone how to win.
+    //
+    // He answers THREE weapons, all sourced, none invented:
+    //   Naga      - he pressed the chariot into the ground, so it took the crown
+    //               instead of the head (see nagastra's condition)
+    //   Vaishnava - Vishnu's own weapon will not harm Vishnu; he took it on his
+    //               chest and it became a garland (see vaishnavastra)
+    //   Narayana  - "lay down your weapons, all of you, and alight from your
+    //               vehicles" (Drona CC). Everyone else buys that escape by
+    //               passing and losing the round. With him it is free, because
+    //               he is the one who knew the terms. See rounds.ts tickHazards.
     id: 'krishna_charioteer',
     name: 'Krishna, the Charioteer',
     house: 'pandava',
     type: 'boon',
     basePower: 0,
-    provision: 10,
+    provision: 12,
     rows: ['ratha'],
     keywords: [],
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'chosen', filter: { side: 'own', rows: ['ratha'] } },
-        actions: [{ kind: 'buff', amount: 3 }, { kind: 'addFlag', flag: 'krishna-guarded' }],
+        actions: [{ kind: 'buff', amount: 1 }, { kind: 'addFlag', flag: 'krishna-guarded' }],
+      },
+      // THE EMPLOYMENT OF MEANS, and it happens the moment he arrives, not as a
+      // separate move. This was a once-per-battle ability gated to the deciding
+      // round, and it fired ZERO times in 300 simulated matches, for a reason
+      // that had nothing to do with the design: clearBoard destroys every unit
+      // at the end of each round and removeInstance takes attached boons with
+      // it, so Krishna never survives the round he is played in. The ability
+      // therefore needed a two-turn combo (commit him, live, then act) that a
+      // one-ply search will never plan and a human should not have to pay for.
+      //
+      // As an onPlay it is one card and one turn, and it is a real decision:
+      // commit him early for the shield and the three answers, or hold him for
+      // the deciding round and take the greatest man on the other side with him.
+      // Drona put down his bow, the thigh broke, the head came off. None of them
+      // died to a better weapon.
+      {
+        on: 'onPlay',
+        condition: { q: 'isFinalRound' },
+        target: { pick: 'highestEnemyUnit' },
+        actions: [{ kind: 'addFlag', flag: 'stripped' }, { kind: 'destroy' }],
       },
     ],
-    flavor: 'He would not fight, he would only drive, and counsel.',
+    flavor:
+      'He would not fight. He drove, and he counselled, and every man he undid was undone by something other than a weapon.',
   },
 
   // ---- Divine-born and next-generation sons ----

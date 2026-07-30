@@ -74,16 +74,25 @@ export function legalMoves(state: GameState, seat: Seat): Action[] {
     }
   }
 
-  // A fielded warrior may spend the turn on his own skill at arms instead.
-  for (const u of unitsOf(state, seat)) {
-    if (!isLegalAbility(state, seat, u.iid)) continue;
-    const ability = getCard(u.cardId).ability!;
+  // A fielded warrior may spend the turn on his own skill at arms instead. So
+  // may anything RIDING with him: this used to walk board units only, and an
+  // attached card is not one, so Krishna's counsel was never offered to any
+  // driver at all. It was legal in the reducer and invisible to the AI, which
+  // is the worst combination, because the sim then measures a card that can
+  // never be used and reports the design as bad rather than unreachable.
+  const actors = unitsOf(state, seat).flatMap((u) => [
+    u.iid,
+    ...u.boons.filter((b) => state.instances[b]?.owner === seat),
+  ]);
+  for (const iid of actors) {
+    if (!isLegalAbility(state, seat, iid)) continue;
+    const ability = getCard(state.instances[iid]!.cardId).ability!;
     if (ability.target.pick === 'chosen') {
       for (const t of candidateTargets(state, seat, ability.target.filter)) {
-        moves.push({ type: 'USE_ABILITY', iid: u.iid, targets: [t] });
+        moves.push({ type: 'USE_ABILITY', iid, targets: [t] });
       }
     } else {
-      moves.push({ type: 'USE_ABILITY', iid: u.iid });
+      moves.push({ type: 'USE_ABILITY', iid });
     }
   }
   return moves;
