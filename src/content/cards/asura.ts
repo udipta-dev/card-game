@@ -39,7 +39,11 @@ export const ASURA_CARDS: Card[] = [
     house: 'asura',
     type: 'unit',
     tier: 'atirathi',
-    basePower: 7,
+    // 8. Rama's whole host emptied itself into him and he kept walking: they
+    // broke his weapon, then he fought with a rock, then bare-handed, and it
+    // took Rama severing both arms, then both legs, then the head. Nobody else
+    // in this deck absorbs a war like that.
+    basePower: 8,
     rows: ['gaja'],
     keywords: [{ kind: 'nightGrowth', amount: 1 }],
     tags: ['rakshasa'],
@@ -68,8 +72,15 @@ export const ASURA_CARDS: Card[] = [
     name: 'Hiranyakashipu',
     house: 'asura',
     type: 'unit',
-    tier: 'atirathi',
-    basePower: 7,
+    tier: 'maharathi',
+    // 9, on the same standard that just took Ravana to 10: an avatar had to be
+    // invented for him. Brahma's boon closed off man and beast, day and night,
+    // indoors and outdoors, ground and air and water, and every weapon. So
+    // Vishnu came as neither man nor beast, at dusk which is neither day nor
+    // night, on a threshold which is neither in nor out, and used no weapon.
+    // He is one below Ravana because he ruled the three worlds and Ravana took
+    // them from the gods who held them.
+    basePower: 9,
     rows: ['ratha'],
     keywords: [{ kind: 'armor', amount: 2 }],
     tags: ['daitya'],
