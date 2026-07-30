@@ -18,6 +18,7 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'discard',
   'draw',
   'denyPlay',
+  'dismount',
   'buff',
   'destroy',
   'debuffRow',
@@ -35,6 +36,7 @@ const TARGET_ACTIONS: ReadonlySet<EffectActionKind> = new Set<EffectActionKind>(
   'damage',
   'setPower',
   'reduceTo',
+  'dismount',
   'buff',
   'destroy',
   'addFlag',
@@ -84,6 +86,28 @@ export function applyTargetAction(
         emit(ctx, { t: 'setPower', iid, value: u.currentPower });
       }
       break;
+    }
+    case 'dismount': {
+      // Already on foot, or not on the field at all: nothing to take away.
+      if (u.row === null || u.row === 'padati') return;
+      const from = u.row;
+      const arr = ctx.state.board[u.owner][from];
+      const at = arr.indexOf(iid);
+      if (at >= 0) arr.splice(at, 1);
+      ctx.state.board[u.owner].padati.push(iid);
+      u.row = 'padati';
+      // AND HE IS WORSE ON FOOT. Moving him alone was very nearly a no-op:
+      // seatPower sums all three rows equally, so a warrior keeps every point
+      // of his power wherever he stands, and the first version of this measured
+      // Bahlika DOWN from 47.5% to 39.3% for spending a card on nothing.
+      //
+      // That was wrong about the text as well as the maths. "Deprived of his
+      // car" is decisive precisely because a man on foot cannot fight chariots
+      // on equal terms; Ganguli's carless warriors are routinely killed or have
+      // to be carried off. The demotion has to cost him something.
+      u.currentPower = Math.max(powerFloor(state, u), u.currentPower - 2);
+      ctx.state.log.push({ t: 'dismount', iid, cardId: u.cardId, from });
+      return;
     }
     case 'buff': {
       // Floor at 0 so a negative buff (Shalya sapping Karna) never goes below zero.

@@ -239,6 +239,16 @@ export type EffectAction =
   // thou shalt in battle check the four other sons of Pandu" (Drona P. XLI).
   // A blocker with a named hole in it is a different card from a blocker.
   | { kind: 'denyPlay'; count: number; sparingStrongest?: boolean }
+  // DISMOUNT: put a chariot-warrior on his feet. Not damage and not removal,
+  // he keeps every point of his power and loses the row he was standing in,
+  // along with anything that row was carrying.
+  //
+  // "Deprived of his car" is the single most common DECISIVE non-kill outcome
+  // in the war: 69 paragraphs, against 50 for cutting off an arm or a head. A
+  // rathi who loses his chariot is not dead, he is demoted, and a game with
+  // three rows has somewhere to put him. (Ganguli says "car" throughout; that
+  // is 1883 English for ratha, not a motor vehicle.)
+  | { kind: 'dismount' }
   | { kind: 'buff'; amount: number }
   | { kind: 'destroy' }
   | {
@@ -486,6 +496,8 @@ export type GameEvent =
   | { t: 'debuffRow'; seat: Seat; row: Row; amount: number }
   | { t: 'attach'; boon: InstanceId; to: InstanceId }
   | { t: 'ban'; cardId: CardId }
+  // Unhorsed: he keeps his power and loses his chariot.
+  | { t: 'dismount'; iid: InstanceId; cardId: CardId; from: Row }
   // Krishna's counsel: this warrior's protections no longer apply.
   | { t: 'stripped'; iid: InstanceId; cardId: CardId }
   // Ghatotkacha stepped in front of it. `cardId` is the man, `astra` the weapon.

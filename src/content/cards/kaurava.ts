@@ -142,7 +142,20 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 1 }],
     tags: ['kaurava-brother'],
-    effects: [],
+    // DEPRIVED OF HIS CAR - Ganguli's phrase, and 1883 English for ratha rather
+    // than a motor vehicle, so the card says chariot. 69 paragraphs use it,
+    // against 50 for cutting off an arm or a head: losing your chariot is the
+    // commonest DECISIVE outcome in the war that is not a death. He keeps every
+    // point of his power and loses the row he was standing in.
+    //
+    // Chitrasena unhorses the strongest chariot facing him.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'highestEnemyUnit' },
+        actions: [{ kind: 'dismount' }],
+      },
+    ],
     flavor: 'One of the hundred, cut down in Bhima’s vow.',
   },
   {
@@ -155,7 +168,20 @@ export const KAURAVA_CARDS: Card[] = [
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 1 }],
     tags: ['kaurava-brother'],
-    effects: [],
+    // DEPRIVED OF HIS CAR - Ganguli's phrase, and 1883 English for ratha rather
+    // than a motor vehicle, so the card says chariot. 69 paragraphs use it,
+    // against 50 for cutting off an arm or a head: losing your chariot is the
+    // commonest DECISIVE outcome in the war that is not a death. He keeps every
+    // point of his power and loses the row he was standing in.
+    //
+    // Vivimsati does the same to the weakest, so the two are not one card twice.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'lowestEnemyUnit' },
+        actions: [{ kind: 'dismount' }],
+      },
+    ],
     flavor: 'A steadier hand than most of his hundred brothers.',
   },
   {
@@ -261,6 +287,20 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 6,
     rows: ['ratha'],
     keywords: [],
+    // NOT given the dismount, and the measurement is the reason. Bahlika blank
+    // measured 47.5%; with an onPlay dismount he measured 39.3%, and 42.8% even
+    // after the demotion was made to cost the victim 2 power.
+    //
+    // Spending a card to move an enemy is worse than spending it on nothing,
+    // because ROWS DO NOT MATTER ENOUGH YET. seatPower sums all three equally,
+    // so the man keeps his points wherever he stands, and shifting him can
+    // actively HELP him: it carries him out of a row we have debuffed and into
+    // one his own side may have buffed (Yudhishthira's conch does exactly that
+    // to his foot row).
+    //
+    // The verb is built, tested and correct. It becomes a good mechanic when
+    // rows carry weight of their own - capacity, row-specific bonuses, reach -
+    // and not before. Chitrasena and Vivimsati carry it in the roster meanwhile.
     effects: [],
     flavor: 'An elder of Shantanu’s own blood, fighting past his years.',
   },

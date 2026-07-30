@@ -9,6 +9,13 @@ import { reduce } from '@engine/reducer';
 import { cardOnBoard, rowPower } from '@engine/queries';
 import { attemptDestroy } from '@engine/keywords';
 import { runBoardTrigger } from '@engine/events';
+import { applyTargetAction } from '@engine/effects/handlers';
+import type { EffectCtx } from '@engine/effects/context';
+import type { GameState, Seat } from '@engine/types';
+
+const ctx = (state: GameState, actorOwner: Seat = 'player'): EffectCtx => ({
+  state, actorOwner, actorCardId: 'test', playedRow: null, actorIid: null, chosen: [],
+});
 import { getCard } from '@content/cards';
 import { attachBoon, makeState, firstOf } from './helpers';
 
@@ -110,5 +117,49 @@ describe('cardOnBoard sees what rides with a warrior', () => {
     const s = makeState({ playerBoard: { ratha: ['arjuna'] } });
     expect(cardOnBoard(s, 'player', 'arjuna', 'own')).toBe(true);
     expect(cardOnBoard(s, 'player', 'bhima', 'own')).toBe(false);
+  });
+});
+
+describe('deprived of his chariot: demotion, not death', () => {
+  // Ganguli's "deprived of his car" is 1883 English for ratha, not a motor
+  // vehicle, so the cards say chariot. 69 paragraphs use the phrase, against 50
+  // for cutting off an arm or a head: it is the commonest decisive outcome in
+  // the war that is not a death, and nothing in this engine moved a unit
+  // between rows until now.
+  it('moves the man to the foot row and leaves his power alone', () => {
+    const s = makeState({ aiBoard: { ratha: ['karna'] } });
+    const iid = s.board.ai.ratha[0];
+    const before = s.instances[iid].currentPower;
+
+    applyTargetAction(ctx(s, 'player'), { kind: 'dismount' }, iid);
+
+    expect(s.board.ai.ratha, 'gone from the chariots').not.toContain(iid);
+    expect(s.board.ai.padati, 'standing with the foot').toContain(iid);
+    expect(s.instances[iid].row).toBe('padati');
+    // He is worse on foot. Without this the whole action is a no-op, because
+    // seatPower sums every row equally and he keeps his power wherever he
+    // stands: the first build of this measured Bahlika DOWN 47.5% -> 39.3%.
+    expect(s.instances[iid].currentPower, 'fighting on foot now').toBe(before - 2);
+  });
+
+  it('costs him whatever the chariot row was carrying', () => {
+    // The real point of the mechanic: he keeps his power and loses the buff.
+    const s = makeState({ aiBoard: { ratha: ['karna'] } });
+    const iid = s.board.ai.ratha[0];
+    s.rowMods.push({ seat: 'ai', row: 'ratha', amount: 4, duration: 'round', source: 'test' });
+    const withBuff = rowPower(s, 'ai', 'ratha');
+
+    applyTargetAction(ctx(s, 'player'), { kind: 'dismount' }, iid);
+
+    expect(rowPower(s, 'ai', 'ratha'), 'the empty chariot row scores nothing').toBe(0);
+    expect(rowPower(s, 'ai', 'padati'), 'without the bonus, and on foot').toBe(withBuff - 4 - 2);
+  });
+
+  it('does nothing to a man already on foot', () => {
+    const s = makeState({ aiBoard: { padati: ['kaurava_infantry'] } });
+    const iid = s.board.ai.padati[0];
+    applyTargetAction(ctx(s, 'player'), { kind: 'dismount' }, iid);
+    expect(s.board.ai.padati).toContain(iid);
+    expect(s.board.ai.padati.filter((x) => x === iid), 'not duplicated').toHaveLength(1);
   });
 });

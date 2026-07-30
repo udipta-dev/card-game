@@ -73,13 +73,23 @@ Brothers** (all power 6-7 and currently blank).
 warrior loses his chariot and must fight on foot or flee. It is not death, it
 is demotion, and the game has three rows to express it with.
 
-Mechanic: **move an enemy from Ratha to Padati.** He keeps his power but loses
-the chariot row, and any Ratha row buff with him. Nothing in the game currently
-moves a unit between rows, which makes this a genuinely new verb rather than
-another damage number.
+Mechanic: **move an enemy from Ratha to Padati**, and cost him 2 for fighting
+on foot. BUILT as the `dismount` action, on Chitrasena and Vivimsati.
 
-Candidates: **Vrishasena** (Karna's son, a chariot-fighter), **Chitrasena**,
-**Vivimsati**, **Durmukha** (the Kaurava brothers, all power 5 and all blank).
+**It does not pay yet, and the measurement says why.** Bahlika blank measured
+47.5%. Given an onPlay dismount he measured **39.3%**, and **42.8%** even after
+the demotion was made to cost the victim power. Spending a card to move an
+enemy is worse than spending it on nothing.
+
+The cause is structural: **`seatPower` sums all three rows equally**, so a
+warrior keeps every point of his power wherever he stands. Worse, shifting him
+can HELP him, by carrying him out of a row you have debuffed and into one his
+own side has buffed. Yudhishthira's conch buffs his foot row, so dismounting
+into it is a gift.
+
+So the prerequisite is real: **rows have to matter before row-movement can.**
+Row capacity, row-specific bonuses, or reach. The verb is built, tested and
+correct, and it is waiting on that. Recorded here so it is not rebuilt.
 
 ### Cutting the bow
 
