@@ -105,12 +105,19 @@ export function tickHazards(state: GameState): void {
     if (h.kind !== 'narayana') continue;
     const men = unitsOf(state, h.victim);
     if (!men.length) continue;
-    // KRISHNA KNOWS THE TERMS. Passing is the published escape, and it costs you
-    // the round; he is the one who published it. "Speedily lay down your
-    // weapons, all of you, and alight from your vehicles" (Drona CC). With him
-    // riding, the host submits on his word and the weapon lifts for nothing.
-    // This is the third of the three astras he answers, and the only one where
-    // the answer is knowledge rather than his body in the way.
+    // TWO THINGS CALL IT OFF, and both are Vishnu declining his own storm.
+    //
+    // Prahlada is the boy Vishnu came in person to save, five times over, so
+    // the weapon made to end asuras will not take the host he stands in.
+    if (men.some((u) => u.cardId === 'prahlada')) {
+      state.log.push({ t: 'hazardLifted', kind: h.kind, seat: h.victim, reason: 'prahlada' });
+      lifted.push(h);
+      continue;
+    }
+    // Krishna knows the terms, because he is the one who published them:
+    // "Speedily lay down your weapons, all of you, and alight from your
+    // vehicles" (Drona CC). Everyone else buys that escape by passing and
+    // losing the round; with him riding, the host submits on his word for free.
     if (men.some((u) => boonCardIds(state, u.iid).includes('krishna_charioteer'))) {
       state.log.push({ t: 'hazardLifted', kind: h.kind, seat: h.victim, reason: 'krishna' });
       lifted.push(h);

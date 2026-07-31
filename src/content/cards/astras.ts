@@ -178,13 +178,23 @@ export const ASTRA_CARDS: Card[] = [
     keywords: [],
     cost: {
       consequence:
-        'Never misses its chosen mark, save the shield of Krishna. Loosing it is an act of adharma: a curse follows you for it.',
+        'Never misses its chosen mark, save where Vishnu himself turns it aside. Loosing it is an act of adharma: a curse follows you for it.',
     },
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'chosen', filter: { side: 'enemy' } },
-        condition: { q: 'not', c: { q: 'targetHasBoon', boon: 'krishna_charioteer' } },
+        // Two things turn it aside, and both are Vishnu refusing his own weapon.
+        // Krishna took it on his chest and it became a garland. And Prahlada is
+        // the asura Vishnu came in person to preserve, five times over, so the
+        // weapon made to end asuras will not end the host he is standing in.
+        condition: {
+          q: 'and',
+          cs: [
+            { q: 'not', c: { q: 'targetHasBoon', boon: 'krishna_charioteer' } },
+            { q: 'not', c: { q: 'cardOnBoard', card: 'prahlada', side: 'enemy' } },
+          ],
+        },
         actions: [{ kind: 'destroy' }],
       },
     ],

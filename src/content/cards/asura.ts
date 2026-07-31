@@ -130,17 +130,39 @@ export const ASURA_CARDS: Card[] = [
     flavor: 'The generous king, deathless in the underworld he was granted.',
   },
   {
+    // NOT A VILLAIN, and he was carrying the most generic card in the game: a
+    // power-4 body with a clan bond and no effects, handed to the least generic
+    // character in the set. Worse, the bond REWARDED him for standing with
+    // other daityas, when refusing to do that is his entire story.
+    //
+    // Krishna names him in the Gita, in the chapter listing the forms the
+    // divine itself takes: "I am Vasuki among serpents... I am Prahlada among
+    // the Daityas... I am Rama among wielders of weapons" (Bhishma P. XXXIV).
+    // He is the divine presence inside the demon race.
+    //
+    // His father had him poisoned, thrown from cliffs, trampled by elephants,
+    // burned, and bound and cast into the sea. Every attempt failed because
+    // Vishnu preserved him, and Narasimha was finally born to kill the father
+    // and save the son.
+    //
+    // So he is the exception to the one structural weakness the Asura host has.
+    // Vishnu's weapons were made to end asuras (the shrine refuses to teach
+    // Narayana or Vaishnava to that house at all), and they will not touch the
+    // man Vishnu came in person to protect. While he stands, his host is spared
+    // them. A five-year-old with folded hands who blanks the thing designed to
+    // beat his faction, without holding a weapon himself.
     id: 'prahlada',
     name: 'Prahlada',
     house: 'asura',
     type: 'unit',
     tier: 'rathi',
-    basePower: 4,
+    basePower: 5,
     rows: ['padati'],
-    keywords: [{ kind: 'bond', tag: 'daitya', amount: 1 }],
+    keywords: [],
     tags: ['daitya'],
     effects: [],
-    flavor: 'The devotee-prince, virtue born inside the demon line.',
+    flavor:
+      'The devotee-prince. Poison, fire, the cliff, the elephants and the sea all refused him, and at the last a lion came out of a pillar for his sake.',
   },
   {
     id: 'narakasura',
