@@ -8,6 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { reduce } from '@engine/reducer';
 import { tickHazards } from '@engine/rounds';
+import { resolveTargets } from '@engine/effects/targeting';
 import { getCard } from '@content/cards';
 import { firstOf, hasEvent, makeState } from './helpers';
 
@@ -79,5 +80,61 @@ describe('he is no longer a demon in a demon line', () => {
 
   it('stands with the foot, not the chariots', () => {
     expect(getCard('prahlada').rows).toEqual(['padati']);
+  });
+});
+
+describe('Indrajit fights from inside his own illusion', () => {
+  // He was a vanilla 10 with no effect and measured 41.3% against Pandava,
+  // BELOW his own deck's base rate: a 10 that does nothing is just the fattest
+  // target on the board, and Pandava's whole kit is single-target removal.
+  it('cannot be picked out by an enemy effect once he takes the field', () => {
+    const s = makeState({ playerHand: ['indrajit'], aiBoard: { ratha: ['arjuna'] } });
+    s.activeSeat = 'player';
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'indrajit').iid, row: 'ratha' });
+    const him = firstOf(s1, 'player', 'indrajit');
+    expect(him.flags.has('hidden')).toBe(true);
+
+    // The enemy's removal walks straight past him.
+    const c = {
+      state: s1, actorOwner: 'ai' as const, actorCardId: 'test',
+      playedRow: null, actorIid: null, chosen: [],
+    };
+    expect(resolveTargets(c, { pick: 'highestEnemyUnit' })).not.toContain(him.iid);
+    expect(resolveTargets(c, { pick: 'allEnemyUnits' })).not.toContain(him.iid);
+  });
+
+  it('so Krishna’s counsel takes somebody else', () => {
+    const s = makeState({
+      playerHand: ['krishna_charioteer'],
+      playerBoard: { ratha: ['arjuna'] },
+      aiBoard: { ratha: ['indrajit', 'kumbhakarna'] },
+    });
+    s.round = 2;
+    s.roundWins = { player: 1, ai: 0 };
+    s.activeSeat = 'player';
+    // Indrajit is the biggest thing opposite, but he is unseen.
+    s.instances[s.board.ai.ratha[0]].flags.add('hidden');
+    const indrajit = s.board.ai.ratha[0];
+    const kumbha = s.board.ai.ratha[1];
+
+    const s1 = reduce(s, {
+      type: 'PLAY_CARD',
+      iid: firstOf(s, 'player', 'krishna_charioteer').iid,
+      row: 'ratha',
+      targets: [s.board.player.ratha[0]],
+    });
+
+    expect(s1.instances[indrajit], 'the unseen man survives').toBeDefined();
+    expect(s1.instances[kumbha], 'and the counsel finds the next one down').toBeUndefined();
+  });
+
+  it('but his own side can still reach him', () => {
+    const s = makeState({ playerBoard: { ratha: ['indrajit'] } });
+    s.instances[s.board.player.ratha[0]].flags.add('hidden');
+    const c = {
+      state: s, actorOwner: 'player' as const, actorCardId: 'test',
+      playedRow: null, actorIid: null, chosen: [],
+    };
+    expect(resolveTargets(c, { pick: 'allOwnUnits' })).toContain(s.board.player.ratha[0]);
   });
 });

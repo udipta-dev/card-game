@@ -371,7 +371,11 @@ export const ASTRA_CARDS: Card[] = [
     keywords: [],
     // Ganguli's own note pairs Prajna against it, and Bhishma is explicitly
     // "not stupefied, for he knoweth how to counteract this weapon".
-    counteredBy: ['sammohana'],
+    // Prajna, not itself. docs/canon-inventory.md has had this since the astra
+    // sweep - "Sammohana | Prajna | Virata P. LXV + n.101" - and the card was
+    // never updated, so the one weapon that answers stupefaction answered
+    // nothing and Sammohana was effectively uncounterable.
+    counteredBy: ['prajna'],
     cost: {
       consequence:
         'No one falls. The line simply stops: senses gone, weapons slack in their hands, for this round only.',

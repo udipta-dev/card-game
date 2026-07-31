@@ -68,8 +68,26 @@ export const ASURA_CARDS: Card[] = [
     tags: ['rakshasa'],
     astraMastery: 2,
     knownAstras: ['vaishnavastra'],
-    effects: [],
-    flavor: 'Meghnad, the only being to defeat Indra, master of every astra.',
+    // HE FIGHTS UNSEEN, which is the only reason Rama's army could not answer
+    // him: he loosed from inside his own maya and there was nothing to shoot
+    // back at. Lakshmana could only kill him by breaking up the sacrifice that
+    // renewed it.
+    //
+    // Measured problem this fixes: Indrajit was a vanilla 10 with no effect and
+    // he measured 41.3% against Pandava, BELOW his own deck's base rate. A 10
+    // that does nothing is simply the fattest target on the board, and Pandava's
+    // whole kit is single-target removal: Krishna's counsel takes the highest
+    // enemy warrior, and Asura is the most top-heavy deck in the game. Being
+    // untargetable is both the canon-true trait and the exact answer to it.
+    effects: [
+      {
+        on: 'onPlay',
+        target: { pick: 'self' },
+        actions: [{ kind: 'addFlag', flag: 'hidden' }],
+      },
+    ],
+    flavor:
+      'Meghnad, the only being to defeat Indra. He fought Rama’s host from inside his own illusion, and there was nothing to shoot back at.',
   },
 
   // ---- The great daityas (Puranic) ----

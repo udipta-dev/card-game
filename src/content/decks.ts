@@ -153,7 +153,14 @@ export const ASURA_DECK: DeckList = {
     'narakasura',
     'brahmastra',
     'nagastra',
-    'sauparna',
+    // Sauparna out for Prajna, both 5 provisions so the budget is untouched.
+    //
+    // Sauparna answers the NAGA weapon, and the Pandava deck does not carry one,
+    // so against them it was a card that could never do anything: it measured
+    // 36.6%, the worst card in that matchup by a distance. Prajna answers
+    // SAMMOHANA, which is Pandava's +11.8pp astra and the second best card they
+    // have in this pairing. A live answer replacing a dead one.
+    'prajna',
     'agneyastra',
     // Vaishnava left this list with the same change and took 24 provisions of
     // slack with it. Tvashtra suits a host of illusionists: Indrajit fought

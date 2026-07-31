@@ -1,12 +1,5 @@
-import {
-  adjacentRows,
-  highestUnit,
-  lowestUnit,
-  opponentOf,
-  rowUnits,
-  unitsOf,
-} from '../queries';
-import type { InstanceId, Row, Seat, TargetSelector, UnitFilter } from '../types';
+import { adjacentRows, opponentOf, rowUnits, unitsOf } from '../queries';
+import type { CardInstance, InstanceId, Row, Seat, TargetSelector, UnitFilter } from '../types';
 import type { EffectCtx } from './context';
 
 /** Resolve a target selector to concrete instance ids. Pure read over state. */
@@ -25,6 +18,17 @@ export function resolveTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[
   });
 }
 
+/** The first unit of `seat` by `order` that the actor can actually target. */
+function pickVisible(
+  ctx: EffectCtx,
+  seat: Seat,
+  order: (a: CardInstance, b: CardInstance) => number,
+): CardInstance | undefined {
+  return unitsOf(ctx.state, seat)
+    .filter((u) => !u.flags.has('hidden') || u.owner === ctx.actorOwner)
+    .sort(order)[0];
+}
+
 function selectTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[] {
   const { state, actorOwner, playedRow } = ctx;
   const enemy = opponentOf(actorOwner);
@@ -33,12 +37,19 @@ function selectTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[] {
       return [];
     case 'self':
       return ctx.actorIid ? [ctx.actorIid] : [];
+    // "Highest enemy" has to mean the highest enemy you can actually SEE.
+    // These used to pick the single biggest and hand it to the hidden filter
+    // below, so one unseen warrior did not merely protect himself, he blanked
+    // the effect outright and everyone behind him was spared too. Choosing from
+    // the visible set instead makes concealment protect the concealed man and
+    // pass the blow to the next one down, which is both less swingy and what a
+    // player would expect.
     case 'highestEnemyUnit': {
-      const u = highestUnit(state, enemy);
+      const u = pickVisible(ctx, enemy, (a, b) => b.currentPower - a.currentPower);
       return u ? [u.iid] : [];
     }
     case 'lowestEnemyUnit': {
-      const u = lowestUnit(state, enemy);
+      const u = pickVisible(ctx, enemy, (a, b) => a.currentPower - b.currentPower);
       return u ? [u.iid] : [];
     }
     case 'allEnemyUnits':
