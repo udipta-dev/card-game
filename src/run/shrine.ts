@@ -72,7 +72,12 @@ export const DEITIES: Deity[] = [
     id: 'brahma',
     name: 'Brahma',
     epithet: 'the creator',
-    domain: { 2: ['brahmastra'], 3: ['brahmashirsha'] },
+    // Samvodhana added at tier 1. Praswapa already named it as its counter, but
+    // the card was in no deck, no shrine and no reward list, so the answer to a
+    // weapon the Kaurava deck actually carries could never be held by anyone.
+    // Brahma keeps it because Praswapa is Prajapati's and the two reached
+    // Bhishma together, from eight Brahmanas in one dream (Udyoga CLXXXVI).
+    domain: { 1: ['samvodhana'], 2: ['brahmastra'], 3: ['brahmashirsha'] },
     minWorth: 11,
   },
   {
@@ -90,7 +95,13 @@ export const DEITIES: Deity[] = [
     id: 'narayana',
     name: 'Narayana',
     epithet: 'Vishnu, who preserves',
-    domain: { 3: ['narayanastra', 'vaishnavastra'] },
+    // Sauparna at tier 1. It left the Pandava deck to make room for the
+    // deception card and would otherwise have been stranded in no deck, no
+    // shrine and no reward list, which would have left the Kaurava Nag-Astra
+    // with no answer anywhere in the game. Garuda is Vishnu's own mount, and
+    // this shrine could previously give nothing but tier 3, so it now has a
+    // rung it can actually pay.
+    domain: { 1: ['sauparna'], 3: ['narayanastra', 'vaishnavastra'] },
     minWorth: 11,
     // The weapons made to end the asuras are not lent to them.
     houses: ['pandava', 'kaurava', 'legend', 'neutral'],

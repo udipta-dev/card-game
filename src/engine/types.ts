@@ -207,12 +207,20 @@ export interface EffectDef {
   actions: EffectAction[];
 }
 
-export type TriggerEvent =
-  | 'onPlay'
-  | 'onRoundStart'
-  | 'onRoundEnd'
-  | 'onDestroyAttempt'
-  | 'onTurnStart';
+/**
+ * Events the engine actually dispatches. Nothing else belongs here.
+ *
+ * 'onDestroyAttempt' and 'onTurnStart' used to sit in this list with no
+ * dispatcher behind either, so a card could declare an effect on them, pass
+ * typecheck, pass content validation, and silently never fire. That is the same
+ * failure that made Drona unkillable and left twelve cards unobtainable: legal
+ * but unreachable. Removing them turns a silent no-op into a compile error.
+ *
+ * Destroy interception is real, but it lives in keywords (attemptDestroy), not
+ * in the effect system. If an effect-driven version is ever wanted, add the
+ * trigger AND the dispatcher in the same change.
+ */
+export type TriggerEvent = 'onPlay' | 'onRoundStart' | 'onRoundEnd';
 
 export type EffectAction =
   | { kind: 'damage'; amount: number }

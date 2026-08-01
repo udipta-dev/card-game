@@ -149,7 +149,10 @@ describe('Drona — disarmed only by the elephant deception', () => {
     const elephant = firstOf(s1, 'player', 'ashwatthama_elephant');
     const s2 = reduce(s1, { type: 'PLAY_CARD', iid: elephant.iid, row: 'ratha' });
     const dronaAfter = firstOf(s2, 'ai', 'drona');
-    expect(dronaAfter.currentPower).toBe(0); // disarmed
+    // Deliberately 4, not 0: the deception takes his guard and most of his
+    // fight, and Dhrishtadyumna still has to arrive. Zeroing him punished a
+    // 9 twice over off one 4-cost stratagem.
+    expect(dronaAfter.currentPower).toBe(4);
     expect(dronaAfter.flags.has('disarmed')).toBe(true);
   });
 });

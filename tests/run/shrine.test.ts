@@ -298,8 +298,13 @@ describe('the shrine cannot advertise what it will not deliver', () => {
   it('shows no chance at a tier whose every weapon the host already holds', () => {
     const held = new Set(['brahmastra']);
     const shown = effectiveOdds(brahma, 'arjuna', 2, held);
-    expect(shown.t2).toBe(0);
-    expect(shown.fail).toBeCloseTo(1, 5);
+    expect(shown.t2, 'the tier he cannot pay shows zero').toBe(0);
+    // This used to assert fail ~= 1, which was only true while Brahma had
+    // NOTHING below tier 2 to give. He now holds Samvodhana at tier 1, so the
+    // probability moves down a rung instead of vanishing. That is the correct
+    // behaviour and the reason the assertion changed.
+    expect(shown.t1, 'it steps down rather than disappearing').toBeGreaterThan(0);
+    expect(shown.t1 + shown.fail).toBeCloseTo(1, 5);
   });
 
   it('still shows the chance when the host does not hold it', () => {

@@ -33,7 +33,18 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 9,
     rows: ['ratha'],
-    keywords: [{ kind: 'immuneUntilPlayed', card: 'ashwatthama_elephant', thenSetPower: 0 }],
+    // thenSetPower 4, not 0. While the deception card was unobtainable this
+    // never fired at all and Drona was an unkillable 9: a bug worth real points
+    // to the Kaurava deck, which is why fixing it dropped them from 48.6% to
+    // 45.1%. Their old balance was partly resting on it.
+    //
+    // But with the card now in play, setting him to ZERO punished him twice
+    // over: he became worthless AND killable off a single 4-cost stratagem.
+    // The text is narrower than that. He laid down his bow and sat in
+    // meditation; he did not shrink. So the lie takes his guard and most of his
+    // fight, and Dhrishtadyumna still has to arrive to finish it. Two cards to
+    // remove a 9, which is what the epic charges.
+    keywords: [{ kind: 'immuneUntilPlayed', card: 'ashwatthama_elephant', thenSetPower: 4 }],
     effects: [],
     astraMastery: 2,
     knownAstras: ['brahmashirsha'],

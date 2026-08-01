@@ -5,12 +5,28 @@ import { nextRandom, shuffle } from '@engine/ids';
 import type { CardId, House } from '@engine/types';
 import type { RewardOption, RunState } from './types';
 
-/** Units the player could still recruit: their own host, plus rarer legends. */
+/**
+ * What a victory can offer: a warrior for your host, or a NAMED WEAPON found on
+ * the field.
+ *
+ * The shastras were unreachable before this. All six of them - Gandiva, Vajra,
+ * Chandrahasa, Asi, Kaumodaki, Parasu - sat in no starter deck, no shrine pool
+ * and no reward list, so six finished cards existed that no player could ever
+ * obtain. The run layer had no shastra path at all.
+ *
+ * A found weapon is the right home for them. They are objects rather than
+ * mantras: things that changed hands, were taken from a field, or were given.
+ * Bows and maces and swords are what a victory yields.
+ */
 function recruitPool(house: House, roster: CardId[]): CardId[] {
   const have = new Set(roster);
   return allCards()
-    .filter((c) => c.type === 'unit' && !have.has(c.id))
-    .filter((c) => c.house === house || c.house === 'legend')
+    .filter((c) => !have.has(c.id))
+    .filter((c) =>
+      c.type === 'unit'
+        ? c.house === house || c.house === 'legend'
+        : c.type === 'shastra' && (c.house === house || c.house === 'neutral'),
+    )
     .map((c) => c.id);
 }
 
@@ -31,9 +47,11 @@ export function rollRewards(run: RunState): RewardOption[] {
       cardId: id,
       label: c.name,
       text:
-        c.house === 'legend'
-          ? `A legend joins your host. ${c.flavor ?? ''}`.trim()
-          : `Recruit ${c.name} (power ${c.basePower}) to your host.`,
+        c.type === 'shastra'
+          ? `${c.name} is yours to put in a warrior's hands. ${c.flavor ?? ''}`.trim()
+          : c.house === 'legend'
+            ? `A legend joins your host. ${c.flavor ?? ''}`.trim()
+            : `Recruit ${c.name} (power ${c.basePower}) to your host.`,
     };
   });
 

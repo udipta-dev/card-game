@@ -363,10 +363,21 @@ export const PANDAVA_CARDS: Card[] = [
     tier: 'rathi',
     basePower: 5,
     rows: ['ratha'],
-    keywords: [],
+    // A FLOOR, by the rule the bottom-tier pass established: a purely
+    // situational card is worse than a blank one, because it costs a commitment
+    // in every game where its condition never arrives. Shikhandi answers exactly
+    // one warrior and did nothing at all otherwise, and he measured -7.8pp
+    // against Asura, who field no Bhishma and never will.
+    //
+    // The floor is his own story rather than a number: Bhishma would not raise
+    // his bow to Amba reborn, and neither would most men, so the first blow
+    // aimed at him does not land. His purpose is untouched - Bhishma's
+    // icchamrityu still lifts the moment Shikhandi takes the field, which needs
+    // no effect on this card at all.
+    keywords: [{ kind: 'armor', amount: 2 }],
     tags: ['panchala'],
     effects: [],
-    flavor: 'Amba reborn, before whom Bhishma would not raise his bow.',
+    flavor: 'Amba reborn, before whom Bhishma would not raise his bow, and few others cared to.',
   },
   {
     id: 'drupada',

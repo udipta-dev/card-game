@@ -48,7 +48,20 @@ export const PANDAVA_DECK: DeckList = {
     'satyaki',
     'abhimanyu',
     'ghatotkacha',
-    'dhrishtaketu',
+    // THE DRONA BUG. Drona carries immuneUntilPlayed{ ashwatthama_elephant },
+    // and that card was in NO deck and no run path, so it could never be
+    // played, so his immunity could never lift. He was an unkillable 9 in the
+    // Kaurava deck, and it silently broke a second card too: Dhrishtadyumna's
+    // entire text is "born of fire to be the slayer of Drona" and his onPlay
+    // destroy was doing nothing at all.
+    //
+    // The lie is Yudhishthira's, so it belongs to the PANDAVAS: they speak it,
+    // the Kaurava Drona lays down his bow, and their Dhrishtadyumna finishes
+    // him. Dhrishtaketu (a blank 7) and Sauparna (5) come out, the deception
+    // (4) and Sweta (10) go in: 14 for 14, so 19 cards and 170 provisions are
+    // both untouched.
+    'ashwatthama_elephant',
+    'sweta',
     'sahadeva',
     'shikhandi',
     'krishna_charioteer',
@@ -60,7 +73,6 @@ export const PANDAVA_DECK: DeckList = {
     // his twin was not, and the two are never apart anywhere in the epic.
     'nakula',
     'brahmastra',
-    'sauparna',
     'agneyastra',
     'varunastra',
     'aindrastra',
