@@ -249,13 +249,17 @@ const Naga: Mark = (p) => (
 /** A rakshasa mask: horns, tusks, and no interest in your rules. */
 const Rakshasa: Mark = (p) => (
   <M {...p}>
-    <path d="M6.6 13.6q0-7.6 9.4-7.6t9.4 7.6q0 13-9.4 13t-9.4-13z" />
-    <path d="M8.4 10.6Q2.6 8.4 2.6 2.6q5.6 1 8 6M23.6 10.6q5.8-2.2 5.8-8-5.6 1-8 6" />
-    <path d="M10 13.2q2.4-2 5-.8M22 13.2q-2.4-2-5-.8" />
-    <circle cx="12.4" cy="16" r="1.2" fill="currentColor" stroke="none" />
-    <circle cx="19.6" cy="16" r="1.2" fill="currentColor" stroke="none" />
-    <path d="M11.4 20.4h9.2" />
-    <path d="m13.4 20.4 1.3 3.4 1.5-3.4M17 20.4l1.3 3.4 1.5-3.4" />
+    <path d="M6.6 9.4Q1.4 6.6 1.6 1.2q6 1 9 6.6M25.4 9.4q5.2-2.8 5-8.2-6 1-9 6.6" />
+    <path
+      d="M3.6 13.4q0-8 12.4-8t12.4 8q0 13.6-12.4 13.6T3.6 13.4z"
+      fill="currentColor"
+      stroke="none"
+    />
+    <g fill="var(--pal-base, #000)" stroke="none">
+      <path d="m9.2 12.6 5.6 2.6-5.6 2z" />
+      <path d="m22.8 12.6-5.6 2.6 5.6 2z" />
+      <path d="M9.6 20h12.8l-1.8 2.4-1.8-1.4-1.6 2-1.6-2-1.8 1.4z" />
+    </g>
   </M>
 );
 
@@ -380,12 +384,16 @@ const Akshamala: Mark = (p) => (
   </M>
 );
 
-/** Folded hands. The devotee, and the man who would not fight back. */
-const Anjali: Mark = (p) => (
+/** A lit lamp. The devotee, and the man who would not fight back. */
+const Dipa: Mark = (p) => (
   <M {...p}>
-    <path d="M16 2.6q-8.4 8-8.4 15.6 0 5.2 8.4 7.2z" />
-    <path d="M16 2.6q8.4 8 8.4 15.6 0 5.2-8.4 7.2z" />
-    <path d="M11.6 25.2 9 30.4M20.4 25.2 23 30.4" />
+    <path
+      d="M16.6 4.4q-.6 4.4-3.4 6.8t-2.8 5.2a5.6 5.6 0 0 0 11.2 0q0-3-2.6-5 .4 2.4-1.4 3.2 1-4.6-1-10.2z"
+      fill="currentColor"
+      stroke="none"
+    />
+    <path d="M4.4 20.6h23.2q-1.4 7.6-11.6 7.6T4.4 20.6z" />
+    <path d="M16 28.2v2.2M9 24.4h14" opacity=".5" />
   </M>
 );
 
@@ -522,6 +530,115 @@ const Yugma: Mark = (p) => (
   </M>
 );
 
+/* ------------------------------------------------------- the named weapons */
+
+/**
+ * Chandrahasa, "moon-laughter": the sword Shiva gave Ravana.
+ *
+ * Two drafts of this were a curved sabre and both read as a leaf, which is the
+ * same trap the flame and the conch fell into. Built instead out of two shapes
+ * that already survive at card size, a blade and a crescent, with the moon
+ * standing in for the pommel. It reads as a sword first and a moon second,
+ * which is the right order.
+ */
+const Asidhara: Mark = (p) => (
+  <M {...p}>
+    <path d="M16 2.6 19.4 8.8v11.4h-6.8V8.8z" fill="currentColor" stroke="none" />
+    <path d="M9 20.6h14" strokeWidth="2" />
+    <path d="M16 20.6v2.2" />
+    <path d="M18.3 22.2a4.32 4.32 0 1 0 1.66 6.05A4.68 4.68 0 0 1 18.3 22.2z" />
+  </M>
+);
+
+/** Three arrows. Barbarika needed exactly this many to end any war. */
+const TriShara: Mark = (p) => (
+  <M {...p}>
+    <path d="M16 29V4.4M16 4.4l-2.8 3.6M16 4.4l2.8 3.6" />
+    <path d="M7.6 29 11 6.6M11 6.6 7.4 9.4M11 6.6l3.2 2.2" opacity=".85" />
+    <path d="M24.4 29 21 6.6M21 6.6l3.6 2.8M21 6.6l-3.2 2.2" opacity=".85" />
+  </M>
+);
+
+/* ------------------------------------------------------- states of the mind */
+
+/**
+ * A target, struck. Ekalavya taught himself in front of a clay statue and
+ * still outshot the man it was made of.
+ */
+const Lakshya: Mark = (p) => (
+  <M {...p}>
+    <circle cx="14" cy="18" r="11.4" />
+    <circle cx="14" cy="18" r="6.6" />
+    <circle cx="14" cy="18" r="2.2" fill="currentColor" stroke="none" />
+    <path d="M29.4 2.6 16.4 15.6" />
+    <path d="m29.4 2.6-5 .8M29.4 2.6l-.8 5" />
+  </M>
+);
+
+/** An open eye. Insight, and the astra that grants it. */
+const Netra: Mark = (p) => (
+  <M {...p}>
+    <path d="M1.6 16Q8.4 6.6 16 6.6T30.4 16Q23.6 25.4 16 25.4T1.6 16z" />
+    <circle cx="16" cy="16" r="4.8" fill="currentColor" stroke="none" />
+    <path d="M16 6.6V3M6.2 9.6 4 6.6M25.8 9.6 28 6.6" opacity=".5" />
+  </M>
+);
+
+/** A bell. What wakes a field that has been put to sleep. */
+const Ghanta: Mark = (p) => (
+  <M {...p}>
+    <path
+      d="M16 6.4q6.8 1.8 6.8 10.6 0 3.6 1.6 5.4H7.6q1.6-1.8 1.6-5.4 0-8.8 6.8-10.6z"
+      fill="currentColor"
+      stroke="none"
+    />
+    <circle cx="16" cy="4" r="2" />
+    <path d="M6 22.4h20" />
+    <path d="M16 24v2" />
+    <circle cx="16" cy="27.6" r="2.2" fill="currentColor" stroke="none" />
+  </M>
+);
+
+/**
+ * Half a form, half nothing. Antardhana is the vanishing, and it is also how
+ * Indrajit fought: the enemy could not see where the arrows were coming from.
+ */
+const Antardhana: Mark = (p) => (
+  <M {...p}>
+    <path
+      d="M16 3.6a12.4 12.4 0 0 0 0 24.8z"
+      fill="currentColor"
+      fillOpacity=".85"
+      stroke="none"
+    />
+    <path d="M16 3.6a12.4 12.4 0 0 1 0 24.8" strokeDasharray="2.2 3.2" />
+    <path d="M16 3.6v24.8" opacity=".45" />
+  </M>
+);
+
+/**
+ * The same shape, three times over. Tvashtra fills the field with foes that
+ * are not there, and the enemy spends the battle fighting them.
+ */
+const Bahurupa: Mark = (p) => (
+  <M {...p}>
+    <path d="M16 3.6 24.4 14H7.6z" fill="currentColor" stroke="none" />
+    <path d="M16 11.6 24.4 22H7.6z" opacity=".6" />
+    <path d="M16 19.6 24.4 30H7.6z" opacity=".3" />
+  </M>
+);
+
+/**
+ * Spiralling eyes. Sammohana kills nobody: it takes an army's wits and leaves
+ * it standing on the field with nothing to do.
+ */
+const Moha: Mark = (p) => (
+  <M {...p}>
+    <path d="M10 17.4a1.6 1.6 0 1 0 1.6-1.6 3.8 3.8 0 1 0-3.8 3.8 6 6 0 1 0 6-6" />
+    <path d="M22 17.4a1.6 1.6 0 1 1-1.6-1.6 3.8 3.8 0 1 1 3.8 3.8 6 6 0 1 1-6-6" />
+  </M>
+);
+
 /* ----------------------------------------------------------------- the map */
 
 // One mark per card. Cards not named here fall through to their type mark,
@@ -563,7 +680,7 @@ const BY_ID: Record<string, Mark> = {
   aindrastra: Megha,
   bhargavastra: Parashu,
   vayavyastra: Vayu,
-  sammohana: Nidra,
+  sammohana: Moha,
   agneyastra: Agni,
   varunastra: Jala,
   sauparna: Paksha,
@@ -594,7 +711,7 @@ const BY_ID: Record<string, Mark> = {
   shalya: ChakraMark,
   kripa: Akshamala,
   kritavarma: Chandra,
-  bhurishravas: Anjali,
+  bhurishravas: Dipa,
   bahlika: Danda,
   somadatta: Khadga,
   vikarna: Tula,
@@ -615,11 +732,11 @@ const BY_ID: Record<string, Mark> = {
   // Asuras
   ravana: Mukuta,
   kumbhakarna: Nidra,
-  indrajit: Dhanus,
+  indrajit: Antardhana, // he fought unseen; that is the whole of him
   hiranyakashipu: Stambha,
   hiranyaksha: Shringa,
   bali: Mukuta,
-  prahlada: Anjali,
+  prahlada: Dipa,
   narakasura: Khadga,
   mahishasura: Shringa,
   shumbha: Yugma,
@@ -638,12 +755,29 @@ const BY_ID: Record<string, Mark> = {
   yama_summons: Danda,
 
   // Those who stood apart
-  barbarika: Dhanus,
+  barbarika: TriShara, // three arrows were enough for any war
   jarasandha: Mushti,
   balarama: Hala,
-  ekalavya: Dhanus,
+  ekalavya: Lakshya,
   shishupala: Aksha,
   rukmi: Dhanus,
+
+  // These twelve had no entry and fell through to a type-generic mark, so six
+  // named weapons all rendered as the same plain sword. Three of them are not
+  // even swords: Gandiva is Arjuna's bow, Kaumodaki is Vishnu's mace, Parasu
+  // is an axe. Every mark below already existed; they were simply never wired.
+  bhagadatta: Ankusha, // the great elephant king, who rode Supratika
+  gandiva: Dhanus,
+  kaumodaki: Gada,
+  vajra: Vajra,
+  parasu: Parashu,
+  asi: Khadga, // the first sword, so it keeps the archetypal one
+  chandrahasa: Asidhara,
+  praswapa: Nidra,
+  tvashtra: Bahurupa,
+  samvodhana: Ghanta,
+  prajna: Netra,
+  antardhana: Antardhana,
 };
 
 const BY_TYPE: Record<string, Mark> = {
