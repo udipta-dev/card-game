@@ -12,7 +12,8 @@
     "sim": "vite-node sim/run.ts",
     "typecheck": "tsc -b --noEmit",
     "analyze": "vite-node sim/analyze.ts",
-    "explore": "vite-node sim/explore.ts"
+    "explore": "vite-node sim/explore.ts",
+    "video:prompts": "vite-node sim/build-video-prompts.ts"
   },
   "dependencies": {
     "@fontsource/cinzel": "^5.3.0",
