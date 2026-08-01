@@ -1,0 +1,417 @@
+/* Ornament: frames, textures and marks.
+ *
+ * Everything here is drawn with gradients or inline SVG, so it costs no network
+ * request and works offline. The vocabulary is temple architecture rather than
+ * generic fantasy chrome: a jali screen, a torana arch, a frieze band.
+ */
+
+/* ---------------------------------------------------------------------------
+ * JALI. A pierced stone screen, the thing that stands in a temple window and
+ * throws a lattice of shadow. Used at very low opacity so it reads as woven
+ * texture rather than as pattern, and disappears entirely on small screens
+ * where it would only add noise.
+ * ------------------------------------------------------------------------- */
+.jali {
+  position: relative;
+}
+.jali::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(194, 160, 78, 0.05) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(-45deg, rgba(194, 160, 78, 0.05) 0 1px, transparent 1px 14px);
+}
+@media (max-width: 640px) {
+  .jali::before {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * TORANA. The gateway arch over a heading. The SVG stretches, so the shoulders
+ * of the arch stay the same weight whatever the width (vector-effect on the
+ * paths keeps the stroke from stretching with it).
+ * ------------------------------------------------------------------------- */
+/* The gate keeps its own proportions; the rules either side absorb the width.
+   Aligned on the baseline of the pillars, not the centre, so the rules read as
+   the ground the gate stands on. */
+.crown {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.8rem;
+  width: 100%;
+  color: var(--gold-dim);
+}
+.crown > svg {
+  flex: none;
+  width: 132px;
+  height: 41px;
+}
+.crown__rule {
+  flex: 1;
+  height: 1px;
+  margin-bottom: 2px;
+  background: linear-gradient(to right, transparent, rgba(194, 160, 78, 0.45));
+}
+.crown__rule:last-child {
+  background: linear-gradient(to left, transparent, rgba(194, 160, 78, 0.45));
+}
+
+/* A frieze of diamonds, for dividing one thing from the next. */
+.frieze {
+  display: block;
+  width: 100%;
+  height: 8px;
+  color: var(--gold-dim);
+  opacity: 0.65;
+}
+
+/* ---------------------------------------------------------------------------
+ * PANEL. A bordered field with corner marks, the way a manuscript page is
+ * ruled before anything is written on it. The corners are drawn with two
+ * gradients rather than four elements.
+ * ------------------------------------------------------------------------- */
+.ornate {
+  position: relative;
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+}
+.ornate::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  pointer-events: none;
+  border: 1px solid rgba(194, 160, 78, 0.14);
+  /* Mask the middle of each edge so only the corner brackets show. */
+  -webkit-mask:
+    linear-gradient(to right, #000 0 14px, transparent 14px calc(100% - 14px), #000 calc(100% - 14px) 100%),
+    linear-gradient(to bottom, #000 0 14px, transparent 14px calc(100% - 14px), #000 calc(100% - 14px) 100%);
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(to right, #000 0 14px, transparent 14px calc(100% - 14px), #000 calc(100% - 14px) 100%),
+    linear-gradient(to bottom, #000 0 14px, transparent 14px calc(100% - 14px), #000 calc(100% - 14px) 100%);
+  mask-composite: intersect;
+}
+
+/* ---------------------------------------------------------------------------
+ * GLYPHS. Every mark inherits currentColor, so colour is set by the parent and
+ * a mark never has to know what it sits on.
+ * ------------------------------------------------------------------------- */
+.glyph {
+  display: inline-block;
+  vertical-align: -0.18em;
+  color: var(--gold);
+  flex: none;
+}
+.glyph--dim {
+  color: var(--ink-faint);
+}
+.glyph--row {
+  color: var(--ink-dim);
+  opacity: 0.8;
+}
+
+/* Rank, shown as the tiers of a temple spire: taller means greater. */
+.rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--gold-dim);
+}
+
+/* Badges on a card: small, drawn, and never emoji. */
+.card__badges .glyph {
+  color: var(--gold);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+}
+
+/* ---------------------------------------------------------------------------
+ * RULES LIST. The How to Play panel, where the six emoji used to be. Each row
+ * now leads with a drawn mark in its own ruled cell.
+ * ------------------------------------------------------------------------- */
+.rule-mark {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: none;
+  color: var(--gold);
+  border: 1px solid rgba(194, 160, 78, 0.28);
+  border-radius: 2px;
+  background: radial-gradient(circle at 50% 40%, rgba(194, 160, 78, 0.12), transparent 70%);
+}
+
+/* Respect the setting; none of the ornament needs to move. */
+@media (prefers-reduced-motion: reduce) {
+  .jali::before {
+    opacity: 0.3;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Fitting the marks into the existing How to Play grid. The old rule icon was
+ * a font-size, because it held an emoji; a drawn mark needs a box instead.
+ * ------------------------------------------------------------------------- */
+.howto__icon {
+  font-size: 0 !important; /* kills the leftover emoji sizing */
+}
+.howto__rule {
+  align-items: start;
+}
+.howto__close {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+.panel.howto .crown {
+  margin-bottom: 0.15rem;
+}
+
+/* The band above the closing button doubles as the rule that separates the
+   list of rules from it, so it wants the full width of the panel. */
+.howto__close .frieze {
+  width: 62%;
+  margin-bottom: 0.15rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * BUTTONS AS INSCRIBED PLATES.
+ *
+ * The stock control was a rounded rectangle with a flat fill, which is the one
+ * shape this visual tradition never makes: temple work is orthogonal, and the
+ * ornament sits at the corners. So the radius comes almost all the way down
+ * and each button gets an inset keyline with its middles masked away, leaving
+ * four corner brackets. On hover the brackets brighten rather than the whole
+ * face lighting up, which is a quieter and more expensive-looking move.
+ * ------------------------------------------------------------------------- */
+.btn {
+  position: relative;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+  border: 1px solid rgba(194, 160, 78, 0.22);
+  transition: border-color 0.18s ease;
+  -webkit-mask:
+    linear-gradient(to right, #000 0 8px, transparent 8px calc(100% - 8px), #000 calc(100% - 8px) 100%),
+    linear-gradient(to bottom, #000 0 6px, transparent 6px calc(100% - 6px), #000 calc(100% - 6px) 100%);
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(to right, #000 0 8px, transparent 8px calc(100% - 8px), #000 calc(100% - 8px) 100%),
+    linear-gradient(to bottom, #000 0 6px, transparent 6px calc(100% - 6px), #000 calc(100% - 6px) 100%);
+  mask-composite: intersect;
+}
+/* The bracket is the ornament, so the plain edge behind it steps back. Left at
+   full strength the two lines sat 5px apart and read as one dashed border. */
+.btn--ghost {
+  border-color: rgba(238, 228, 210, 0.07);
+}
+.btn--ghost:hover {
+  border-color: rgba(194, 160, 78, 0.3);
+}
+.btn:hover::after {
+  border-color: rgba(194, 160, 78, 0.7);
+}
+.btn:hover {
+  /* The old hover washed the whole face with white. Brass warms; it does not
+     go pale. */
+  background: rgba(194, 160, 78, 0.07);
+}
+.btn--ghost:hover {
+  background: rgba(194, 160, 78, 0.06);
+}
+
+/* The gilt plate. A single flat gradient reads as plastic; brass has a bright
+   line where the light catches the top bevel and a dark one under it. */
+.btn--primary {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, transparent 42%),
+    linear-gradient(180deg, #d0ad57 0%, #a8873c 52%, #8d7231 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 226, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 1px 10px rgba(194, 160, 78, 0.14);
+  text-shadow: 0 1px 0 rgba(255, 246, 220, 0.3);
+}
+.btn--primary::after {
+  border-color: rgba(60, 42, 8, 0.34);
+}
+.btn--primary:hover::after {
+  border-color: rgba(60, 42, 8, 0.5);
+}
+.btn--primary:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, transparent 42%),
+    linear-gradient(180deg, #dcb85e 0%, #b2903f 52%, #977a34 100%);
+}
+
+/* Small buttons get proportionally smaller brackets, or the marks meet in the
+   middle and the mask stops reading as corners at all. */
+.btn--sm::after {
+  inset: 2px;
+  -webkit-mask:
+    linear-gradient(to right, #000 0 7px, transparent 7px calc(100% - 7px), #000 calc(100% - 7px) 100%),
+    linear-gradient(to bottom, #000 0 6px, transparent 6px calc(100% - 6px), #000 calc(100% - 6px) 100%);
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(to right, #000 0 7px, transparent 7px calc(100% - 7px), #000 calc(100% - 7px) 100%),
+    linear-gradient(to bottom, #000 0 6px, transparent 6px calc(100% - 6px), #000 calc(100% - 6px) 100%);
+  mask-composite: intersect;
+}
+
+/* ---------------------------------------------------------------------------
+ * THE FRONT DOOR. The title screen is the one place worth spending on, because
+ * it sets the expectation for everything behind it.
+ * ------------------------------------------------------------------------- */
+.menu__devanagari {
+  font-family: var(--font-deva);
+  /* Tiro sets Sanskrit at its own generous proportions, so the old 0.3em
+     tracking pulled the conjuncts apart into separate glyphs. */
+  letter-spacing: 0.12em;
+  font-size: 26px;
+}
+.menu__title {
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+.menu .crown {
+  max-width: 520px;
+  margin-top: -10px;
+}
+.menu .crown > svg {
+  width: 160px;
+  height: 50px;
+}
+.menu__actions {
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------------------------
+ * THE CARD. A drawn mark in a niche, until the painting arrives.
+ *
+ * The art slot was sized with font-size, because it held an emoji. A drawn mark
+ * is sized in the component, so the slot only has to hold it: a shallow recess
+ * with a hairline keyline, the way a temple niche holds a figure.
+ * ------------------------------------------------------------------------- */
+.card__mark {
+  color: var(--pal-edge, var(--gold));
+  opacity: 0.9;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+}
+.card__art:has(.card__mark) {
+  border-radius: 4px;
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(194, 160, 78, 0.1), transparent 68%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.24), transparent 60%);
+  box-shadow: inset 0 0 0 1px rgba(194, 160, 78, 0.12);
+}
+
+/* ---------------------------------------------------------------------------
+ * THE FIELD. Six near-identical dark bands is not a battlefield, it is a
+ * spreadsheet. The jali screen gives the empty ones something to be, and the
+ * gutter is ruled off from the field the way a margin is ruled on a page.
+ * ------------------------------------------------------------------------- */
+.row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(194, 160, 78, 0.045) 0 1px, transparent 1px 13px),
+    repeating-linear-gradient(-45deg, rgba(194, 160, 78, 0.045) 0 1px, transparent 1px 13px);
+}
+.row__label::after {
+  content: '';
+  position: absolute;
+  right: -7px;
+  top: -6px;
+  bottom: -6px;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(194, 160, 78, 0.22) 22%,
+    rgba(194, 160, 78, 0.22) 78%,
+    transparent
+  );
+}
+
+/* The card sits on the field, so it has to sit ABOVE the screen behind it. */
+.row__cards,
+.row__power,
+.row__label {
+  position: relative;
+  z-index: 1;
+}
+
+/* The hand count reads as a mark plus a number, not as an emoji plus a number. */
+.chip__hand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--ink-dim);
+}
+.chip__hand svg {
+  color: var(--gold-dim);
+}
+@media (max-width: 640px) {
+  .row::before {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * BOARD CARDS. These do not get their declared 92x128: the card carries
+ * aspect-ratio 5/7 and shrinks to the row height, so on a 1280x860 screen it
+ * lands at 44x62 and smaller on a laptop. Head + mark + foot needs 66px, so
+ * the foot was being pushed a fraction past the bottom edge and clipped.
+ *
+ * The foot is the thing to drop. On the board the row already says what kind
+ * of thing this is, and the power badge marks a warrior; "Warrior" printed
+ * under every card is a caption nobody reads twice.
+ * ------------------------------------------------------------------------- */
+.row__cards .card__foot {
+  display: none;
+}
+.row__cards .card__art {
+  /* Reclaim what the foot was using. */
+  margin-bottom: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * The power badge is absolutely positioned bottom-left; the type label sits in
+ * the flow, right-aligned. On a 92px card the word WARRIOR is 51px wide and
+ * only 46px are left beside the badge, so the two overlapped by 5px at desktop
+ * and by far more on a phone.
+ *
+ * No amount of padding fixes that, and the label is redundant anyway: the
+ * badge IS the "this is a warrior" mark, and the rank chevron in the header
+ * says the rest. Cards with no badge (ASTRA, VARDAAN, SHASTRA, STRATAGEM) keep
+ * theirs, because for those the word is the only thing saying what they are,
+ * and they have the whole foot to themselves.
+ * ------------------------------------------------------------------------- */
+.card:has(.card__power) .card__foot {
+  display: none;
+}
+
+/* On a phone the toast column was 70% of the screen and covered the top two
+   rows outright. Narrower, and still clear of the power figures. */
+@media (max-width: 640px) {
+  .eventlog {
+    right: 52px;
+    max-width: min(58vw, 220px);
+  }
+  .eventlog__item {
+    font-size: 11.5px;
+    padding: 5px 8px;
+  }
+}

@@ -9,6 +9,7 @@ import { getDeity, worthOf } from '@run/shrine';
 import type { PenanceOffer, ShrineOffer, VardaanOffer } from '@run/shrine';
 import type { RewardOption, RunState } from '@run/types';
 import { recordRunEnd } from '@run/meta';
+import { Bindu, Rosette } from '@ui/ornament';
 
 interface Props {
   run: RunState;
@@ -124,7 +125,7 @@ function MapScreen({
         <div className="run__away">
           {run.away.map((p) => (
             <span key={p.warrior} className="away-chip" title={`Returns before rung ${p.returnsAt + 1}`}>
-              🕉 {getCard(p.warrior).name} at penance
+              <Bindu size={13} className="glyph glyph--dim" /> {getCard(p.warrior).name} at penance
             </span>
           ))}
           <span className="run__curses-note">absent until the tapasya is complete</span>
@@ -137,7 +138,7 @@ function MapScreen({
             const c = getCurse(id);
             return (
               <span key={id} className="curse-chip" title={c?.text ?? id}>
-                ✦ {c?.name ?? id}
+                <Rosette petals={6} size={11} className="glyph glyph--dim" /> {c?.name ?? id}
               </span>
             );
           })}

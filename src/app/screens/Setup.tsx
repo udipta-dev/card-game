@@ -6,6 +6,7 @@ import type { Card, House } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_DOT, FACTION_NAME } from '@ui/card/cardTheme';
+import { Aksha } from '@ui/ornament';
 
 const FACTIONS: { house: House; deck: DeckList }[] = [
   { house: 'pandava', deck: PANDAVA_DECK },
@@ -95,7 +96,7 @@ export function Setup({ mode, onStart, onStartHost, onBack }: Props) {
                 className={'faction-btn' + (oppHouse === 'random' ? ' faction-btn--on' : '')}
                 onClick={() => setOppHouse('random')}
               >
-                🎲 Random
+                <Aksha size={14} className="glyph glyph--dim" /> Random
               </button>
               {FACTIONS.map((f) => factionButton(f.house, oppHouse === f.house, () => setOppHouse(f.house)))}
             </div>

@@ -15,6 +15,7 @@ import type { Action, Card, GameState, House, InstanceId, Row, Seat } from '@eng
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_DOT, FACTION_NAME, ROW_GLOSS, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
+import { Fan, ROW_GLYPH, Rosette } from '@ui/ornament';
 import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
 
@@ -244,8 +245,14 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
         onClick={() => onRowClick(seat, row)}
       >
         <span className="row__label" title={`${ROW_LABEL[row]}: ${ROW_GLOSS[row]}`}>
-          {ROW_LABEL[row]}
-          <span className="row__gloss">{ROW_GLOSS[row]}</span>
+          {(() => {
+            const Glyph = ROW_GLYPH[row];
+            return <Glyph size={17} className="row__glyph" />;
+          })()}
+          <span className="row__words">
+            {ROW_LABEL[row]}
+            <span className="row__gloss">{ROW_GLOSS[row]}</span>
+          </span>
         </span>
         <div className="row__cards">
           {state.board[seat][row].map((iid) => {
@@ -581,13 +588,14 @@ function SeatChip({
       <span className="chip__name">{name}</span>
       <Gems n={wins} />
       <span className="chip__hand" title="cards in hand">
-        🖐{hand}
+        <Fan size={15} />
+        {hand}
       </span>
       {curses.map((id) => {
         const c = getCurse(id);
         return (
           <span key={id} className="curse-chip" title={c?.text ?? id}>
-            ✦ {c?.name ?? id}
+            <Rosette petals={6} size={11} className="glyph glyph--dim" /> {c?.name ?? id}
           </span>
         );
       })}

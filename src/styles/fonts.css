@@ -1,0 +1,19 @@
+/* The Devanagari title face.
+ *
+ * Not @fontsource/tiro-devanagari-sanskrit: that ships the whole Devanagari
+ * range at 180 KB, which the service worker then precaches, for a single
+ * eleven-character word on the title screen. A third of the app's offline
+ * payload for one line of type is not a trade worth making.
+ *
+ * This is the same font subset to exactly the glyphs in कुरुक्षेत्र, with the
+ * layout features kept so the conjuncts still form. 180 KB becomes 8.7 KB.
+ * Regenerate with `npm run font:subset` if the title ever changes.
+ */
+@font-face {
+  font-family: 'Tiro Devanagari Sanskrit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/tiro-kurukshetra.woff2') format('woff2');
+  unicode-range: U+0900-097F, U+200C-200D;
+}

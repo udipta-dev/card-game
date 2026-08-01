@@ -19,12 +19,17 @@ export interface HousePalette {
   glow: string;
 }
 
+// Ground colours, ground pigments. These were still the retired neon set long
+// after tokens.css moved to indigo/lac/terre verte, so the board glowed royal
+// blue under cards painted in gouache. Each base is the token colour taken
+// down to something a lamp could plausibly light, and every edge is brass:
+// house is carried by the ground, never by five competing metals.
 export const HOUSE_PALETTE: Record<House, HousePalette> = {
-  pandava: { base: '#16265c', edge: '#e8b923', ink: '#eaf0ff', glow: 'rgba(120,160,255,0.55)' },
-  kaurava: { base: '#4a0f14', edge: '#c9a227', ink: '#ffeaea', glow: 'rgba(220,80,80,0.55)' },
-  neutral: { base: '#2c1a4d', edge: '#8b7bd8', ink: '#f0eaff', glow: 'rgba(160,120,240,0.55)' },
-  asura: { base: '#152b1c', edge: '#57b06e', ink: '#e6ffe9', glow: 'rgba(90,200,120,0.5)' },
-  legend: { base: '#12313a', edge: '#54b7c4', ink: '#e6fbff', glow: 'rgba(84,183,196,0.5)' },
+  pandava: { base: '#141d2e', edge: '#a98c45', ink: '#e6ecf6', glow: 'rgba(91,123,168,0.45)' },
+  kaurava: { base: '#2b120f', edge: '#a98c45', ink: '#f6e7e4', glow: 'rgba(176,87,74,0.45)' },
+  neutral: { base: '#211c2c', edge: '#a98c45', ink: '#efeaf6', glow: 'rgba(136,120,171,0.45)' },
+  asura: { base: '#15201a', edge: '#a98c45', ink: '#e6f1e9', glow: 'rgba(106,144,112,0.42)' },
+  legend: { base: '#132225', edge: '#a98c45', ink: '#e4f2f4', glow: 'rgba(95,143,149,0.42)' },
 };
 
 /** Short display name and dot colour per house, for chips and the picker. */
@@ -57,132 +62,10 @@ export function tierMark(tier?: Tier): string {
   return '';
 }
 
-// Signature glyphs, a light touch of character for the placeholder art.
-const GLYPHS: Record<string, string> = {
-  // Pandavas
-  arjuna: '🏹',
-  bhima: '🪓',
-  yudhishthira: '👑',
-  abhimanyu: '🌀',
-  ghatotkacha: '👹',
-  dhrishtadyumna: '🔥',
-  nakula: '🗡️',
-  sahadeva: '📜',
-  shikhandi: '☯️',
-  pandava_infantry: '🛡️',
-  krishna_charioteer: '🪈',
-  // Kauravas
-  bhishma: '🏵️',
-  drona: '🎯',
-  karna: '☀️',
-  duryodhana: '💎',
-  ashwatthama: '🐎',
-  dushasana: '✋',
-  shakuni: '🎲',
-  jayadratha: '🚪',
-  kaurava_infantry: '⚔️',
-  // Astras & tricks
-  nagastra: '🐍',
-  brahmastra: '☢️',
-  pashupatastra: '🔱',
-  vaishnavastra: '🌀',
-  ashwatthama_elephant: '🐘',
-  brahmashirsha: '☄️',
-  vasavi_shakti: '⚡',
-  aindrastra: '🌧️',
-  bhargavastra: '🪓',
-  vayavyastra: '🌪️',
-  sammohana: '💤',
-  agneyastra: '🔥',
-  varunastra: '🌊',
-  sauparna: '🦅',
-  narayanastra: '🌀',
-  // Pandava allies
-  iravan: '🐍',
-  anjanaparvan: '👹',
-  drupada: '🏰',
-  satyaki: '🗡️',
-  virata: '🐟',
-  sweta: '⚡',
-  sankha: '🐚',
-  uttara: '🐎',
-  chekitana: '🛡️',
-  dhrishtaketu: '🔱',
-  kekaya_brothers: '👬',
-  kuntibhoja: '🏵️',
-  yuyutsu: '🕊️',
-  yudhamanyu: '🛞',
-  uttamaujas: '🛞',
-  prativindhya: '🔥',
-  sutasoma: '🔥',
-  shrutakarma: '🔥',
-  shatanika: '🔥',
-  shrutasena: '🔥',
-  // Kaurava allies
-  shalya: '🐎',
-  kripa: '📿',
-  kritavarma: '🌙',
-  bhurishravas: '🙏',
-  bahlika: '👴',
-  somadatta: '⚔️',
-  vikarna: '⚖️',
-  chitrasena: '🏹',
-  vivimsati: '🏹',
-  durmukha: '😠',
-  uluka: '✉️',
-  vinda: '⚔️',
-  anuvinda: '⚔️',
-  susharma: '💀',
-  sudakshina: '🐎',
-  srutayudha: '🔨',
-  jalasandha: '🐘',
-  alambusha: '👺',
-  alayudha: '👺',
-  vrishasena: '☀️',
-  // Asuras
-  ravana: '👺',
-  kumbhakarna: '😴',
-  indrajit: '🏹',
-  hiranyakashipu: '💪',
-  hiranyaksha: '🐗',
-  bali: '👑',
-  prahlada: '🙏',
-  narakasura: '🗡️',
-  mahishasura: '🐃',
-  shumbha: '😈',
-  nishumbha: '😈',
-  raktabija: '🩸',
-  vritra: '🐉',
-  tarakasura: '⭐',
-  asura_horde: '👹',
-  // Vardaan: gifts of the gods
-  brahmas_bargain: '🪷',
-  kunti_invocation: '🕉️',
-  surya_kavacha: '🌞',
-  ashwins_draught: '⚕️',
-  vayu_fury: '🌪️',
-  yama_summons: '⚖️',
-  // Those who stood apart
-  barbarika: '🏹',
-  jarasandha: '🤼',
-  balarama: '🌾',
-  ekalavya: '🎯',
-  shishupala: '💯',
-  rukmi: '🏹',
-};
-
-const TYPE_FALLBACK: Record<Card['type'], string> = {
-  unit: '⚔️',
-  astra: '✴️',
-  shastra: '🗡️',
-  boon: '🪷',
-  curse: '🕯️',
-  stratagem: '🎭',
-};
-
-export function cardGlyph(card: Card): string {
-  return GLYPHS[card.id] ?? TYPE_FALLBACK[card.type];
-}
+// The placeholder art is a drawn mark now, and lives in ./marks. The emoji
+// table that used to sit here mapped 117 card ids onto somebody else's
+// illustrations, in somebody else's colour, at a weight nothing else on the
+// card shared.
 
 export const TYPE_LABEL: Record<Card['type'], string> = {
   unit: 'Warrior',

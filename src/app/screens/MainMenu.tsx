@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HowToPlay } from '@ui/HowToPlay';
+import { Crown } from '@ui/ornament';
 import { loadMeta } from '@run/meta';
 
 interface Props {
@@ -26,6 +27,7 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
     <div className="menu">
       <div className="menu__devanagari">कुरुक्षेत्र</div>
       <h1 className="menu__title">Kurukshetra</h1>
+      <Crown />
       <p className="menu__sub">
         A card battler of the Mahabharata. Marshal maharathis, fire divine astras, and turn the
         tide with curses and boons across three rounds of war. Raw power is never destiny. The right

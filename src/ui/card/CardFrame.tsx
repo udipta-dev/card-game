@@ -1,6 +1,8 @@
 import type { CSSProperties, MouseEvent } from 'react';
+import { Adamant, Boss, Conch, SunkWheel } from '../ornament';
 import type { Card, CardInstance } from '@engine/types';
-import { HOUSE_PALETTE, TIER_LABEL, TYPE_LABEL, cardGlyph, tierMark } from './cardTheme';
+import { HOUSE_PALETTE, TIER_LABEL, TYPE_LABEL, tierMark } from './cardTheme';
+import { markFor } from './marks';
 import { artFor } from './cardArt';
 
 interface Props {
@@ -30,6 +32,7 @@ export function CardFrame({
   onLeave,
 }: Props) {
   const art = artFor(card);
+  const Mark = markFor(card.id, card.type);
   const pal = HOUSE_PALETTE[card.house];
   const style = {
     '--pal-base': pal.base,
@@ -80,7 +83,7 @@ export function CardFrame({
         {art ? (
           <img src={art} alt="" loading="lazy" draggable={false} />
         ) : (
-          <span>{cardGlyph(card)}</span>
+          <Mark size={mini ? 26 : 44} className="card__mark" />
         )}
       </div>
 
@@ -100,10 +103,18 @@ export function CardFrame({
       )}
 
       <div className="card__badges">
-        {instance?.flags.has('krishna-guarded') && <span title="Guarded by Krishna">🪈</span>}
-        {instance && (instance.counters.armor ?? 0) > 0 && <span title="Armoured">🛡️</span>}
-        {instance?.flags.has('diamond-body') && <span title="Diamond body">💎</span>}
-        {instance?.flags.has('wheel-sunk') && <span title="Chariot wheel sunk">🛞</span>}
+        {instance?.flags.has('krishna-guarded') && (
+          <Conch size={15} className="glyph" title="Guarded by Krishna" />
+        )}
+        {instance && (instance.counters.armor ?? 0) > 0 && (
+          <Boss size={15} className="glyph" title="Armoured" />
+        )}
+        {instance?.flags.has('diamond-body') && (
+          <Adamant size={15} className="glyph" title="Adamantine body" />
+        )}
+        {instance?.flags.has('wheel-sunk') && (
+          <SunkWheel size={15} className="glyph" title="The earth has his wheel" />
+        )}
       </div>
     </div>
   );

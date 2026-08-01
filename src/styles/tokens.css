@@ -1,36 +1,55 @@
 /* Design tokens + base reset. House/tier/row colours live here as custom
    properties so the whole UI reads as one system. */
 :root {
-  --bg-0: #0b0a12;
-  --bg-1: #14121f;
-  --bg-2: #1d1a2c;
-  --panel: rgba(255, 255, 255, 0.04);
-  --panel-edge: rgba(255, 255, 255, 0.09);
-  --ink: #ece7f5;
-  --ink-dim: #a89fc2;
-  --ink-faint: #6f6790;
-  --gold: #e8b923;
-  --gold-dim: #b9922a;
+  /* GROUND. Lamp-black with a warm cast, not the blue-violet it was. The card
+     art is ink-and-gouache with dramatic chiaroscuro, and a cool purple ground
+     made every painting look like it had been pasted onto the wrong app. */
+  --bg-0: #0c0a09;
+  --bg-1: #15110f;
+  --bg-2: #201a16;
+  --panel: rgba(238, 228, 210, 0.035);
+  --panel-edge: rgba(238, 228, 210, 0.1);
+  --ink: #efe6d4;
+  --ink-dim: #b3a68e;
+  --ink-faint: #7c7160;
 
-  --pandava: #4f7cff;
-  --pandava-deep: #16265c;
-  --kaurava: #e0555b;
-  --kaurava-deep: #4a0f14;
-  --neutral: #a081ee;
-  --asura: #57c06e;
-  --legend: #54b7c4;
+  /* BRASS, not neon gold. Repoussé brass under lamplight is dull and warm; the
+     old #e8b923 was a highlighter pen and it pulled the eye off the art. */
+  --gold: #c2a04e;
+  --gold-dim: #8d7231;
 
-  --win: #57d38c;
-  --lose: #e0555b;
+  /* HOUSES, AS PIGMENTS. Each is a colour a painter of this tradition actually
+     ground and used, which is why they sit down beside the gouache instead of
+     glowing on top of it: indigo, lac, terre verte, lapis. */
+  --pandava: #5b7ba8;      /* indigo */
+  --pandava-deep: #1b2942;
+  --kaurava: #b0574a;      /* lac */
+  --kaurava-deep: #3d1613;
+  --neutral: #8878ab;      /* lapis */
+  --asura: #6a9070;        /* terre verte */
+  --legend: #5f8f95;       /* verdigris */
 
-  --row-ratha: rgba(232, 185, 35, 0.06);
-  --row-gaja: rgba(160, 129, 238, 0.06);
-  --row-padati: rgba(120, 160, 255, 0.05);
+  --win: #7ba879;
+  --lose: #b0574a;
+
+  --row-ratha: rgba(194, 160, 78, 0.055);
+  --row-gaja: rgba(136, 120, 171, 0.055);
+  --row-padati: rgba(91, 123, 168, 0.05);
 
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  --font-display: 'Cinzel', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+
+  /* Cinzel led this stack and was never named in a font-family, so three
+     weights of it were being bundled and precached for nothing. It is also
+     Trajan-Roman capitals, the wrong civilisation entirely.
+
+     EB Garamond is an old-style with real character in the ascenders, and it
+     sits down beside painted gouache instead of on top of it. The Devanagari
+     is Tiro Sanskrit, cut for exactly this script rather than borrowed from
+     whatever the device happens to have. */
+  --font-display: 'EB Garamond', 'Iowan Old Style', Palatino, 'Book Antiqua', Georgia, serif;
+  --font-deva: 'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif;
   --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -52,7 +71,7 @@ body,
 
 body {
   background:
-    radial-gradient(1200px 700px at 50% -10%, #241f38 0%, var(--bg-0) 60%),
+    radial-gradient(1200px 700px at 50% -10%, #2a2119 0%, var(--bg-0) 62%),
     var(--bg-0);
   color: var(--ink);
   font-family: var(--font-ui);
