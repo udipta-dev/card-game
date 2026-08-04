@@ -46,6 +46,15 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 
 Each card below gives two forms. **Standalone** includes the style sentence; use it when generating from the prompt alone. **With style reference** omits it, for when an approved image is uploaded as a style reference and repeating the style in words would give the model two competing instructions.
 
+
+## Weapons carry their god
+
+The first weapon set came back as pretty light and nothing else, because nothing in the frame was looking back and nothing said which god it belonged to. The epic itself supplies the fix, in the argument over whose sign is greatest: *"Brahma has for his sign the lotus, Vishnu has for his the discus, Indra has for his sign the thunder-bolt."* Every weapon prompt now names its own god's attribute as an object, and puts something in the frame with a face or an eye. The Brahmastra is not a column of fire, it is an arrow whose head is a lotus opening into four faces, because Ganguli has the four-faced Brahma come out of the navel-lotus.
+
+**Arrows rise.** Nothing falls, descends or rains down. It reads better on a portrait card and it reads better as a weapon being loosed rather than a weather event happening.
+
+**Three rules bend for weapons only.** They lose `no bloom`, because these things are made of light and the corona is what feathers the effect into the board instead of ending it at a hard edge. They swap the muted earthy palette for incandescent white and gold, which is still one global palette instruction and so still obeys rule 6; the earthy one was quietly telling the model to desaturate the only subject on the card. And they are isolated on pure black, for the compositing reasons in the art folder README.
+
 ## The Pandava Host (30)
 
 ### Arjuna
@@ -1354,404 +1363,404 @@ Rukmi, wiry, standing square and unmoving, squarely facing the viewer, head slig
 
 ### Brahma-Astra
 
-`brahmastra.png` · 577 chars · 92 words
+`brahmastra.png` · 810 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single arrow blooming into a towering column of white fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single arrow rising point-upward, its head a lotus opening into four stern faces that stare outward in four directions, a wheel of white fire turning behind them. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single arrow blooming into a towering column of white fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single arrow rising point-upward, its head a lotus opening into four stern faces that stare outward in four directions, a wheel of white fire turning behind them. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Brahmashirsha-Astra
 
-`brahmashirsha.png` · 586 chars · 93 words
+`brahmashirsha.png` · 781 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A four-faced pillar of fire, one face to each quarter, turning slowly. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. Four immense faces of the Grandsire stacked into a rising column of fire, every mouth open, a crown of burning lotus petals at the top. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A four-faced pillar of fire, one face to each quarter, turning slowly. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Four immense faces of the Grandsire stacked into a rising column of fire, every mouth open, a crown of burning lotus petals at the top. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Pashupat-Astra
 
-`pashupatastra.png` · 589 chars · 94 words
+`pashupatastra.png` · 794 chars · 130 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single unbearable eye of white fire, wide open, rimmed with cold flame. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. One vast unblinking eye opening upright in a mane of white fire, a crescent moon and a trident rising from its brow, serpents coiling along its rim. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single unbearable eye of white fire, wide open, rimmed with cold flame. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+One vast unblinking eye opening upright in a mane of white fire, a crescent moon and a trident rising from its brow, serpents coiling along its rim. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Narayan-Astra
 
-`narayanastra.png` · 607 chars · 94 words
+`narayanastra.png` · 772 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Innumerable divine weapons, discs and spears without number, descending in a dense curtain. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A blazing discus at the centre, innumerable spears and discs streaming outward from it in every direction, each trailing fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-Innumerable divine weapons, discs and spears without number, descending in a dense curtain. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A blazing discus at the centre, innumerable spears and discs streaming outward from it in every direction, each trailing fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Vaishnav-Astra
 
-`vaishnavastra.png` · 606 chars · 99 words
+`vaishnavastra.png` · 792 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A discus of blue-white light in flight, its rim a ring of fire, trailing a long clean arc. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. One immense discus seen edge-on, its rim a ring of serrated flame like a mouth of teeth, a lotus burning at the hub, spinning fast enough to blur. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A discus of blue-white light in flight, its rim a ring of fire, trailing a long clean arc. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+One immense discus seen edge-on, its rim a ring of serrated flame like a mouth of teeth, a lotus burning at the hub, spinning fast enough to blur. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Vasavi Shakti
 
-`vasavi_shakti.png` · 588 chars · 94 words
+`vasavi_shakti.png` · 774 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single blazing spear hanging in the dark, thrown once and never again. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single barbed dart rising point-upward, its shaft a braided thunderbolt, a corona of unblinking eyes burning along its length. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single blazing spear hanging in the dark, thrown once and never again. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single barbed dart rising point-upward, its shaft a braided thunderbolt, a corona of unblinking eyes burning along its length. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Aindra-Astra
 
-`aindrastra.png` · 584 chars · 94 words
+`aindrastra.png` · 790 chars · 129 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A dense solid sheet of arrows falling, each one lit like a filament. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A dense sheaf of arrows rising point-upward in a solid column, every shaft a thread of lightning, a thunderbolt burning at the core of the mass. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A dense solid sheet of arrows falling, each one lit like a filament. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A dense sheaf of arrows rising point-upward in a solid column, every shaft a thread of lightning, a thunderbolt burning at the core of the mass. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Agney-Astra
 
-`agneyastra.png` · 590 chars · 93 words
+`agneyastra.png` · 768 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A churning wall of unquenchable flame, its crest curling forward to break. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A wall of fire rising, its crest breaking into seven tongues, the head of a ram of white flame forming in the heart of it. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A churning wall of unquenchable flame, its crest curling forward to break. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A wall of fire rising, its crest breaking into seven tongues, the head of a ram of white flame forming in the heart of it. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Varun-Astra
 
-`varunastra.png` · 561 chars · 89 words
+`varunastra.png` · 779 chars · 130 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A rising wall of black water swallowing fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A rising coil of black water lit from within, a noose of white foam turning at its centre, the jaws of a makara opening at the crest. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A rising wall of black water swallowing fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A rising coil of black water lit from within, a noose of white foam turning at its centre, the jaws of a makara opening at the crest. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Vayavya-Astra
 
-`vayavyastra.png` · 584 chars · 94 words
+`vayavyastra.png` · 747 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A screaming spiral of wind drawn as a coiling funnel of white light. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A rising funnel of white wind, its walls scored into blades, a torn banner whipping at the top of it. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A screaming spiral of wind drawn as a coiling funnel of white light. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A rising funnel of white wind, its walls scored into blades, a torn banner whipping at the top of it. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Nag-Astra
 
-`nagastra.png` · 595 chars · 95 words
+`nagastra.png` · 768 chars · 123 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. An arrow becoming a mass of serpents in flight, hoods spread wide, fangs bared. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. An arrow rising point-upward, its shaft splitting into a mass of serpents, hoods spread wide, every mouth open and fanged. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-An arrow becoming a mass of serpents in flight, hoods spread wide, fangs bared. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+An arrow rising point-upward, its shaft splitting into a mass of serpents, hoods spread wide, every mouth open and fanged. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Sauparn-Astra
 
-`sauparna.png` · 594 chars · 95 words
+`sauparna.png` · 770 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A vast eagle of white fire stooping with talons open, wings filling the frame. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A vast eagle of white fire rising with talons open and wings spread to the edge of the frame, a serpent burning in its beak. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A vast eagle of white fire stooping with talons open, wings filling the frame. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A vast eagle of white fire rising with talons open and wings spread to the edge of the frame, a serpent burning in its beak. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Bhargav-Astra
 
-`bhargavastra.png` · 583 chars · 94 words
+`bhargavastra.png` · 759 chars · 125 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Countless arrows loosed at once from a single point, a fan of fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. Countless arrows rising at once from a single point in a widening fan, a great axe burning at the origin of them. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-Countless arrows loosed at once from a single point, a fan of fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Countless arrows rising at once from a single point in a widening fan, a great axe burning at the origin of them. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Sammohan-Astra
 
-`sammohana.png` · 588 chars · 94 words
+`sammohana.png` · 762 chars · 122 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A soft grey haze rolling over an army, weapons falling from slack hands. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A ring of spiralling eyes turning in on themselves, the pupils drifting apart, a slow dissolving light between them. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A soft grey haze rolling over an army, weapons falling from slack hands. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A ring of spiralling eyes turning in on themselves, the pupils drifting apart, a slow dissolving light between them. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Tvashtra-Astra
 
-`tvashtra.png` · 598 chars · 97 words
+`tvashtra.png` · 774 chars · 126 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. One of you, then a hundred, then a thousand, and they cannot tell which to strike. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. One armoured figure of white fire, and three more of the very same figure stepping out of it in different directions, each fainter than the last. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-One of you, then a hundred, then a thousand, and they cannot tell which to strike. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+One armoured figure of white fire, and three more of the very same figure stepping out of it in different directions, each fainter than the last. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Praswapa-Astra
 
-`praswapa.png` · 583 chars · 92 words
+`praswapa.png` · 814 chars · 133 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prajapati’s weapon, given to Bhishma in a dream by eight Brahmanas. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. One great closed eye at the centre of an eight-petalled lotus of white fire, the lashes long and utterly still, eight small flames standing in a ring beyond the petals. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-Prajapati’s weapon, given to Bhishma in a dream by eight Brahmanas. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+One great closed eye at the centre of an eight-petalled lotus of white fire, the lashes long and utterly still, eight small flames standing in a ring beyond the petals. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Samvodhan-Astra
 
-`samvodhana.png` · 568 chars · 90 words
+`samvodhana.png` · 779 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. The waking that Prajapati gave along with the sleep. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A great bell of white fire struck and still ringing, hard rings of sound expanding from its lip, an eye opening wide inside the bell. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-The waking that Prajapati gave along with the sleep. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A great bell of white fire struck and still ringing, hard rings of sound expanding from its lip, an eye opening wide inside the bell. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Prajna-Astra
 
-`prajna.png` · 587 chars · 93 words
+`prajna.png` · 783 chars · 130 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. The weapon of wakefulness, which is why Bhishma could not be stupefied. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single eye held open at the centre of a lotus of white fire, rings of small burning script in orbit around it, nothing about it drowsy. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-The weapon of wakefulness, which is why Bhishma could not be stupefied. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single eye held open at the centre of a lotus of white fire, rings of small burning script in orbit around it, nothing about it drowsy. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Antardhan-Astra
 
-`antardhana.png` · 593 chars · 95 words
+`antardhana.png` · 796 chars · 128 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. What Shiva shot to unmake Tripura, and Kubera gave to Arjuna on the mountain. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single arrow rising point-upward, three burning cities strung along its shaft like beads, a crescent moon and an opening third eye at the arrowhead. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-What Shiva shot to unmake Tripura, and Kubera gave to Arjuna on the mountain. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single arrow rising point-upward, three burning cities strung along its shaft like beads, a crescent moon and an opening third eye at the arrowhead. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ## The Named Weapons (6)
 
 ### Asi, the First Sword
 
-`asi.png` · 637 chars · 99 words
+`asi.png` · 809 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single straight double-edged sword standing point-down, the first sword ever forged, its blade running with white fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single straight double-edged sword rising point-upward, the first sword ever forged, white fire running the length of the blade and a ring of flame at the guard. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single straight double-edged sword standing point-down, the first sword ever forged, its blade running with white fire. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single straight double-edged sword rising point-upward, the first sword ever forged, white fire running the length of the blade and a ring of flame at the guard. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Gandiva
 
-`gandiva.png` · 634 chars · 101 words
+`gandiva.png` · 813 chars · 133 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single immense war bow, unstrung and upright, its limbs bound in gold and silver, faintly alight along their length. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single immense war bow held upright and strung, its limbs bound in gold and silver and carved with running water, one arrow of white fire nocked and pointing upward. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single immense war bow, unstrung and upright, its limbs bound in gold and silver, faintly alight along their length. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single immense war bow held upright and strung, its limbs bound in gold and silver and carved with running water, one arrow of white fire nocked and pointing upward. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Kaumodaki
 
-`kaumodaki.png` · 631 chars · 101 words
+`kaumodaki.png` · 798 chars · 130 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single heavy mace standing upright, its head a fluted globe banded in gold, the whole weapon glowing from within. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single heavy mace standing upright, its head a fluted globe banded in gold, a peal of thunder drawn as hard concentric rings breaking outward from it. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single heavy mace standing upright, its head a fluted globe banded in gold, the whole weapon glowing from within. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single heavy mace standing upright, its head a fluted globe banded in gold, a peal of thunder drawn as hard concentric rings breaking outward from it. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Chandrahasa
 
-`chandrahasa.png` · 634 chars · 102 words
+`chandrahasa.png` · 804 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single curved sword held upright, a thin crescent moon set into the pommel, cold white light along the cutting edge. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single curved sword rising point-upward, a thin crescent moon set into the pommel, cold white light along the cutting edge and a serpent coiled at the grip. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single curved sword held upright, a thin crescent moon set into the pommel, cold white light along the cutting edge. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single curved sword rising point-upward, a thin crescent moon set into the pommel, cold white light along the cutting edge and a serpent coiled at the grip. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Vajra
 
-`vajra.png` · 651 chars · 105 words
+`vajra.png` · 798 chars · 131 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single thunderbolt held horizontally, a ribbed grip flaring into a cage of curved prongs at each end, arcs of light between the tips. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single thunderbolt held upright, a ribbed grip of white bone flaring into a cage of curved prongs at each end, arcs of light leaping between the tips. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single thunderbolt held horizontally, a ribbed grip flaring into a cage of curved prongs at each end, arcs of light between the tips. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single thunderbolt held upright, a ribbed grip of white bone flaring into a cage of curved prongs at each end, arcs of light leaping between the tips. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ### Parasu
 
-`parasu.png` · 622 chars · 99 words
+`parasu.png` · 799 chars · 132 words
 
 Standalone:
 
 ```
-Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. A single great battle-axe standing upright, a broad crescent blade on a long haft, the edge burning white. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, incandescent white and gold against black, dramatic chiaroscuro. A single great battle-axe rising upright, a broad crescent blade on a long haft, the edge burning white and a third eye opening in the flat of the blade. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 With style reference:
 
 ```
-A single great battle-axe standing upright, a broad crescent blade on a long haft, the edge burning white. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+A single great battle-axe rising upright, a broad crescent blade on a long haft, the edge burning white and a third eye opening in the flat of the blade. No human figure. Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black. A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible. Whole subject inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces.
 ```
 
 ## Stratagems (1)

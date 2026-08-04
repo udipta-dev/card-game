@@ -50,6 +50,14 @@ const STYLE =
   'Ink-and-gouache fantasy illustration, bold black linework, opaque gouache ' +
   'brushwork, muted earthy palette, dramatic chiaroscuro.';
 
+/** Same hand, same medium, different palette. Rule 6 still applies: this is
+ *  one global palette instruction, not per-item colour discipline. It just
+ *  cannot be the earthy one, which was quietly instructing the model to
+ *  desaturate a weapon whose entire subject is light. */
+const STYLE_EMISSIVE =
+  'Ink-and-gouache fantasy illustration, bold black linework, opaque gouache ' +
+  'brushwork, incandescent white and gold against black, dramatic chiaroscuro.';
+
 /** The camera gets its own sentence, because a bare "Low-angle view" tucked
  *  into the framing clause did not land and Karna came back near eye-level.
  *  But it must NOT be universal: a worm's-eye view says "this one towers over
@@ -122,6 +130,17 @@ const FRAME = (subject: string) => `${subject} inside the frame, clear margin, n
 
 /** Rule 5: qualities only. Never negate an object. */
 const NEG = 'No photorealism, no 3D rendering, no glossy surfaces, no bloom.';
+
+/** Weapons keep the photographic negations but lose "no bloom": these things
+ *  are made of light, and the glow is the point. Screen compositing rewards it
+ *  too, since the corona is what feathers the effect into the board instead of
+ *  ending it at a hard edge. */
+const NEG_EMISSIVE = 'No photorealism, no 3D rendering, no glossy surfaces.';
+
+/** Rule 8 again, aimed at menace. The first pass produced pretty light and
+ *  nothing frightening, because nothing in the frame was looking back. */
+const AURA =
+  'A hard rim of white light around the whole subject and a wide burning corona beyond it. Enormous, close, and terrible.';
 
 type U = Card & { basePower?: number; tier?: string; flavor?: string };
 
@@ -947,26 +966,31 @@ const M: Record<string, Marquee> = {
 const PHENOMENON: Record<string, string> = {
   // The named weapons. Objects, not events: each one is a thing a hand holds,
   // so it is described as a thing rather than as something happening.
-  asi: 'A single straight double-edged sword standing point-down, the first sword ever forged, its blade running with white fire',
-  gandiva: 'A single immense war bow, unstrung and upright, its limbs bound in gold and silver, faintly alight along their length',
-  kaumodaki: 'A single heavy mace standing upright, its head a fluted globe banded in gold, the whole weapon glowing from within',
-  chandrahasa: 'A single curved sword held upright, a thin crescent moon set into the pommel, cold white light along the cutting edge',
-  vajra: 'A single thunderbolt held horizontally, a ribbed grip flaring into a cage of curved prongs at each end, arcs of light between the tips',
-  parasu: 'A single great battle-axe standing upright, a broad crescent blade on a long haft, the edge burning white',
-  pashupatastra: 'A single unbearable eye of white fire, wide open, rimmed with cold flame',
-  brahmashirsha: 'A four-faced pillar of fire, one face to each quarter, turning slowly',
-  brahmastra: 'A single arrow blooming into a towering column of white fire',
-  narayanastra: 'Innumerable divine weapons, discs and spears without number, descending in a dense curtain',
-  vaishnavastra: 'A discus of blue-white light in flight, its rim a ring of fire, trailing a long clean arc',
-  vasavi_shakti: 'A single blazing spear hanging in the dark, thrown once and never again',
-  nagastra: 'An arrow becoming a mass of serpents in flight, hoods spread wide, fangs bared',
-  sauparna: 'A vast eagle of white fire stooping with talons open, wings filling the frame',
-  agneyastra: 'A churning wall of unquenchable flame, its crest curling forward to break',
-  varunastra: 'A rising wall of black water swallowing fire',
-  vayavyastra: 'A screaming spiral of wind drawn as a coiling funnel of white light',
-  aindrastra: 'A dense solid sheet of arrows falling, each one lit like a filament',
-  bhargavastra: 'Countless arrows loosed at once from a single point, a fan of fire',
-  sammohana: 'A soft grey haze rolling over an army, weapons falling from slack hands',
+  asi: 'A single straight double-edged sword rising point-upward, the first sword ever forged, white fire running the length of the blade and a ring of flame at the guard',
+  gandiva: 'A single immense war bow held upright and strung, its limbs bound in gold and silver and carved with running water, one arrow of white fire nocked and pointing upward',
+  kaumodaki: 'A single heavy mace standing upright, its head a fluted globe banded in gold, a peal of thunder drawn as hard concentric rings breaking outward from it',
+  chandrahasa: 'A single curved sword rising point-upward, a thin crescent moon set into the pommel, cold white light along the cutting edge and a serpent coiled at the grip',
+  vajra: 'A single thunderbolt held upright, a ribbed grip of white bone flaring into a cage of curved prongs at each end, arcs of light leaping between the tips',
+  parasu: 'A single great battle-axe rising upright, a broad crescent blade on a long haft, the edge burning white and a third eye opening in the flat of the blade',
+  praswapa: 'One great closed eye at the centre of an eight-petalled lotus of white fire, the lashes long and utterly still, eight small flames standing in a ring beyond the petals',
+  samvodhana: 'A great bell of white fire struck and still ringing, hard rings of sound expanding from its lip, an eye opening wide inside the bell',
+  prajna: 'A single eye held open at the centre of a lotus of white fire, rings of small burning script in orbit around it, nothing about it drowsy',
+  tvashtra: 'One armoured figure of white fire, and three more of the very same figure stepping out of it in different directions, each fainter than the last',
+  antardhana: 'A single arrow rising point-upward, three burning cities strung along its shaft like beads, a crescent moon and an opening third eye at the arrowhead',
+  pashupatastra: 'One vast unblinking eye opening upright in a mane of white fire, a crescent moon and a trident rising from its brow, serpents coiling along its rim',
+  brahmashirsha: 'Four immense faces of the Grandsire stacked into a rising column of fire, every mouth open, a crown of burning lotus petals at the top',
+  brahmastra: 'A single arrow rising point-upward, its head a lotus opening into four stern faces that stare outward in four directions, a wheel of white fire turning behind them',
+  narayanastra: 'A blazing discus at the centre, innumerable spears and discs streaming outward from it in every direction, each trailing fire',
+  vaishnavastra: 'One immense discus seen edge-on, its rim a ring of serrated flame like a mouth of teeth, a lotus burning at the hub, spinning fast enough to blur',
+  vasavi_shakti: 'A single barbed dart rising point-upward, its shaft a braided thunderbolt, a corona of unblinking eyes burning along its length',
+  nagastra: 'An arrow rising point-upward, its shaft splitting into a mass of serpents, hoods spread wide, every mouth open and fanged',
+  sauparna: 'A vast eagle of white fire rising with talons open and wings spread to the edge of the frame, a serpent burning in its beak',
+  agneyastra: 'A wall of fire rising, its crest breaking into seven tongues, the head of a ram of white flame forming in the heart of it',
+  varunastra: 'A rising coil of black water lit from within, a noose of white foam turning at its centre, the jaws of a makara opening at the crest',
+  vayavyastra: 'A rising funnel of white wind, its walls scored into blades, a torn banner whipping at the top of it',
+  aindrastra: 'A dense sheaf of arrows rising point-upward in a solid column, every shaft a thread of lightning, a thunderbolt burning at the core of the mass',
+  bhargavastra: 'Countless arrows rising at once from a single point in a widening fan, a great axe burning at the origin of them',
+  sammohana: 'A ring of spiralling eyes turning in on themselves, the pupils drifting apart, a slow dissolving light between them',
   brahmas_bargain: 'Two asura brothers kneeling before a four-faced god, one boon between them, each already watching the other',
   kunti_invocation: 'A woman with closed eyes speaking a mantra, a god half-formed in the air above her',
   surya_kavacha: 'Golden armour and earrings glowing with sunlight, worn by no one, floating in darkness',
@@ -984,6 +1008,7 @@ const PHENOMENON: Record<string, string> = {
 /** Cards whose subject IS a person. "No human figure" was being stamped on a
  *  queen, a woman speaking a mantra, twin gods and a lord of death. */
 const HAS_FIGURE = new Set([
+  'tvashtra', // the astra IS a duplicated warrior; without him there is nothing to draw
   'krishna_charioteer',
   'brahmas_bargain',
   'kunti_invocation',
@@ -1002,8 +1027,9 @@ function bodyOf(card: U): string {
   if (card.type !== 'unit') {
     const p = PHENOMENON[card.id] || hookOf(card) || card.name;
     const figure = HAS_FIGURE.has(card.id) ? '' : 'No human figure. ';
-    const ground = EMISSIVE_TYPES.has(card.type) ? ON_BLACK : CAMERA_SCENE;
-    return `${p}. ${figure}${ground} ${FRAME('Whole subject')} ${NEG}`;
+    const emissive = EMISSIVE_TYPES.has(card.type);
+    const ground = emissive ? `${ON_BLACK} ${AURA}` : CAMERA_SCENE;
+    return `${p}. ${figure}${ground} ${FRAME('Whole subject')} ${emissive ? NEG_EMISSIVE : NEG}`;
   }
 
   const m = M[card.id] ?? {};
@@ -1153,6 +1179,38 @@ out.push('');
 out.push('Each card below gives two forms. **Standalone** includes the style sentence; use it when generating from the prompt alone. **With style reference** omits it, for when an approved image is uploaded as a style reference and repeating the style in words would give the model two competing instructions.');
 out.push('');
 
+out.push('');
+out.push('## Weapons carry their god');
+out.push('');
+out.push(
+  'The first weapon set came back as pretty light and nothing else, because ' +
+  'nothing in the frame was looking back and nothing said which god it belonged ' +
+  'to. The epic itself supplies the fix, in the argument over whose sign is ' +
+  'greatest: *"Brahma has for his sign the lotus, Vishnu has for his the discus, ' +
+  'Indra has for his sign the thunder-bolt."* Every weapon prompt now names its ' +
+  "own god's attribute as an object, and puts something in the frame with a face " +
+  'or an eye. The Brahmastra is not a column of fire, it is an arrow whose head ' +
+  'is a lotus opening into four faces, because Ganguli has the four-faced Brahma ' +
+  'come out of the navel-lotus.'
+);
+out.push('');
+out.push(
+  '**Arrows rise.** Nothing falls, descends or rains down. It reads better on a ' +
+  'portrait card and it reads better as a weapon being loosed rather than a ' +
+  'weather event happening.'
+);
+out.push('');
+out.push(
+  '**Three rules bend for weapons only.** They lose `no bloom`, because these ' +
+  'things are made of light and the corona is what feathers the effect into the ' +
+  'board instead of ending it at a hard edge. They swap the muted earthy palette ' +
+  'for incandescent white and gold, which is still one global palette instruction ' +
+  'and so still obeys rule 6; the earthy one was quietly telling the model to ' +
+  'desaturate the only subject on the card. And they are isolated on pure black, ' +
+  'for the compositing reasons in the art folder README.'
+);
+out.push('');
+
 for (const g of GROUPS) {
   const group = cards.filter(g.match);
   if (!group.length) continue;
@@ -1160,7 +1218,7 @@ for (const g of GROUPS) {
   out.push('');
   for (const c of group) {
     const body = bodyOf(c);
-    const full = `${STYLE} ${body}`;
+    const full = `${EMISSIVE_TYPES.has(c.type) ? STYLE_EMISSIVE : STYLE} ${body}`;
     const w = wordsIn(full);
     longest = Math.max(longest, full.length);
     longestWords = Math.max(longestWords, w);
