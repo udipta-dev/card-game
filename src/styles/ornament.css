@@ -415,3 +415,20 @@
     padding: 5px 8px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * EMISSIVE ART. Astras and shastras are painted on pure black, and screen
+ * blending drops that black so the weapon's light falls on the card's own
+ * house ground. Dropped in raw, a black-ground painting reads as a hole cut
+ * in the grid; blended, it reads as the card glowing.
+ *
+ * The drop-shadow on .card__art has to go for these. A filter creates a
+ * stacking context, and a stacking context isolates the blend, so the image
+ * would composite against nothing and the black would stay black.
+ * ------------------------------------------------------------------------- */
+.card__art--emissive {
+  filter: none;
+}
+.card__art--emissive img {
+  mix-blend-mode: screen;
+}

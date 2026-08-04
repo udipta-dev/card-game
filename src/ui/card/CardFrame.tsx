@@ -3,6 +3,11 @@ import { Adamant, Boss, Conch, SunkWheel } from '../ornament';
 import type { Card, CardInstance } from '@engine/types';
 import { HOUSE_PALETTE, TIER_LABEL, TYPE_LABEL, tierMark } from './cardTheme';
 import { markFor } from './marks';
+
+/** Weapon art is generated on pure black and screen-blended, so the card shows
+ *  the weapon's light on the card's own ground instead of a black rectangle.
+ *  See the ON_BLACK note in sim/build-art-prompts.ts. */
+const EMISSIVE = new Set(['astra', 'shastra']);
 import { artFor } from './cardArt';
 
 interface Props {
@@ -79,7 +84,7 @@ export function CardFrame({
         )}
       </div>
 
-      <div className="card__art">
+      <div className={'card__art' + (art && EMISSIVE.has(card.type) ? ' card__art--emissive' : '')}>
         {art ? (
           <img src={art} alt="" loading="lazy" draggable={false} />
         ) : (

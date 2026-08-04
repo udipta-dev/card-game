@@ -63,6 +63,27 @@ const CAMERA: Record<string, string> = {
 /** Same idea where there is no "him" to look up at. */
 const CAMERA_SCENE = 'Low camera angle looking up from below, towering scale.';
 
+/**
+ * Weapons are generated on pure black and composited with `mix-blend-mode:
+ * screen`, so the card shows the weapon's own light on the card's own ground
+ * rather than a black rectangle punched into the grid. The same file then
+ * seeds the invocation clip, which has to be black anyway: no video format
+ * carries an alpha channel in every browser, so screen-over-black is how an
+ * effect gets to sit on the board without a box around it.
+ *
+ * Everything here exists to protect the black. Haze, grain, a lifted vignette
+ * and volumetric smoke all survive a screen blend as a grey veil, and a dark
+ * bronze shaft disappears into the ground entirely, because screen can only
+ * add light. What you want visible has to be luminous.
+ */
+const ON_BLACK =
+  'Isolated on a pure black background, lit only by its own light. No ground, no horizon, no sky, no landscape, no smoke, no haze, no fog, no vignette, no film grain. Strong modelling is welcome but no part of the subject may fall to near-black.';
+
+/** Card types generated on black. Vardaans are the obvious next candidates if
+ *  the look is wanted for them; they are left as scenes for now because they
+ *  are gifts rather than light. */
+const EMISSIVE_TYPES = new Set(['astra', 'shastra']);
+
 // ------------------------------------------------------------------- facing
 // Nothing in the prompt said which way anyone faced, so the model fell back to
 // the same default every time and the whole set looked away to its left. That
@@ -924,18 +945,26 @@ const M: Record<string, Marquee> = {
 // ------------------------------------------------------------ astras & fates
 // No figure, so these get the whole budget for the phenomenon itself.
 const PHENOMENON: Record<string, string> = {
-  pashupatastra: 'A single unbearable eye of white fire opening in a black sky, the world thinning to nothing beneath it',
-  brahmashirsha: 'A four-faced pillar of fire rising from a scorched horizon',
-  brahmastra: 'A single arrow blooming into a column of white fire, the ground beneath already ash',
-  narayanastra: 'A sky filled edge to edge with descending divine weapons, discs and spears without number',
-  vaishnavastra: 'A discus of blue-white light crossing a dark field with impossible certainty',
+  // The named weapons. Objects, not events: each one is a thing a hand holds,
+  // so it is described as a thing rather than as something happening.
+  asi: 'A single straight double-edged sword standing point-down, the first sword ever forged, its blade running with white fire',
+  gandiva: 'A single immense war bow, unstrung and upright, its limbs bound in gold and silver, faintly alight along their length',
+  kaumodaki: 'A single heavy mace standing upright, its head a fluted globe banded in gold, the whole weapon glowing from within',
+  chandrahasa: 'A single curved sword held upright, a thin crescent moon set into the pommel, cold white light along the cutting edge',
+  vajra: 'A single thunderbolt held horizontally, a ribbed grip flaring into a cage of curved prongs at each end, arcs of light between the tips',
+  parasu: 'A single great battle-axe standing upright, a broad crescent blade on a long haft, the edge burning white',
+  pashupatastra: 'A single unbearable eye of white fire, wide open, rimmed with cold flame',
+  brahmashirsha: 'A four-faced pillar of fire, one face to each quarter, turning slowly',
+  brahmastra: 'A single arrow blooming into a towering column of white fire',
+  narayanastra: 'Innumerable divine weapons, discs and spears without number, descending in a dense curtain',
+  vaishnavastra: 'A discus of blue-white light in flight, its rim a ring of fire, trailing a long clean arc',
   vasavi_shakti: 'A single blazing spear hanging in the dark, thrown once and never again',
-  nagastra: 'Serpents rising from the ground to bind a warrior by the legs, hoods spread wide',
-  sauparna: 'The shadow of a vast eagle falling across a field, serpents scattering beneath it',
-  agneyastra: 'A wall of unquenchable flame advancing across a rank of soldiers',
+  nagastra: 'An arrow becoming a mass of serpents in flight, hoods spread wide, fangs bared',
+  sauparna: 'A vast eagle of white fire stooping with talons open, wings filling the frame',
+  agneyastra: 'A churning wall of unquenchable flame, its crest curling forward to break',
   varunastra: 'A rising wall of black water swallowing fire',
-  vayavyastra: 'A screaming spiral of wind tearing a battle line apart',
-  aindrastra: 'A sky-blackening rain of arrows falling in a solid sheet',
+  vayavyastra: 'A screaming spiral of wind drawn as a coiling funnel of white light',
+  aindrastra: 'A dense solid sheet of arrows falling, each one lit like a filament',
   bhargavastra: 'Countless arrows loosed at once from a single point, a fan of fire',
   sammohana: 'A soft grey haze rolling over an army, weapons falling from slack hands',
   brahmas_bargain: 'Two asura brothers kneeling before a four-faced god, one boon between them, each already watching the other',
@@ -973,7 +1002,8 @@ function bodyOf(card: U): string {
   if (card.type !== 'unit') {
     const p = PHENOMENON[card.id] || hookOf(card) || card.name;
     const figure = HAS_FIGURE.has(card.id) ? '' : 'No human figure. ';
-    return `${p}. ${figure}${CAMERA_SCENE} ${FRAME('Whole subject')} ${NEG}`;
+    const ground = EMISSIVE_TYPES.has(card.type) ? ON_BLACK : CAMERA_SCENE;
+    return `${p}. ${figure}${ground} ${FRAME('Whole subject')} ${NEG}`;
   }
 
   const m = M[card.id] ?? {};
@@ -1048,13 +1078,29 @@ const GROUPS: { title: string; match: (c: U) => boolean }[] = [
   { title: 'The Asura Host', match: (c) => c.type === 'unit' && c.house === 'asura' },
   { title: 'Those Who Stood Apart', match: (c) => c.type === 'unit' && c.house === 'legend' },
   { title: 'Astras', match: (c) => c.type === 'astra' },
+  { title: 'The Named Weapons', match: (c) => c.type === 'shastra' },
+  { title: 'Stratagems', match: (c) => c.type === 'stratagem' },
   { title: 'Vardaan and Fates', match: (c) => c.type === 'boon' || c.type === 'curse' },
 ];
+
+// Every card must land in exactly one group. Six shastras and one stratagem
+// had no group and vanished from the document, while the header went on
+// claiming all 114 were present, because the count came from the card list
+// rather than from what was written. A card silently missing its prompt is
+// invisible until someone goes looking for art that was never commissioned.
+const uncovered = cards.filter((c) => !GROUPS.some((g) => g.match(c)));
+if (uncovered.length) {
+  throw new Error(
+    `${uncovered.length} card(s) match no group in GROUPS, so they would emit no prompt: ` +
+      uncovered.map((c) => `${c.id} [${c.type}]`).join(', '),
+  );
+}
 
 const out: string[] = [];
 let longest = 0;
 let longestWords = 0;
 let overWords = 0;
+let emitted = 0;
 
 const wordsIn = (s: string) => s.trim().split(/\s+/).length;
 
@@ -1119,6 +1165,7 @@ for (const g of GROUPS) {
     longest = Math.max(longest, full.length);
     longestWords = Math.max(longestWords, w);
     if (w > 110) overWords++;
+    emitted++;
     out.push(`### ${c.name}`);
     out.push('');
     out.push(`\`${c.id}.png\` · ${full.length} chars · ${w} words`);
@@ -1140,5 +1187,5 @@ for (const g of GROUPS) {
 
 fs.writeFileSync('docs/art-prompts.md', out.join('\n'));
 console.log(
-  `docs/art-prompts.md written: ${cards.length} prompts, longest ${longest} chars / ${longestWords} words, ${overWords} over the 110-word budget`,
+  `docs/art-prompts.md written: ${emitted} prompts, longest ${longest} chars / ${longestWords} words, ${overWords} over the 110-word budget`,
 );
