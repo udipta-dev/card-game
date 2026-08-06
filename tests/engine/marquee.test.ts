@@ -36,8 +36,10 @@ describe('Bhishma — icchamrityu', () => {
     expect(hasEvent(s1, (e) => e.t === 'destroy' && e.cardId === 'bhishma')).toBe(true);
   });
 
-  it('can be worn down to 1, but never to nothing', () => {
-    // The other half of unkillable: he must not become a 0-power ornament.
+  it('can be worn down to half, but never past it', () => {
+    // The other half of unkillable: he must not become a 0-power ornament, and
+    // he must not be reducible to a 1-power one either, or the answer card that
+    // takes the remaining half is worth nothing.
     const s0 = makeState({
       playerHand: ['nagastra'],
       playerBoard: { padati: ['karna'] },
@@ -45,7 +47,8 @@ describe('Bhishma — icchamrityu', () => {
     });
     const bhishma = firstOf(s0, 'ai', 'bhishma');
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'nagastra').iid, row: 'ratha' });
-    expect(s1.instances[bhishma.iid].currentPower).toBe(1);
+    // The Naga weapon binds him down to 1 on paper; the floor holds him at 5.
+    expect(s1.instances[bhishma.iid].currentPower).toBe(5);
   });
 });
 

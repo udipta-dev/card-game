@@ -30,9 +30,21 @@ export function powerFloor(state: GameState, u: CardInstance): number {
   if (u.flags.has('stripped')) return 0;
   const card = getCard(u.cardId);
   for (const kw of card.keywords) {
+    // A warrior who HAS an answer floors at half his strength. Grinding him is
+    // still worth doing, but it can never finish the job, so the answer card is
+    // the only way to take the rest. At a floor of 1 the answer was worth about
+    // one point: two damage cards took Bhishma from 10 to 1, the board wiped at
+    // round end anyway, and Shikhandi, the most famous answer in the epic, was
+    // decoration.
+    //
+    // A warrior with NO answer keeps the floor of 1. Ashwatthama cannot be
+    // killed by anything, so half his strength would be points the opponent is
+    // simply never allowed to contest.
     if (kw.kind === 'deathless') return 1;
-    if (kw.kind === 'icchamrityu' && !cardOnBoard(state, u.owner, kw.unlessCardOnBoard, 'any')) return 1;
-    if (kw.kind === 'immuneUntilPlayed' && !u.flags.has('disarmed')) return 1;
+    if (kw.kind === 'icchamrityu' && !cardOnBoard(state, u.owner, kw.unlessCardOnBoard, 'any'))
+      return Math.floor(card.basePower / 2);
+    if (kw.kind === 'immuneUntilPlayed' && !u.flags.has('disarmed'))
+      return Math.floor(card.basePower / 2);
   }
   return 0;
 }

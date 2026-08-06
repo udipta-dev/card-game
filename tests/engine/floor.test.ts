@@ -1,10 +1,21 @@
 // The undying floor, reduce-to, and line targeting.
 //
-// The floor is the interesting one. Before it, "cannot be killed" and "cannot
-// be reduced to nothing" were different things, and only the first was true:
-// Bhishma could be ground to 0 power and left standing on the field
-// contributing nothing. Unkillable AND useless is the worst of both, and it
-// made attacking him pointless rather than costly.
+// The floor is the interesting one, and it has moved twice.
+//
+// First from 0 to 1: "cannot be killed" and "cannot be reduced to nothing" were
+// different things and only the first was true, so Bhishma could be ground to 0
+// and left standing contributing nothing. Unkillable AND useless is the worst
+// of both, and it made attacking him pointless rather than costly.
+//
+// Then from 1 to HALF, for warriors who have an answer card. At 1 the answer
+// was worth almost nothing: two damage cards took Bhishma from 10 to 1, the
+// board wiped at round end anyway, so killing him and grinding him differed by
+// a single point. Shikhandi, the most famous answer in the epic, was decoration.
+// At half he can be worn down but never finished, and the answer is the only
+// way to take the rest.
+//
+// Warriors with NO answer stay at 1. Ashwatthama cannot be killed by anything,
+// so half his strength would be points nobody is ever allowed to contest.
 import { describe, expect, it } from 'vitest';
 import { powerFloor } from '@engine/keywords';
 import { rowPower } from '@engine/queries';
@@ -26,25 +37,45 @@ const ctx = (state: GameState, actorOwner: Seat = 'player', playedRow: Row | nul
 });
 
 describe('a warrior who cannot be killed cannot be reduced to nothing', () => {
-  it('grinds Bhishma down to 1 and no further', () => {
+  it('grinds Bhishma down to half and no further', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    expect(powerFloor(s, s.instances[iid])).toBe(1);
+    expect(powerFloor(s, s.instances[iid])).toBe(5);
 
     // Hit him for far more than he has, through the real damage handler.
     applyTargetAction(ctx(s, 'ai'), { kind: 'damage', amount: 99 }, iid);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
 
-    // And again. He does not go to zero and he does not go negative.
+    // And again. Every weapon in the game together cannot take the other half.
     applyTargetAction(ctx(s, 'ai'), { kind: 'damage', amount: 99 }, iid);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
+  });
+
+  it('and Shikhandi takes the half no weapon could', () => {
+    // The whole point of the change. Grinding is worth doing and is never
+    // enough; the answer card is what finishes him.
+    const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
+    const iid = s.board.player.ratha[0];
+    applyTargetAction(ctx(s, 'ai'), { kind: 'damage', amount: 99 }, iid);
+    expect(s.instances[iid].currentPower).toBe(5);
+
+    const withAnswer = makeState({ playerBoard: { ratha: ['bhishma', 'shikhandi'] } });
+    const b = withAnswer.board.player.ratha[0];
+    applyTargetAction(ctx(withAnswer, 'ai'), { kind: 'damage', amount: 99 }, b);
+    expect(withAnswer.instances[b].currentPower).toBe(0);
+  });
+
+  it('floors Drona at half too, because the elephant lie is his answer', () => {
+    const s = makeState({ playerBoard: { ratha: ['drona'] } });
+    const iid = s.board.player.ratha[0];
+    expect(powerFloor(s, s.instances[iid])).toBe(4); // base 9
   });
 
   it('cannot be zeroed by setPower either, which was the back door', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
     applyTargetAction(ctx(s, 'ai'), { kind: 'setPower', value: 0 }, iid);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
   });
 
   it('drops the floor to 0 once Shikhandi takes the field', () => {
@@ -54,7 +85,9 @@ describe('a warrior who cannot be killed cannot be reduced to nothing', () => {
     expect(powerFloor(s, s.instances[bhishma])).toBe(0);
   });
 
-  it('holds the floor for the deathless too', () => {
+  it('holds the floor at ONE for the deathless, who has no answer at all', () => {
+    // Deliberately not half. Nothing in the game can kill Ashwatthama, so a
+    // half floor would be guaranteed points the opponent may never contest.
     const s = makeState({ playerBoard: { ratha: ['ashwatthama'] } });
     const iid = s.board.player.ratha[0];
     expect(powerFloor(s, s.instances[iid])).toBe(1);
@@ -90,7 +123,7 @@ describe('reduceTo lowers, and only lowers', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
     applyTargetAction(ctx(s, 'ai'), { kind: 'reduceTo', value: 0 }, iid);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
   });
 });
 
@@ -146,7 +179,7 @@ describe('Sanmohana stupefies rather than kills', () => {
     const s = makeState({ aiBoard: { ratha: ['bhishma'] } });
     const iid = s.board.ai.ratha[0];
     applyTargetAction(ctx(s), { kind: 'damage', amount: 99 }, iid);
-    expect(rowPower(s, 'ai', 'ratha')).toBe(1); // still scoring
+    expect(rowPower(s, 'ai', 'ratha')).toBe(5); // still scoring, and now for half
     applyTargetAction(ctx(s), { kind: 'addFlag', flag: 'stupefied' }, iid);
     expect(rowPower(s, 'ai', 'ratha')).toBe(0);
   });
@@ -160,25 +193,25 @@ describe('the undying floor holds on EVERY path, not just the handlers', () => {
   it('survives Broken Bowstring, which took 4 straight off the top', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    s.instances[iid].currentPower = 2;
+    s.instances[iid].currentPower = 7;
     afflict(s, 'player', ['broken_bowstring']);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
   });
 
   it('survives Withered Host', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    s.instances[iid].currentPower = 1;
+    s.instances[iid].currentPower = 6;
     afflict(s, 'player', ['withered_host']);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
   });
 
   it('survives the Forgotten Mantra', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    s.instances[iid].currentPower = 2;
+    s.instances[iid].currentPower = 7;
     afflict(s, 'player', ['forgotten_mantra']);
-    expect(s.instances[iid].currentPower).toBe(1);
+    expect(s.instances[iid].currentPower).toBe(5);
   });
 
   it('and an ordinary warrior still reaches zero on those same paths', () => {
