@@ -39,18 +39,25 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    # Pages has been slow for this repo for a while and we were living on the
-    # margin without knowing it. Successful deploys took 6 min and then 8.5 min
-    # against the action's 10-minute default; the art tipped it over and three
-    # runs in a row died at exactly 600 seconds.
+    # NOTE: do not bother raising the deploy timeout. It is capped.
     #
-    # The timeout MUST be quoted. The action declares its own default as the
-    # string '600000', so an unquoted YAML integer is not what it expects, and
-    # a run carrying `timeout: 1200000` still aborted at exactly ten minutes,
-    # having silently fallen back to the default.
-    timeout-minutes: 30
+    # actions/deploy-pages accepts a `timeout` input, and GitHub silently
+    # clamps it: passing 1500000 logs "timeout value is greater than the
+    # allowed maximum - timeout set to the maximum of 600000 milliseconds" and
+    # carries on with ten minutes. So when Pages is slow there is no lever here
+    # at all, and a failed run is a failed run.
+    #
+    # Worth knowing what that looks like, because it wasted an afternoon:
+    # deploys for this repo ran in 12 seconds on 1-4 Aug, then degraded through
+    # 6 Aug to 1.6, 3.8, 4.3, 6.0, 8.4 minutes and finally past the cap. Every
+    # other stage stayed green the whole time, dist grew only 300 to 394 KB
+    # across the stretch that went from 0.2 to 8.4 minutes, and no incident was
+    # posted until well after. If deploys start timing out and the build is
+    # green, check the deployment durations before changing anything:
+    #
+    #   for id in $(gh api repos/OWNER/REPO/deployments --jq '.[].id'); do
+    #     gh api repos/OWNER/REPO/deployments/$id/statuses --jq '.[].state'
+    #   done
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          timeout: '1500000' # 25 minutes
