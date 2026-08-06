@@ -89,18 +89,46 @@ const ON_BLACK =
   'Isolated on pure black, lit only by its own light. No ground, horizon, sky, landscape, smoke, haze, fog, vignette or film grain. Strong modelling, but no part of the subject may fall to near-black.';
 
 /**
- * The lesson that cost the most generations. An astra described as "an arrow
- * AND an emblem" comes back as two separate objects with a hard contact line,
- * and it reads as an arrow *striking* a sphere rather than an arrow that IS
- * one. Three passes to find it: deleting the arrowhead was not enough on its
- * own, because the shaft still met the emblem at a seam and looked glued.
+ * How an astra is actually delivered, checked against Ganguli rather than
+ * assumed. Almost all of them are an arrow shot from a bow:
  *
- * What works is describing the transition itself as the subject. Wood, then
- * embers, then streaming light, then the emblem, with no boundary anywhere.
- * The arrowhead has to be named as absent or the model draws one.
+ *   Brahmastra   "that violent arrow transformed by Rama, with proper mantras
+ *                into a Brahma weapon ... Then Rama shot that terrible weapon"
+ *   Nagastra     "fixed on his bow-string that foe-killing, exceedingly keen,
+ *                snake-mouthed, blazing, and fierce shaft"
+ *   Varunastra   "the Kuru chief fixed the Varuna weapon on his bow-string"
+ *   Aindra       "fixed them on the bow-string ... Hundreds and thousands of
+ *                blazing shafts ... flowed from it"
+ *   Tvashtra     "grasped Gandiva ... and then he shot the weapon called
+ *                Tvashtra"
+ *   Praswapa     "desirous of speedily shooting the Praswapa weapon"
+ *   Antardhana   "this was the weapon which he shot"
+ *
+ * Two are NOT arrows and must never be drawn as one:
+ *
+ *   Vasavi Shakti  a dart hurled by hand, once: "the celestial Sakti given by
+ *                  Indra ... caused to be hurled upon Rakshasa Ghatotkacha"
+ *   Vaishnavastra  also hurled: Bhagadatta "with Mantras, turned his hook into
+ *                  the Vaishnava weapon and hurled it at Arjuna's breast"
+ *
+ * And one is explicitly any of them: the Pashupata "may be hurled by the mind,
+ * by the eye, by words, and by the bow".
+ *
+ * The merge rule below cost three rounds to find. An astra described as "an
+ * arrow AND an emblem" comes back as two objects with a hard contact line, and
+ * reads as an arrow striking a sphere rather than an arrow that IS one.
+ *
+ * But the first fix went too far. Banning the arrowhead outright deleted the
+ * arrow's identity along with the seam, and the render stopped reading as
+ * something fired at all. An arrow is recognised from its nock and fletching,
+ * not from its point, so those stay and only the head dissolves.
  */
 const MERGE =
-  'No arrowhead anywhere in the frame, and no seam or contact line: the shaft breaks into embers and streaming light partway up and flows into the emblem, becoming it. One single object, not two touching.';
+  'The lower shaft is plainly an arrow, its nock and fletching clear at the base. No arrowhead, and no seam or contact line: partway up the shaft breaks into embers and streaming light and flows into the emblem, becoming it. One single object, not two touching.';
+
+/** For the two that are thrown, not shot. No shaft, no fletching, no bow. */
+const HURLED =
+  'A weapon held and thrown by hand, not an arrow: no bowstring, no fletching, no shaft of any kind in the frame.';
 
 /**
  * Also learned by generating: at full size the emblem crowds its own detail
@@ -122,12 +150,19 @@ const EMISSIVE_TYPES = new Set(['astra', 'shastra']);
 const MERGES = new Set([
   'brahmastra',
   'brahmashirsha',
-  'pashupatastra',
   'nagastra',
   'bhargavastra',
   'sauparna',
   'antardhana',
+  'praswapa',
+  'tvashtra',
+  'varunastra',
+  'aindrastra',
 ]);
+
+/** Thrown by hand, on the epic's own evidence. Drawing either as an arrow is
+ *  simply wrong, not a stylistic choice. */
+const HURLED_IDS = new Set(['vasavi_shakti', 'vaishnavastra']);
 
 // ------------------------------------------------------------------- facing
 // Nothing in the prompt said which way anyone faced, so the model fell back to
@@ -1031,13 +1066,13 @@ const PHENOMENON: Record<string, string> = {
   prajna: 'A Prajna, the weapon of wakefulness that no stupor can close: a single tall lamp of white and brass fire that will not gutter, rings of small burning script in orbit around its flame',
   tvashtra: 'A Tvashtra, the weapon of the divine artificer: one rising arrow becoming three identical arrows, and those three becoming nine, each rank fainter and cooler than the rank in front of it',
   antardhana: 'An Antardhana, the arrow Shiva loosed to unmake the three cities: a rising shaft strung with three burning fortress-cities like beads, a thin silver crescent above them where the arrowhead would be',
-  pashupatastra: 'A Pashupatastra, the weapon of Shiva, carrying his signs: a rising arrow becoming a great three-pronged trident, a thin silver crescent caught between its prongs, green-black serpents coiled down the shaft, ash-white fire along every edge',
+  pashupatastra: 'A Pashupatastra, the weapon of Shiva, carrying his signs: a great three-pronged trident standing alone, a thin silver crescent caught between its prongs, green-black serpents coiled down its haft, ash-white fire along every edge',
   brahmashirsha: 'A Brahmashirsha, the Brahmastra raised past recall: four lotuses of saffron and gold fused into a single flower facing the four quarters, every petal a blade, a column of white fire driven up through its centre',
   brahmastra: 'A Brahmastra, the weapon of Brahma, carrying his sign the lotus: a rising arrow becoming one great open lotus of deep saffron and rose, every petal edged like a blade, a ring of white fire turning behind it',
-  narayanastra: 'A Narayanastra, the weapon of Vishnu, carrying his sign the discus: one blazing indigo and gold discus at the centre, innumerable smaller discs and spears streaming outward from it in every direction, each trailing fire',
-  vaishnavastra: 'A Vaishnavastra, the weapon of Vishnu: one immense discus seen edge-on, deep indigo at the hub and white-hot at the rim, that rim a continuous ring of curved blades, a gold lotus at its centre, spinning fast enough to blur',
-  vasavi_shakti: 'A Vasavi Shakti, the dart Indra gave for one throw only, carrying his sign the thunderbolt: a single barbed spear rising point-upward, its shaft a braided vajra of amber lightning, arcs leaping between the barbs',
-  nagastra: 'A Nagastra, the serpent weapon: a rising arrow becoming a mass of green-black serpents, hoods spread wide, amber-scaled, coiled hard around one another',
+  narayanastra: 'A Narayanastra, the weapon of Vishnu, carrying his sign the discus: one blazing indigo and gold discus at the centre, arrows streaming outward from it in every direction and each turning into a different weapon as it goes, discs and spears and maces, all trailing fire',
+  vaishnavastra: 'A Vaishnavastra, the weapon of Vishnu, carrying his sign the discus: an elephant-goad of deep indigo and gold held aloft, a burning discus opening out of its hook, its rim a ring of curved blades',
+  vasavi_shakti: 'A Vasavi Shakti, the dart Indra gave for one throw only, carrying his sign the thunderbolt: a single short barbed javelin of amber and brass, its grip a braided vajra, arcs of lightning leaping between the barbs',
+  nagastra: 'A Nagastra, the serpent weapon: a rising arrow whose head is a single great cobra of green-black and amber, hood spread wide, the shaft scaled like a snake’s back',
   sauparna: 'A Sauparna, the Garuda weapon: a rising arrow becoming a vast pair of outspread wings of white and copper fire, talons closing on a green serpent beneath them',
   agneyastra: 'An Agneyastra, the weapon of Agni: a wall of orange and white-hot fire rising, its crest breaking into seven distinct tongues, a pair of spiralling ram horns of white flame in the heart of it',
   varunastra: 'A Varunastra, the weapon of Varuna, carrying his sign the noose: a rising coil of deep blue-green water lit from within, a great noose of white foam turning at its heart, the whole column crested and breaking',
@@ -1081,7 +1116,11 @@ function bodyOf(card: U): string {
     const p = PHENOMENON[card.id] || hookOf(card) || card.name;
     const figure = HAS_FIGURE.has(card.id) ? '' : 'No human figure. ';
     const emissive = EMISSIVE_TYPES.has(card.type);
-    const merge = MERGES.has(card.id) ? ` ${MERGE}` : '';
+    const merge = MERGES.has(card.id)
+      ? ` ${MERGE}`
+      : HURLED_IDS.has(card.id)
+        ? ` ${HURLED}`
+        : '';
     if (emissive) {
       // One framing sentence, not two. FRAME's "clear margin, nothing cropped"
       // and the scale rule's "generous black margin" were saying the same
@@ -1256,6 +1295,38 @@ out.push(
   'frightening; a lotus with a man screaming in the middle of it is a cartoon. ' +
   'Every weapon prompt carries an explicit guard: show the emblem alone, the god ' +
   'never appears.'
+);
+out.push('');
+out.push(
+  '**0b. Check how the weapon is actually delivered.** Almost every astra is an ' +
+  'arrow shot from a bow, and the epic says so plainly. Two are not, and drawing ' +
+  'those as arrows is wrong rather than merely off-style.'
+);
+out.push('');
+out.push('| Astra | Delivery | Ganguli |');
+out.push('|---|---|---|');
+out.push('| Brahmastra | arrow, transformed by mantra, shot | *"that violent arrow transformed by Rama, with proper mantras into a Brahma weapon ... Then Rama shot that terrible weapon"* |');
+out.push('| Nagastra | one snake-mouthed shaft on the string | *"fixed on his bow-string that foe-killing, exceedingly keen, snake-mouthed, blazing, and fierce shaft"* |');
+out.push('| Varunastra | fixed on the bow-string | *"the Kuru chief fixed the Varuna weapon on his bow-string"* |');
+out.push('| Aindrastra | from the bow, thousands of shafts flow out | *"fixed them on the bow-string ... Hundreds and thousands of blazing shafts ... flowed from it"* |');
+out.push('| Tvashtra | shot from Gandiva | *"grasped Gandiva ... and then he shot the weapon called Tvashtra"* |');
+out.push('| Praswapa | shot | *"desirous of speedily shooting the Praswapa weapon"* |');
+out.push('| Antardhana | shot; Shiva used it on Tripura | *"this was the weapon which he shot"* |');
+out.push('| **Vasavi Shakti** | **hurled by hand, once** | *"the celestial Sakti given by Indra ... caused to be hurled upon Rakshasa Ghatotkacha"* |');
+out.push('| **Vaishnavastra** | **hurled by hand** | Bhagadatta *"with Mantras, turned his hook into the Vaishnava weapon and hurled it at Arjuna\'s breast"* |');
+out.push('| **Pashupata** | **any of four ways** | *"it may be hurled by the mind, by the eye, by words, and by the bow"* |');
+out.push('');
+out.push(
+  'Sauparna, Sammohana, Prajna and Samvodhana have no narrated discharge I could ' +
+  'find, so their prompts do not claim one.'
+);
+out.push('');
+out.push(
+  '**0c. Keep the fletching.** The first merge rule banned the arrowhead to stop ' +
+  'the emblem reading as a separate object being struck. It worked, and it went ' +
+  'too far: it deleted the arrow\'s identity along with the seam, and the render ' +
+  'stopped looking like anything fired. An arrow is recognised from its nock and ' +
+  'fletching, not from its point. Those stay; only the head dissolves.'
 );
 out.push('');
 out.push(
