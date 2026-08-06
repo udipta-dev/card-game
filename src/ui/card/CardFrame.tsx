@@ -19,6 +19,8 @@ interface Props {
   /** A fielded warrior with an unspent skill at arms this battle. */
   ready?: boolean;
   dead?: boolean;
+  /** Stupefied: still standing, still at full power, contributing nothing. */
+  stupefied?: boolean;
   onClick?: () => void;
   onEnter?: (e: MouseEvent) => void;
   onLeave?: () => void;
@@ -32,6 +34,7 @@ export function CardFrame({
   targetable,
   ready,
   dead,
+  stupefied,
   onClick,
   onEnter,
   onLeave,
@@ -63,6 +66,7 @@ export function CardFrame({
     targetable ? 'card--targetable' : '',
     ready ? 'card--ready' : '',
     dead ? 'card--dead' : '',
+    stupefied ? 'card--stupefied' : '',
   ]
     .filter(Boolean)
     .join(' ');

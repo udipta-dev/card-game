@@ -432,3 +432,41 @@
 .card__art--emissive img {
   mix-blend-mode: screen;
 }
+
+/* ---------------------------------------------------------------------------
+ * STUPEFIED. Sammohana leaves an army standing and dreaming: every warrior is
+ * alive, unhurt, at full strength, and scoring nothing.
+ *
+ * Found by playing rather than by testing. Four warriors totalling 33 sat on a
+ * row worth 9, with nothing on any card to say why. The engine was right; the
+ * card simply had no idea the flag existed, so the most dramatic astra in the
+ * game was invisible and the score looked like an arithmetic bug.
+ *
+ * Deliberately NOT the same treatment as death. A dead man is greyed out; a
+ * stupefied one keeps his colour and his number, because he has lost neither,
+ * and is veiled instead. The power badge is struck through, since that is the
+ * number the row is refusing to count.
+ * ------------------------------------------------------------------------- */
+.card--stupefied {
+  position: relative;
+}
+.card--stupefied::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(136, 120, 171, 0.22) 0 3px,
+      transparent 3px 7px
+    ),
+    rgba(12, 10, 9, 0.42);
+}
+.card--stupefied .card__power {
+  color: var(--ink-faint);
+  border-color: var(--ink-faint);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}

@@ -269,6 +269,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
                 card={card}
                 instance={u}
                 dead={u.currentPower <= 0}
+                stupefied={u.flags.has('stupefied')}
                 targetable={isTargetable}
                 ready={seat === 'player' && myTurn && isLegalAbility(state, 'player', iid)}
                 onClick={() =>
