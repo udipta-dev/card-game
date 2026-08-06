@@ -123,12 +123,22 @@ const ON_BLACK =
  * something fired at all. An arrow is recognised from its nock and fletching,
  * not from its point, so those stay and only the head dissolves.
  */
+/**
+ * What a celestial shaft is made of, in the epic's own words rather than mine.
+ * A wooden shaft with bird feathers reads as ordinary hunting kit and makes a
+ * god's weapon look weak, and it turns out the text never asked for one:
+ *
+ *   "shafts made wholly of iron"    (and 44 hits for wholly/entirely of iron)
+ *   "shafts of golden wings"        (the fletching, eight times over)
+ *
+ * So: forged, not grown. Dark metal and hammered gold.
+ */
 const MERGE =
-  'The lower shaft is plainly an arrow, its nock and fletching clear at the base. No arrowhead, and no seam or contact line: partway up the shaft breaks into embers and streaming light and flows into the emblem, becoming it. One single object, not two touching.';
+  "The lower shaft is plainly an arrow: the nock clear at the base, the fletching a pair of golden wings hammered thin and edged like blades, the shaft itself made wholly of iron, dark meteoric metal fluted and chased with gold. No wood, no bird feathers. No arrowhead, and no seam or contact line: partway up the shaft breaks into embers and streaming light and flows into the emblem, becoming it. One single object, not two touching.";
 
 /** For the two that are thrown, not shot. No shaft, no fletching, no bow. */
 const HURLED =
-  'A weapon held and thrown by hand, not an arrow: no bowstring, no fletching, no shaft of any kind in the frame.';
+  "A weapon held and thrown by hand, not an arrow: no bowstring, no fletching, no arrow shaft in the frame. Forged of dark meteoric metal chased with gold, nothing wooden and nothing that looks grown.";
 
 /**
  * Also learned by generating: at full size the emblem crowds its own detail
@@ -229,7 +239,7 @@ const RIM =
  * lotus with a man screaming in the middle of it is a cartoon.
  */
 const EMBLEM_ONLY =
-  'Show the emblem alone. The god himself never appears: no face, no head, no human figure, no eyes anywhere in the image.';
+  'Show the emblem alone; the god himself never appears, no face or head or human figure anywhere.';
 
 type U = Card & { basePower?: number; tier?: string; flavor?: string };
 
@@ -1327,6 +1337,16 @@ out.push(
   'too far: it deleted the arrow\'s identity along with the seam, and the render ' +
   'stopped looking like anything fired. An arrow is recognised from its nock and ' +
   'fletching, not from its point. Those stay; only the head dissolves.'
+);
+out.push('');
+out.push(
+  '**0d. Forged, never grown.** A wooden shaft with bird feathers reads as ' +
+  'ordinary hunting kit and makes a god\'s weapon look weak. The epic never ' +
+  'asked for one either: it says *"shafts made wholly of iron"* (44 hits for ' +
+  'wholly or entirely of iron) and calls the fletching *"shafts of golden ' +
+  'wings"*. So every arrow and dart is dark meteoric metal, fluted and chased ' +
+  'with gold, with hammered gold wings for fletching. No wood, no plumage, ' +
+  'nothing that looks grown.'
 );
 out.push('');
 out.push(
