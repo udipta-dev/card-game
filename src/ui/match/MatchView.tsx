@@ -52,6 +52,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   const [inspect, setInspect] = useState<{
     card: Card;
     inst?: GameState['instances'][string];
+    onSwap?: () => void;
     onPlay?: () => void;
     blockedReason?: string;
   } | null>(null);
@@ -192,10 +193,17 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     const inst = state.instances[iid]!;
     const card = getCard(inst.cardId);
     const canPlay = myTurn && myMoves.some((m) => m.type === 'PLAY_CARD' && m.iid === iid);
+    // The once-a-round trade rides in the same sheet as Play: you are already
+    // looking at the card you are unsure about, and that is exactly the moment
+    // the trade is for.
+    const canSwap = myMoves.some((m) => m.type === 'ROUND_SWAP' && m.iid === iid);
     setInspect({
       card,
       inst,
       onPlay: canPlay ? () => { setInspect(null); setSelected(iid); } : undefined,
+      onSwap: canSwap
+        ? () => { setInspect(null); dispatch({ type: 'ROUND_SWAP', seat: 'player', iid }); }
+        : undefined,
       blockedReason: canPlay ? undefined : whyNotPlayable(state, iid, myTurn),
     });
   }

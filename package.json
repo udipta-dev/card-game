@@ -16,7 +16,8 @@
     "video:prompts": "vite-node sim/build-video-prompts.ts",
     "font:subset": "python3 -m fontTools.subset node_modules/@fontsource/tiro-devanagari-sanskrit/files/tiro-devanagari-sanskrit-devanagari-400-normal.woff2 --text=कुरुक्षेत्र --layout-features='*' --flavor=woff2 --output-file=src/assets/fonts/tiro-kurukshetra.woff2",
     "duel": "vite-node sim/ai-duel.ts",
-    "art:import": "vite-node sim/art-import.ts"
+    "art:import": "vite-node sim/art-import.ts",
+    "ship": "CF_PAGES=1 vite build && wrangler pages deploy dist --project-name kurukshetra --branch main --commit-dirty=true"
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5.3.0",

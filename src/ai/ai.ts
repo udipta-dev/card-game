@@ -189,6 +189,71 @@ function determinizeOpponentHand(realState: GameState, seat: Seat, sample: numbe
  */
 const WORLDS = 4;
 
+/**
+ * OFF (false) BY MEASUREMENT.
+ *
+ * The heuristic below is correct play: an astra nobody left can fire is a
+ * guaranteed zero, and trading a guaranteed zero for a random card is better
+ * whatever comes back. It is also unevenly available, and that is the problem.
+ *
+ * Measured over 60 matches, trades made and matches won:
+ *
+ *   pandava   0 swaps   35% wins
+ *   kaurava  19 swaps   65% wins
+ *   asura    15 swaps   45% wins
+ *
+ * Pandava never trades at all, because every Pandava astra keeps a possible
+ * wielder somewhere in hand or deck; the other two carry astras tied to one
+ * named man, which go dead when he does. So the trade hands free card cycling
+ * to two decks out of three, and deck spread went from 3.0 points to 15.7.
+ * With this flag off it returns to 3.0 exactly, which is how we know the
+ * MECHANIC is neutral and this heuristic is the whole of the damage.
+ *
+ * Turning it on wants either decks with comparable dead-card rates, or a
+ * heuristic that judges hand quality rather than one card class. evaluate()
+ * scores boards and card counts and has no notion of hand quality, so that is
+ * a real piece of work, not a constant change. The mechanic still ships: a
+ * human can use it, and the AI simply does not.
+ */
+const AI_USES_ROUND_SWAP = false;
+
+/** A hand astra nobody left on this side could ever fire, if any. */
+function deadAstraSwap(state: GameState, seat: Seat): Action | null {
+  if (state.phase !== 'playing' || state.activeSeat !== seat) return null;
+  if (!state.roundSwap[seat] || state.playedThisRound[seat]) return null;
+  if (state.decks[seat].length === 0) return null;
+
+  // Dead means NOBODY LEFT can fire it, not "nobody is standing right now".
+  //
+  // The first version asked canInvokeAstra, which reads the BOARD. The trade is
+  // offered at the start of a round, and the board was wiped to set that round
+  // up, so every astra looked unusable and the AI threw away perfectly good
+  // weapons every round 2 and 3. The lab caught it at once: deck spread blew
+  // out from 3.0 points to 8.6.
+  //
+  // The honest test is over everything this seat has left, hand and deck
+  // together, plus anything learned through tapasya. Own cards only, so no
+  // hidden information is touched.
+  const granted = Object.values(state.astraGrants?.[seat] ?? {}).flat();
+  const remaining = [...state.hands[seat], ...state.decks[seat]];
+
+  for (const iid of state.hands[seat]) {
+    const card = getCard(state.instances[iid]!.cardId);
+    if (card.type !== 'astra') continue;
+    if (granted.includes(card.id)) continue;
+    const tier = card.astraTier ?? 1;
+    const anyoneLeftCanFire = remaining.some((h) => {
+      const w = getCard(state.instances[h]!.cardId);
+      if (w.type !== 'unit') return false;
+      if ((w.astraMastery ?? 0) >= tier) return true;
+      return !!w.knownAstras?.includes(card.id);
+    });
+    if (anyoneLeftCanFire) continue;
+    return { type: 'ROUND_SWAP', seat, iid };
+  }
+  return null;
+}
+
 /** The old behaviour: erase the hand entirely. Kept for the head-to-head. */
 function blankOpponentHand(realState: GameState, seat: Seat): GameState {
   const s = structuredClone(realState);
@@ -232,6 +297,12 @@ export function chooseAction(
   // whichever side fielded the lesser astra-master.
   if (realState.phase === 'awaitingCounter' && realState.pendingCounter) {
     return { type: 'ANSWER_ASTRA', seat, counter: shouldAnswer(realState, seat) };
+  }
+
+  // The round trade, currently OFF for the AI. See AI_USES_ROUND_SWAP.
+  if (AI_USES_ROUND_SWAP) {
+    const deadSwap = deadAstraSwap(realState, seat);
+    if (deadSwap) return deadSwap;
   }
   // Our own hand and board are identical in every world, so the legal move
   // list is too; only what the opponent might be holding differs.

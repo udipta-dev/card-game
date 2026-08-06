@@ -14,6 +14,12 @@ export function eventText(state: GameState, ev: GameEvent): string | null {
       return `${who(ev.seat)} played ${getCard(ev.cardId).name}.`;
     case 'pass':
       return `${who(ev.seat)} passed.`;
+    case 'roundSwap':
+      // Name the card only for the player's own trade. The enemy's goes back
+      // unseen, exactly as a hidden hand demands.
+      return ev.seat === 'player'
+        ? `You traded ${getCard(ev.cardId).name} back to the deck.`
+        : 'The enemy traded a card back to the deck.';
     case 'destroy':
       return `${getCard(ev.cardId).name} was slain.`;
     case 'preventDestroy': {

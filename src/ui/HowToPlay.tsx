@@ -29,7 +29,7 @@ const RULES: Rule[] = [
   {
     Icon: Abhaya,
     title: 'Passing keeps your cards',
-    body: 'You do not get a fresh hand each round. You draw only two cards between rounds, so one hand must last all three. Pass to stop and save your cards. When both sides pass, the round ends.',
+    body: 'You do not get a fresh hand each round. You draw two cards between rounds and may trade one back for a fresh draw, so one hand must last all three. Pass to stop and save your cards. When both sides pass, the round ends.',
   },
   {
     Icon: Vyuha,

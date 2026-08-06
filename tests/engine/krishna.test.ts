@@ -53,9 +53,9 @@ describe('the counsel strips a warrior of what makes him unkillable', () => {
     const s = makeState({ aiBoard: { ratha: ['bhishma'] } });
     const iid = s.board.ai.ratha[0];
 
-    // Control first: he is untouchable and cannot be worn below half.
+    // Control first: he is untouchable and cannot be worn below a third.
     expect(attemptDestroy(s, 'player', iid)).toBe(false);
-    expect(powerFloor(s, s.instances[iid])).toBe(5);
+    expect(powerFloor(s, s.instances[iid])).toBe(3);
 
     s.instances[iid].flags.add('stripped');
 

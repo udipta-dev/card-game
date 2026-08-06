@@ -53,6 +53,13 @@ export function legalMoves(state: GameState, seat: Seat): Action[] {
   if (state.phase !== 'playing' || state.activeSeat !== seat) return [];
   const moves: Action[] = [{ type: 'PASS', seat }];
 
+  // The once-a-round trade, while it is still a mulligan and not an
+  // information play. Listed after PASS and before the plays so a greedy
+  // argmax that ties never prefers it by accident.
+  if (state.roundSwap[seat] && !state.playedThisRound[seat] && state.decks[seat].length > 0) {
+    for (const iid of state.hands[seat]) moves.push({ type: 'ROUND_SWAP', seat, iid });
+  }
+
 
   for (const iid of state.hands[seat]) {
     const card = getCard(state.instances[iid]!.cardId);

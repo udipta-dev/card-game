@@ -12,6 +12,12 @@ export const KAURAVA_CARDS: Card[] = [
     type: 'unit',
     tier: 'maharathi',
     basePower: 10,
+    // One more than the default power+2 that every other 10 pays. Priced by
+    // measurement, not sentiment: at the same 12 as Karna he ran 60.7% in the
+    // lab even after his floor was cut from half to a third, because ten power
+    // that cannot be finished without its answer card is worth more than ten
+    // power behind one-shot armour. The extra provision is the cost of that.
+    provision: 13,
     rows: ['ratha'],
     keywords: [{ kind: 'icchamrityu', unlessCardOnBoard: 'shikhandi' }],
     ability: {

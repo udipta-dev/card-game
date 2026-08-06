@@ -439,6 +439,11 @@ export interface GameState {
   totalRounds: number; // best-of, default 3 (win 2)
   roundWins: Record<Seat, number>;
   passed: Record<Seat, boolean>;
+  /** One trade-back per seat per round, rounds 2 and 3 only. */
+  roundSwap: Record<Seat, boolean>;
+  /** Set once a seat has played a card this round; a swap after that would be
+   *  an information play, not a mulligan. */
+  playedThisRound: Record<Seat, boolean>;
   board: Record<Seat, Record<Row, InstanceId[]>>;
   instances: Record<InstanceId, CardInstance>;
   hands: Record<Seat, InstanceId[]>;
@@ -485,6 +490,13 @@ export type Action =
   | { type: 'USE_ABILITY'; iid: InstanceId; targets?: InstanceId[] }
   | { type: 'PASS'; seat: Seat }
   | { type: 'MULLIGAN'; seat: Seat; iids: InstanceId[] }
+  /**
+   * Trade one hand card back into the deck at the start of rounds 2 and 3,
+   * before this seat has played anything. The Gwent move: the card you banked
+   * for a plan that died goes back, and a fresh draw takes its place. This is
+   * the release valve for the dead-combo hand, and it does NOT pass the turn.
+   */
+  | { type: 'ROUND_SWAP'; seat: Seat; iid: InstanceId }
   /** The defender answers an astra in flight, or lets it through. */
   | { type: 'ANSWER_ASTRA'; seat: Seat; counter: boolean };
 
@@ -493,6 +505,7 @@ export type GameEvent =
   | { t: 'play'; seat: Seat; iid: InstanceId; cardId: CardId; row: Row }
   | { t: 'pass'; seat: Seat }
   | { t: 'mulligan'; seat: Seat; count: number }
+  | { t: 'roundSwap'; seat: Seat; cardId: CardId }
   | { t: 'damage'; iid: InstanceId; amount: number; power: number }
   | { t: 'setPower'; iid: InstanceId; value: number }
   | { t: 'buff'; iid: InstanceId; amount: number; power: number }

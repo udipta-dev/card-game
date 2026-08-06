@@ -79,6 +79,9 @@ export function resolveRound(state: GameState): void {
   // one of them, so vanishing cannot leak into the next round by construction.
   for (const inst of Object.values(state.instances)) inst.flags.delete('denied');
   state.passed = { player: false, ai: false };
+  // Each seat may trade one card back before it first plays this round.
+  state.roundSwap = { player: true, ai: true };
+  state.playedThisRound = { player: false, ai: false };
   drawCards(state, 'player', ROUND_DRAW);
   drawCards(state, 'ai', ROUND_DRAW);
 

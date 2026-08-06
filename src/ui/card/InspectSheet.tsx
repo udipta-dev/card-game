@@ -12,6 +12,7 @@ export function InspectSheet({
   inst,
   onClose,
   onPlay,
+  onSwap,
   blockedReason,
 }: {
   card: Card;
@@ -19,6 +20,8 @@ export function InspectSheet({
   onClose: () => void;
   /** Present when this card can be played from here. */
   onPlay?: () => void;
+  /** Present when the once-a-round trade is available for this card. */
+  onSwap?: () => void;
   /** Why it cannot be, if it cannot. Shown instead of the play button. */
   blockedReason?: string;
 }) {
@@ -65,6 +68,15 @@ export function InspectSheet({
           {/* You should never have to commit a card to find out what it does.
               The play action lives HERE, after you have read it. */}
           {blockedReason && <div className="sheet__blocked">{blockedReason}</div>}
+          {onSwap && (
+            <button
+              className="btn btn--sm sheet__close"
+              title="Return this card to the deck and draw another. Once per round, before you play."
+              onClick={onSwap}
+            >
+              Trade back for a new card
+            </button>
+          )}
           {onPlay && (
             <button className="btn btn--primary btn--sm sheet__close" onClick={onPlay}>
               Play {card.name}

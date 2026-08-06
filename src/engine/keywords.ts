@@ -33,12 +33,12 @@ export function powerFloor(state: GameState, u: CardInstance): number {
   // why it was missed: attemptDestroy checked it and powerFloor did not, so he
   // was the one warrior left in the state the floor exists to prevent, immune
   // to every weapon and grindable all the way to nothing. Bhima's vow is his
-  // answer, so he takes the same half floor as the others who have one.
-  if (u.flags.has('diamond-body')) return Math.floor(card.basePower / 2);
+  // answer, so he takes the same third floor as the others who have one.
+  if (u.flags.has('diamond-body')) return Math.floor(card.basePower / 3);
   for (const kw of card.keywords) {
-    // A warrior who HAS an answer floors at half his strength. Grinding him is
+    // A warrior who HAS an answer floors at a THIRD of his strength. Grinding him is
     // still worth doing, but it can never finish the job, so the answer card is
-    // the only way to take the rest. At a floor of 1 the answer was worth about
+    // the only way to take the rest. The number has moved on measurement: at 1 the answer was worth about
     // one point: two damage cards took Bhishma from 10 to 1, the board wiped at
     // round end anyway, and Shikhandi, the most famous answer in the epic, was
     // decoration.
@@ -53,9 +53,9 @@ export function powerFloor(state: GameState, u: CardInstance): number {
     if (kw.kind === 'unwoundable') return card.basePower;
     if (kw.kind === 'deathless') return 1;
     if (kw.kind === 'icchamrityu' && !cardOnBoard(state, u.owner, kw.unlessCardOnBoard, 'any'))
-      return Math.floor(card.basePower / 2);
+      return Math.floor(card.basePower / 3);
     if (kw.kind === 'immuneUntilPlayed' && !u.flags.has('disarmed'))
-      return Math.floor(card.basePower / 2);
+      return Math.floor(card.basePower / 3);
   }
   return 0;
 }

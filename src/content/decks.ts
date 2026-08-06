@@ -112,7 +112,11 @@ export const KAURAVA_DECK: DeckList = {
     // canonical act was a CHOICE - he hurled the mace at a man he could see was
     // not fighting - and until the engine can make it a choice he stays out of
     // the starter deck and remains available as a run recruit.
-    'bahlika',
+    // Bahlika (6, costs 8) out for Uluka (5, costs 7), paying for Bhishma's
+    // rise to provision 13. Bahlika was the weakest warrior in the deck at
+    // 42.6%, and Uluka is Shakuni's own son, the envoy whose message made the
+    // peace impossible: the right company for his father in a deck of guile.
+    'uluka',
     // Somadatta (6) out, Vikarna (5) in, paying for Bhagadatta's rise to 9.
     // An earlier pass cut Vikarna as a power-5 body the Pandava deck would not
     // carry, and by raw power that was correct. But this sweep is about men who

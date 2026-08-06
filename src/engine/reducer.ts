@@ -10,6 +10,7 @@ import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime, removeInstance }
 import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
 import { resolveRound } from './rounds';
 import { MULLIGAN_MAX, makeInstance } from './createMatch';
+import { nextRandom } from './ids';
 import type { Action, Card, CardInstance, GameState, Row, Seat } from './types';
 
 function clone(state: GameState): GameState {
@@ -191,6 +192,37 @@ export function reduce(state: GameState, action: Action): GameState {
       resolvePendingCounter(s, action.counter);
       return s;
     }
+    case 'ROUND_SWAP': {
+      const seat = action.seat;
+      // A trade, not a play: legal only on your turn, once per round, and only
+      // while you have not yet committed a card this round. After a play it
+      // would be an information move; before one it is a mulligan.
+      if (s.phase !== 'playing' || s.activeSeat !== seat) return state;
+      if (!s.roundSwap[seat] || s.playedThisRound[seat]) return state;
+      if (!s.hands[seat].includes(action.iid)) return state;
+      if (s.decks[seat].length === 0) return state;
+
+      const cardId = s.instances[action.iid]!.cardId;
+      s.hands[seat].splice(s.hands[seat].indexOf(action.iid), 1);
+      // Draw the replacement FIRST, then bury the traded card. The first
+      // version inserted before drawing, and a seeded position of 0 handed the
+      // same card straight back: a trade that traded nothing. Drawing first
+      // also matches the table-rules intuition that you cannot redraw the card
+      // you just gave up.
+      const drawn = s.decks[seat].shift();
+      if (drawn) s.hands[seat].push(drawn);
+      // Buried at a seeded-random position, not the bottom: the bottom is a
+      // memorisable place, and this deck is only 19 cards deep.
+      const [r, nextSeed] = nextRandom(s.seed);
+      s.seed = nextSeed;
+      const at = Math.floor(r * (s.decks[seat].length + 1));
+      s.decks[seat].splice(at, 0, action.iid);
+      s.roundSwap[seat] = false;
+      s.log.push({ t: 'roundSwap', seat, cardId });
+      // The turn does not pass: you traded, now you still act.
+      return s;
+    }
+
     case 'MULLIGAN': {
       if (s.phase !== 'mulligan' || s.mulliganDone[action.seat]) return state;
       const seat = action.seat;
@@ -212,6 +244,7 @@ export function reduce(state: GameState, action: Action): GameState {
     case 'PLAY_CARD': {
       const seat = s.activeSeat;
       if (!isLegalPlay(s, seat, action.iid, action.row)) return state;
+      s.playedThisRound[seat] = true;
       const iid = action.iid;
       const u = s.instances[iid]!;
       const card = getCard(u.cardId);

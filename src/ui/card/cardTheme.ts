@@ -131,11 +131,11 @@ export function rulesText(card: Card): string[] {
   for (const kw of card.keywords) {
     if (kw.kind === 'icchamrityu')
       lines.push(
-        `Icchamrityu: cannot be slain, and cannot be worn below half his strength, until ${nameOf(kw.unlessCardOnBoard)} takes the field.`,
+        `Icchamrityu: cannot be slain, and cannot be worn below a third of his strength, until ${nameOf(kw.unlessCardOnBoard)} takes the field.`,
       );
     if (kw.kind === 'immuneUntilPlayed')
       lines.push(
-        `Cannot be slain, and cannot be worn below half his strength, until ${nameOf(kw.card)} is played. Then he falls.`,
+        `Cannot be slain, and cannot be worn below a third of his strength, until ${nameOf(kw.card)} is played. Then he falls.`,
       );
     if (kw.kind === 'deathless')
       lines.push('Chiranjivi: nothing in the world can slay him. He can still be worn down to 1.');
@@ -178,7 +178,7 @@ export function rulesText(card: Card): string[] {
         lines.push(`He takes −${a.amount} himself, armour first.`);
       if (a.kind === 'addFlag' && a.flag === 'diamond-body')
         lines.push(
-          'A body of adamant: cannot be slain, and cannot be worn below half his strength, until a vow strips it from him.',
+          'A body of adamant: cannot be slain, and cannot be worn below a third of his strength, until a vow strips it from him.',
         );
       if (a.kind === 'cleanse') lines.push('Lifts every penalty from your own lines.');
       if (a.kind === 'dismount') lines.push('Puts a chariot-warrior on foot (−2).');

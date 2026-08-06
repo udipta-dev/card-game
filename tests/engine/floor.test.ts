@@ -7,12 +7,13 @@
 // and left standing contributing nothing. Unkillable AND useless is the worst
 // of both, and it made attacking him pointless rather than costly.
 //
-// Then from 1 to HALF, for warriors who have an answer card. At 1 the answer
-// was worth almost nothing: two damage cards took Bhishma from 10 to 1, the
-// board wiped at round end anyway, so killing him and grinding him differed by
-// a single point. Shikhandi, the most famous answer in the epic, was decoration.
-// At half he can be worn down but never finished, and the answer is the only
-// way to take the rest.
+// Then from 1 to half, for warriors who have an answer card: at 1 the answer
+// was worth a single point and Shikhandi was decoration.
+//
+// Then from half to a THIRD, again on measurement. At half, Bhishma measured
+// 62.4% in the lab, far past the 55% it calls strong: unfinishable AND keeping
+// five points is two abilities in one. At a third the grind-resistance stays
+// real without letting him carry a round from the floor.
 //
 // Warriors with NO answer stay at 1. Ashwatthama cannot be killed by anything,
 // so half his strength would be points nobody is ever allowed to contest.
@@ -37,27 +38,27 @@ const ctx = (state: GameState, actorOwner: Seat = 'player', playedRow: Row | nul
 });
 
 describe('a warrior who cannot be killed cannot be reduced to nothing', () => {
-  it('grinds Bhishma down to half and no further', () => {
+  it('grinds Bhishma down to a third and no further', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    expect(powerFloor(s, s.instances[iid])).toBe(5);
+    expect(powerFloor(s, s.instances[iid])).toBe(3);
 
     // Hit him for far more than he has, through the real damage handler.
     applyTargetAction(ctx(s, 'ai'), { kind: 'damage', amount: 99 }, iid);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
 
-    // And again. Every weapon in the game together cannot take the other half.
+    // And again. Every weapon in the game together cannot take the rest.
     applyTargetAction(ctx(s, 'ai'), { kind: 'damage', amount: 99 }, iid);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
   });
 
-  it('and Shikhandi takes the half no weapon could', () => {
+  it('and Shikhandi takes the rest no weapon could', () => {
     // The whole point of the change. Grinding is worth doing and is never
     // enough; the answer card is what finishes him.
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
     applyTargetAction(ctx(s, 'ai'), { kind: 'damage', amount: 99 }, iid);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
 
     const withAnswer = makeState({ playerBoard: { ratha: ['bhishma', 'shikhandi'] } });
     const b = withAnswer.board.player.ratha[0];
@@ -65,17 +66,17 @@ describe('a warrior who cannot be killed cannot be reduced to nothing', () => {
     expect(withAnswer.instances[b].currentPower).toBe(0);
   });
 
-  it('floors Drona at half too, because the elephant lie is his answer', () => {
+  it('floors Drona at a third too, because the elephant lie is his answer', () => {
     const s = makeState({ playerBoard: { ratha: ['drona'] } });
     const iid = s.board.player.ratha[0];
-    expect(powerFloor(s, s.instances[iid])).toBe(4); // base 9
+    expect(powerFloor(s, s.instances[iid])).toBe(3); // base 9
   });
 
   it('cannot be zeroed by setPower either, which was the back door', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
     applyTargetAction(ctx(s, 'ai'), { kind: 'setPower', value: 0 }, iid);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
   });
 
   it('drops the floor to 0 once Shikhandi takes the field', () => {
@@ -123,7 +124,7 @@ describe('reduceTo lowers, and only lowers', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
     applyTargetAction(ctx(s, 'ai'), { kind: 'reduceTo', value: 0 }, iid);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
   });
 });
 
@@ -179,7 +180,7 @@ describe('Sanmohana stupefies rather than kills', () => {
     const s = makeState({ aiBoard: { ratha: ['bhishma'] } });
     const iid = s.board.ai.ratha[0];
     applyTargetAction(ctx(s), { kind: 'damage', amount: 99 }, iid);
-    expect(rowPower(s, 'ai', 'ratha')).toBe(5); // still scoring, and now for half
+    expect(rowPower(s, 'ai', 'ratha')).toBe(3); // still scoring, for a third
     applyTargetAction(ctx(s), { kind: 'addFlag', flag: 'stupefied' }, iid);
     expect(rowPower(s, 'ai', 'ratha')).toBe(0);
   });
@@ -193,25 +194,25 @@ describe('the undying floor holds on EVERY path, not just the handlers', () => {
   it('survives Broken Bowstring, which took 4 straight off the top', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    s.instances[iid].currentPower = 7;
+    s.instances[iid].currentPower = 5;
     afflict(s, 'player', ['broken_bowstring']);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
   });
 
   it('survives Withered Host', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    s.instances[iid].currentPower = 6;
+    s.instances[iid].currentPower = 4;
     afflict(s, 'player', ['withered_host']);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
   });
 
   it('survives the Forgotten Mantra', () => {
     const s = makeState({ playerBoard: { ratha: ['bhishma'] } });
     const iid = s.board.player.ratha[0];
-    s.instances[iid].currentPower = 7;
+    s.instances[iid].currentPower = 5;
     afflict(s, 'player', ['forgotten_mantra']);
-    expect(s.instances[iid].currentPower).toBe(5);
+    expect(s.instances[iid].currentPower).toBe(3);
   });
 
   it('and an ordinary warrior still reaches zero on those same paths', () => {

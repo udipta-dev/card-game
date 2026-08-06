@@ -76,6 +76,9 @@ export function createMatch(
     totalRounds: 3,
     roundWins: { player: 0, ai: 0 },
     passed: { player: false, ai: false },
+    // No trade in round 1: the opening mulligan is that round's correction.
+    roundSwap: { player: false, ai: false },
+    playedThisRound: { player: false, ai: false },
     board: { player: emptyRows(), ai: emptyRows() },
     instances,
     hands: { player: playerHand, ai: aiHand },

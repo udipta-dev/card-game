@@ -79,6 +79,8 @@ export function makeState(spec: StateSpec = {}): GameState {
     totalRounds: 3,
     roundWins: { player: 0, ai: 0, ...spec.roundWins },
     passed: { player: false, ai: false, ...spec.passed },
+    roundSwap: { player: false, ai: false },
+    playedThisRound: { player: false, ai: false },
     board,
     instances,
     hands: { player: hand('player', spec.playerHand), ai: hand('ai', spec.aiHand) },
