@@ -1,21 +1,30 @@
-name: Deploy to GitHub Pages
+# Build, test, and publish to Cloudflare Pages.
+#
+# This used to deploy to GitHub Pages. On 6 Aug that pipeline stopped working:
+# every run built and tested green, uploaded its artifact, created the
+# deployment, and then sat in GitHub's processing stage until it hit the
+# ten-minute cap, which actions/deploy-pages will not let you raise (passing a
+# larger `timeout` logs "timeout value is greater than the allowed maximum" and
+# uses 600000 anyway). Six runs in a row died that way with nothing wrong on
+# our side. Every other repo on this account deploys fine because none of them
+# were on GitHub Pages.
+#
+# vite.config.ts already reads CF_PAGES to pick the base path ('/' on
+# Cloudflare, '/card-game/' on a GitHub project site), so it is set here to get
+# root-relative asset URLs.
+name: Deploy
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,40 +33,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Tests gate the deploy: a red suite must never reach the live site.
       - run: npm test
       - run: npm run build
-      - uses: actions/configure-pages@v5
+        env:
+          CF_PAGES: '1'
+      - uses: cloudflare/wrangler-action@v3
         with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    # NOTE: do not bother raising the deploy timeout. It is capped.
-    #
-    # actions/deploy-pages accepts a `timeout` input, and GitHub silently
-    # clamps it: passing 1500000 logs "timeout value is greater than the
-    # allowed maximum - timeout set to the maximum of 600000 milliseconds" and
-    # carries on with ten minutes. So when Pages is slow there is no lever here
-    # at all, and a failed run is a failed run.
-    #
-    # Worth knowing what that looks like, because it wasted an afternoon:
-    # deploys for this repo ran in 12 seconds on 1-4 Aug, then degraded through
-    # 6 Aug to 1.6, 3.8, 4.3, 6.0, 8.4 minutes and finally past the cap. Every
-    # other stage stayed green the whole time, dist grew only 300 to 394 KB
-    # across the stretch that went from 0.2 to 8.4 minutes, and no incident was
-    # posted until well after. If deploys start timing out and the build is
-    # green, check the deployment durations before changing anything:
-    #
-    #   for id in $(gh api repos/OWNER/REPO/deployments --jq '.[].id'); do
-    #     gh api repos/OWNER/REPO/deployments/$id/statuses --jq '.[].state'
-    #   done
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name kurukshetra --branch main
