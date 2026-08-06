@@ -120,8 +120,19 @@ const ON_BLACK =
  *
  * But the first fix went too far. Banning the arrowhead outright deleted the
  * arrow's identity along with the seam, and the render stopped reading as
- * something fired at all. An arrow is recognised from its nock and fletching,
- * not from its point, so those stay and only the head dissolves.
+ * something fired at all. An arrow is recognised from its nock and from the
+ * fins at its base, not from its point, so those stay and only the head
+ * dissolves.
+ *
+ * But naming that part is a trap. "Fletching" MEANS feathers to a model, and
+ * adding "no bird feathers" made it worse rather than better, which is rule 5
+ * exactly: negating an object hands you the object. Two renders came back with
+ * green plumage on a weapon that had just been told twice not to have any.
+ *
+ * The words "fletching", "feather" and "wood" therefore appear nowhere in the
+ * prompt. The part is described positively instead, as four gold fins standing
+ * out at right angles, which is a thing a model can draw without reaching for
+ * a bird.
  */
 /**
  * What a celestial shaft is made of, in the epic's own words rather than mine.
@@ -134,11 +145,11 @@ const ON_BLACK =
  * So: forged, not grown. Dark metal and hammered gold.
  */
 const MERGE =
-  "The lower shaft is plainly an arrow: the nock clear at the base, the fletching a pair of golden wings hammered thin and edged like blades, the shaft itself made wholly of iron, dark meteoric metal fluted and chased with gold. No wood, no bird feathers. No arrowhead, and no seam or contact line: partway up the shaft breaks into embers and streaming light and flows into the emblem, becoming it. One single object, not two touching.";
+  "The lower shaft is a long slender rod of dark meteoric metal, fluted and twisted and chased with gold, ending at the very bottom in a small gold nock. Just above the nock, four short triangular fins of hammered gold stand out from the shaft at right angles, flat and sharp-edged like little blades. Where a head would be there is no head: partway up, the shaft breaks into embers and streaming light and flows into the emblem, becoming it, with no seam and no contact line. One single object, not two touching.";
 
-/** For the two that are thrown, not shot. No shaft, no fletching, no bow. */
+/** For the two that are thrown, not shot. */
 const HURLED =
-  "A weapon held and thrown by hand, not an arrow: no bowstring, no fletching, no arrow shaft in the frame. Forged of dark meteoric metal chased with gold, nothing wooden and nothing that looks grown.";
+  "A short weapon held and thrown by hand, complete in itself: forged end to end of dark meteoric metal chased with gold, with a gripped haft and no tail of any kind behind it.";
 
 /**
  * Also learned by generating: at full size the emblem crowds its own detail
@@ -1340,7 +1351,19 @@ out.push(
 );
 out.push('');
 out.push(
-  '**0d. Forged, never grown.** A wooden shaft with bird feathers reads as ' +
+  '**0d. Never say "fletching", and never negate a feather.** The word means ' +
+  'feathers to a model, and adding *"no wood, no bird feathers"* made it worse ' +
+  'rather than better: two renders came back with green plumage on a weapon ' +
+  'that had just been told twice not to have any. That is rule 5 in its purest ' +
+  'form, negating an object hands you the object. The words *fletching*, ' +
+  '*feather* and *wood* now appear nowhere in a weapon prompt. The part is ' +
+  'described positively instead, as four short triangular fins of hammered gold ' +
+  'standing out from the shaft at right angles, which a model can draw without ' +
+  'reaching for a bird.'
+);
+out.push('');
+out.push(
+  '**0e. Forged, never grown.** A wooden shaft with bird feathers reads as ' +
   'ordinary hunting kit and makes a god\'s weapon look weak. The epic never ' +
   'asked for one either: it says *"shafts made wholly of iron"* (44 hits for ' +
   'wholly or entirely of iron) and calls the fletching *"shafts of golden ' +
