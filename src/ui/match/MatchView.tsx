@@ -638,15 +638,32 @@ function Tooltip({ card, inst, x, y }: { card: Card; inst?: GameState['instances
 }
 
 function EventFeed({ state }: { state: GameState }) {
+  // Gathered newest-first because that is the cheap way to take the last four,
+  // then REVERSED for display so the column reads top to bottom in the order
+  // things happened.
+  //
+  // It used to render newest at the top, and that read as a bug even to the
+  // person who built the game: "the enemy played Duryodhana" sat under
+  // "Duryodhana was slain", so a correct Bhima kill looked like a dead man
+  // being played again. Nothing on screen said which way the list ran, and
+  // top-to-bottom is what anyone assumes.
   const items: string[] = [];
   for (let i = state.log.length - 1; i >= 0 && items.length < 4; i--) {
     const txt = eventText(state, state.log[i]);
     if (txt) items.push(txt);
   }
+  items.reverse();
   return (
     <div className="eventlog">
       {items.map((t, i) => (
-        <div key={state.log.length - i} className="eventlog__item">
+        <div
+          key={state.log.length - (items.length - 1 - i)}
+          // Oldest faintest, newest full strength and wearing the brass rule.
+          // Two wordless cues that the story runs downward, because the one
+          // the feed had before (none) was not enough.
+          className={'eventlog__item' + (i === items.length - 1 ? ' eventlog__item--now' : '')}
+          style={{ opacity: 0.45 + (0.55 * (i + 1)) / items.length }}
+        >
           {t}
         </div>
       ))}

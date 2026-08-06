@@ -39,6 +39,19 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # 20 minutes rather than the action's 10-minute default.
+    #
+    # The deploy step does nothing but poll GitHub asking whether it has
+    # accepted the upload. Two runs in a row sat on "deployment_queued" for
+    # exactly ten minutes and then aborted themselves, while everything on our
+    # side was green: tests passed, the build passed, the artifact uploaded,
+    # 6.8 MB over 128 files, Pages configured as build_type=workflow, repo
+    # under 1 MB. Nothing to fix here, GitHub was simply slower to pick the job
+    # up than the action was willing to wait. Giving it longer costs nothing
+    # when the queue is fast and rescues the deploy when it is not.
+    timeout-minutes: 25
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 1200000

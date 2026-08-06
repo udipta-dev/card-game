@@ -470,3 +470,19 @@
   text-decoration: line-through;
   text-decoration-thickness: 2px;
 }
+
+/* The newest line in the feed carries the brass rule; the older ones fade back.
+   The feed reads downward in time order, and this is the wordless cue that
+   says so. */
+.eventlog__item--now {
+  border-left-color: var(--gold);
+  color: var(--ink);
+}
+
+/* The newest line in the feed keeps the brass rule and the full-strength ink;
+   older lines fade back. The feed reads downward in the order things happened,
+   and this is what says so without using a word. */
+.eventlog__item--now {
+  border-left-color: var(--gold);
+  color: var(--ink);
+}
