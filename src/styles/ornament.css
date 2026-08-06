@@ -486,3 +486,72 @@
   border-left-color: var(--gold);
   color: var(--ink);
 }
+
+/* ---------------------------------------------------------------------------
+ * MUSTER. Choosing the host.
+ *
+ * The two numbers that decide everything, count and provisions, are pinned so
+ * they cannot scroll away: a budget you have to go and look for is a budget
+ * you will overspend, and the pool here runs to sixty cards.
+ * ------------------------------------------------------------------------- */
+.muster__bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--panel-edge);
+  background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+}
+.muster__stat b {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--gold);
+}
+.muster__unit {
+  margin-left: 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.muster__problems {
+  flex: 1;
+  min-width: 12ch;
+  font-size: 0.8rem;
+  color: var(--lose);
+}
+.muster__bar--ok .muster__problems {
+  color: var(--win);
+}
+
+.muster__slot {
+  position: relative;
+}
+/* The provision price, on the card, at the size a price wants to be: readable
+   and not competing with the power badge it sits opposite. */
+/* BOTTOM right, not top right. The top right is where the card writes its name,
+   so the badge sat on it and clipped every warrior to four letters ("Bhim",
+   "Yudh", "Dhris"). The bottom right is empty on every frame: the power circle
+   sits bottom LEFT. Nothing moved except the corner, and the names came back. */
+.muster__cost {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  min-width: 1.15rem;
+  padding: 0 0.2rem;
+  border-radius: 2px;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  text-align: center;
+  color: var(--ink-dim);
+  background: rgba(12, 10, 9, 0.82);
+  border: 1px solid rgba(194, 160, 78, 0.3);
+}
+/* Mustered cards carry the brass edge; the pool below does not. */
+.muster__slot--in .card {
+  box-shadow: 0 0 0 1px var(--gold-dim);
+}

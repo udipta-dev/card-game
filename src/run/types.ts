@@ -68,6 +68,16 @@ export interface RunState {
   rewardChoices?: RewardOption[];
   /** Warriors currently away at penance. They do not fight while absent. */
   away: Penance[];
+  /**
+   * The cards chosen to march in the next battle, if the player has chosen.
+   *
+   * Absent means "field everything available", which is what the run always
+   * did and what makes winning WORSE: the roster grows by one card per victory
+   * while the opening hand stays at six, so a specific card went from 53% to
+   * appear at the start to 40% by the sixth battle. Choosing caps the deck, so
+   * a card you win replaces one you cut instead of diluting the ones you have.
+   */
+  marching?: CardId[];
   /** Astras learned through tapasya (warrior card id -> astra ids). */
   astraGrants: Record<CardId, CardId[]>;
   /** Warriors who returned from penance since the last map view, for the UI. */

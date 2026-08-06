@@ -157,6 +157,10 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
 
   const myMoves = useMemo(() => (myTurn ? legalMoves(state, 'player') : []), [state, myTurn]);
 
+  // Dev-only handle on the live match, so a question about what the engine
+  // thinks can be answered by asking it rather than by reasoning about it.
+  if (import.meta.env?.DEV) (window as unknown as { kuru?: unknown }).kuru = { state, myTurn, myMoves };
+
   const selectedCard = selected ? getCard(state.instances[selected]!.cardId) : null;
   const plan: Plan | null = useMemo(() => {
     if (!selectedCard || !selected) return null;
@@ -501,6 +505,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           card={inspect.card}
           inst={inspect.inst}
           onPlay={inspect.onPlay}
+          onSwap={inspect.onSwap}
           blockedReason={inspect.blockedReason}
           onClose={() => setInspect(null)}
         />

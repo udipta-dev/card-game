@@ -7,6 +7,8 @@ import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_DOT, FACTION_NAME } from '@ui/card/cardTheme';
 import { Aksha } from '@ui/ornament';
+import { loadMuster, hasCustomMuster } from '@content/savedMuster';
+import { toDeckList } from '@content/muster';
 
 const FACTIONS: { house: House; deck: DeckList }[] = [
   { house: 'pandava', deck: PANDAVA_DECK },
@@ -22,15 +24,24 @@ interface Props {
   onStart?: (playerDeck: DeckList, aiDeck: DeckList) => void;
   /** Campaign: choose your host; the ladder provides the opponents. */
   onStartHost?: (playerDeck: DeckList) => void;
+  /** Open the muster screen for the currently chosen house. */
+  onMuster?: (house: House) => void;
 }
 
-export function Setup({ mode, onStart, onStartHost, onBack }: Props) {
+export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
   const campaign = mode === 'campaign';
   const [playerHouse, setPlayerHouse] = useState<House>('pandava');
   const [oppHouse, setOppHouse] = useState<House | 'random'>('random');
   const [inspect, setInspect] = useState<Card | null>(null);
 
-  const playerDeck = deckFor(playerHouse);
+  // The host you last chose for this house, or the starter list. Reading it
+  // here rather than at module load means a muster saved this session is picked
+  // up the moment you come back to this screen.
+  const musteredIds = loadMuster(playerHouse);
+  const custom = hasCustomMuster(playerHouse);
+  const playerDeck = custom
+    ? toDeckList(playerHouse, `Your ${FACTION_NAME[playerHouse]}`, musteredIds)
+    : deckFor(playerHouse);
 
   const begin = () => {
     if (campaign) {
@@ -73,6 +84,16 @@ export function Setup({ mode, onStart, onStartHost, onBack }: Props) {
           {playerDeck.name}
           <span className="codex__group-n">
             {playerDeck.cards.length} cards · {deckProvisions(playerDeck)} provisions
+            {onMuster && (
+              <button
+                className="btn btn--ghost btn--sm"
+                style={{ marginLeft: 10 }}
+                title="Choose which cards go to war"
+                onClick={() => onMuster(playerHouse)}
+              >
+                {custom ? 'Change host' : 'Choose your host'}
+              </button>
+            )}
           </span>
         </div>
         <div className="codex__grid">

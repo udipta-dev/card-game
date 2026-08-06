@@ -9,6 +9,8 @@ import { Codex } from './screens/Codex';
 import { MainMenu } from './screens/MainMenu';
 import { RunView } from './screens/RunView';
 import { Setup } from './screens/Setup';
+import { Muster } from './screens/Muster';
+import { loadMuster, saveMuster } from '@content/savedMuster';
 
 interface MatchConfig {
   seed: number;
@@ -16,7 +18,7 @@ interface MatchConfig {
   aiDeck: DeckList;
 }
 
-type Screen = 'menu' | 'quickSetup' | 'campaignSetup' | 'codex';
+type Screen = 'menu' | 'quickSetup' | 'campaignSetup' | 'codex' | 'muster';
 
 function makeSeed(): number {
   // ?seed=17 replays an exact match. Every match is deterministic from its
@@ -30,6 +32,8 @@ export function App() {
   const [screen, setScreen] = useState<Screen>('menu');
   const [match, setMatch] = useState<MatchConfig | null>(null);
   const [run, setRun] = useState<RunState | null>(null);
+  /** Which house the muster screen is editing, and where to return to. */
+  const [mustering, setMustering] = useState<{ house: House; back: Screen } | null>(null);
 
   const startQuickplay = (playerDeck: DeckList, aiDeck: DeckList) => {
     setScreen('menu');
@@ -66,10 +70,34 @@ export function App() {
 
   return (
     <div className="app">
-      {screen === 'quickSetup' ? (
-        <Setup mode="quickplay" onStart={startQuickplay} onBack={() => setScreen('menu')} />
+      {mustering ? (
+        <Muster
+          house={mustering.house}
+          initial={loadMuster(mustering.house)}
+          onBack={() => {
+            setScreen(mustering.back);
+            setMustering(null);
+          }}
+          onConfirm={(ids) => {
+            saveMuster(mustering.house, ids);
+            setScreen(mustering.back);
+            setMustering(null);
+          }}
+        />
+      ) : screen === 'quickSetup' ? (
+        <Setup
+          mode="quickplay"
+          onStart={startQuickplay}
+          onMuster={(house) => setMustering({ house, back: 'quickSetup' })}
+          onBack={() => setScreen('menu')}
+        />
       ) : screen === 'campaignSetup' ? (
-        <Setup mode="campaign" onStartHost={startCampaign} onBack={() => setScreen('menu')} />
+        <Setup
+          mode="campaign"
+          onStartHost={startCampaign}
+          onMuster={(house) => setMustering({ house, back: 'campaignSetup' })}
+          onBack={() => setScreen('menu')}
+        />
       ) : screen === 'codex' ? (
         <Codex onBack={() => setScreen('menu')} />
       ) : (

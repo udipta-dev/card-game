@@ -4,7 +4,9 @@ import type { GameState } from '@engine/types';
 import { getCurse } from '@engine/curses';
 import { MatchView } from '@ui/match/MatchView';
 import { FACTION_NAME } from '@ui/card/cardTheme';
-import { chooseReward, chooseShrineOffer, currentEncounter, fieldedRoster, planBattle, resolveBattle } from '@run/run';
+import { chooseReward, chooseShrineOffer, currentEncounter, fieldedRoster, marchingCards, planBattle, resolveBattle } from '@run/run';
+import { MUSTER_MAX } from '@content/muster';
+import { Muster } from './Muster';
 import { getDeity, worthOf } from '@run/shrine';
 import type { PenanceOffer, ShrineOffer, VardaanOffer } from '@run/shrine';
 import type { RewardOption, RunState } from '@run/types';
@@ -25,6 +27,7 @@ export function RunView({ run: initial, onExit }: Props) {
   const [run, setRun] = useState<RunState>(initial);
   const [inBattle, setInBattle] = useState(false);
   const [recorded, setRecorded] = useState(false);
+  const [mustering, setMustering] = useState(false);
 
   const plan = useMemo(() => (inBattle ? planBattle(run) : null), [inBattle, run]);
 
@@ -60,7 +63,31 @@ export function RunView({ run: initial, onExit }: Props) {
   if (run.phase === 'won' || run.phase === 'lost') {
     return <RunEndScreen run={run} onExit={onExit} />;
   }
-  return <MapScreen run={run} onBattle={() => setInBattle(true)} onExit={onExit} />;
+  if (mustering) {
+    return (
+      <Muster
+        house={run.house}
+        // The run's own roster, not the whole house: you fight with what you
+        // have earned, and only with warriors who are not spent or at penance.
+        pool={fieldedRoster(run)}
+        initial={marchingCards(run)}
+        title="Choose who marches"
+        onBack={() => setMustering(false)}
+        onConfirm={(ids) => {
+          setRun((r) => ({ ...r, marching: ids }));
+          setMustering(false);
+        }}
+      />
+    );
+  }
+  return (
+    <MapScreen
+      run={run}
+      onBattle={() => setInBattle(true)}
+      onMuster={() => setMustering(true)}
+      onExit={onExit}
+    />
+  );
 }
 
 // ---------------------------------------------------------------- Map screen
@@ -68,13 +95,20 @@ function MapScreen({
   run,
   onBattle,
   onExit,
+  onMuster,
 }: {
   run: RunState;
   onBattle: () => void;
   onExit: () => void;
+  onMuster: () => void;
 }) {
   const enc = currentEncounter(run);
   const roster = fieldedRoster(run);
+  const marching = marchingCards(run);
+  // Only worth offering once there is a real decision: below the cap, every
+  // card marches anyway and a "choose your host" button is a button that
+  // changes nothing.
+  const canChoose = roster.length > MUSTER_MAX;
   return (
     <div className="run">
       <header className="run__top">
@@ -150,8 +184,14 @@ function MapScreen({
         <div className="run__next-label">Next</div>
         <div className="run__next-name">{enc.name}</div>
         <div className="run__next-sub">
-          {FACTION_NAME[enc.house]} · {enc.deckCards.length} cards · your host: {roster.length}
+          {FACTION_NAME[enc.house]} · {enc.deckCards.length} cards · your host:{' '}
+          {canChoose ? `${marching.length} of ${roster.length}` : roster.length}
         </div>
+        {canChoose && (
+          <button className="btn btn--ghost btn--sm run__muster" onClick={onMuster}>
+            {run.marching?.length ? 'Change who marches' : 'Choose who marches'}
+          </button>
+        )}
         <button className="btn btn--primary run__march" onClick={onBattle}>
           March to battle
         </button>

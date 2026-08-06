@@ -1193,6 +1193,14 @@
     font-size: 11px;
     padding: 5px 8px;
   }
+  /* ONE LINE ON A PHONE, not four. The feed is fixed over the board, and on a
+     desktop it sits in the margin beside it. There is no margin at 375px, so
+     the four-line stack lay across both enemy rows and hid the men standing in
+     them. History is worth less than seeing the field: the newest line stays,
+     the three behind it go, and what they covered is the board again. */
+  .eventlog__item:not(.eventlog__item--now) {
+    display: none;
+  }
 }
 
 /* On touch devices the hover tooltip has no place; tap-to-inspect replaces it. */

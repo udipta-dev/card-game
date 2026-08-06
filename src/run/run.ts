@@ -5,6 +5,7 @@ import { getCard } from '@content/cards';
 import type { DeckList } from '@content/decks';
 import { DECKS } from '@content/decks';
 import type { BattleInit } from '@engine/createMatch';
+import { checkMuster } from '@content/muster';
 import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
 import { buildLadder } from './ladder';
@@ -62,13 +63,29 @@ export function fieldedRoster(run: RunState): CardId[] {
   return run.roster.filter((id) => !run.banned.includes(id) && !away.has(id));
 }
 
-/** Build the next battle. The player fields the roster minus what is spent. */
+/**
+ * The cards that actually march.
+ *
+ * The chosen list if there is one and it is still legal, otherwise everything
+ * available. A choice is checked rather than trusted: it was made before the
+ * last battle, and a card can be spent, burnt or sent to penance in between,
+ * so a stale marching order could name cards that are no longer there.
+ */
+export function marchingCards(run: RunState): CardId[] {
+  const available = fieldedRoster(run);
+  if (!run.marching?.length) return available;
+  const live = run.marching.filter((id) => available.includes(id));
+  // Too small to fight is worse than too big to be reliable.
+  return checkMuster(live).ok ? live : available;
+}
+
+/** Build the next battle. */
 export function planBattle(run: RunState): BattlePlan {
   const enc = currentEncounter(run);
   const [battleSeed] = nextRandom((run.seed ^ (run.index * 0x85ebca6b)) >>> 0);
   return {
     seed: battleSeed,
-    playerDeck: { id: 'run-host', name: 'Your host', house: run.house, cards: fieldedRoster(run) },
+    playerDeck: { id: 'run-host', name: 'Your host', house: run.house, cards: marchingCards(run) },
     aiDeck: { id: enc.id, name: enc.name, house: enc.house, cards: enc.deckCards },
     init: {
       banned: run.banned,
