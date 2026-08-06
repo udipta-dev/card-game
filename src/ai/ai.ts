@@ -9,6 +9,7 @@
 // mechanical consequences of curses and abilities land in seatPower, and the
 // obvious deeper search is poisoned by the hidden-hand determinization.
 import { reduce } from '@engine/reducer';
+import { shuffle } from '@engine/ids';
 import { getCard } from '@content/cards';
 import { isFinalRound, opponentOf, seatPower, unitsOf } from '@engine/queries';
 import { legalMoves } from '@engine/selectors';
@@ -22,21 +23,26 @@ function isPlay(a: Action): boolean {
 }
 
 /**
- * OFF (0) BY MEASUREMENT, not by oversight.
+ * STILL OFF (0), but no longer for the original reason.
  *
- * Two-ply lookahead was built and measured against the one-ply AI, and it lost:
- * 47.6% at shortlist 3, 43.5% at 6, 39.3% at 12, against a 48.5% control. The
- * monotonic decline gave the cause away. hideOpponentHand() empties the
- * opponent's hand BEFORE the search runs, so the reply step believes they can
- * only pass, and a pass when we have also passed resolves the round. The search
- * was therefore scoring every candidate as "what if my opponent concedes right
- * now", which massively overvalues aggression, and the more moves it examined
- * the more damage it did.
+ * The first time two-ply was measured it lost, and lost harder the deeper it
+ * looked: 47.6% at shortlist 3, 43.5% at 6, 39.3% at 12, against a 48.5%
+ * control. That monotonic decline was the tell. The opponent's hand was being
+ * emptied before the search ran, so the reply step believed they could only
+ * pass, a mutual pass ends the round, and every candidate was therefore scored
+ * as "what if they concede right now".
  *
- * The machinery below is correct and costs about 1ms per decision. Turning it
- * on requires giving the reply step a plausible opponent hand, sampled from
- * their remaining deck, rather than the empty one determinization leaves behind.
- * That is a real piece of work, not a constant change.
+ * That cause is fixed: determinizeOpponentHand now deals a plausible hand
+ * instead of no hand. Re-measured against the shipped one-ply AI, the decline
+ * is gone:
+ *
+ *   shortlist 3   52.0%   (was 47.6%)
+ *   shortlist 6   50.7%   (was 43.5%)
+ *
+ * So the diagnosis was right. But at 2000 games shortlist 3 lands at 51.2%
+ * [95% CI 49.0-53.4], which does not clear 50, and it costs a reply search per
+ * candidate. Not harmful any more, just not worth paying for. Left off, and
+ * left reachable: `npm run duel 2000 4 0 3 0` reruns the comparison.
  */
 const LOOKAHEAD = 0;
 
@@ -66,19 +72,19 @@ function scoreAfterReply(state: GameState, seat: Seat, move: Action, w: Weights)
 }
 
 /** Deterministic argmax: first move achieving the max score wins ties. */
-function greedy(state: GameState, seat: Seat, moves: Action[], w: Weights, look: number): Action {
-  // Rank everything cheaply, then re-rank only the top few by what the
-  // opponent can do about them.
+function greedy(worlds: GameState[], seat: Seat, moves: Action[], w: Weights, look: number): Action {
+  // Rank everything cheaply across every world, then re-rank only the top few
+  // by what the opponent can do about them.
   const ranked = moves
-    .map((m) => ({ m, score: evaluate(reduce(state, m), seat, w) }))
+    .map((m) => ({ m, score: scoreAcrossWorlds(worlds, seat, m, w, 0) }))
     .sort((a, b) => b.score - a.score);
 
-  if (look <= 0) return ranked[0].m; // one-ply only
+  if (look <= 0) return ranked[0].m;
   const shortlist = ranked.slice(0, look);
   let best = ranked[0].m;
   let bestScore = -Infinity;
   for (const { m } of shortlist) {
-    const score = scoreAfterReply(state, seat, m, w);
+    const score = scoreAcrossWorlds(worlds, seat, m, w, look);
     if (score > bestScore) {
       bestScore = score;
       best = m;
@@ -88,7 +94,16 @@ function greedy(state: GameState, seat: Seat, moves: Action[], w: Weights, look:
 }
 
 /** The opponent has already passed, this round is a closed book we can read. */
-function chooseWhenOppPassed(state: GameState, seat: Seat, plays: Action[], w: Weights, look: number): Action {
+function chooseWhenOppPassed(
+  worlds: GameState[],
+  seat: Seat,
+  plays: Action[],
+  w: Weights,
+  look: number,
+): Action {
+  // The opponent has passed, so their hand cannot affect this round any more:
+  // one world is enough to read a closed book.
+  const state = worlds[0];
   const opp = opponentOf(seat);
   const myPower = seatPower(state, seat);
   const oppPower = seatPower(state, opp);
@@ -115,21 +130,85 @@ function chooseWhenOppPassed(state: GameState, seat: Seat, plays: Action[], w: W
 
   // We cannot take this round with one card. In the decider we must keep
   // fighting (greedy avoids the battle-losing pass); otherwise concede & bank.
-  if (isFinalRound(state)) return greedy(state, seat, [...plays, { type: 'PASS', seat }], w, look);
+  if (isFinalRound(state)) return greedy(worlds, seat, [...plays, { type: 'PASS', seat }], w, look);
   return { type: 'PASS', seat };
 }
 
 /**
- * Hide the opponent's concealed hand so the AI plans without clairvoyant
- * knowledge of held counters (imperfect-information determinization). The
- * opponent's card count is unknown across every candidate, so it cancels in the
- * argmax and does not distort the choice; only the counter-web stops being
- * pre-dodged, so astras actually get fired and answered in real games.
+ * Replace the opponent's real hand with a PLAUSIBLE one.
+ *
+ * The AI must not read their actual hand, or it pre-dodges every counter and
+ * astras stop being fired. The previous answer was to empty the hand outright,
+ * and that turned out to cost more than it saved, in two separate ways.
+ *
+ * First, five cards in the game act on the enemy hand: Shakuni discards two of
+ * them, Jayadratha denies four, and Tvashtra and Praswapa deny one each.
+ * Simulated against an empty hand every one of those is a no-op, so the search
+ * scored the whole guile line at zero. Shakuni measured 42.5%, second worst
+ * card in the game, for an ability the AI could not see happen.
+ *
+ * Second, it poisoned lookahead. With no cards the opponent can only pass, and
+ * a pass when we have also passed ends the round, so every candidate was scored
+ * as "what if they concede right now". That overvalues aggression, which is why
+ * two-ply lost to one-ply and lost harder the deeper it looked.
+ *
+ * The fix is the standard one for imperfect information. The union of their
+ * hand and their deck is exactly the set of their cards we have not seen, and
+ * we ARE entitled to know that set: it is their decklist minus what they have
+ * played. What we are not entitled to know is how it splits. So reshuffle the
+ * union and deal a fresh hand of the right size. Nothing is invented, nothing
+ * real is revealed, and the hand is the right SHAPE even when it is the wrong
+ * cards, which is all the search needs.
  */
-function hideOpponentHand(realState: GameState, seat: Seat): GameState {
+function determinizeOpponentHand(realState: GameState, seat: Seat, sample: number): GameState {
+  const s = structuredClone(realState);
+  const opp = opponentOf(seat);
+  const handSize = s.hands[opp].length;
+  if (handSize === 0) return s;
+  const pool = [...s.hands[opp], ...s.decks[opp]];
+  // Salted per sample, and derived from state.seed rather than any global
+  // source, so the AI stays pure and reproducible.
+  const [dealt] = shuffle(pool, (s.seed ^ (0x9e3779b9 + sample * 0x85ebca6b)) >>> 0);
+  s.hands[opp] = dealt.slice(0, handSize);
+  s.decks[opp] = dealt.slice(handSize);
+  return s;
+}
+
+/**
+ * How many plausible worlds to average a decision over.
+ *
+ * One is not enough, and the astra test proved it. A single deal is a point
+ * estimate: if that one hand happens to hold the counter, the AI treats being
+ * countered as CERTAIN and will not fire at all. Averaging over several deals
+ * turns that back into what it should be, a probability. A counter appearing
+ * in one world out of four discounts the play by a quarter instead of killing
+ * it outright.
+ *
+ * Four is where the cost stops buying accuracy: see the head-to-head in the
+ * commit that introduced this.
+ */
+const WORLDS = 4;
+
+/** The old behaviour: erase the hand entirely. Kept for the head-to-head. */
+function blankOpponentHand(realState: GameState, seat: Seat): GameState {
   const s = structuredClone(realState);
   s.hands[opponentOf(seat)] = [];
   return s;
+}
+
+/** Mean score of a move across several plausible opponent hands. */
+function scoreAcrossWorlds(
+  worlds: GameState[],
+  seat: Seat,
+  move: Action,
+  w: Weights,
+  look: number,
+): number {
+  let total = 0;
+  for (const world of worlds) {
+    total += look > 0 ? scoreAfterReply(world, seat, move, w) : evaluate(reduce(world, move), seat, w);
+  }
+  return total / worlds.length;
 }
 
 /** Choose the AI's next action. Pure & deterministic given the state. */
@@ -138,6 +217,13 @@ export function chooseAction(
   seat: Seat,
   w: Weights = WEIGHTS,
   look: number = LOOKAHEAD,
+  /**
+   * How many plausible opponent hands to average over. 0 reproduces the old
+   * behaviour exactly (blank the hand), which is what the head-to-head in the
+   * commit message was run against. Kept as a knob rather than deleted so the
+   * comparison stays reproducible.
+   */
+  worldCount: number = WORLDS,
 ): Action {
   // The returned action references the AI's own card ids, which are unchanged,
   // so it is valid to apply against the real state.
@@ -147,14 +233,20 @@ export function chooseAction(
   if (realState.phase === 'awaitingCounter' && realState.pendingCounter) {
     return { type: 'ANSWER_ASTRA', seat, counter: shouldAnswer(realState, seat) };
   }
-  const state = hideOpponentHand(realState, seat);
-  const moves = legalMoves(state, seat);
+  // Our own hand and board are identical in every world, so the legal move
+  // list is too; only what the opponent might be holding differs.
+  const worlds =
+    worldCount <= 0
+      ? [blankOpponentHand(realState, seat)]
+      : Array.from({ length: worldCount }, (_, i) => determinizeOpponentHand(realState, seat, i));
+  const moves = legalMoves(worlds[0], seat);
   const plays = moves.filter(isPlay);
   if (plays.length === 0) return { type: 'PASS', seat };
 
-  if (state.passed[opponentOf(seat)]) return chooseWhenOppPassed(state, seat, plays, w, look);
+  if (worlds[0].passed[opponentOf(seat)])
+    return chooseWhenOppPassed(worlds, seat, plays, w, look);
 
-  return greedy(state, seat, moves, w, look);
+  return greedy(worlds, seat, moves, w, look);
 }
 
 /**
