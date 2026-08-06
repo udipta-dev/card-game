@@ -1,4 +1,4 @@
-import { allCards } from '@content/cards';
+import { allCards, getCard } from '@content/cards';
 import type { Card, House, Tier } from '@engine/types';
 
 /** Names of the warriors who can invoke a given astra. */
@@ -108,7 +108,7 @@ function conditionText(c: Card['effects'][number]['condition']): string | null {
   if (!c) return null;
   if (c.q === 'isFinalRound') return 'In the round that decides the battle:';
   if (c.q === 'cardOnBoard')
-    return `While ${titleize(c.card)} stands${c.side === 'enemy' ? ' against you' : ''}:`;
+    return `While ${nameOf(c.card)} stands${c.side === 'enemy' ? ' against you' : ''}:`;
   if (c.q === 'targetHasFlag' && c.flag === 'diamond-body') return 'Against an armoured foe:';
   if (c.q === 'and') {
     const parts = c.cs.map(conditionText).filter(Boolean) as string[];
@@ -123,11 +123,32 @@ function conditionText(c: Card['effects'][number]['condition']): string | null {
 
 export function rulesText(card: Card): string[] {
   const lines: string[] = [];
+  // Eight of the twelve keywords in the game used to say nothing here, so a
+  // player could not learn from the card that Ashwatthama cannot be killed, or
+  // that half the Asura roster lands harder the longer you hold it. Worse, the
+  // half floor is silent by nature: a player grinding Bhishma watches him stop
+  // at 5 for no stated reason and reasonably concludes the game is broken.
   for (const kw of card.keywords) {
     if (kw.kind === 'icchamrityu')
-      lines.push(`Icchamrityu: cannot be slain until ${titleize(kw.unlessCardOnBoard)} takes the field.`);
+      lines.push(
+        `Icchamrityu: cannot be slain, and cannot be worn below half his strength, until ${nameOf(kw.unlessCardOnBoard)} takes the field.`,
+      );
     if (kw.kind === 'immuneUntilPlayed')
-      lines.push(`Immune until "${titleize(kw.card)}" is played, then falls.`);
+      lines.push(
+        `Cannot be slain, and cannot be worn below half his strength, until ${nameOf(kw.card)} is played. Then he falls.`,
+      );
+    if (kw.kind === 'deathless')
+      lines.push('Chiranjivi: nothing in the world can slay him. He can still be worn down to 1.');
+    if (kw.kind === 'unwoundable')
+      lines.push('Every wound raises another of him: damage cannot lower him at all. Only removal answers him.');
+    if (kw.kind === 'nightGrowth')
+      lines.push(
+        `Night-strength: arrives +${kw.amount} for every round already fought. Hold him back and he lands harder.`,
+      );
+    if (kw.kind === 'bond')
+      lines.push(`Rallies: +${kw.amount} for each ally of the same banner already on the field.`);
+    if (kw.kind === 'drawsAstra')
+      lines.push('A lightning rod: an enemy astra aimed at your host strikes him instead.');
     if (kw.kind === 'armor') lines.push(`Kavacha-Kundala: armour absorbs the first strike.`);
     if (kw.kind === 'noAstrasInFinalRound') lines.push(`His curse bars astras in the final round.`);
   }
@@ -145,6 +166,8 @@ export function rulesText(card: Card): string[] {
         lines.push('Slays the mightiest foe.');
       if (a.kind === 'destroy' && eff.target.pick === 'chosen')
         lines.push('Slays a chosen foe.');
+      if (a.kind === 'destroy' && eff.target.pick === 'unitByCard')
+        lines.push(`Slays ${nameOf((eff.target as { card: string }).card)}, wherever he stands.`);
       if (a.kind === 'destroy' && eff.target.pick === 'allEnemyUnits')
         lines.push('Strikes every foe.');
       if (a.kind === 'damage' && eff.target.pick === 'enemyRowSameAsPlayed')
@@ -153,6 +176,10 @@ export function rulesText(card: Card): string[] {
         lines.push(`Rains −${a.amount} on every foe.`);
       if (a.kind === 'damage' && eff.target.pick === 'self')
         lines.push(`He takes −${a.amount} himself, armour first.`);
+      if (a.kind === 'addFlag' && a.flag === 'diamond-body')
+        lines.push(
+          'A body of adamant: cannot be slain, and cannot be worn below half his strength, until a vow strips it from him.',
+        );
       if (a.kind === 'cleanse') lines.push('Lifts every penalty from your own lines.');
       if (a.kind === 'dismount') lines.push('Puts a chariot-warrior on foot (−2).');
     }
@@ -170,14 +197,31 @@ export function rulesText(card: Card): string[] {
       lines.push('An elemental astra. Any astra-trained warrior can fire it.');
     }
     if (card.counteredBy?.length)
-      lines.push(`Answered by: ${card.counteredBy.map(titleize).join(', ')} in the enemy hand.`);
+      lines.push(`Answered by: ${card.counteredBy.map(nameOf).join(', ')} in the enemy hand.`);
   }
   if (card.astraMastery)
     lines.push(`An astra-master, trained to tier ${card.astraMastery}.`);
   if (card.knownAstras?.length)
-    lines.push(`Bears the ${card.knownAstras.map(titleize).join(', ')}.`);
+    lines.push(`Bears the ${card.knownAstras.map(nameOf).join(', ')}.`);
   if (card.cost?.consequence) lines.push(card.cost.consequence);
   return lines;
+}
+
+/**
+ * The DISPLAYED name of a card, from the card itself.
+ *
+ * titleize() turns an id into title case, which is right for a word like
+ * shikhandi and wrong the moment a name and an id differ: Drona's card told
+ * the player to look for "Ashwatthama Elephant", and the card is called
+ * "Ashwatthama is Dead". Sending a player hunting for a card that does not
+ * exist is worse than saying nothing.
+ */
+function nameOf(id: string): string {
+  try {
+    return getCard(id).name;
+  } catch {
+    return titleize(id);
+  }
 }
 
 function titleize(id: string): string {
