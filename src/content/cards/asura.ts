@@ -247,23 +247,19 @@ export const ASURA_CARDS: Card[] = [
     tier: 'rathi',
     basePower: 5,
     rows: ['ratha'],
-    keywords: [{ kind: 'nightGrowth', amount: 2 }],
+    keywords: [{ kind: 'nightGrowth', amount: 2 }, { kind: 'unwoundable' }],
     tags: ['daitya'],
     // Every drop of his blood that touched the ground stood up as another of
     // him, and the gods could not fight him because hurting him MADE more of
     // him. Durga's answer was Kali, drinking the blood before it landed.
     //
-    // The true version is a spawn-on-damage trigger and the engine has no
-    // onDamage event, so this is the closest thing the existing triggers allow:
-    // he swells every round he is still standing. Not the mechanic, but the
-    // right shape, and it stops him being a vanilla 5 that measured 42.6%.
-    effects: [
-      {
-        on: 'onRoundStart',
-        target: { pick: 'self' },
-        actions: [{ kind: 'buff', amount: 3 }],
-      },
-    ],
+    // This was an onRoundStart buff, which fires AFTER the board is wiped and
+    // therefore never once fired in any game. The comment even claimed it had
+    // lifted him off 42.6%; the lab still had him at 43.3%, because nothing had
+    // happened. 'unwoundable' says the same thing through the floor instead:
+    // damage cannot move him at all, and removal is the only answer. Which is
+    // the actual story, since Kali did not wound him either.
+    effects: [],
     flavor: 'From every drop of his blood, a thousand more of him rose. Wounding him was how you lost.',
   },
 

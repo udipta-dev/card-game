@@ -29,6 +29,12 @@ export function powerFloor(state: GameState, u: CardInstance): number {
   // strange half-state and not what "his protections do not apply" means.
   if (u.flags.has('stripped')) return 0;
   const card = getCard(u.cardId);
+  // Duryodhana's diamond body. A flag rather than a keyword, which is exactly
+  // why it was missed: attemptDestroy checked it and powerFloor did not, so he
+  // was the one warrior left in the state the floor exists to prevent, immune
+  // to every weapon and grindable all the way to nothing. Bhima's vow is his
+  // answer, so he takes the same half floor as the others who have one.
+  if (u.flags.has('diamond-body')) return Math.floor(card.basePower / 2);
   for (const kw of card.keywords) {
     // A warrior who HAS an answer floors at half his strength. Grinding him is
     // still worth doing, but it can never finish the job, so the answer card is
@@ -40,6 +46,11 @@ export function powerFloor(state: GameState, u: CardInstance): number {
     // A warrior with NO answer keeps the floor of 1. Ashwatthama cannot be
     // killed by anything, so half his strength would be points the opponent is
     // simply never allowed to contest.
+    // Every drop that fell stood up as another of him. Damage never moves him;
+    // he floors at his full strength. He has no protection from destroy, so the
+    // answer is removal, which is exactly how the story goes: Kali did not
+    // wound him, she stopped the blood from landing.
+    if (kw.kind === 'unwoundable') return card.basePower;
     if (kw.kind === 'deathless') return 1;
     if (kw.kind === 'icchamrityu' && !cardOnBoard(state, u.owner, kw.unlessCardOnBoard, 'any'))
       return Math.floor(card.basePower / 2);

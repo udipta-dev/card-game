@@ -179,6 +179,9 @@ export type Keyword =
   | { kind: 'deathless' }
   // Grows in strength each round it survives (rakshasa night-strength, etc.).
   | { kind: 'nightGrowth'; amount: number }
+  // Raktabija: wounding him is how you lose. Damage cannot lower him at all,
+  // so the only answer is to remove him outright.
+  | { kind: 'unwoundable' }
   // +power for each other allied unit sharing a tag (squads, clans).
   | { kind: 'bond'; tag: string; amount: number }
   // The lightning rod. While he stands, an enemy astra that gets through takes

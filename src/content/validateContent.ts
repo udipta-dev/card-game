@@ -39,6 +39,8 @@ function checkKeyword(card: Card, kw: Keyword, errs: ContentError[]): void {
     // Names no other card, so there is no reference to validate: it only makes
     // the card carrying it the thing an enemy astra lands on.
     case 'drawsAstra':
+    // Names no other card either: it is a floor, expressed on the card itself.
+    case 'unwoundable':
       break;
     default: {
       const _exhaustive: never = kw;
@@ -92,6 +94,18 @@ export function validateContent(): ContentError[] {
     if (card.rows.length === 0)
       errs.push({ cardId: card.id, message: 'card has no legal rows' });
     card.keywords.forEach((kw) => checkKeyword(card, kw, errs));
+    // onRoundStart runs AFTER the board has been wiped for the new round, so a
+    // warrior standing there when it fires is a warrior who does not exist. It
+    // is not a weak trigger, it is an unreachable one, and Raktabija carried an
+    // effect on it that never fired in any game ever played. onRoundEnd is the
+    // one that works: it runs while the field is still standing.
+    for (const eff of card.effects)
+      if (eff.on === 'onRoundStart')
+        errs.push({
+          cardId: card.id,
+          message:
+            'effect uses onRoundStart, which fires after the board is cleared and can never see this card. Use onRoundEnd.',
+        });
     for (const a of card.knownAstras ?? []) {
       if (!CARD_DB[a]) errs.push({ cardId: card.id, message: `knownAstras references unknown card '${a}'` });
       else if (CARD_DB[a].type !== 'astra')
