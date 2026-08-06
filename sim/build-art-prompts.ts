@@ -183,6 +183,19 @@ const NEG_EMISSIVE = 'No photorealism, no 3D rendering, no glossy surfaces.';
 const RIM =
   'A hard rim of white light around the subject and a wide burning corona beyond it.';
 
+/**
+ * The god is named in every weapon prompt, and naming him invites the model to
+ * draw him. The first Brahmashirsha came back as four screaming heads stacked
+ * into a column: grotesque, and wrong on its own terms, because the line this
+ * whole section is built on is about signs and not faces.
+ *
+ * Menace has to come from the emblem being a weapon, not from something with a
+ * face glaring out of it. A lotus whose petals are blades is frightening. A
+ * lotus with a man screaming in the middle of it is a cartoon.
+ */
+const EMBLEM_ONLY =
+  'Show the emblem alone. The god himself never appears: no face, no head, no human figure, no eyes anywhere in the image.';
+
 type U = Card & { basePower?: number; tier?: string; flavor?: string };
 
 // ---------------------------------------------------------------- house look
@@ -1012,26 +1025,26 @@ const PHENOMENON: Record<string, string> = {
   kaumodaki: 'Kaumodaki, the mace Varuna gave Krishna: a single heavy mace standing upright, its head a fluted globe banded in brass and indigo, a peal of thunder drawn as hard concentric rings breaking outward from it',
   chandrahasa: 'Chandrahasa, the moon-laughter sword Shiva gave Ravana: a single curved blade rising point-upward, a thin silver crescent set into the pommel, cold blue-white light along the cutting edge, a serpent coiled at the grip',
   vajra: 'Vajra, the thunderbolt cut from the bones of Dadhichi: a single bolt held upright, a ribbed grip of white bone flaring into a cage of curved prongs at each end, arcs of amber light leaping between the tips',
-  parasu: 'Parasu, the axe Shiva gave Parashurama: a single great battle-axe rising upright, a broad crescent blade of lac red and brass on a long haft, the edge burning white, a third eye opening in the flat of the blade',
-  praswapa: 'A Praswapa, the sleep Prajapati gave: one great closed eye at the centre of an eight-petalled lotus of pale gold fire, the lashes long and utterly still, eight small flames standing in a ring beyond the petals',
-  samvodhana: 'A Samvodhana, the waking Prajapati gave alongside the sleep: a great brass bell struck and still ringing, hard rings of sound expanding from its lip, an eye opening wide inside the bell',
-  prajna: 'A Prajna, the weapon of wakefulness that no stupor can close: a single eye held open at the centre of a lotus of white and brass fire, rings of small burning script in orbit around it',
-  tvashtra: 'A Tvashtra, the weapon of the divine artificer: one armoured warrior of white fire, and three more of the very same warrior stepping out of him in different directions, each fainter and cooler than the last',
-  antardhana: 'An Antardhana, the arrow Shiva loosed to unmake the three cities: a rising shaft strung with three burning cities like beads, a silver crescent and an opening third eye where the head would be',
-  pashupatastra: 'A Pashupatastra, the weapon of Shiva, bearing his sign: a rising arrow becoming one vast unblinking eye, ash-white and rimmed in cold blue fire, a silver crescent and a trident growing from its brow, green-black serpents coiling at its edge',
-  brahmashirsha: 'A Brahmashirsha, the head of Brahma made a weapon: a rising arrow becoming four immense saffron and gold faces stacked into a column, every mouth open, a crown of burning lotus petals above them',
-  brahmastra: 'A Brahmastra, the weapon of Brahma, bearing his sign the lotus: a rising arrow becoming a great lotus of deep saffron and rose, four stern gold faces opening outward from its heart to stare in four directions, a wheel of white fire turning behind them',
-  narayanastra: 'A Narayanastra, the weapon of Vishnu, bearing his sign the discus: one blazing indigo and gold discus at the centre, innumerable spears and smaller discs streaming outward from it in every direction, each trailing fire',
-  vaishnavastra: 'A Vaishnavastra, the weapon of Vishnu: one immense discus seen edge-on, deep indigo at the hub and white-hot at the rim, that rim serrated like a mouth of teeth, a gold lotus burning at its centre, spinning fast enough to blur',
-  vasavi_shakti: 'A Vasavi Shakti, the dart Indra gave for one throw only, bearing his sign the thunderbolt: a single barbed spear rising point-upward, its shaft a braided bolt of amber lightning, a corona of unblinking eyes burning along its length',
-  nagastra: 'A Nagastra, the serpent weapon: a rising arrow becoming a mass of green-black serpents, hoods spread wide, amber eyes, every mouth open and fanged',
-  sauparna: 'A Sauparna, the Garuda weapon: a rising arrow becoming a vast eagle of white and copper fire, talons open and wings spread to the edge of the frame, a green serpent burning in its beak',
-  agneyastra: 'An Agneyastra, the weapon of Agni: a wall of orange and white-hot fire rising, its crest breaking into seven tongues, the head of a ram of white flame forming in the heart of it',
-  varunastra: 'A Varunastra, the weapon of Varuna, bearing his sign the noose: a rising coil of deep blue-green water lit from within, a noose of white foam turning at its centre, the jaws of a makara opening at the crest',
-  vayavyastra: 'A Vayavyastra, the weapon of Vayu: a rising funnel of pale grey-green wind, its walls scored into blades, a torn banner whipping at the top of it',
-  aindrastra: 'An Aindrastra, the weapon of Indra: a dense sheaf of arrows rising point-upward in a solid column, every shaft a thread of white lightning, an amber thunderbolt burning at the core of the mass',
+  parasu: 'Parasu, the axe Shiva gave Parashurama: a single great battle-axe rising upright, a broad crescent blade of lac red and brass on a long haft, the edge burning white, a trident cut into the flat of the blade',
+  praswapa: 'A Praswapa, the sleep Prajapati gave: one great lotus of pale gold closed tight for the night, eight small flames standing motionless in a ring around it',
+  samvodhana: 'A Samvodhana, the waking Prajapati gave alongside the sleep: a great brass bell struck and still ringing, hard rings of sound breaking outward from its lip, a lotus opening beneath it',
+  prajna: 'A Prajna, the weapon of wakefulness that no stupor can close: a single tall lamp of white and brass fire that will not gutter, rings of small burning script in orbit around its flame',
+  tvashtra: 'A Tvashtra, the weapon of the divine artificer: one rising arrow becoming three identical arrows, and those three becoming nine, each rank fainter and cooler than the rank in front of it',
+  antardhana: 'An Antardhana, the arrow Shiva loosed to unmake the three cities: a rising shaft strung with three burning fortress-cities like beads, a thin silver crescent above them where the arrowhead would be',
+  pashupatastra: 'A Pashupatastra, the weapon of Shiva, carrying his signs: a rising arrow becoming a great three-pronged trident, a thin silver crescent caught between its prongs, green-black serpents coiled down the shaft, ash-white fire along every edge',
+  brahmashirsha: 'A Brahmashirsha, the Brahmastra raised past recall: four lotuses of saffron and gold fused into a single flower facing the four quarters, every petal a blade, a column of white fire driven up through its centre',
+  brahmastra: 'A Brahmastra, the weapon of Brahma, carrying his sign the lotus: a rising arrow becoming one great open lotus of deep saffron and rose, every petal edged like a blade, a ring of white fire turning behind it',
+  narayanastra: 'A Narayanastra, the weapon of Vishnu, carrying his sign the discus: one blazing indigo and gold discus at the centre, innumerable smaller discs and spears streaming outward from it in every direction, each trailing fire',
+  vaishnavastra: 'A Vaishnavastra, the weapon of Vishnu: one immense discus seen edge-on, deep indigo at the hub and white-hot at the rim, that rim a continuous ring of curved blades, a gold lotus at its centre, spinning fast enough to blur',
+  vasavi_shakti: 'A Vasavi Shakti, the dart Indra gave for one throw only, carrying his sign the thunderbolt: a single barbed spear rising point-upward, its shaft a braided vajra of amber lightning, arcs leaping between the barbs',
+  nagastra: 'A Nagastra, the serpent weapon: a rising arrow becoming a mass of green-black serpents, hoods spread wide, amber-scaled, coiled hard around one another',
+  sauparna: 'A Sauparna, the Garuda weapon: a rising arrow becoming a vast pair of outspread wings of white and copper fire, talons closing on a green serpent beneath them',
+  agneyastra: 'An Agneyastra, the weapon of Agni: a wall of orange and white-hot fire rising, its crest breaking into seven distinct tongues, a pair of spiralling ram horns of white flame in the heart of it',
+  varunastra: 'A Varunastra, the weapon of Varuna, carrying his sign the noose: a rising coil of deep blue-green water lit from within, a great noose of white foam turning at its heart, the whole column crested and breaking',
+  vayavyastra: 'A Vayavyastra, the weapon of Vayu: a rising funnel of pale grey-green wind, its walls scored into blade-edges, a torn banner whipping at the crown of it',
+  aindrastra: 'An Aindrastra, the weapon of Indra: a dense sheaf of arrows rising point-upward in a solid column, every shaft a thread of white lightning, an amber vajra burning at the core of the mass',
   bhargavastra: 'A Bhargavastra, the weapon of Parashurama of the Bhrigus: a rising arrow becoming countless arrows in a widening fan, a great red-gold axe burning at the origin of them',
-  sammohana: 'A Sammohana, the weapon that leaves an army standing and dreaming: a ring of spiralling eyes turning in on themselves, irises lac red and indigo, the pupils drifting apart, a slow dissolving light between them',
+  sammohana: 'A Sammohana, the weapon that leaves an army standing and dreaming: a slow spiral of pale indigo light turning in on itself, ring within ring, each ring drifting out of true with the next',
   brahmas_bargain: 'Two asura brothers kneeling before a four-faced god, one boon between them, each already watching the other',
   kunti_invocation: 'A woman with closed eyes speaking a mantra, a god half-formed in the air above her',
   surya_kavacha: 'Golden armour and earrings glowing with sunlight, worn by no one, floating in darkness',
@@ -1049,7 +1062,6 @@ const PHENOMENON: Record<string, string> = {
 /** Cards whose subject IS a person. "No human figure" was being stamped on a
  *  queen, a woman speaking a mantra, twin gods and a lord of death. */
 const HAS_FIGURE = new Set([
-  'tvashtra', // the astra IS a duplicated warrior; without him there is nothing to draw
   'krishna_charioteer',
   'brahmas_bargain',
   'kunti_invocation',
@@ -1074,7 +1086,7 @@ function bodyOf(card: U): string {
       // One framing sentence, not two. FRAME's "clear margin, nothing cropped"
       // and the scale rule's "generous black margin" were saying the same
       // thing twice in the same prompt.
-      return `${p}. ${figure}${ON_BLACK}${merge} ${FRAME_EMISSIVE} ${RIM} ${NEG_EMISSIVE}`;
+      return `${p}. ${EMBLEM_ONLY} ${ON_BLACK}${merge} ${FRAME_EMISSIVE} ${RIM} ${NEG_EMISSIVE}`;
     }
     return `${p}. ${figure}${CAMERA_SCENE} ${FRAME('Whole subject')} ${NEG}`;
   }
@@ -1232,6 +1244,18 @@ out.push('');
 out.push(
   'Four rounds of real generation went into this section. Every rule below cost ' +
   'images, so they are written down rather than quietly folded in.'
+);
+out.push('');
+out.push(
+  '**0. The sign, never the god.** This is the rule the whole section is built ' +
+  'on and it was still got wrong once. Naming a god invites the model to draw ' +
+  'him, and the first Brahmashirsha came back as four screaming heads stacked ' +
+  'into a column: grotesque, and wrong on its own terms, because the line being ' +
+  'quoted is about *signs*. Menace comes from the emblem being a weapon, not ' +
+  'from a face glaring out of it. A lotus whose petals are blades is ' +
+  'frightening; a lotus with a man screaming in the middle of it is a cartoon. ' +
+  'Every weapon prompt carries an explicit guard: show the emblem alone, the god ' +
+  'never appears.'
 );
 out.push('');
 out.push(
