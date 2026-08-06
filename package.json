@@ -14,8 +14,9 @@
     "analyze": "vite-node sim/analyze.ts",
     "explore": "vite-node sim/explore.ts",
     "video:prompts": "vite-node sim/build-video-prompts.ts",
-    "font:subset": "python3 -m fontTools.subset node_modules/@fontsource/tiro-devanagari-sanskrit/files/tiro-devanagari-sanskrit-devanagari-400-normal.woff2 --text=\u0915\u0941\u0930\u0941\u0915\u094d\u0937\u0947\u0924\u094d\u0930 --layout-features='*' --flavor=woff2 --output-file=src/assets/fonts/tiro-kurukshetra.woff2",
-    "duel": "vite-node sim/ai-duel.ts"
+    "font:subset": "python3 -m fontTools.subset node_modules/@fontsource/tiro-devanagari-sanskrit/files/tiro-devanagari-sanskrit-devanagari-400-normal.woff2 --text=कुरुक्षेत्र --layout-features='*' --flavor=woff2 --output-file=src/assets/fonts/tiro-kurukshetra.woff2",
+    "duel": "vite-node sim/ai-duel.ts",
+    "art:import": "vite-node sim/art-import.ts"
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5.3.0",
@@ -29,6 +30,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "sharp": "^0.35.3",
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
     "vite-plugin-pwa": "^0.20.5",
