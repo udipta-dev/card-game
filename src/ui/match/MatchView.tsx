@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { getCard, provisionOf } from '@content/cards';
+import { getCard } from '@content/cards';
 import type { DeckList } from '@content/decks';
 import { chooseAction } from '@ai/ai';
 import { createMatch } from '@engine/createMatch';
@@ -49,6 +49,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   const [selected, setSelected] = useState<InstanceId | null>(null);
   const [mSel, setMSel] = useState<InstanceId[]>([]);
   const [showHelp, setShowHelp] = useState(false);
+  const [showLog, setShowLog] = useState(false);
   const [inspect, setInspect] = useState<{
     card: Card;
     inst?: GameState['instances'][string];
@@ -395,13 +396,14 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
       </div>
 
       {tip && <Tooltip {...tip} />}
-      <EventFeed state={state} />
+      <EventFeed state={state} onOpenLog={() => setShowLog(true)} />
       {banner && (
         <div className="overlay" style={{ background: 'transparent', pointerEvents: 'none' }}>
           <div className="banner">{banner}</div>
         </div>
       )}
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
+      {showLog && <BattleLog state={state} onClose={() => setShowLog(false)} />}
       {omen && (
         <div className={`omen omen--${omen.tone}`} role="status" onClick={() => setOmen(null)}>
           <div className="omen__title">{omen.title}</div>
@@ -639,8 +641,14 @@ function Tooltip({ card, inst, x, y }: { card: Card; inst?: GameState['instances
         {TYPE_LABEL[card.type]}
         {card.tier ? ` · ${TIER_LABEL[card.tier]}` : ''}
         {inst ? ` · Power ${inst.currentPower}` : card.basePower ? ` · Power ${card.basePower}` : ''}
-        {` · Cost ${provisionOf(card)}`}
+        {inst && inst.currentPower !== card.basePower ? ` (printed ${card.basePower})` : ''}
       </div>
+      {/* The provision price is deliberately NOT here. Mid-battle it answers a
+          question nobody is asking and invites one that has no answer: there is
+          no cost to play a card, no pool, and no per-round limit of any kind.
+          Printing "Cost 12" beside "Power 0" during a fight is where "do I have
+          unlimited cost per round?" came from. It belongs on the muster screen,
+          which is the only place it does anything. */}
       {rules.map((r, i) => (
         <div key={i} className="tooltip__rule">
           {r}
@@ -651,7 +659,54 @@ function Tooltip({ card, inst, x, y }: { card: Card; inst?: GameState['instances
   );
 }
 
-function EventFeed({ state }: { state: GameState }) {
+/**
+ * The whole battle, from the first card to now, grouped by round.
+ *
+ * The feed shows the last four lines and nothing else, which is fine while you
+ * are looking at it and useless the moment you are not: fire a weapon, watch
+ * the numbers move, and by the time you wonder what happened the lines have
+ * scrolled away. The engine has kept every event all along; nothing rendered
+ * more than the tail of it.
+ */
+function BattleLog({ state, onClose }: { state: GameState; onClose: () => void }) {
+  // Split into rounds so the story has chapters rather than being one column.
+  const rounds: Array<{ round: number; lines: string[] }> = [{ round: 1, lines: [] }];
+  for (const ev of state.log) {
+    const txt = eventText(state, ev);
+    if (txt) rounds[rounds.length - 1].lines.push(txt);
+    // roundEnd closes a chapter; anything after it belongs to the next round.
+    if (ev.t === 'roundEnd' && ev.round < MAX_ROUNDS_SHOWN)
+      rounds.push({ round: ev.round + 1, lines: [] });
+  }
+  const shown = rounds.filter((r) => r.lines.length);
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="panel log" onClick={(e) => e.stopPropagation()}>
+        <h2 className="log__title">The battle so far</h2>
+        <div className="log__scroll">
+          {shown.map((r) => (
+            <div key={r.round} className="log__round">
+              <div className="log__round-head">Round {r.round}</div>
+              {r.lines.map((line, i) => (
+                <div key={i} className="log__line">
+                  {line}
+                </div>
+              ))}
+            </div>
+          ))}
+          {!shown.length && <p className="setup__note">Nothing has happened yet.</p>}
+        </div>
+        <button className="btn btn--primary btn--sm" onClick={onClose}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
+}
+/** A battle never runs past three rounds, so a fourth chapter cannot exist. */
+const MAX_ROUNDS_SHOWN = 3;
+
+function EventFeed({ state, onOpenLog }: { state: GameState; onOpenLog: () => void }) {
   // Gathered newest-first because that is the cheap way to take the last four,
   // then REVERSED for display so the column reads top to bottom in the order
   // things happened.
@@ -681,6 +736,13 @@ function EventFeed({ state }: { state: GameState }) {
           {t}
         </div>
       ))}
+      {/* The feed only ever holds the last four lines. This is the way back to
+          everything before them. */}
+      {state.log.length > 0 && (
+        <button className="eventlog__more" onClick={onOpenLog} title="Everything that has happened">
+          Full log
+        </button>
+      )}
     </div>
   );
 }

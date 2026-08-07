@@ -9,6 +9,7 @@ import { FACTION_DOT, FACTION_NAME } from '@ui/card/cardTheme';
 import { Aksha } from '@ui/ornament';
 import { loadMuster, hasCustomMuster } from '@content/savedMuster';
 import { toDeckList } from '@content/muster';
+import { HelpButton } from '@ui/HelpButton';
 
 const FACTIONS: { house: House; deck: DeckList }[] = [
   { house: 'pandava', deck: PANDAVA_DECK },
@@ -71,7 +72,7 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
           ‹ Back
         </button>
         <h2 className="codex__title">Choose your host</h2>
-        <span className="codex__count" />
+        <span className="codex__count"><HelpButton className="btn btn--ghost btn--sm" /></span>
       </div>
 
       <div className="codex__scroll">

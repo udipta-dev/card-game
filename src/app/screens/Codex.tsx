@@ -3,22 +3,81 @@ import { allCards } from '@content/cards';
 import type { Card, House } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
+import { HelpButton } from '@ui/HelpButton';
 
-const GROUPS: { title: string; house: House }[] = [
+/**
+ * A section of the codex: either a whole house, or one kind of card within the
+ * neutral pile.
+ *
+ * The neutral pile used to be a single heading, "Astras and Fates", holding the
+ * divine weapons, the named weapons, the shrine gifts and the stratagems all
+ * mixed together. Those are four different things that are acquired in
+ * different ways and played in different ways, and lumping them made the
+ * largest section of the codex the least navigable.
+ */
+interface Group {
+  title: string;
+  /** Plain English, for anyone meeting the word for the first time. */
+  gloss?: string;
+  house?: House;
+  types?: Card['type'][];
+}
+
+const GROUPS: Group[] = [
   { title: 'The Pandava Host', house: 'pandava' },
   { title: 'The Kaurava Host', house: 'kaurava' },
   { title: 'The Asura Host', house: 'asura' },
-  { title: 'Those Who Stood Apart', house: 'legend' },
-  { title: 'Astras and Fates', house: 'neutral' },
+  {
+    // "Those Who Stood Apart" is a nice phrase and tells a new player nothing.
+    // These are the warriors who fought for neither side, so the heading now
+    // says that and the old line survives as the gloss.
+    title: 'Neutral Warriors',
+    gloss: 'who took neither side',
+    house: 'legend',
+  },
+  {
+    title: 'Astras',
+    gloss: 'divine weapons, invoked by mantra',
+    house: 'neutral',
+    types: ['astra'],
+  },
+  {
+    title: 'Shastras',
+    gloss: 'named weapons, carried in the hand',
+    house: 'neutral',
+    types: ['shastra'],
+  },
+  {
+    title: 'Vardaan',
+    gloss: 'divine gifts, earned at a shrine',
+    house: 'neutral',
+    types: ['boon'],
+  },
+  {
+    title: 'Fates',
+    gloss: 'tricks of war, and curses',
+    house: 'neutral',
+    types: ['stratagem', 'curse'],
+  },
 ];
 
+/**
+ * Warriors strongest first; weapons by rank, mightiest first.
+ *
+ * Astras used to fall through to declared order, so the Pashupata sat wherever
+ * it happened to be written and the tiers were invisible. They have a canonical
+ * hierarchy (tier 3 are the ultimates, tier 1 the elementals) and the codex is
+ * where a player goes to learn it, so it leads with the ones that end battles.
+ */
 function sortCards(cards: Card[]): Card[] {
-  // Units by power (strongest first), then the rest in declared order.
   return [...cards].sort((a, b) => {
     if (a.type === 'unit' && b.type === 'unit') return b.basePower - a.basePower;
     if (a.type === 'unit') return -1;
     if (b.type === 'unit') return 1;
-    return 0;
+    const at = a.astraTier ?? 0;
+    const bt = b.astraTier ?? 0;
+    if (at !== bt) return bt - at;
+    return a.name.localeCompare(b.name);
   });
 }
 
@@ -33,16 +92,26 @@ export function Codex({ onBack }: { onBack: () => void }) {
           ‹ Back
         </button>
         <h2 className="codex__title">Codex</h2>
-        <span className="codex__count">{all.length} cards</span>
+        <span className="codex__count">
+          {all.length} cards <HelpButton className="btn btn--ghost btn--sm" />
+        </span>
       </div>
 
       <div className="codex__scroll">
         {GROUPS.map((g) => {
-          const group = sortCards(all.filter((c) => c.house === g.house));
+          const group = sortCards(
+            all.filter(
+              (c) => c.house === g.house && (!g.types || g.types.includes(c.type)),
+            ),
+          );
+          if (!group.length) return null;
           return (
-            <section key={g.house} className="codex__section">
+            <section key={g.title} className="codex__section">
               <h3 className="codex__group">
-                {g.title}
+                <span>
+                  {g.title}
+                  {g.gloss && <span className="codex__gloss">{g.gloss}</span>}
+                </span>
                 <span className="codex__group-n">{group.length}</span>
               </h3>
               <div className="codex__grid">

@@ -18,6 +18,7 @@ import type { Card, CardId, House } from '@engine/types';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_NAME } from '@ui/card/cardTheme';
+import { HelpButton } from '@ui/HelpButton';
 
 interface Props {
   house: House;
@@ -57,7 +58,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
           ‹ Back
         </button>
         <h2 className="codex__title">{title ?? `Muster the ${FACTION_NAME[house]}`}</h2>
-        <span className="codex__count" />
+        <span className="codex__count"><HelpButton className="btn btn--ghost btn--sm" /></span>
       </div>
 
       {/* The two numbers that decide everything, always on screen. Sticky
