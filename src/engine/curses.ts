@@ -119,7 +119,7 @@ export function getCurse(id: CurseId): CurseDef | undefined {
  * state seed, so the draw stays deterministic and replayable. A seat never
  * carries the same curse twice.
  */
-export function afflict(state: GameState, seat: Seat, pool: CurseId[]): CurseDef | undefined {
+export function afflict(state: GameState, seat: Seat, pool: CurseId[], by?: string): CurseDef | undefined {
   if (!state.curses) state.curses = { player: [], ai: [] };
   const available = pool.filter((id) => CURSES[id] && !state.curses[seat].includes(id));
   if (!available.length) return undefined;
@@ -128,7 +128,7 @@ export function afflict(state: GameState, seat: Seat, pool: CurseId[]): CurseDef
   const curse = CURSES[available[Math.floor(roll * available.length)]];
   state.curses[seat].push(curse.id);
   curse.onAfflict?.(state, seat);
-  state.log.push({ t: 'afflict', seat, curse: curse.id, name: curse.name, text: curse.text });
+  state.log.push({ t: 'afflict', seat, curse: curse.id, name: curse.name, text: curse.text, by });
   return curse;
 }
 

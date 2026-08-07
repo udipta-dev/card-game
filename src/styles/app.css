@@ -1880,3 +1880,16 @@
 }
 .house-brief__tag--good { color: #a8cfae; border-color: rgba(106, 144, 112, 0.55); }
 .house-brief__tag--bad { color: #e0a99f; border-color: rgba(176, 87, 74, 0.55); }
+
+/* A long mark says how many more battles it holds. Without the number, the one
+   thing a player needs to decide whether to fire another great weapon (how long
+   am I already marked for?) was nowhere on screen. */
+.curse-chip--long { border-color: rgba(176, 87, 74, 0.5); }
+.curse-chip__left {
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 2px;
+  background: rgba(176, 87, 74, 0.22);
+  color: #e0a99f;
+  font-variant-numeric: tabular-nums;
+}

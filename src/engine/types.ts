@@ -536,7 +536,10 @@ export type GameEvent =
   // Banned, but recoverable: the next warrior home from penance brings it back.
   | { t: 'suspended'; cardId: CardId }
   | { t: 'ability'; iid: InstanceId; cardId: CardId; name: string; left: number }
-  | { t: 'afflict'; seat: Seat; curse: CurseId; name: string; text: string }
+  // `by` is the card that earned it, so the run layer can price the curse
+  // without re-deriving which weapon was fired. Absent when a curse comes from
+  // somewhere other than a weapon (a shrine's shrap, say).
+  | { t: 'afflict'; seat: Seat; curse: CurseId; name: string; text: string; by?: CardId }
   | { t: 'burn'; seat: Seat; cardIds: CardId[] }
   // Two great astras meet. Both hosts are scoured; the wielder who never
   // learned to withdraw his weapon pays the greater price.

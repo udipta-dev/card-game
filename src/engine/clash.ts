@@ -67,5 +67,5 @@ export function resolveClash(
     blast,
     unwithdrawn,
   });
-  if (unwithdrawn) afflict(state, unwithdrawn, ADHARMA_CURSES);
+  if (unwithdrawn) afflict(state, unwithdrawn, ADHARMA_CURSES, astra.id);
 }

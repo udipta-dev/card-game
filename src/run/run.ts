@@ -8,6 +8,7 @@ import type { BattleInit } from '@engine/createMatch';
 import { checkMuster } from '@content/muster';
 import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
+import { activeCurses, bind, curseBattlesFor, serveOneBattle } from './dharma';
 import { buildLadder } from './ladder';
 import { mixSeed, rollRewards } from './rewards';
 import { getDeity, isShrineIndex, rollPenanceOutcome, rollShrine } from './shrine';
@@ -46,6 +47,7 @@ export function createRun(seed: number, house: House, chosen?: readonly CardId[]
     banned: [],
     suspended: [],
     pendingCurses: [],
+    curseClock: {},
     depth: 0,
     away: [],
     astraGrants: {},
@@ -97,7 +99,10 @@ export function planBattle(run: RunState): BattlePlan {
     init: {
       banned: run.banned,
       suspended: run.suspended ?? [],
-      playerCurses: run.pendingCurses,
+      // Everything still serving a sentence, plus any one-battle shrap bound
+      // at a shrine. The engine does not know what a battle is, so it is simply
+      // handed the curses that are live when this one starts.
+      playerCurses: unique([...run.pendingCurses, ...activeCurses(run.curseClock ?? {})]),
       astraGrants: run.astraGrants,
     },
   };
@@ -129,10 +134,27 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
   // dropping it here would mean there was nothing left for penance to restore.
   const roster = run.roster.filter((id) => !banned.includes(id) || suspended.includes(id));
 
-  // A curse earned this battle clings through the next one, then fades. We only
-  // carry what was freshly earned, so curses never pile up into a death spiral.
-  const seeded = new Set(run.pendingCurses);
-  const pendingCurses = finalState.curses[playerSeat].filter((c) => !seeded.has(c));
+  // A curse earned THIS battle goes on the clock for as long as the weapon that
+  // earned it costs. The afflict event carries the weapon, so the price is read
+  // off the act rather than guessed at afterwards.
+  let curseClock = run.curseClock ?? {};
+  // Defaulted for the same reason `suspended` is above: a caller may hand us a
+  // partial final state, and a run persisted before this field existed has no
+  // clock. Neither should crash the end of a battle.
+  for (const ev of finalState.log ?? []) {
+    if (ev.t !== 'afflict' || ev.seat !== playerSeat || !ev.by) continue;
+    const weapon = getCard(ev.by);
+    curseClock = bind(curseClock, ev.curse, curseBattlesFor(weapon.id, weapon.astraTier ?? 0));
+  }
+  // This battle has been fought, so every sentence is one battle shorter.
+  curseClock = serveOneBattle(curseClock);
+
+  // Anything earned this battle that was NOT priced by a weapon (a shrine's
+  // shrap) keeps the old one-battle carry.
+  const seeded = new Set([...run.pendingCurses, ...activeCurses(run.curseClock ?? {})]);
+  const pendingCurses = finalState.curses[playerSeat].filter(
+    (c) => !seeded.has(c) && !(c in curseClock),
+  );
 
   const depth = run.depth + 1;
   const nextIndex = run.index + 1;
@@ -167,6 +189,7 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
     suspended: stillSuspended,
     roster: withReturned,
     pendingCurses,
+    curseClock,
     depth,
     index: nextIndex,
     away,

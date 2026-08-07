@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { getCard } from '@content/cards';
 import type { GameState } from '@engine/types';
 import { getCurse } from '@engine/curses';
+import { battlesLeftText } from '@run/dharma';
 import { MatchView } from '@ui/match/MatchView';
 import { FACTION_NAME } from '@ui/card/cardTheme';
 import { chooseReward, chooseShrineOffer, currentEncounter, fieldedRoster, marchingCards, planBattle, resolveBattle } from '@run/run';
@@ -176,8 +177,26 @@ function MapScreen({
         </div>
       )}
 
-      {run.pendingCurses.length > 0 && (
+      {/* WHAT YOU ARE CARRYING, AND FOR HOW LONG. A curse used to be a name
+          with no stated end, so the one thing a player needs in order to decide
+          whether to fire another great weapon (how long am I already marked?)
+          was the one thing nowhere on screen. Long marks are counted in battles
+          and count down; a shrine's bound shrap still lasts a single battle. */}
+      {(run.pendingCurses.length > 0 || Object.keys(run.curseClock ?? {}).length > 0) && (
         <div className="run__curses">
+          {Object.entries(run.curseClock ?? {}).map(([id, left]) => {
+            const c = getCurse(id);
+            return (
+              <span
+                key={id}
+                className="curse-chip curse-chip--long"
+                title={`${c?.text ?? id} Lifts after ${battlesLeftText(left)}.`}
+              >
+                <Rosette petals={6} size={11} className="glyph glyph--dim" /> {c?.name ?? id}
+                <b className="curse-chip__left">{left}</b>
+              </span>
+            );
+          })}
           {run.pendingCurses.map((id) => {
             const c = getCurse(id);
             return (
@@ -186,7 +205,11 @@ function MapScreen({
               </span>
             );
           })}
-          <span className="run__curses-note">carries into the next battle</span>
+          <span className="run__curses-note">
+            {Object.keys(run.curseClock ?? {}).length
+              ? 'the number is how many more battles it holds'
+              : 'carries into the next battle'}
+          </span>
         </div>
       )}
 

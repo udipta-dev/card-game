@@ -60,8 +60,22 @@ export interface RunState {
    * Always a subset of `banned`.
    */
   suspended: CardId[];
-  /** A curse earned last battle, clinging to the player through the next one. */
+  /**
+   * A curse earned last battle, clinging to the player through the next one.
+   *
+   * Kept for the shrine's bound curses, which are a one-battle price rather
+   * than a mark on your record. The long marks live on `curseClock`.
+   */
   pendingCurses: CurseId[];
+  /**
+   * Acts of adharma and how many battles each still has to run.
+   *
+   * Loosing a great weapon used to cost one bad afternoon: the curse lasted the
+   * battle, one battle carried forward, and it was gone. Nothing could say "and
+   * this follows you". Counted in battles rather than rounds because a battle
+   * is at most three rounds, so rounds are too fine to plan around.
+   */
+  curseClock?: Record<CurseId, number>;
   /** Battles won this run. */
   depth: number;
   /**

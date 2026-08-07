@@ -164,7 +164,7 @@ function resolvePendingCounter(s: GameState, counter: boolean): void {
     s.log.push({ t: 'unanswered', astra: card.id, seat: opponentOf(p.firer) });
     runCardEffects(ctx, 'onPlay');
     if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
-      afflict(s, p.firer, ADHARMA_CURSES);
+      afflict(s, p.firer, ADHARMA_CURSES, card.id);
     }
   }
 
@@ -365,7 +365,7 @@ export function reduce(state: GameState, action: Action): GameState {
           // rule rather than per-card data means no tier-3 weapon can ever be
           // added as pure upside, however it is written.
           if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
-            afflict(s, seat, ADHARMA_CURSES);
+            afflict(s, seat, ADHARMA_CURSES, card.id);
           }
         }
         delete s.instances[iid]; // the astra is spent either way
