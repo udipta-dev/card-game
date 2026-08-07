@@ -313,4 +313,245 @@ export const ASURA_CARDS: Card[] = [
     effects: [],
     flavor: 'The numberless danava rank-and-file.',
   },
+
+  // ---- The rakshasas of the Mahabharata itself ----
+  //
+  // This host was sixteen cards against Pandava's thirty-two and Kaurava's
+  // thirty, so it had visibly fewer choices at the muster and its deck was
+  // nearly forced. Everything added below is attested, and most of it is from
+  // the Mahabharata rather than the Puranas, which the roster was thin on: the
+  // asuras present were almost all cosmic figures from other stories, and the
+  // rakshasas the Pandavas actually fought in the forest were missing.
+  {
+    id: 'hidimba',
+    name: 'Hidimba',
+    house: 'asura',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 7,
+    rows: ['gaja'],
+    keywords: [{ kind: 'nightGrowth', amount: 2 }, { kind: 'bond', tag: 'rakshasa', amount: 2 }],
+    tags: ['rakshasa'],
+    effects: [],
+    flavor:
+      'The man-eater of the forest by Varanavata, who smelled the Pandavas sleeping and sent his sister to fetch them. Bhima broke him instead.',
+  },
+  {
+    id: 'hidimbi',
+    name: 'Hidimbi',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['ratha', 'gaja'],
+    keywords: [{ kind: 'bond', tag: 'rakshasa', amount: 2 }],
+    tags: ['rakshasa'],
+    // She took the side of the man who killed her brother, and their son
+    // Ghatotkacha died for the Pandavas. A rakshasi who rallies her own kind is
+    // the whole of her: she brought the forest into that war.
+    effects: [
+      { on: 'onPlay', target: { pick: 'chosen', filter: { side: 'own' } }, actions: [{ kind: 'buff', amount: 2 }] },
+    ],
+    flavor:
+      'Sent to lure the sleepers, she chose Bhima instead, and bore him Ghatotkacha. The rakshasi who took the other side.',
+  },
+  {
+    id: 'bakasura',
+    name: 'Baka',
+    house: 'asura',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 8,
+    rows: ['gaja'],
+    keywords: [],
+    tags: ['rakshasa'],
+    // Ekachakra fed him a cartload of rice and a man every week. Bhima ate the
+    // cartload on the road and killed him with it still in him.
+    effects: [
+      { on: 'onPlay', target: { pick: 'lowestEnemyUnit' }, actions: [{ kind: 'destroy' }] },
+    ],
+    flavor:
+      'The eater of Ekachakra, who took a cartload of food and one villager a week, until the village sent Bhima with the cart.',
+  },
+  {
+    id: 'kirmira',
+    name: 'Kirmira',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 6,
+    rows: ['padati', 'gaja'],
+    keywords: [{ kind: 'nightGrowth', amount: 2 }, { kind: 'bond', tag: 'rakshasa', amount: 2 }],
+    tags: ['rakshasa'],
+    effects: [],
+    flavor:
+      'Baka’s brother, who barred the road into Kamyaka at dusk and fought in darkness of his own making, to avenge him.',
+  },
+  {
+    id: 'jatasura',
+    name: 'Jatasura',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 6,
+    rows: ['padati'],
+    keywords: [],
+    tags: ['rakshasa'],
+    // He lived among them disguised as a brahmana for months, waiting for the
+    // day Bhima went hunting, then carried off four of the five and Draupadi.
+    effects: [
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'denyPlay', count: 1 }] },
+    ],
+    flavor:
+      'Who ate at their fire as a brahmana until Bhima went hunting, then picked up four Pandavas and Draupadi and ran.',
+  },
+
+  // ---- Ravana's captains ----
+  {
+    id: 'prahasta',
+    name: 'Prahasta',
+    house: 'asura',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 7,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'rakshasa', amount: 2 }],
+    tags: ['rakshasa'],
+    effects: [],
+    flavor: 'Ravana’s commander, who led the first sortie out of Lanka and did not come back through the gate.',
+  },
+  {
+    id: 'atikaya',
+    name: 'Atikaya',
+    house: 'asura',
+    type: 'unit',
+    tier: 'atirathi',
+    basePower: 8,
+    rows: ['ratha'],
+    // Brahma's own armour, which no ordinary shaft could pierce: Lakshmana had
+    // to use the Brahmastra on him in the end.
+    keywords: [{ kind: 'armor', amount: 3 }],
+    tags: ['rakshasa'],
+    effects: [],
+    flavor:
+      'Ravana’s son by Dhanyamalini, cased in armour Brahma gave him. Nothing short of a Brahma weapon would open it.',
+  },
+  {
+    id: 'trishira',
+    name: 'Trishira',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'rakshasa', amount: 2 }],
+    tags: ['rakshasa'],
+    // Three heads, and Rama took all three.
+    effects: [
+      { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 1 }] },
+    ],
+    flavor: 'The three-headed son of Ravana, who fought with three faces turned to the field at once.',
+  },
+  {
+    id: 'maricha',
+    name: 'Maricha',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['padati'],
+    keywords: [],
+    tags: ['rakshasa'],
+    // The golden deer. He knew it would kill him and he did it anyway, because
+    // he was more afraid of Ravana than of Rama.
+    effects: [
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'denyPlay', count: 2, sparingStrongest: true }] },
+    ],
+    flavor:
+      'Who took the shape of a golden deer to draw Rama away, knowing exactly what it would cost him, because Ravana asked.',
+  },
+
+  // ---- The older danavas ----
+  {
+    id: 'mayasura',
+    name: 'Maya',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 4,
+    rows: ['padati'],
+    keywords: [],
+    tags: ['danava'],
+    // Not a fighter. The architect Arjuna spared at Khandava, who built the
+    // Pandavas the hall of illusions that Duryodhana fell into.
+    effects: [
+      { on: 'onPlay', target: { pick: 'self' }, actions: [{ kind: 'addFlag', flag: 'hidden' }] },
+      { on: 'onPlay', target: { pick: 'chosen', filter: { side: 'own' } }, actions: [{ kind: 'buff', amount: 3 }] },
+    ],
+    flavor:
+      'The danava architect Arjuna spared from the burning of Khandava. He repaid it with the hall where water looked like floor.',
+  },
+  {
+    id: 'namuchi',
+    name: 'Namuchi',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 6,
+    rows: ['padati'],
+    // Indra swore not to kill him with anything wet or dry, so he used sea
+    // foam. A promise is not a shield, but it takes a trick to get around one.
+    keywords: [{ kind: 'armor', amount: 2 }, { kind: 'bond', tag: 'danava', amount: 2 }],
+    tags: ['danava'],
+    effects: [],
+    flavor:
+      'Whom Indra swore to kill with nothing wet and nothing dry, and then killed with the foam of the sea.',
+  },
+  {
+    id: 'virochana',
+    name: 'Virochana',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 6,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'daitya', amount: 2 }],
+    tags: ['daitya'],
+    effects: [],
+    flavor: 'Prahlada’s son and Bali’s father, who gave away his own life when a brahmana asked for it.',
+  },
+  {
+    id: 'shambara',
+    name: 'Shambara',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['ratha'],
+    keywords: [{ kind: 'bond', tag: 'danava', amount: 2 }],
+    tags: ['danava'],
+    // Ninety-nine forts, and a hundred illusions to hold them.
+    effects: [
+      { on: 'onPlay', target: { pick: 'chosen', filter: { side: 'own' } }, actions: [{ kind: 'addFlag', flag: 'hidden' }] },
+    ],
+    flavor: 'Master of a hundred illusions and ninety-nine hill forts, who stole Pradyumna out of his cradle.',
+  },
+  {
+    id: 'kalanemi',
+    name: 'Kalanemi',
+    house: 'asura',
+    type: 'unit',
+    tier: 'rathi',
+    basePower: 5,
+    rows: ['padati'],
+    keywords: [{ kind: 'bond', tag: 'danava', amount: 2 }],
+    tags: ['danava'],
+    // Sent to delay Hanuman on the errand that would save Lakshmana's life. He
+    // did not fight him; he tried to waste his time.
+    effects: [
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'denyPlay', count: 1 }] },
+    ],
+    flavor:
+      'Sent in a hermit’s robe to hold Hanuman with hospitality while a man lay dying for want of the herb he carried.',
+  },
 ];

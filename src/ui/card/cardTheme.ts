@@ -247,6 +247,8 @@ export function rulesText(card: Card): string[] {
       if (a.kind === 'banFromRun') lines.push('Then lost for the rest of the run.');
       if (a.kind === 'destroy' && eff.target.pick === 'highestEnemyUnit')
         lines.push('Slays the mightiest foe.');
+      if (a.kind === 'destroy' && eff.target.pick === 'lowestEnemyUnit')
+        lines.push('Slays the weakest foe.');
       if (a.kind === 'destroy' && eff.target.pick === 'chosen')
         lines.push('Slays a chosen foe.');
       if (a.kind === 'destroy' && eff.target.pick === 'unitByCard')
