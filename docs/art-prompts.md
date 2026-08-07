@@ -1,6 +1,6 @@
 # Kurukshetra: card art prompts
 
-114 prompts, generated from the live card data. Regenerate with `npx vite-node sim/build-art-prompts.ts`.
+128 prompts, generated from the live card data. Regenerate with `npx vite-node sim/build-art-prompts.ts`.
 
 Generated for **meta.ai**, which honours negated qualities. Firefly does not, and caps prompts at 1024 characters.
 
@@ -1052,7 +1052,7 @@ With style reference:
 Kaurava Footmen, wiry, in a planted, braced stance, in near profile, gaze off to one side, holding an iron spear and a round bossed shield. Deep bronze skin, hard contemptuous expression, long black hair bound in a topknot. Deep crimson-lacquered armour with brass fittings, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a maroon tunic. Saffron dhoti, plain wooden paduka, bare toes. A field of broken chariots and dead horses. A tall plain gold war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
-## The Asura Host (15)
+## The Asura Host (29)
 
 ### Ravana
 
@@ -1292,6 +1292,230 @@ With style reference:
 
 ```
 Asura Horde, wiry, in a planted, braced stance, in near profile, gaze off to one side, holding an iron spear and a round bossed shield. Ashen grey skin, eyes burning, jaw clenched, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a dark green tunic. A long sash knotted at the hip, ends flying, saffron dhoti, jewelled sandals with silver straps, toes visible. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Hidimba
+
+`hidimba.png` · 948 chars · 139 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Hidimba, hard-muscled, leaning forward, shoulders set, squarely facing the viewer, head slightly turned, holding a long iron war-lance braced across his body. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a black tunic. A gold-bordered uttariya wound across the torso, ochre dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Hidimba, hard-muscled, leaning forward, shoulders set, squarely facing the viewer, head slightly turned, holding a long iron war-lance braced across his body. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a black tunic. A gold-bordered uttariya wound across the torso, ochre dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Hidimbi
+
+`hidimbi.png` · 850 chars · 127 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Hidimbi, wiry, half-turned, weight on his back foot, turned three-quarters to his left, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, eyes burning, jaw clenched, long black hair bound in a topknot. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and a jewelled belt, over a black tunic. A crimson uttariya thrown back over one shoulder, deep red dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Hidimbi, wiry, half-turned, weight on his back foot, turned three-quarters to his left, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, eyes burning, jaw clenched, long black hair bound in a topknot. Engraved blackened bronze armour, sculpted breastplate, layered pauldrons, vambraces, greaves and a jewelled belt, over a black tunic. A crimson uttariya thrown back over one shoulder, deep red dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Baka
+
+`bakasura.png` · 996 chars · 149 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Baka, hard-muscled, half-turned, weight on his back foot, turned three-quarters to his left, holding a long iron war-lance braced across his body. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, embossed cuirass with a lion-face boss, layered shoulder-plates, bracers, greaves and a gem-set belt, over a black tunic. A coarse wool shawl over one shoulder, white dhoti, sandals laced with crossed leather thongs to the ankle, toes visible. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Baka, hard-muscled, half-turned, weight on his back foot, turned three-quarters to his left, holding a long iron war-lance braced across his body. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, embossed cuirass with a lion-face boss, layered shoulder-plates, bracers, greaves and a gem-set belt, over a black tunic. A coarse wool shawl over one shoulder, white dhoti, sandals laced with crossed leather thongs to the ankle, toes visible. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a great war-elephant beside him, its head and trunk filling one side. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Kirmira
+
+`kirmira.png` · 792 chars · 114 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kirmira, wiry, mid-stride, advancing, squarely facing the viewer, holding an iron spear and a round bossed shield. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Ash-grey iron armour with bone fittings, scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt, over a dark green tunic. Cream dhoti, plain wooden paduka, bare toes. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Kirmira, wiry, mid-stride, advancing, squarely facing the viewer, holding an iron spear and a round bossed shield. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Ash-grey iron armour with bone fittings, scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt, over a dark green tunic. Cream dhoti, plain wooden paduka, bare toes. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Jatasura
+
+`jatasura.png` · 834 chars · 117 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Jatasura, wiry, leaning forward, shoulders set, turned three-quarters to his right, holding an iron spear and a round bossed shield. Ashen grey skin, eyes burning, jaw clenched, long black hair bound in a topknot. Ash-grey iron armour with bone fittings, banded chest-plate, ridged shoulder-cops, arm-guards, greaves and a knotted sash-belt, over a rust-brown tunic. Saffron dhoti, jewelled sandals with silver straps, toes visible. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Jatasura, wiry, leaning forward, shoulders set, turned three-quarters to his right, holding an iron spear and a round bossed shield. Ashen grey skin, eyes burning, jaw clenched, long black hair bound in a topknot. Ash-grey iron armour with bone fittings, banded chest-plate, ridged shoulder-cops, arm-guards, greaves and a knotted sash-belt, over a rust-brown tunic. Saffron dhoti, jewelled sandals with silver straps, toes visible. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Prahasta
+
+`prahasta.png` · 908 chars · 135 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Prahasta, hard-muscled, standing at his full height, feet apart, turned three-quarters to his left, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a rust-brown tunic. A crimson uttariya thrown back over one shoulder, undyed dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Prahasta, hard-muscled, standing at his full height, feet apart, turned three-quarters to his left, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a rust-brown tunic. A crimson uttariya thrown back over one shoulder, undyed dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Atikaya
+
+`atikaya.png` · 898 chars · 134 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Atikaya, hard-muscled, in a planted, braced stance, turned three-quarters to his left, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a black tunic. Ochre dhoti, sandals laced with crossed leather thongs to the ankle, toes visible. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Atikaya, hard-muscled, in a planted, braced stance, turned three-quarters to his left, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, teeth bared in a snarl, long black hair beneath a golden circlet. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a black tunic. Ochre dhoti, sandals laced with crossed leather thongs to the ankle, toes visible. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Slightly low camera angle, imposing perspective. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Trishira
+
+`trishira.png` · 913 chars · 137 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Trishira, wiry, leaning forward, shoulders set, head lowered, eyes up at the viewer, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, roaring, mouth wide open, long black hair bound in a topknot. Engraved blackened bronze armour, embossed cuirass with a lion-face boss, layered shoulder-plates, bracers, greaves and a gem-set belt, over a dark green tunic. A crimson uttariya thrown back over one shoulder, white dhoti, leather paduka sandals with plain straps, toes visible. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Trishira, wiry, leaning forward, shoulders set, head lowered, eyes up at the viewer, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, roaring, mouth wide open, long black hair bound in a topknot. Engraved blackened bronze armour, embossed cuirass with a lion-face boss, layered shoulder-plates, bracers, greaves and a gem-set belt, over a dark green tunic. A crimson uttariya thrown back over one shoulder, white dhoti, leather paduka sandals with plain straps, toes visible. A burnt forest, black trunks still standing. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Maricha
+
+`maricha.png` · 855 chars · 131 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Maricha, wiry, in a low crouch, ready to spring, in near profile, gaze off to one side, holding an iron spear and a round bossed shield. Ashen grey skin, teeth bared in a snarl, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt, over a rust-brown tunic. A crimson uttariya thrown back over one shoulder, ochre dhoti, plain wooden paduka, bare toes. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Maricha, wiry, in a low crouch, ready to spring, in near profile, gaze off to one side, holding an iron spear and a round bossed shield. Ashen grey skin, teeth bared in a snarl, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt, over a rust-brown tunic. A crimson uttariya thrown back over one shoulder, ochre dhoti, plain wooden paduka, bare toes. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Maya
+
+`mayasura.png` · 799 chars · 122 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Maya, wiry, in a wide battle stance, in near profile, gaze off to one side, holding an iron spear and a round bossed shield. Ashen grey skin, roaring, mouth wide open, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a rust-brown tunic. Undyed dhoti, plain wooden paduka, bare toes. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Maya, wiry, in a wide battle stance, in near profile, gaze off to one side, holding an iron spear and a round bossed shield. Ashen grey skin, roaring, mouth wide open, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a rust-brown tunic. Undyed dhoti, plain wooden paduka, bare toes. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Namuchi
+
+`namuchi.png` · 874 chars · 131 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Namuchi, wiry, one foot set on a broken chariot wheel, turned three-quarters to his right, holding an iron spear and a round bossed shield. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a rust-brown tunic. A gold-bordered uttariya wound across the torso, ochre dhoti, jewelled sandals with silver straps, toes visible. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Namuchi, wiry, one foot set on a broken chariot wheel, turned three-quarters to his right, holding an iron spear and a round bossed shield. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a rust-brown tunic. A gold-bordered uttariya wound across the torso, ochre dhoti, jewelled sandals with silver straps, toes visible. Smoke pouring from a fissure in the ground. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Virochana
+
+`virochana.png` · 867 chars · 128 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Virochana, wiry, in a planted, braced stance, turned three-quarters to his right, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, silent and hungry, long black hair bound in a topknot. Ash-grey iron armour with bone fittings, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a dark green tunic. White dhoti, jewelled sandals with silver straps, toes visible. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Virochana, wiry, in a planted, braced stance, turned three-quarters to his right, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, silent and hungry, long black hair bound in a topknot. Ash-grey iron armour with bone fittings, quilted coat sewn with iron plates, shoulder-guards, vambraces, greaves and a leather war-belt, over a dark green tunic. White dhoti, jewelled sandals with silver straps, toes visible. Ruined battlefield at night, drifting embers, shattered stone. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Shambara
+
+`shambara.png` · 896 chars · 134 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Shambara, wiry, one foot set on a broken chariot wheel, turned three-quarters to his right, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt, over a rust-brown tunic. Cream dhoti, open-toed Indian warrior sandals with golden straps, toes visible beneath the greaves. Smoke pouring from a fissure in the ground. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Shambara, wiry, one foot set on a broken chariot wheel, turned three-quarters to his right, holding a war-bow, a full quiver of arrows on his back. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Green-lacquered armour banded with dark iron, scale-mail cuirass, broad shoulder-guards, forearm bracers, shin-plates and a wide war-belt, over a rust-brown tunic. Cream dhoti, open-toed Indian warrior sandals with golden straps, toes visible beneath the greaves. Smoke pouring from a fissure in the ground. A tall ragged black war-standard, and a war-chariot behind him. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+### Kalanemi
+
+`kalanemi.png` · 771 chars · 118 words
+
+Standalone:
+
+```
+Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushwork, muted earthy palette, dramatic chiaroscuro. Kalanemi, wiry, standing at his full height, feet apart, head lowered, eyes up at the viewer, holding an iron spear and a round bossed shield. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a black tunic. Dark blue dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
+```
+
+With style reference:
+
+```
+Kalanemi, wiry, standing at his full height, feet apart, head lowered, eyes up at the viewer, holding an iron spear and a round bossed shield. Ashen grey skin, a wide cruel grin, long black hair bound in a topknot. Engraved blackened bronze armour, lamellar corselet laced with cord, heavy pauldrons, vambraces, greaves and a studded belt, over a black tunic. Dark blue dhoti, bare feet. A burnt forest, black trunks still standing. A tall ragged black war-standard. Eye-level camera. Full figure from head to feet, entire weapon inside the frame, clear margin, nothing cropped. No photorealism, no 3D rendering, no glossy surfaces, no bloom.
 ```
 
 ## Those Who Stood Apart (6)
