@@ -1,0 +1,54 @@
+# Build and test every push. This does NOT deploy.
+#
+# It used to. The deploy step ran cloudflare/wrangler-action, which needs two
+# repo secrets (CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID) that were never
+# set, so it failed on every single push from the day it was added: wrangler
+# installed fine, then `pages deploy` exited 1 and the action swallowed the
+# reason. Green build, green tests, red run, and an email each time.
+#
+# The live site was never affected, because publishing happens from a developer
+# machine with `npm run ship`, which uses the local Cloudflare login rather than
+# repo secrets.
+#
+# So this keeps the half that was earning its keep. A broken commit is still
+# caught on push. If CI-side deploys are ever wanted, add the two secrets and
+# put back:
+#
+#   - uses: cloudflare/wrangler-action@v3
+#     with:
+#       apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+#       accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+#       command: pages deploy dist --project-name kurukshetra --branch main
+#
+# (The earlier history: this was GitHub Pages until 6 Aug, when that pipeline
+# began hanging in GitHub's processing stage until the ten-minute cap, six runs
+# running, with nothing wrong on our side.)
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      # CF_PAGES picks the root base path, matching what `npm run ship`
+      # publishes, so the build here proves the same artifact compiles.
+      - run: npm run build
+        env:
+          CF_PAGES: '1'
