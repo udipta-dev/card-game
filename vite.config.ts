@@ -22,10 +22,14 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/icon.svg', 'icons/icon-maskable.svg'],
       manifest: {
-        name: 'Kurukshetra — Mahabharata Card Battler',
-        short_name: 'Kurukshetra',
+        // The name is "18 Days" first and "Kurukshetra" second, deliberately.
+        // Kurukshetra alone is esoteric to anyone who does not already know the
+        // epic; eighteen days is a hook that needs no background at all, and it
+        // is the war's actual length. The URL is unchanged.
+        name: '18 Days · Kurukshetra',
+        short_name: '18 Days',
         description:
-          'A Gwent-like card battler built on the lore of the Mahabharata.',
+          'A card battler of the Mahabharata. Eighteen days of war, fought three rounds at a time.',
         theme_color: '#0b0a12',
         background_color: '#0b0a12',
         display: 'standalone',

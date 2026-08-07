@@ -26,7 +26,15 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
   return (
     <div className="menu">
       <div className="menu__devanagari">कुरुक्षेत्र</div>
-      <h1 className="menu__title">Kurukshetra</h1>
+      {/* "18 Days" leads because "Kurukshetra" alone means nothing to anyone
+          who does not already know the epic, and the whole point of the name is
+          that a stranger can remember it. Eighteen is the war's real length and
+          needs no explanation. Kurukshetra stays underneath, in brass, because
+          it is what the game actually is. */}
+      <h1 className="menu__title">
+        18 Days
+        <span className="menu__title-sub">Kurukshetra</span>
+      </h1>
       <Crown />
       <p className="menu__sub">
         A card battler of the Mahabharata. Marshal maharathis, fire divine astras, and turn the

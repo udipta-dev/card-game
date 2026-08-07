@@ -9,14 +9,36 @@
   --bg-2: #201a16;
   --panel: rgba(238, 228, 210, 0.035);
   --panel-edge: rgba(238, 228, 210, 0.1);
+  /* INK. Measured against every ground below, not eyeballed. WCAG AA wants
+     4.5:1 for normal text and the lightest ground here is --bg-2, so that is
+     the case each of these has to clear.
+                        on bg-0   bg-1   bg-2
+       --ink            15.94  15.14  13.88
+       --ink-dim         8.24   7.83   7.18
+       --ink-faint       5.31   5.04   4.62   (was 4.13 / 3.92 / 3.59, all FAIL)
+       --muted           6.28   5.97   5.47
+
+     --ink-faint was below AA on all three grounds, and it is used at 7.5 to
+     13px, which is exactly where the threshold matters most. Reported as "the
+     text colour is poor, very washed out", and it measured that way.
+
+     Hierarchy is carried by size, weight and case, NOT by fading text toward
+     the background. If something needs to recede, make it smaller or lighter in
+     weight; do not make it harder to read. */
   --ink: #efe6d4;
   --ink-dim: #b3a68e;
-  --ink-faint: #7c7160;
+  --ink-faint: #8f836f;
+  /* Referenced 15 times in app.css and defined nowhere, so every one of those
+     rules was silently running on its inline fallback. Now it is real. */
+  --muted: #9a9080;
 
   /* BRASS, not neon gold. Repoussé brass under lamplight is dull and warm; the
      old #e8b923 was a highlighter pen and it pulled the eye off the art. */
   --gold: #c2a04e;
-  --gold-dim: #8d7231;
+  /* Lifted from #8d7231, which measured 4.31 / 4.10 / 3.75 and so failed AA on
+     every ground. It is used for labels and small caps, i.e. normal-size text.
+     Now 5.28 / 5.02 / 4.60. */
+  --gold-dim: #9f8037;
 
   /* HOUSES, AS PIGMENTS. Each is a colour a painter of this tradition actually
      ground and used, which is why they sit down beside the gouache instead of

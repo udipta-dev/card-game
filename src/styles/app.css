@@ -26,6 +26,28 @@
   /* Brass, matching --gold. The old value was the retired neon. */
   text-shadow: 0 2px 44px rgba(194, 160, 78, 0.22);
   line-height: 1.05;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* The second half of the name, set small and wide beneath the first. It is a
+   subtitle, not a second heading: "18 Days" is what someone remembers and
+   "Kurukshetra" is what tells them what it is. Kept inside the h1 so the two
+   read as one title to a screen reader as well as to the eye. */
+.menu__title-sub {
+  font-size: clamp(13px, 1.7vw, 19px);
+  letter-spacing: 0.42em;
+  /* The gradient above is clipped to the text, and at this size the bottom stop
+     lands almost white. A flat brass reads better and matches the devanagari. */
+  background: none;
+  -webkit-text-fill-color: var(--gold-dim);
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-top: 2px;
+  /* Letter-spacing pads the right edge only; this pulls the block back to true
+     centre under the word above it. */
+  text-indent: 0.42em;
+  font-weight: 400;
 }
 .menu__sub {
   color: var(--ink-dim);

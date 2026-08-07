@@ -126,6 +126,33 @@ export const ROW_GLOSS: Record<string, string> = {
 
 /** Short human-readable rules text derived from a card's keywords/effects. */
 /** Plain-language gloss for the conditions a card's effects are gated on. */
+/**
+ * Who an effect lands on, in words a player already knows.
+ *
+ * The generator used to hard-code the target into each sentence, which is why
+ * only a handful of (action, target) pairs had any wording at all and the rest
+ * printed nothing. Naming the target separately means a new action needs one
+ * line rather than one line per target it might be paired with.
+ */
+function whom(t: Card['effects'][number]['target']): string {
+  switch (t.pick) {
+    case 'self': return 'himself';
+    case 'highestEnemyUnit': return 'the mightiest foe';
+    case 'lowestEnemyUnit': return 'the weakest foe';
+    case 'allEnemyUnits': return 'every foe';
+    case 'allOwnUnits': return 'every ally';
+    case 'allUnits': return 'everyone on the field';
+    case 'chosen': return t.filter?.side === 'own' ? 'a chosen ally' : 'a chosen foe';
+    case 'unitByCard': return nameOf(t.card);
+    case 'enemyRow':
+    case 'enemyRowSameAsPlayed': return 'the struck enemy rank';
+    case 'lineBothSides':
+    case 'lineBothSidesSameAsPlayed': return 'that rank on both sides of the field';
+    case 'ownAdjacentToPlayed': return 'your neighbouring ranks';
+    default: return 'the field';
+  }
+}
+
 function conditionText(c: Card['effects'][number]['condition']): string | null {
   if (!c) return null;
   if (c.q === 'isFinalRound') return 'In the round that decides the battle:';
@@ -133,15 +160,35 @@ function conditionText(c: Card['effects'][number]['condition']): string | null {
     return `While ${nameOf(c.card)} stands${c.side === 'enemy' ? ' against you' : ''}:`;
   if (c.q === 'targetHasFlag' && c.flag === 'diamond-body') return 'Against an armoured foe:';
   if (c.q === 'and') {
-    const parts = c.cs.map(conditionText).filter(Boolean) as string[];
-    return parts.length ? parts.join(' ') : null;
+    // ONE SENTENCE, not two glued together. Each clause returns its own
+    // colon-terminated fragment, and joining them with a space produced
+    // "In the round that decides the battle: Unless while jarasandha stands
+    // against you:" on Krishna's card, which is not English. Strip the inner
+    // colons, join with "and", and punctuate once at the end.
+    const parts = (c.cs.map(conditionText).filter(Boolean) as string[]).map((p) =>
+      p.replace(/:$/, ''),
+    );
+    if (!parts.length) return null;
+    const joined =
+      parts.length === 1
+        ? parts[0]
+        : `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
+    return `${joined}:`;
   }
   if (c.q === 'not') {
     const inner = conditionText(c.c);
-    return inner ? `Unless ${inner.replace(/:$/, '').toLowerCase()}:` : null;
+    if (!inner) return null;
+    const bare = inner.replace(/:$/, '');
+    // "While X stands against you" negates to "so long as X does NOT stand",
+    // which reads far better than "Unless while X stands".
+    const cleaned = bare.replace(/^While /, 'so long as ').replace(/ stands/, ' does not stand');
+    return cleaned !== bare ? `${cleaned}:` : `unless ${bare.toLowerCase()}:`;
   }
   return null;
 }
+
+/** Sentence-case the first letter, for a clause that may arrive lowercased. */
+const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s);
 
 export function rulesText(card: Card): string[] {
   const lines: string[] = [];
@@ -187,7 +234,7 @@ export function rulesText(card: Card): string[] {
     // him for the deciding round: the information existed only in the source.
     // A drawback the player cannot see is a trap, not a decision.
     const when = conditionText(eff.condition);
-    if (when) lines.push(when);
+    if (when) lines.push(cap(when));
     for (const a of eff.actions) {
       if (a.kind === 'winBattle') lines.push('Wins the battle outright.');
       if (a.kind === 'banFromRun') lines.push('Then lost for the rest of the run.');
@@ -198,21 +245,85 @@ export function rulesText(card: Card): string[] {
       if (a.kind === 'destroy' && eff.target.pick === 'unitByCard')
         lines.push(`Slays ${nameOf((eff.target as { card: string }).card)}, wherever he stands.`);
       if (a.kind === 'destroy' && eff.target.pick === 'allEnemyUnits')
-        lines.push('Strikes every foe.');
-      if (a.kind === 'damage' && eff.target.pick === 'enemyRowSameAsPlayed')
-        lines.push(`Devastates the struck row (−${a.amount}).`);
-      if (a.kind === 'damage' && eff.target.pick === 'allEnemyUnits')
-        lines.push(`Rains −${a.amount} on every foe.`);
-      if (a.kind === 'damage' && eff.target.pick === 'self')
-        lines.push(`He takes −${a.amount} himself, armour first.`);
+        lines.push('Slays every foe.');
+      if (a.kind === 'destroy' && eff.target.pick === 'self')
+        lines.push('And falls with them: he is spent doing it.');
+      if (a.kind === 'destroy' && eff.target.pick === 'allOwnUnits')
+        lines.push('Slays every one of your own.');
+      // ANY target, not the three that happened to be written. Sweta and
+      // Barbarika both deal damage and both rendered a blank card, because
+      // 'highestEnemyUnit' and 'allUnits' had no sentence of their own.
+      if (a.kind === 'damage')
+        lines.push(
+          eff.target.pick === 'self'
+            ? `He takes −${a.amount} himself, armour first.`
+            : `Strikes ${whom(eff.target)} for −${a.amount}.`,
+        );
       if (a.kind === 'addFlag' && a.flag === 'diamond-body')
         lines.push(
           'A body of adamant: cannot be slain, and cannot be worn below a third of his strength, until a vow strips it from him.',
         );
       if (a.kind === 'cleanse') lines.push('Lifts every penalty from your own lines.');
       if (a.kind === 'dismount') lines.push('Puts a chariot-warrior on foot (−2).');
+
+      // EVERYTHING BELOW HAD NO WORDS AT ALL, and the gaps were not obscure:
+      // `buff` alone is used by fourteen cards, so Krishna's +1 and Gandiva's
+      // +3 were both invisible on their own cards. Seven cards rendered a
+      // completely empty rules panel (Shakuni, Jayadratha, Yudhishthira, Sweta,
+      // Shalya, Barbarika, Balarama): the player was shown a number, a tier and
+      // a flavour line, and the entire card was hidden.
+      // A negative buff is a real thing in the data: Shalya's whole card is
+      // that he weakens the man he drives for. "+-3" was what that printed.
+      if (a.kind === 'buff')
+        lines.push(
+          a.amount >= 0
+            ? `Raises ${whom(eff.target)} by +${a.amount}.`
+            : `Weakens ${whom(eff.target)} by ${a.amount}.`,
+        );
+      if (a.kind === 'debuffRow') {
+        const own = a.rows.some((r) => r.side === 'own');
+        const foe = a.rows.some((r) => r.side === 'enemy');
+        const whose = own && foe ? 'both hosts' : own ? 'your own' : 'the enemy';
+        const lasts = a.duration === 'lingering' ? ' for the rest of the battle' : ' this round';
+        lines.push(
+          a.amount >= 0
+            ? `Steadies ${whose} line (+${a.amount})${lasts}.`
+            : `Withers ${whose} line (${a.amount})${lasts}.`,
+        );
+      }
+      if (a.kind === 'discard' && a.side === 'enemy')
+        lines.push(`The enemy loses ${a.count} card${a.count === 1 ? '' : 's'} from hand, at random.`);
+      if (a.kind === 'discard' && a.side === 'own')
+        lines.push(`You lose ${a.count} card${a.count === 1 ? '' : 's'} from your own hand, at random.`);
+      if (a.kind === 'discard' && a.side === 'both')
+        lines.push(`Both hands lose ${a.count} card${a.count === 1 ? '' : 's'}, at random.`);
+      if (a.kind === 'draw' && a.side === 'own')
+        lines.push(`Draw ${a.count} card${a.count === 1 ? '' : 's'}.`);
+      if (a.kind === 'draw' && a.side === 'enemy')
+        lines.push(`The enemy draws ${a.count}.`);
+      if (a.kind === 'denyPlay')
+        lines.push(
+          `Bars ${a.count} enemy card${a.count === 1 ? '' : 's'} from being played this round` +
+            (a.sparingStrongest ? ', sparing their strongest.' : '.'),
+        );
+      if (a.kind === 'setPower') lines.push(`Sets ${whom(eff.target)} to ${a.value}.`);
+      if (a.kind === 'reduceTo') lines.push(`Binds ${whom(eff.target)} down to ${a.value}.`);
+      if (a.kind === 'burnOwnDeck')
+        lines.push(`Tears ${a.count} of your own warriors out of the run, for good.`);
+      if (a.kind === 'afflict' && a.side === 'own')
+        lines.push('A shrap binds itself to you for the act.');
+      if (a.kind === 'afflict' && a.side === 'enemy')
+        lines.push('A shrap binds itself to the enemy.');
+      if (a.kind === 'hazard' && a.hazard === 'narayana')
+        lines.push('Hangs over their host and strikes again every round, harder each time. Passing lifts it.');
     }
   }
+  // A SKILL AT ARMS, spent on its own turn rather than triggered by playing him.
+  // Every one of these already carried player-facing prose in the card data and
+  // none of it was ever rendered, so Balarama's card was blank and nothing told
+  // you he had a button at all. The text says its own charge cost.
+  if (card.ability) lines.push(`${card.ability.name}: ${card.ability.text}`);
+
   if (card.type === 'astra') {
     const tier = card.astraTier ?? 1;
     if (tier >= 3) {
