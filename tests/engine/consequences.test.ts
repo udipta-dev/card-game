@@ -3,7 +3,7 @@
 // something, and the worst of them take your own host with them.
 import { describe, expect, it } from 'vitest';
 import { reduce, isLegalAbility, isLegalPlay } from '@engine/reducer';
-import { canInvokeAstra, unitsOf } from '@engine/queries';
+import { canInvokeAstra } from '@engine/queries';
 import { legalMoves } from '@engine/selectors';
 import { hasEvent, makeState } from './helpers';
 
@@ -57,14 +57,16 @@ describe('Brahmashirsha is utter destruction', () => {
     });
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
 
-    // The enemy host is gone.
-    expect(unitsOf(s1, 'ai').length).toBe(0);
-    // WAS: our own host died too. That was a symmetric wipe, which destroys
-    // cards already played and so changes nobody's hand size: it cost a card
-    // to reset the board to nothing, and measured a 17.2% win rate, the worst
-    // in the game. The price is now paid AFTERWARDS instead.
-    expect(unitsOf(s1, 'player').length).toBeGreaterThan(0);
-    // Every one of our lines withers for the rest of the battle...
+    // IT TAKES THE ROUND. Without that it could unmake an army and still lose
+    // the round on power, which is absurd. Taking it ends the round there, so
+    // the board is swept and neither host is standing afterwards: what is
+    // asserted below is what SURVIVES a round transition.
+    expect(s1.roundWins.player).toBe(1);
+
+    // The ground you won stays poisoned. A lingering row mod outlives
+    // clearBoard, which is exactly why the price is written this way: anything
+    // done to the men standing now would be erased half a second later by the
+    // round ending, and the weapon would be free.
     const withered = s1.rowMods.filter((m) => m.seat === 'player' && m.amount < 0);
     expect(withered.length).toBe(3); // all three of our own lines
     expect(withered.every((m) => m.duration === 'lingering')).toBe(true);
@@ -78,16 +80,37 @@ describe('Brahmashirsha is utter destruction', () => {
       playerBoard: { ratha: ['arjuna'] },
       aiBoard: { ratha: ['ashwatthama'], gaja: ['dushasana'] },
     });
+    // Read the log rather than the board: the round ends the moment it lands,
+    // and clearBoard then destroys everyone regardless of who the weapon spared.
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
 
-    const survivors = unitsOf(s1, 'ai').map((u) => u.cardId);
-    expect(survivors).toContain('ashwatthama'); // chiranjivi
-    expect(survivors).not.toContain('dushasana');
+    const slain = s1.log.filter((e) => e.t === 'destroy').map((e) => e.cardId);
+    const spared = s1.log.filter((e) => e.t === 'preventDestroy');
+    expect(slain).toContain('dushasana');
+    // Ashwatthama is chiranjivi: the weapon could not take him.
+    expect(spared.length).toBeGreaterThan(0);
   });
 });
 
-describe('Pashupatastra wins, but at a price', () => {
-  it('ends the battle and tears warriors out of your own deck forever', () => {
+describe('Pashupatastra wins, and is remembered for it', () => {
+  it('ends the battle outright and burns from your grasp', () => {
+    const s = makeState({
+      playerHand: ['pashupatastra'],
+      playerBoard: { ratha: ['arjuna'] },
+      aiBoard: { ratha: ['dushasana'] },
+      playerDeck: ['bhima', 'nakula', 'sahadeva', 'satyaki', 'drupada', 'virata'],
+    });
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+
+    expect(s1.winner).toBe('player');
+    expect(s1.phase).toBe('battleEnd');
+    expect(s1.bannedThisRun).toContain('pashupatastra');
+  });
+
+  it('does NOT eat five of your own warriors any more', () => {
+    // That was an arbitrary tax with no story behind it: Shiva's weapon does
+    // not devour your infantry. The price is now the shrap, which is fifteen
+    // battles long, by far the heaviest mark in the game. See run/dharma.ts.
     const s = makeState({
       playerHand: ['pashupatastra'],
       playerBoard: { ratha: ['arjuna'] },
@@ -97,16 +120,8 @@ describe('Pashupatastra wins, but at a price', () => {
     const deckBefore = s.decks.player.length;
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
 
-    expect(s1.winner).toBe('player');
-    expect(s1.phase).toBe('battleEnd');
-    // Five warriors are gone from the deck, and gone for the run.
-    expect(s1.decks.player.length).toBe(deckBefore - 5);
-    expect(hasEvent(s1, (e) => e.t === 'burn' && e.seat === 'player')).toBe(true);
-    const burn = s1.log.find((e) => e.t === 'burn');
-    expect(burn && burn.t === 'burn' && burn.cardIds.length).toBe(5);
-    for (const id of (burn as { cardIds: string[] }).cardIds) {
-      expect(s1.bannedThisRun).toContain(id);
-    }
+    expect(s1.decks.player.length).toBe(deckBefore);
+    expect(hasEvent(s1, (e) => e.t === 'burn')).toBe(false);
   });
 });
 

@@ -81,23 +81,48 @@ describe('Nagastra — binds, and Krishna redirects', () => {
   });
 });
 
-describe('Brahmastra — row devastation + collateral', () => {
-  it('damages the struck enemy row, scorches it, and singes own adjacent row', () => {
+describe('Brahmastra takes the whole enemy host', () => {
+  it('strikes every enemy standing, in every rank, not one line', () => {
+    // It used to hit one line, and the UI silently chose that line for the
+    // human. It now takes the whole host, so there is nothing to aim.
     const s0 = makeState({
       playerHand: ['brahmastra'],
-      // gaja is adjacent to ratha -> collateral. Dhrishtadyumna invokes Brahmastra.
       playerBoard: { gaja: ['bhima'], padati: ['dhrishtadyumna'] },
       aiBoard: { ratha: ['arjuna', 'kaurava_infantry'] },
     });
     const arjuna = firstOf(s0, 'ai', 'arjuna');
-    const bhima = firstOf(s0, 'player', 'bhima');
+    // Dhrishtadyumna (8), NOT Bhima (9). Firing a tier-2 weapon also earns an
+    // adharma curse, and every curse in that pool bites your MIGHTIEST warrior,
+    // so asserting on him would be measuring the curse as well as the blast.
+    const dd = firstOf(s0, 'player', 'dhrishtadyumna');
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'brahmastra').iid, row: 'ratha' });
-    // Enemy ratha units took 6 damage.
-    expect(s1.instances[arjuna.iid].currentPower).toBe(4); // 10 - 6
-    // Lingering scorch on enemy ratha (-3 row mod).
-    expect(s1.rowMods.some((m) => m.seat === 'ai' && m.row === 'ratha' && m.amount === -3)).toBe(true);
-    // Own adjacent gaja unit took 2 collateral.
-    expect(s1.instances[bhima.iid].currentPower).toBe(7); // 9 - 2
+
+    // Every enemy, in every rank: 10 - 5.
+    expect(s1.instances[arjuna.iid].currentPower).toBe(5);
+    // Your own men take no blast. They take the SICKNESS afterwards instead: a
+    // quarter of 8, rounded up, is 2.
+    //
+    // Symmetric damage was tried and measured 24.8% win / 12.4% played, near
+    // unplayable, because hitting both sides equally and then paying a
+    // one-sided penalty on top is strictly worse than not firing at all. The
+    // blast falls on them; the sickness falls on you.
+    expect(s1.instances[dd.iid].currentPower).toBe(6);
+  });
+
+  it('and your own host sickens afterwards, in proportion', () => {
+    // Proportional, not flat: a flat number is a scratch on a maharathi and
+    // ruin on a levy, and the aftermath is not supposed to discriminate.
+    const s0 = makeState({
+      playerHand: ['brahmastra'],
+      playerBoard: { gaja: ['bhima'], padati: ['dhrishtadyumna'] },
+      aiBoard: { ratha: ['arjuna'] },
+    });
+    const dd = firstOf(s0, 'player', 'dhrishtadyumna');
+    const printed = s0.instances[dd.iid].currentPower;
+    const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'brahmastra').iid, row: 'ratha' });
+    // Again the non-mightiest man, so the adharma curse is not in the sum.
+    // Proportional, so it costs the great and the small alike in proportion.
+    expect(s1.instances[dd.iid].currentPower).toBe(printed - Math.ceil(printed * 0.25));
   });
 });
 

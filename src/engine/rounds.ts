@@ -67,7 +67,11 @@ export function resolveRound(state: GameState): void {
 
   const ps = seatPower(state, 'player');
   const as = seatPower(state, 'ai');
-  const roundWinner: Seat | 'tie' = ps > as ? 'player' : as > ps ? 'ai' : 'tie';
+  // A weapon may take the round outright, whatever the power on the board. Read
+  // and cleared here because a round is only ever decided in this one place.
+  const forced = state.forcedRoundWinner ?? null;
+  state.forcedRoundWinner = null;
+  const roundWinner: Seat | 'tie' = forced ?? (ps > as ? 'player' : as > ps ? 'ai' : 'tie');
 
   if (roundWinner === 'tie') {
     state.roundWins.player += 1;

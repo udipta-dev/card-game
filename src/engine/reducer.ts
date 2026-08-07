@@ -384,6 +384,15 @@ export function reduce(state: GameState, action: Action): GameState {
         return s;
       }
 
+      // A weapon that TAKES THE ROUND ends it here rather than waiting for both
+      // sides to pass. Waiting would be wrong twice over: the round is already
+      // decided, so further play is theatre, and the enemy would get to keep
+      // committing men to a round they have provably lost.
+      if (s.forcedRoundWinner) {
+        resolveRound(s);
+        return s;
+      }
+
       advanceTurn(s, seat);
       return s;
     }

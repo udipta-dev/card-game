@@ -1,8 +1,8 @@
 import { getCard } from '@content/cards';
 import { afflict } from '../curses';
 import { nextRandom } from '../ids';
-import { attemptDestroy, powerFloor } from '../keywords';
-import { opponentOf } from '../queries';
+import { attemptDestroy, lowerPower, powerFloor } from '../keywords';
+import { opponentOf, unitsOf } from '../queries';
 import type { EffectAction, EffectActionKind, GameState, InstanceId, Seat } from '../types';
 import type { EffectCtx } from './context';
 import { emit } from './context';
@@ -25,6 +25,8 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'debuffRow',
   'banFromRun',
   'winBattle',
+  'winRound',
+  'sap',
   'addFlag',
   'removeFlag',
   'preventDestroy',
@@ -184,6 +186,21 @@ export function applyGlobalAction(ctx: EffectCtx, action: EffectAction): void {
     }
     case 'winBattle': {
       state.forcedWinner = ctx.actorOwner;
+      break;
+    }
+    case 'winRound': {
+      // Marked, not resolved here. resolveRound reads it, because a round is
+      // only ever decided in one place and a second path would be a second set
+      // of rules to keep in step.
+      state.forcedRoundWinner = ctx.actorOwner;
+      break;
+    }
+    case 'sap': {
+      const seat = action.side === 'own' ? ctx.actorOwner : opponentOf(ctx.actorOwner);
+      for (const u of unitsOf(state, seat)) {
+        const loss = Math.ceil((u.currentPower * action.percent) / 100);
+        if (loss > 0) lowerPower(state, u, loss);
+      }
       break;
     }
     case 'burnOwnDeck': {

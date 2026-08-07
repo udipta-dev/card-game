@@ -20,38 +20,44 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: ['brahmastra'],
     cost: {
       consequence:
-        'It devastates the line it is aimed at, and it does not care whose men stand in it. Where it falls no rain will come for twelve years. Loosing it is an act of adharma: a curse follows you for it. Only another Brahma-Astra can answer it.',
+        'It takes the whole enemy host at once, five to every warrior standing in every rank. Then your own army sickens for it: a quarter off each of your men, rounded up, for the rest of the battle. Loosing it is an act of adharma, and the shrap holds for five battles after this one. Only another Brahma-Astra can answer it.',
     },
     effects: [
-      // AIMED AT A LINE, AND IT DOES NOT CARE WHOSE LINE IT IS. This measured
-      // 66.6% win / 44.9% played, by far the strongest card in the game, for
-      // one reason: it was the only great weapon that did not hurt you. Six
-      // damage to the enemy row and a scratch to your own adjacent ranks is
-      // not a decision, it is free value, so it was the only ultimate anyone
-      // ever fired.
+      // THE WHOLE HOST, not a line. There is no row to choose because there is
+      // nowhere to stand.
       //
-      // A divyastra devastates a formation. The chariots burn, whoever's
-      // chariots they are. Now the question is which line you can afford to
-      // lose men in, which is a real choice and a canonical one: the whole
-      // horror of these weapons is that they do not discriminate.
-      { on: 'onPlay', target: { pick: 'lineBothSidesSameAsPlayed' }, actions: [{ kind: 'damage', amount: 6 }] },
+      // Three versions, all measured, because the arithmetic here is not
+      // obvious and the middle one is a trap:
+      //   enemy row only          66.6% win / 44.9% played. The strongest card
+      //                           in the game, because it was the only great
+      //                           weapon that did not cost you anything.
+      //   both-sides LINE         46.0%. Fair, but a tactical card, which is
+      //                           the wrong shape for a world-ender.
+      //   5 to EVERYONE + sap     24.8% win / 12.4% played. Near unplayable.
+      //   5 to the enemy + sap    42.8% win / 26.2% played. <- this one.
+      //
+      // The lesson in that third line is the same one the old Brahmashirsha
+      // taught: SYMMETRIC damage is not a cost, it is a self-inflicted wound.
+      // Hitting both sides equally and then paying a one-sided penalty on top
+      // makes the card strictly worse than not playing it, so nobody fires it
+      // and the drama never happens. The blast falls on them; the sickness
+      // afterwards falls on you. That is the shape that costs you something
+      // real and is still worth reaching for.
+      { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 5 }] },
       {
         on: 'onPlay',
         target: { pick: 'none' },
         actions: [
-          {
-            // No rain for twelve years, on both sides of the line.
-            kind: 'debuffRow',
-            amount: -3,
-            rows: [
-              { side: 'enemy', sameAsPlayed: true },
-              { side: 'own', sameAsPlayed: true },
-            ],
-            duration: 'lingering',
-          },
+          // AND THEN YOUR OWN ARMY IS SICK FOR THE REST OF IT. A quarter off
+          // every man you have left, rounded up, on top of the five he already
+          // took. Proportional rather than flat because a flat number is a
+          // scratch on a maharathi and ruin on a levy, and the whole point of
+          // the aftermath is that it does not discriminate either.
+          { kind: 'sap', percent: 25, side: 'own' },
         ],
       },
-      // The weapon wins you the line. The adharma of loosing it stays with you.
+      // The weapon wins you the field. The adharma of loosing it follows you
+      // out of this battle and into the next five: see run/dharma.ts.
       { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'afflict', side: 'own', pool: ADHARMA }] },
     ],
     flavor: 'Brahma’s weapon; where it strikes, no rain falls for twelve years.',
@@ -71,26 +77,38 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: ['brahmashirsha', 'brahmastra'],
     cost: {
       consequence:
-        'The four-headed weapon takes the enemy host entire. Only the deathless walk out of it. The land it touched is poisoned: your own lines wither for the rest of the battle, and the one who loosed it is cursed for the act.',
+        'The four-headed weapon takes the enemy host entire, and the round with it. Only the deathless walk out. The land it touched is poisoned: a third off every man you have left. The shrap of it holds for ten battles.',
     },
     effects: [
-      // WAS: destroy allUnits, both hosts. It measured a 17.2% win rate, the
-      // worst card in the game, and the reason is structural rather than a
-      // tuning error: a SYMMETRIC board wipe destroys cards that were already
-      // played, so it changes nobody's hand size. You simply spent a card and
-      // the enemy did not. It cost a card to reset to nothing.
+      // WAS: destroy allUnits, both hosts. That measured a 17.2% win rate, the
+      // worst card in the game, and structurally so: a SYMMETRIC board wipe
+      // destroys cards already played, so it changes nobody's hand size. You
+      // spent a card and the enemy did not, to reset to nothing.
       //
-      // Now it takes the enemy host and bills you afterwards instead: the
-      // aftermath is the price, not instant friendly fire. That is closer to
-      // the epic anyway - twelve years of barren land, not your own men
-      // dropping dead beside you.
+      // The enemy host, entire. Only the deathless walk out: attemptDestroy
+      // already honours Chiranjivi and Icchamrityu, so Ashwatthama and Bhishma
+      // survive this without the card needing to name them.
       { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'destroy' }] },
       {
         on: 'onPlay',
         target: { pick: 'none' },
         actions: [
+          // AND IT TAKES THE ROUND, whatever is left standing. Without this the
+          // weapon could wipe a host and still lose the round on power, which
+          // is absurd for a thing that has just unmade an army. It takes the
+          // round, not the battle: that is the Pashupata's job, and the gap
+          // between them is what makes them different weapons.
+          { kind: 'winRound' },
           {
-            // The land is poisoned. Your OWN lines, for the rest of the battle.
+            // THE LAND IS POISONED, and that is the price, deliberately not a
+            // hit on the men standing now. Taking the round ends it, and
+            // clearBoard destroys every unit when a round ends, so anything
+            // done to your own warriors here would be erased half a second
+            // later and the weapon would be free. A lingering row penalty
+            // survives the round transition (rounds.ts keeps `lingering`
+            // mods), so the ground you won is still poisoned when you fight on
+            // it next round. Twelve years of barren land, not your own men
+            // dropping dead beside you.
             kind: 'debuffRow',
             amount: -3,
             rows: [
@@ -117,7 +135,7 @@ export const ASTRA_CARDS: Card[] = [
     keywords: [],
     cost: {
       consequence:
-        'You win this battle the instant it is loosed. Then five warriors are torn out of your deck forever, and the weapon burns from your grasp. Nothing answers it. Nothing survives it.',
+        'You win this battle the instant it is loosed, every round of it, and the weapon burns from your grasp. Then it is remembered: the shrap of loosing it hangs over your host for fifteen battles, which is most of a war. Nothing answers it. Nothing survives it.',
     },
     effects: [
       {
@@ -126,8 +144,12 @@ export const ASTRA_CARDS: Card[] = [
         actions: [
           { kind: 'winBattle' },
           { kind: 'banFromRun', card: 'pashupatastra' },
-          // Won at what cost. Five of your own are unmade along with the field.
-          { kind: 'burnOwnDeck', count: 5 },
+          // THE PRICE IS THE SHRAP, not five warriors torn out of the deck.
+          // Burning your own men was an arbitrary tax with no story behind it:
+          // Shiva's weapon does not eat your infantry. Now the cost is the one
+          // the epic actually describes, a mark you carry, and it is by far the
+          // longest in the game (fifteen battles, against ten for the other
+          // ultimates and five for the Brahma line). See run/dharma.ts.
         ],
       },
     ],

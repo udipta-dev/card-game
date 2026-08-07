@@ -278,6 +278,19 @@ export type EffectAction =
   // The price of an adharmic weapon: permanently burn `count` cards out of the
   // firer's own deck. Pashupatastra wins the battle, but at this cost.
   | { kind: 'burnOwnDeck'; count: number }
+  /**
+   * Weaken a whole side by a FRACTION of each warrior's strength, rounded up.
+   * Flat numbers do not scale: -3 is a scratch on a 10 and ruin on a 4, and the
+   * aftermath of a world-ending weapon should cost the great and the small
+   * alike in proportion. Rounded up so it always bites.
+   */
+  | { kind: 'sap'; percent: number; side: 'own' | 'enemy' }
+  /**
+   * Take the ROUND, not the battle. Sits between a weapon that damages and one
+   * that simply ends the war: you win this round outright, and still have to
+   * win another to take the field.
+   */
+  | { kind: 'winRound' }
   // Loosing a Brahma-line weapon is an act of adharma. Draws one curse at
   // random from `pool` onto the firer. See engine/curses.ts.
   | { kind: 'afflict'; pool: CurseId[]; side: 'own' | 'enemy' }
@@ -476,6 +489,12 @@ export interface GameState {
   astraGrants: Record<Seat, Record<CardId, CardId[]>>;
   /** Set when a card forces an immediate battle result (Pashupatastra). */
   forcedWinner: Seat | null;
+  /**
+   * Set when a card takes the current ROUND outright, whatever the power on the
+   * board. Read and cleared by resolveRound, which is the only place a round is
+   * ever decided.
+   */
+  forcedRoundWinner?: Seat | null;
   winner: Seat | null;
   mulliganDone: Record<Seat, boolean>;
   log: GameEvent[];

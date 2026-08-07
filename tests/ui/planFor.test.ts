@@ -21,10 +21,13 @@ const movesForAllRows = (): Action[] =>
   ROWS.map((row) => ({ type: 'PLAY_CARD', seat: 'player', iid, row }) as Action);
 
 describe('a weapon that reads the line it was aimed at must ask for the line', () => {
-  it('Brahma-Astra offers all three, and does not silently pick one', () => {
+  it('Brahma-Astra no longer asks, because it no longer aims', () => {
+    // It used to burn ONE line on both sides, and the UI silently picked that
+    // line for the human (always the chariots) while the AI chose freely. That
+    // was the defect this file was written for. The weapon now takes the whole
+    // field, so there is genuinely nothing to choose and 'cast' is correct.
     const plan = planFor(getCard('brahmastra'), iid, movesForAllRows());
-    expect(plan.mode).toBe('drop-enemy');
-    expect(plan.mode === 'drop-enemy' && plan.rows).toEqual(ROWS);
+    expect(plan.mode).toBe('cast');
   });
 
   it('so does a plain row-damage astra, which always worked', () => {
@@ -36,7 +39,7 @@ describe('a weapon that reads the line it was aimed at must ask for the line', (
   it('every astra whose effect names the played row asks for it', () => {
     // A guard against the next pick mode being added and quietly forgotten.
     const rowPicks = ['enemyRowSameAsPlayed', 'ownAdjacentToPlayed', 'lineBothSidesSameAsPlayed'];
-    for (const id of ['brahmastra', 'vayavyastra', 'agneyastra']) {
+    for (const id of ['vayavyastra', 'agneyastra']) {
       const card = getCard(id);
       if (!card.effects.some((e) => rowPicks.includes(e.target.pick))) continue;
       expect(planFor(card, iid, movesForAllRows()).mode, `${id} must ask for a line`).toBe(
