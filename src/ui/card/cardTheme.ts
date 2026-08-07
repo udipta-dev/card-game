@@ -1,4 +1,5 @@
 import { allCards, getCard } from '@content/cards';
+import { BOND_OTHERS } from '@engine/keywords';
 import type { Card, House, Tier } from '@engine/types';
 
 /** Names of the warriors who can invoke a given astra. */
@@ -167,14 +168,13 @@ export function rulesText(card: Card): string[] {
         `Night-strength: arrives +${kw.amount} for every round already fought. Hold him back and he lands harder.`,
       );
     if (kw.kind === 'bond')
-      // HE GETS THE BONUS, NOT THEM, and the old wording said the opposite to
-      // everyone who read it. "+1 for each ally of the same banner already on
-      // the field" scans as "gives +1 to each ally", so a player fielded
-      // Tarakasura beside a kinsman, saw the kinsman unchanged, and reported a
-      // broken card. Naming the kindred instead of "the same banner" also stops
-      // it being a guessing game about who counts.
+      // Says who is raised, by how much, and when. The old line ("+N for each
+      // ally of the same banner already on the field") named none of the three,
+      // and read as if it buffed allies when it buffed himself.
       lines.push(
-        `Rallies: HE arrives +${kw.amount} stronger for each ${BOND_WORD[kw.tag] ?? kw.tag} already standing beside him. It does not raise them, and only counts who is already there when he lands.`,
+        kw.amount > BOND_OTHERS
+          ? `Rallies the rank he joins: every ally already standing in that row gains +${BOND_OTHERS}, and each ${BOND_WORD[kw.tag] ?? kw.tag} gains +${kw.amount}. He gains nothing himself, so place him last.`
+          : `Rallies the rank he joins: every ally already standing in that row gains +${kw.amount}. He gains nothing himself, so place him last.`,
       );
     if (kw.kind === 'drawsAstra')
       lines.push('A lightning rod: an enemy astra aimed at your host strikes him instead.');

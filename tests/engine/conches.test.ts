@@ -29,8 +29,10 @@ describe('the twins answer each other across the line', () => {
     s.activeSeat = 'player';
     const before = rowPower(s, 'player', 'ratha');
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'nakula').iid, row: 'ratha' });
-    // His own 6 plus the +2 the conch puts on the row.
-    expect(rowPower(s1, 'player', 'ratha')).toBe(before + 6 + 2);
+    // His own 6, the +2 the conch puts on the row, and the +1 he rallies onto
+    // Arjuna, who was already standing there. The rally is new: bond used to
+    // take its bonus onto Nakula's own head and leave the line untouched.
+    expect(rowPower(s1, 'player', 'ratha')).toBe(before + 6 + 2 + 1);
   });
 
   it('Manipushpaka leans on the enemy’s instead, so they are not one card twice', () => {
@@ -45,7 +47,12 @@ describe('the twins answer each other across the line', () => {
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'sahadeva').iid, row: 'ratha' });
 
     expect(rowPower(s1, 'ai', 'ratha'), 'the enemy line sags').toBe(foeBefore - 1);
-    expect(rowPower(s1, 'player', 'ratha'), 'his own gains only his body').toBe(ownBefore + 6);
+    // His body, plus the +1 he rallies onto Arjuna. The point of the test is
+    // that Manipushpaka itself leans on the ENEMY line rather than lifting his
+    // own, and that still holds: the +1 is the rally, not the conch.
+    expect(rowPower(s1, 'player', 'ratha'), 'his own gains his body and the rally').toBe(
+      ownBefore + 6 + 1,
+    );
   });
 
   it('and Sahadeva still cuts down Shakuni, which must not regress', () => {

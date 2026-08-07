@@ -128,7 +128,17 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 9,
     rows: ['ratha'],
-    keywords: [],
+    // HE RALLIES HIS BROTHERS, and until now nobody in this host rallied
+    // anybody. Dushasana, Vikarna and Duryodhana all carry the kaurava-brother
+    // tag already, so the kin were in the starter deck the whole time; what was
+    // missing was a man to gather them. Kaurava fielded ZERO rally cards while
+    // Pandava fielded three and Asura four, which made the trait a Pandava and
+    // Asura mechanic by accident.
+    //
+    // It is also simply who he is. Duryodhana's whole standing in the epic is
+    // that a hundred brothers form up behind him, and he never fights better
+    // than when they are beside him.
+    keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 2 }],
     tags: ['kaurava-brother'],
     // The mechanic was right and the story on it was wrong. Gandhari hardening
     // her son's body with one unbandaged look is NOT in Ganguli: searched all
@@ -152,7 +162,12 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'rathi',
     basePower: 6,
     rows: ['ratha', 'gaja'],
-    keywords: [],
+    // The second brother rallies too, and he is the reason this host can do it
+    // at all outside the chariot line: Duryodhana is ratha-only, so with him
+    // alone a Kaurava rally had exactly one rank it could ever happen in.
+    // Dushasana stands in the elephants as well. He is also never anywhere but
+    // at Duryodhana's shoulder, which is the whole of his character.
+    keywords: [{ kind: 'bond', tag: 'kaurava-brother', amount: 2 }],
     tags: ['kaurava-brother'],
     effects: [],
     flavor: 'Whose hands at the dice-hall sealed the war.',

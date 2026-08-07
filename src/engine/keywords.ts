@@ -9,6 +9,15 @@ import { ROWS } from './types';
 import type { CardInstance, GameState, InstanceId, Seat } from './types';
 
 /**
+ * What a rally is worth to a man who is not your kin.
+ *
+ * A rally lifts the whole rank, because that is what a rally is, but it lifts
+ * the men who came with you further. The kin figure is per-card (`amount`);
+ * this is the flat one everyone else in the line gets.
+ */
+export const BOND_OTHERS = 1;
+
+/**
  * The lowest power a warrior may be driven to.
  *
  * Normally 0. But a warrior who CANNOT BE KILLED must not be reducible to
@@ -110,14 +119,29 @@ export function initInstanceRuntime(state: GameState, iid: InstanceId): void {
       }
     }
     if (kw.kind === 'bond') {
-      // Rallies: +amount for each allied unit already fielded with the tag.
-      const allies = boardUnits(state, u.owner).filter(
-        (o) => o.iid !== iid && getCard(o.cardId).tags?.includes(kw.tag),
-      );
-      const bonus = kw.amount * allies.length;
-      if (bonus > 0) {
-        u.currentPower += bonus;
-        state.log.push({ t: 'buff', iid, amount: bonus, power: u.currentPower });
+      // HE RAISES THE MEN AROUND HIM. He does not raise himself.
+      //
+      // This used to be the reverse: he counted the kin already standing and
+      // took the bonus onto his own head. Two problems with that. It read
+      // backwards to every player who saw it ("rallies" sounds like something
+      // you do TO people), and mathematically it was pointless: a man who
+      // arrives at 6 and becomes 8 might as well have been printed as an 8.
+      //
+      // The totals are identical either way, because it is the same set of
+      // pairs counted from the other end: five bonded warriors deliver +10
+      // whichever direction the arrow points. What changes is where the power
+      // sits and whether it can be taken back. On his own head, one removal
+      // erases the whole bonus. Spread across the men already standing, it is
+      // banked the moment he lands, and WHERE you put him starts to matter.
+      //
+      // Kin get the full amount; anyone else in the rank gets 1. A rally lifts
+      // the whole line, but it lifts your own people most.
+      const line = boardUnits(state, u.owner).filter((o) => o.iid !== iid && o.row === u.row);
+      for (const ally of line) {
+        const kin = getCard(ally.cardId).tags?.includes(kw.tag);
+        const bonus = kin ? kw.amount : BOND_OTHERS;
+        ally.currentPower += bonus;
+        state.log.push({ t: 'buff', iid: ally.iid, amount: bonus, power: ally.currentPower });
       }
     }
   }
