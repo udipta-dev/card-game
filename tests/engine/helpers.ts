@@ -72,6 +72,7 @@ export function makeState(spec: StateSpec = {}): GameState {
 
   return {
     seed: 12345,
+    ultimatesFired: { player: 0, ai: 0 },
     phase: 'playing',
     activeSeat: spec.activeSeat ?? 'player',
     firstMover: 'player',

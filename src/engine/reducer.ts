@@ -13,6 +13,9 @@ import { MULLIGAN_MAX, makeInstance } from './createMatch';
 import { nextRandom } from './ids';
 import type { Action, Card, CardInstance, GameState, Row, Seat } from './types';
 
+/** How many tier-3 weapons one side may loose in a single battle. */
+export const ULTIMATES_PER_BATTLE = 1;
+
 function clone(state: GameState): GameState {
   return structuredClone(state);
 }
@@ -44,6 +47,12 @@ export function isLegalPlay(
   if (card.type === 'astra') {
     if (!canPlayAstras(state, seat, isFinalRound(state))) return false;
     if (!canInvokeAstra(state, seat, card.id)) return false; // needs a warrior who knows it
+    // ONE WORLD-ENDER PER BATTLE. A hand holding two ultimates would otherwise
+    // fire both in the same fight, and the battle would be decided by the draw
+    // rather than by anything either player did. One is a moment; two is a
+    // coin flip.
+    if ((card.astraTier ?? 1) >= 3 && (state.ultimatesFired?.[seat] ?? 0) >= ULTIMATES_PER_BATTLE)
+      return false;
   }
   return true;
 }
@@ -252,6 +261,11 @@ export function reduce(state: GameState, action: Action): GameState {
       // Remove from hand and announce.
       s.hands[seat].splice(s.hands[seat].indexOf(iid), 1);
       s.log.push({ t: 'play', seat, iid, cardId: card.id, row: action.row });
+      // Counted whether or not it lands: firing IS the act. A weapon answered
+      // in the air, or swallowed by Ghatotkacha, was still loosed.
+      if (card.type === 'astra' && (card.astraTier ?? 1) >= 3) {
+        s.ultimatesFired = { ...s.ultimatesFired, [seat]: (s.ultimatesFired?.[seat] ?? 0) + 1 };
+      }
 
       const ctx: EffectCtx = {
         state: s,

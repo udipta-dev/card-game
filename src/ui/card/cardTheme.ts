@@ -209,7 +209,9 @@ export function rulesText(card: Card): string[] {
     if (kw.kind === 'deathless')
       lines.push('Chiranjivi: nothing in the world can slay him. He can still be worn down to 1.');
     if (kw.kind === 'unwoundable')
-      lines.push('Every wound raises another of him: damage cannot lower him at all. Only removal answers him.');
+      lines.push(
+        'Damage cannot lower him. Not reduced, ignored: every drop of blood spilled raises another of him. Only removal answers him.',
+      );
     if (kw.kind === 'nightGrowth')
       lines.push(
         `Night-strength: arrives +${kw.amount} for every round already fought. Hold him back and he lands harder.`,
@@ -233,8 +235,13 @@ export function rulesText(card: Card): string[] {
     // conditions, so Karna read as a plain 10 and turned to nothing if you held
     // him for the deciding round: the information existed only in the source.
     // A drawback the player cannot see is a trap, not a decision.
+    // The condition JOINS the sentence it governs. Pushed as its own line it
+    // read as a dangling fragment: Karna's card said "In the round that decides
+    // the battle:" and then, as a separate paragraph, "He takes -4 himself".
+    // Two half-sentences stacked, which is most of what "the text is nonsense"
+    // was pointing at.
     const when = conditionText(eff.condition);
-    if (when) lines.push(cap(when));
+    const before = lines.length;
     for (const a of eff.actions) {
       if (a.kind === 'winBattle') lines.push('Wins the battle outright.');
       if (a.kind === 'banFromRun') lines.push('Then lost for the rest of the run.');
@@ -316,6 +323,14 @@ export function rulesText(card: Card): string[] {
         lines.push('A shrap binds itself to the enemy.');
       if (a.kind === 'hazard' && a.hazard === 'narayana')
         lines.push('Hangs over their host and strikes again every round, harder each time. Passing lifts it.');
+    }
+    if (when && lines.length > before) {
+      // Lower-case the first letter of the consequence so the joined sentence
+      // reads as one: "In the round that decides the battle, he takes -4."
+      const first = lines[before];
+      lines[before] = `${cap(when).replace(/:$/, '')}, ${first[0].toLowerCase()}${first.slice(1)}`;
+    } else if (when) {
+      lines.push(cap(when));
     }
   }
   // A SKILL AT ARMS, spent on its own turn rather than triggered by playing him.

@@ -89,6 +89,7 @@ export function createMatch(
     curses: { player: init?.playerCurses ? [...init.playerCurses] : [], ai: [] },
     astraGrants: { player: init?.astraGrants ? { ...init.astraGrants } : {}, ai: {} },
     hazards: [],
+    ultimatesFired: { player: 0, ai: 0 },
     forcedWinner: null,
     winner: null,
     mulliganDone: { player: false, ai: false },

@@ -13,6 +13,19 @@ import { Setup } from './screens/Setup';
 import { Muster } from './screens/Muster';
 import { loadMuster, saveMuster } from '@content/savedMuster';
 
+/**
+ * Quickplay is one battle with nothing carried in or out, so the weapon that
+ * simply WINS one has no cost in it at all: no run to be marked for, no penance
+ * to walk, no arsenal to empty. The Pashupata is therefore not in the arsenal
+ * here. It stays a campaign weapon, which is also the only place its fifteen
+ * battles of shrap can mean anything, and being unavailable is most of what
+ * gives it an aura.
+ *
+ * `banned` is the same list a run uses for a spent weapon, so this needs no
+ * special case anywhere in the engine.
+ */
+const QUICKPLAY_INIT = { banned: ['pashupatastra'] };
+
 interface MatchConfig {
   seed: number;
   playerDeck: DeckList;
@@ -66,6 +79,7 @@ export function App() {
           seed={match.seed}
           playerDeck={match.playerDeck}
           aiDeck={match.aiDeck}
+          init={QUICKPLAY_INIT}
           onExit={() => setMatch(null)}
         />
       </div>

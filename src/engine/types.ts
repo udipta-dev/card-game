@@ -487,6 +487,15 @@ export interface GameState {
    * returns from Vayu bearing a weapon Bhima never started with.
    */
   astraGrants: Record<Seat, Record<CardId, CardId[]>>;
+  /**
+   * Tier-3 weapons each seat has loosed this battle. ONE PER BATTLE, per side.
+   *
+   * Without a cap, a hand holding two ultimates fires both in the same fight
+   * and the battle is decided by draw rather than by play. One is a moment; two
+   * is a coin flip. The Brahma line (tier 2) is not capped, because each is
+   * already spent for the run the moment it fires.
+   */
+  ultimatesFired: Record<Seat, number>;
   /** Set when a card forces an immediate battle result (Pashupatastra). */
   forcedWinner: Seat | null;
   /**
