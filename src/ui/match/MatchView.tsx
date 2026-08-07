@@ -962,12 +962,37 @@ function SanctionGate({
 function handGroup(type: Card['type']): number {
   return type === 'unit' ? 0 : 1;
 }
-/** Sort the hand so warriors come first, then boons and astras, stable within. */
+/**
+ * Warriors first and strongest first, then the weapons, mightiest first.
+ *
+ * The hand was only ever grouped, never ordered inside a group, so it sat in
+ * whatever order the cards happened to be drawn. Since the hand persists all
+ * three rounds and you draw into it between them, that order is effectively
+ * random and it changes under you: the card you reached for last turn is
+ * somewhere else this turn. Sorting by strength means the shape of your hand is
+ * the same every time you look at it, and the big decision (who is my heaviest
+ * man?) is answered by looking at one end.
+ */
 function sortedHand(iids: InstanceId[], state: GameState): InstanceId[] {
   return [...iids].sort((a, b) => {
-    const ga = handGroup(getCard(state.instances[a]!.cardId).type);
-    const gb = handGroup(getCard(state.instances[b]!.cardId).type);
-    return ga - gb;
+    const ca = getCard(state.instances[a]!.cardId);
+    const cb = getCard(state.instances[b]!.cardId);
+    const ga = handGroup(ca.type);
+    const gb = handGroup(cb.type);
+    if (ga !== gb) return ga - gb;
+    // Warriors by the power actually on the card right now, not the printed
+    // one: a wounded man belongs where he currently sits.
+    if (ga === 0) {
+      const pa = state.instances[a]!.currentPower;
+      const pb = state.instances[b]!.currentPower;
+      if (pa !== pb) return pb - pa;
+      return ca.name.localeCompare(cb.name);
+    }
+    // Weapons by rank, so the ultimates sit at the same end every time.
+    const ta = ca.astraTier ?? 0;
+    const tb = cb.astraTier ?? 0;
+    if (ta !== tb) return tb - ta;
+    return ca.name.localeCompare(cb.name);
   });
 }
 

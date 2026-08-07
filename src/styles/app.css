@@ -1841,3 +1841,42 @@
   color: var(--ink-faint);
   margin-top: 2px;
 }
+
+/* What a house plays like, shown the moment you select it. Choosing a side used
+   to be three unlabelled buttons: one tap committed you to an army with nothing
+   anywhere saying how it differs from the other two. */
+.house-brief {
+  border: 1px solid var(--panel-edge);
+  border-left: 2px solid var(--gold-dim);
+  background: var(--panel);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin: 10px 0 4px;
+  max-width: 620px;
+}
+.house-brief__line {
+  margin: 0 0 8px;
+  font-family: var(--font-display, serif);
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.house-brief__row {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+.house-brief__tag {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1px 6px;
+  margin-right: 8px;
+  border-radius: 2px;
+  border: 1px solid var(--panel-edge);
+  vertical-align: 1px;
+}
+.house-brief__tag--good { color: #a8cfae; border-color: rgba(106, 144, 112, 0.55); }
+.house-brief__tag--bad { color: #e0a99f; border-color: rgba(176, 87, 74, 0.55); }

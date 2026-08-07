@@ -262,8 +262,16 @@ function ShrineScreen({
         <div className="shrine__om" aria-hidden="true">ॐ</div>
         <div className="run__title">A shrine on the road</div>
       </header>
+      {/* WHAT THIS PAGE IS FOR, before the poetry. "The gods ask what you are
+          willing to pay" is atmosphere and told the player nothing about what
+          the screen actually does, which was the complaint: "shrine on the road
+          is confusing, what does this page do?" There are exactly two kinds of
+          offer here and they work completely differently, so both are named. */}
       <p className="reward__lede">
-        The gods ask what you are willing to pay. Nothing here is given freely.
+        Two kinds of bargain, and you may refuse both. A <b>vardaan</b> is a gift you take
+        now, sometimes at a price paid immediately. A <b>tapasya</b> sends one of your
+        warriors away to a god: he cannot fight for the battles named on the card, and
+        he comes back bearing a divine weapon, or bearing nothing.
       </p>
 
       <div className="shrine__grid">
