@@ -336,7 +336,13 @@ export function rollShrine(run: RunState): ShrineOffer[] {
 
   const held = new Set([...run.roster, ...run.banned]);
   const gifts = VARDAAN_CARDS.filter((c) => !held.has(c.id)).map((c) => c.id);
-  const rosterUnits = run.roster.filter((id) => getCard(id).type === 'unit');
+  // Only warriors actually STANDING WITH YOU can be asked for. This read the
+  // raw roster, which still lists a man away at penance, so the shrine could
+  // demand the life of someone who is not on the field to give it: you paid for
+  // a gift with a warrior you had already sent away, and he simply never came
+  // home. Whoever is away is not yours to trade.
+  const away = new Set((run.away ?? []).map((p) => p.warrior));
+  const rosterUnits = run.roster.filter((id) => getCard(id).type === 'unit' && !away.has(id));
 
   // Two gifts. The second carries a shrap: the greater the gift, the greater
   // the price, and the player sees exactly what it costs before accepting.
@@ -370,12 +376,12 @@ export function rollShrine(run: RunState): ShrineOffer[] {
   // The god at this shrine, and the wagers he will entertain. The longest
   // penance is bounded so the warrior can still return before the last rung:
   // commit too late and he would never rejoin the host at all.
-  const away = new Set(run.away.map((p) => p.warrior));
   const maxBattles = Math.max(1, run.ladder.length - 1 - run.index);
 
-  const candidates = rosterUnits
-    .filter((id) => !away.has(id))
-    .sort((a, b) => worthOf(b) - worthOf(a));
+  // `rosterUnits` already excludes anyone away at penance, which is the same
+  // rule this list needs: a man cannot be sent on a second penance, and he
+  // cannot be sacrificed while he is gone either.
+  const candidates = [...rosterUnits].sort((a, b) => worthOf(b) - worthOf(a));
 
   // Gather every god this host could actually reach, then choose among them by
   // seed. Taking the first match in a fixed order let the elemental gods, who

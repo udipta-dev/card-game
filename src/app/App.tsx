@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { DeckList } from '@content/decks';
 import type { House } from '@engine/types';
 import { MatchView } from '@ui/match/MatchView';
 import { createRun } from '@run/run';
 import { recordRunStart } from '@run/meta';
+import { clearRun, loadRun, saveRun } from '@run/savedRun';
 import type { RunState } from '@run/types';
 import { Codex } from './screens/Codex';
 import { MainMenu } from './screens/MainMenu';
@@ -31,9 +32,18 @@ function makeSeed(): number {
 export function App() {
   const [screen, setScreen] = useState<Screen>('menu');
   const [match, setMatch] = useState<MatchConfig | null>(null);
-  const [run, setRun] = useState<RunState | null>(null);
+  // Resume whatever campaign was in progress. A run is long and a reload is
+  // cheap to trigger by accident, so losing one to a refresh is not acceptable.
+  const [run, setRun] = useState<RunState | null>(() => loadRun());
   /** Which house the muster screen is editing, and where to return to. */
   const [mustering, setMustering] = useState<{ house: House; back: Screen } | null>(null);
+
+  // Persist on every change rather than at checkpoints, because the moments a
+  // player actually loses a tab (sleep, crash, update) are not checkpoints.
+  useEffect(() => {
+    if (run) saveRun(run);
+    else clearRun();
+  }, [run]);
 
   const startQuickplay = (playerDeck: DeckList, aiDeck: DeckList) => {
     setScreen('menu');
@@ -43,7 +53,9 @@ export function App() {
   const startCampaign = (playerDeck: DeckList) => {
     recordRunStart();
     setScreen('menu');
-    setRun(createRun(makeSeed(), playerDeck.house as House));
+    // playerDeck is the host mustered on the setup screen. Passing only the
+    // house threw that choice away and started every campaign on the starter list.
+    setRun(createRun(makeSeed(), playerDeck.house as House, playerDeck.cards));
   };
 
   if (match) {

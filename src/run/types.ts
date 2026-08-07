@@ -64,6 +64,13 @@ export interface RunState {
   pendingCurses: CurseId[];
   /** Battles won this run. */
   depth: number;
+  /**
+   * How the run finished, once `phase` is 'lost'. A drawn battle also ends a
+   * run, and without this the closing screen could only say "your host is
+   * broken", which is wrong twice over on a stalemate: nobody broke it, and it
+   * counted victories the player had not won.
+   */
+  endedBy?: 'defeat' | 'stalemate';
   /** The three choices offered after the last win, if we are in 'reward'. */
   rewardChoices?: RewardOption[];
   /** Warriors currently away at penance. They do not fight while absent. */

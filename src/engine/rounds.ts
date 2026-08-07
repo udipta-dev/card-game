@@ -1,3 +1,4 @@
+import { getCard } from '@content/cards';
 import { runBoardTrigger } from './events';
 import { lowerPower, removeInstance } from './keywords';
 import { nextRandom } from './ids';
@@ -12,6 +13,39 @@ function drawCards(state: GameState, seat: Seat, n: number): void {
     if (!iid) break;
     state.hands[seat].push(iid);
   }
+}
+
+/**
+ * Nobody opens a round unable to put a man on the field.
+ *
+ * A round begins with the board swept, and an astra needs a warrior standing to
+ * fire it. So a hand of nothing but weapons is not a bad hand, it is no turn at
+ * all: you pass, the enemy plays into an empty field, and the round is decided
+ * before you act. Measured over 900 games (sim/dead-hand.ts): 12.1% of round-2
+ * openings held ZERO warriors and 42.0% held exactly one, and on 10.1% of the
+ * player's own turns there was no legal card of any kind to put down.
+ *
+ * So the between-round draw digs. If a seat would start a round with no warrior
+ * in hand, the deck is searched for the first one and it comes up in place of a
+ * card that could not be played. This is not extra cards: the hand is the same
+ * size either way, and if the deck holds no warrior at all nothing changes.
+ * Both seats get it, so it is symmetric.
+ */
+function digForAWarrior(state: GameState, seat: Seat): void {
+  const isWarrior = (iid: string) => getCard(state.instances[iid]!.cardId).type === 'unit';
+  if (state.hands[seat].some(isWarrior)) return;
+  const at = state.decks[seat].findIndex(isWarrior);
+  if (at < 0) return; // no warrior left anywhere; nothing to be done
+
+  const [warrior] = state.decks[seat].splice(at, 1);
+  // Put back the least useful thing we just drew, so the hand size is unchanged.
+  // The hand is all non-warriors by definition here, so the last drawn card is
+  // as good a candidate as any, and it returns to the top rather than being
+  // lost: you will see it again next round, when you may have a man for it.
+  const spare = state.hands[seat].pop();
+  if (spare) state.decks[seat].unshift(spare);
+  state.hands[seat].push(warrior);
+  state.log.push({ t: 'draw', seat, cardId: state.instances[warrior]!.cardId });
 }
 
 function clearBoard(state: GameState): void {
@@ -84,6 +118,8 @@ export function resolveRound(state: GameState): void {
   state.playedThisRound = { player: false, ai: false };
   drawCards(state, 'player', ROUND_DRAW);
   drawCards(state, 'ai', ROUND_DRAW);
+  digForAWarrior(state, 'player');
+  digForAWarrior(state, 'ai');
 
   // Winner of the round leads the next: they commit first, so the loser gets
   // "last say" and a chance to rubber-band back. Tie leaves the first mover leading.

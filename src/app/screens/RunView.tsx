@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { getCard } from '@content/cards';
 import type { GameState } from '@engine/types';
 import { getCurse } from '@engine/curses';
@@ -26,16 +26,26 @@ interface Props {
 export function RunView({ run: initial, onExit }: Props) {
   const [run, setRun] = useState<RunState>(initial);
   const [inBattle, setInBattle] = useState(false);
-  const [recorded, setRecorded] = useState(false);
   const [mustering, setMustering] = useState(false);
+  const recorded = useRef(false);
 
   const plan = useMemo(() => (inBattle ? planBattle(run) : null), [inBattle, run]);
 
   // Record the outcome to cross-run progress exactly once when the run ends.
-  if ((run.phase === 'won' || run.phase === 'lost') && !recorded) {
+  //
+  // IN AN EFFECT, AND GUARDED BY A REF. This was a bare `if` in the render body
+  // writing to localStorage, guarded by a useState flag set in the same pass.
+  // React.StrictMode renders every component twice in development, and both
+  // passes see the old `false`, so every finished run was filed twice: lifetime
+  // wins and best depth were quietly doubled. A write to the outside world is a
+  // side effect and belongs in an effect; a ref updates immediately, so the
+  // second pass sees the guard already closed.
+  useEffect(() => {
+    if (run.phase !== 'won' && run.phase !== 'lost') return;
+    if (recorded.current) return;
+    recorded.current = true;
     recordRunEnd(run.phase === 'won', run.depth);
-    setRecorded(true);
-  }
+  }, [run.phase, run.depth]);
 
   if (inBattle && plan) {
     return (
@@ -362,14 +372,21 @@ function PenanceCard({
 // ---------------------------------------------------------------- End screen
 function RunEndScreen({ run, onExit }: { run: RunState; onExit: () => void }) {
   const won = run.phase === 'won';
+  const drew = run.endedBy === 'stalemate';
+  // "after N victories" read as "after 0 victories" on a first-battle loss, and
+  // called a stalemate a broken host. Both now say what actually happened.
+  const record =
+    run.depth === 0 ? 'at the first rung' : `after ${run.depth} ${run.depth === 1 ? 'victory' : 'victories'}`;
   return (
     <div className="run run--end">
-      <div className={'panel ' + (won ? 'result--win' : 'result--lose')}>
-        <h2>{won ? 'The war is won' : 'The run ends'}</h2>
+      <div className={'panel ' + (won ? 'result--win' : drew ? '' : 'result--lose')}>
+        <h2>{won ? 'The war is won' : drew ? 'Neither host yields' : 'The run ends'}</h2>
         <p className="panel__sub">
           {won
             ? 'You carried your host through every rung of the ladder. Dharma prevails.'
-            : `Your host is broken after ${run.depth} ${run.depth === 1 ? 'victory' : 'victories'}. The next run begins anew, a little wiser.`}
+            : drew
+              ? `The field was level ${record}, and a drawn battle carries no one forward. The next run begins anew.`
+              : `Your host is broken ${record}. The next run begins anew, a little wiser.`}
         </p>
         <div className="menu__actions" style={{ margin: '0 auto' }}>
           <button className="btn btn--primary" onClick={onExit}>

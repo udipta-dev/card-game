@@ -104,8 +104,9 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
 
         {campaign ? (
           <p className="setup__note">
-            You will carry this host up a ladder of battles. Your great astra is not with you: it
-            must be earned. Win to recruit new warriors; lose a single battle and the run is over.
+            You will carry this host up a ladder of battles. The great astras are not dealt to you:
+            they must be earned at a shrine, except for the ones a warrior physically carries into
+            battle. Win to recruit new warriors; lose a single battle and the run is over.
           </p>
         ) : (
           <>

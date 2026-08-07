@@ -526,7 +526,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
         />
       )}
       {state.phase === 'battleEnd' && (
-        <ResultOverlay state={state} onExit={onExit} onFinish={onFinish} />
+        <ResultOverlay state={state} house={playerDeck.house} onExit={onExit} onFinish={onFinish} />
       )}
     </div>
   );
@@ -722,12 +722,39 @@ function MulliganOverlay({
   );
 }
 
+/**
+ * How each host is spoken of when it takes the field, and when it loses it.
+ *
+ * This used to be two hardcoded sentences: every win read "the conches sound
+ * for the PANDAVAS" and every loss read "Hastinapura's banners advance", no
+ * matter whose army you were actually commanding. Win a campaign as the Asuras
+ * and the game congratulated the other side. A player who picks a house should
+ * never be told they are someone else.
+ */
+const HOUSE_WIN: Record<House, string> = {
+  pandava: 'Dharma holds the field. The conches sound for the Pandavas.',
+  kaurava: 'The field is held. Hastinapura’s banners stand over it.',
+  asura: 'The field is taken. The asura host does not yield it back.',
+  neutral: 'The field is held.',
+  legend: 'The field is held.',
+};
+const HOUSE_LOSS: Record<House, string> = {
+  pandava: 'The line is broken. The Pandava banners fall back.',
+  kaurava: 'The line is broken. Hastinapura’s banners fall back.',
+  asura: 'The line is broken. The asura host is scattered.',
+  neutral: 'The line is broken.',
+  legend: 'The line is broken.',
+};
+
 function ResultOverlay({
   state,
+  house,
   onExit,
   onFinish,
 }: {
   state: GameState;
+  /** The house the human is commanding, so the copy names the right army. */
+  house: House;
   onExit: () => void;
   onFinish?: (s: GameState) => void;
 }) {
@@ -742,10 +769,10 @@ function ResultOverlay({
         <h2>{draw ? 'Stalemate' : won ? 'Victory' : 'Defeat'}</h2>
         <p className="panel__sub">
           {draw
-            ? 'The field is soaked, and neither host yields.'
+            ? 'The field is soaked, and neither host yields. A drawn round counts for both sides, so three rounds can end two-all.'
             : won
-              ? 'Dharma holds the field. The conches sound for the Pandavas.'
-              : 'The line is broken. Hastinapura’s banners advance.'}
+              ? HOUSE_WIN[house]
+              : HOUSE_LOSS[house]}
           {' '}Rounds {state.roundWins.player}–{state.roundWins.ai}.
         </p>
         <div className="menu__actions" style={{ margin: '0 auto' }}>
@@ -760,7 +787,15 @@ function ResultOverlay({
 
 // ============================================================ helpers
 
-function planFor(card: Card, iid: InstanceId, moves: Action[]): Plan {
+/**
+ * What the board should ask the player for once they pick a card up: a row to
+ * drop into, an enemy to aim at, or nothing at all.
+ *
+ * Exported for tests. This is where a weapon quietly loses its decision, so it
+ * is worth pinning: getting it wrong does not crash or look broken, it just
+ * silently makes the choice for the player.
+ */
+export function planFor(card: Card, iid: InstanceId, moves: Action[]): Plan {
   const forCard = moves.filter((m) => m.type === 'PLAY_CARD' && m.iid === iid);
   const rows = [...new Set(forCard.map((m) => (m.type === 'PLAY_CARD' ? m.row : 'ratha')))] as Row[];
   const targets = [
@@ -777,8 +812,18 @@ function planFor(card: Card, iid: InstanceId, moves: Action[]): Plan {
   // astra / curse
   const hasChosen = card.effects.some((e) => e.target.pick === 'chosen');
   if (hasChosen) return { mode: 'target-enemy', candidates: targets };
+  // Any weapon whose effect reads the line it was aimed at has to ASK for that
+  // line. 'lineBothSidesSameAsPlayed' was missing here, and it is the whole
+  // Brahma-Astra: it burns the chosen line on both sides of the field, so the
+  // choice of line is the entire decision the card exists to pose. Leaving it
+  // out dropped it through to 'cast', which fires at rows[0] without asking:
+  // the human always flattened the chariot line, and always scorched their own
+  // chariots with it, while the AI picked freely among all three.
   const usesPlayedRow = card.effects.some(
-    (e) => e.target.pick === 'enemyRowSameAsPlayed' || e.target.pick === 'ownAdjacentToPlayed',
+    (e) =>
+      e.target.pick === 'enemyRowSameAsPlayed' ||
+      e.target.pick === 'ownAdjacentToPlayed' ||
+      e.target.pick === 'lineBothSidesSameAsPlayed',
   );
   if (usesPlayedRow) return { mode: 'drop-enemy', rows: rows.length ? rows : card.rows };
   return { mode: 'cast', row: (rows[0] ?? card.rows[0]) as Row };

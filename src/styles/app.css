@@ -1474,11 +1474,25 @@
 }
 
 /* ============================================================== Run / Campaign */
+/* THIS SCREEN OWNS ITS SCROLL, and it did not, which made the first shrine of
+   every campaign unfinishable on a phone.
+   `body` is overflow:hidden and `#root` is a hard 100dvh (tokens.css), so the
+   page itself can never scroll: every screen has to scroll internally, the way
+   .codex__scroll does. This was `min-height: 100dvh` with no overflow, so a
+   shrine offering five choices ran 1202px tall inside an 812px window and the
+   bottom simply did not exist. The fifth offer and the "Walk on, and ask
+   nothing" button were both below the fold, unreachable by touch, wheel or
+   scrollTo. You could not decline the shrine.
+   flex:1 + min-height:0 is what lets a flex child actually shrink and scroll;
+   height:100dvh here would overflow .app instead of fitting inside it. */
 .run {
   max-width: 640px;
   margin: 0 auto;
   padding: max(16px, env(safe-area-inset-top)) 16px 40px;
-  min-height: 100dvh;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   gap: 16px;

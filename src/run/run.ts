@@ -20,19 +20,26 @@ const DECK_BY_HOUSE: Record<string, DeckList> = {
   asura: DECKS['asura_starter'],
 };
 
-/** The great weapons are earned through penance later, not carried from the start. */
-function startingRoster(house: House): CardId[] {
-  const deck = DECK_BY_HOUSE[house];
-  if (!deck) return [];
-  return deck.cards.filter((id) => (getCard(id).astraTier ?? 0) < 3);
+/**
+ * The great weapons are earned through penance later, not carried from the start.
+ *
+ * `chosen` is the host the player actually mustered on the setup screen. It used
+ * to be discarded: createRun took only a house and always rebuilt the hardcoded
+ * starter list, so the deck you spent time assembling never reached the campaign
+ * and the game quietly fielded something else. If nothing was chosen, the
+ * starter list is still the fallback.
+ */
+function startingRoster(house: House, chosen?: readonly CardId[]): CardId[] {
+  const from = chosen?.length ? chosen : (DECK_BY_HOUSE[house]?.cards ?? []);
+  return from.filter((id) => (getCard(id).astraTier ?? 0) < 3);
 }
 
 /** Begin a fresh run for the chosen host. */
-export function createRun(seed: number, house: House): RunState {
+export function createRun(seed: number, house: House, chosen?: readonly CardId[]): RunState {
   return {
     seed: seed >>> 0,
     house,
-    roster: startingRoster(house),
+    roster: startingRoster(house, chosen),
     ladder: buildLadder(seed, house),
     index: 0,
     phase: 'map',
@@ -104,7 +111,9 @@ export function planBattle(run: RunState): BattlePlan {
 export function resolveBattle(run: RunState, finalState: GameState, playerSeat: Seat = 'player'): RunState {
   const won = finalState.winner === playerSeat;
   if (!won) {
-    return { ...run, phase: 'lost' };
+    // A drawn battle ends the run too (you must WIN to march on), but it is not
+    // a defeat and the end screen should not call it one.
+    return { ...run, phase: 'lost', endedBy: finalState.winner === null ? 'stalemate' : 'defeat' };
   }
 
   // Anything spent for the run (great astras loosed, warriors burnt) leaves the

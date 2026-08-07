@@ -19,7 +19,9 @@ const RULES: Rule[] = [
   {
     Icon: Lamps,
     title: 'Win two of three rounds',
-    body: 'Each round, whoever has more total power on the board wins it. First side to two round wins takes the war.',
+    // The drawn-round rule was nowhere in the game, so a match that ended 2-2
+    // looked like a bug rather than a rule.
+    body: 'Each round, whoever has more total power on the board wins it. First side to two round wins takes the war. A round tied on power counts as a win for BOTH sides, so a level fight can end two-all: that is a stalemate, and nobody marches on.',
   },
   {
     Icon: Alternating,

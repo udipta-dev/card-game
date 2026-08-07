@@ -32,6 +32,27 @@ export const HOUSE_PALETTE: Record<House, HousePalette> = {
   legend: { base: '#132225', edge: '#a98c45', ink: '#e4f2f4', glow: 'rgba(95,143,149,0.42)' },
 };
 
+/**
+ * What a bond's kinship is called on the card face.
+ *
+ * The rules line used to say "of the same banner", which tells the player
+ * nothing about who actually counts. Naming the kindred lets them look at their
+ * own board and work it out.
+ */
+const BOND_WORD: Record<string, string> = {
+  daitya: 'fellow daitya',
+  'asura-lord': 'fellow asura lord',
+  rakshasa: 'fellow rakshasa',
+  twin: 'twin',
+  upapandava: 'son of Draupadi',
+  'kaurava-brother': 'brother of Hastinapura',
+  avanti: 'brother of Avanti',
+  matsya: 'man of Matsya',
+  panchala: 'man of Panchala',
+  'sun-line': 'child of the sun',
+  'wheel-guard': 'wheel-guard',
+};
+
 /** Short display name and dot colour per house, for chips and the picker. */
 export const FACTION_NAME: Record<House, string> = {
   pandava: 'Pandavas',
@@ -146,7 +167,15 @@ export function rulesText(card: Card): string[] {
         `Night-strength: arrives +${kw.amount} for every round already fought. Hold him back and he lands harder.`,
       );
     if (kw.kind === 'bond')
-      lines.push(`Rallies: +${kw.amount} for each ally of the same banner already on the field.`);
+      // HE GETS THE BONUS, NOT THEM, and the old wording said the opposite to
+      // everyone who read it. "+1 for each ally of the same banner already on
+      // the field" scans as "gives +1 to each ally", so a player fielded
+      // Tarakasura beside a kinsman, saw the kinsman unchanged, and reported a
+      // broken card. Naming the kindred instead of "the same banner" also stops
+      // it being a guessing game about who counts.
+      lines.push(
+        `Rallies: HE arrives +${kw.amount} stronger for each ${BOND_WORD[kw.tag] ?? kw.tag} already standing beside him. It does not raise them, and only counts who is already there when he lands.`,
+      );
     if (kw.kind === 'drawsAstra')
       lines.push('A lightning rod: an enemy astra aimed at your host strikes him instead.');
     if (kw.kind === 'armor') lines.push(`Kavacha-Kundala: armour absorbs the first strike.`);
