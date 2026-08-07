@@ -17,11 +17,23 @@ change and is not done.
 Ids, exactly: `agni`, `varuna`, `vayu`, `indra`, `brahma`, `parashurama`,
 `narayana`, `shiva`.
 
+## Where the god is actually seen
+
+Two moments, both of them small panels rather than card slots:
+
+1. **The shrine**, when a penance is offered: the god you would send a warrior to.
+2. **The warning before you fire his weapon**, when he comes to tell you the price.
+
+Neither is a full-height card. Both are a panel the player looks at for a few
+seconds while reading text beside it, so the face has to carry it.
+
 ## Framing
 
-**4:5 portrait**, same as the cards. Assume the bottom may be cropped on small
-screens, so keep the face and the emblem in the upper two thirds and let the loss
-fall on the feet.
+**4:5 portrait**, same as the cards. Because of the two uses above, compose these
+as **head, shoulders and upper chest**, not a full standing figure: the mount and
+the legs are wasted at panel size and the face is the whole point. Keep the
+emblem he is known by (Indra's vajra, Shiva's trident) visible at the edge of
+frame rather than held out at full length. Assume the bottom may crop.
 
 ## Rules carried over from the card prompts
 
@@ -64,7 +76,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > water vessel. Golden breastplate, pauldrons, vambraces, a heavy jewelled belt,
 > deep red silk about the legs. He sits astride a black ram with heavy curled
 > horns. Behind him a tall banner of dark smoke. Embers drift across the frame.
-> Deep reds and soot black against warm gold. Full figure, centred, calm and
+> Deep reds and soot black against warm gold. Head, shoulders and upper chest, centred, calm and
 > unblinking. No glossy surfaces, no modern detail, serene rather than snarling.
 
 ## varuna
@@ -77,7 +89,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > pauldrons, vambraces, a jewelled belt, wet dark blue silk clinging about the
 > legs. He rides a great scaled makara, part crocodile and part fish, breaking
 > from black water. Behind him a wall of slow standing waves. Muted teal and
-> slate against tarnished gold. Full figure, centred. No glossy surfaces, no
+> slate against tarnished gold. Head, shoulders and upper chest, centred. No glossy surfaces, no
 > modern detail, serene rather than snarling.
 
 ## vayu
@@ -90,7 +102,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > about the legs whipping hard to one side. He stands braced on the back of a
 > running antelope. Behind him torn dark storm-cloud and a column of dust and
 > flying leaves. Everything in the frame leans one way. Muted grey-green and
-> bone against dull gold. Full figure, centred. No glossy surfaces, no modern
+> bone against dull gold. Head, shoulders and upper chest, centred. No glossy surfaces, no modern
 > detail, serene rather than snarling.
 
 ## indra
@@ -103,7 +115,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > vambraces, greaves, a broad jewelled belt, saffron silk about the legs. He is
 > seated on Airavata, an enormous white elephant with four tusks. Behind him dark
 > thunderclouds split by a distant bolt. Muted ivory and storm-grey against deep
-> gold. Full figure, centred, imperious. No glossy surfaces, no modern detail,
+> gold. Head, shoulders and upper chest, centred, imperious. No glossy surfaces, no modern detail,
 > serene rather than snarling.
 
 ## brahma
@@ -116,7 +128,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > a long-handled sacrificial ladle. Simple undyed cloth over one shoulder, a plain
 > sacred thread, a jewelled belt, no armour. He sits cross-legged on an open lotus
 > above still water, a white swan beside him. Muted ochre and parchment against
-> pale gold. Full figure, centred, perfectly composed. No glossy surfaces, no
+> pale gold. Head, shoulders and upper chest, centred, perfectly composed. No glossy surfaces, no
 > modern detail, no open mouths, serene rather than snarling.
 
 ## parashurama
@@ -129,7 +141,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > ground, a great bow slung across his back. Bare chested with a plain sacred
 > thread, coarse bark-cloth about the legs, a simple belt, rudraksha beads at the
 > throat and wrists. He stands on bare rock above a dry riverbed. Behind him a
-> single blasted tree. Muted umber and ash against dull bronze. Full figure,
+> single blasted tree. Muted umber and ash against dull bronze. Head, shoulders and upper chest,
 > centred. No glossy surfaces, no modern detail, serene rather than snarling.
 
 ## narayana
@@ -142,7 +154,7 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > broad jewelled belt, yellow silk about the legs, a long garland of forest
 > flowers to the knee. He stands before the coiled white serpent Shesha, whose
 > many hoods spread behind him like a canopy. Muted indigo and cream against warm
-> gold. Full figure, centred, entirely still. No glossy surfaces, no modern
+> gold. Head, shoulders and upper chest, centred, entirely still. No glossy surfaces, no modern
 > detail, serene rather than snarling.
 
 ## shiva
@@ -155,5 +167,5 @@ Ink-and-gouache fantasy illustration, bold black linework, opaque gouache brushw
 > unreadable face. Four arms bearing a tall trident, a small hand drum, a string
 > of beads and a begging bowl. Bare chested, a live serpent about the throat, a
 > tiger skin about the waist, no armour. He sits cross-legged on the tiger skin on
-> bare mountain rock. Muted ash-grey and bone against cold gold. Full figure,
+> bare mountain rock. Muted ash-grey and bone against cold gold. Head, shoulders and upper chest,
 > centred. No glossy surfaces, no modern detail, serene rather than snarling.
