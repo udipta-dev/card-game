@@ -241,6 +241,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
 
   const pScore = seatPower(state, 'player');
   const aScore = seatPower(state, 'ai');
+  const drawn = drawnRounds(state);
 
   const renderRow = (seat: Seat, row: Row) => {
     const droppable =
@@ -318,7 +319,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           <div className="score-side score-side--ai">
             <span className="score-num score-num--ai">{aScore}</span>
             <span className="score-label">
-              Enemy <RoundPips n={state.roundWins.ai} lead={aScore > pScore} />
+              Enemy <RoundPips n={state.roundWins.ai} drawn={drawn} lead={aScore > pScore} />
             </span>
           </div>
           <div className="score-mid">
@@ -330,7 +331,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           <div className="score-side score-side--player">
             <span className="score-num score-num--player">{pScore}</span>
             <span className="score-label">
-              You <RoundPips n={state.roundWins.player} lead={pScore > aScore} />
+              You <RoundPips n={state.roundWins.player} drawn={drawn} lead={pScore > aScore} />
             </span>
           </div>
         </div>
@@ -773,7 +774,15 @@ function ResultOverlay({
             : won
               ? HOUSE_WIN[house]
               : HOUSE_LOSS[house]}
-          {' '}Rounds {state.roundWins.player}–{state.roundWins.ai}.
+          {/* Says how many rounds were actually FOUGHT, not just the tally. A
+              drawn round scores for both sides, so a two-round battle can end
+              2-2, and "Rounds 2-2" on its own reads as four rounds in a game
+              that stops at three. */}
+          {' '}Rounds {state.roundWins.player}–{state.roundWins.ai} over {state.round}{' '}
+          {state.round === 1 ? 'round' : 'rounds'}
+          {drawnRounds(state) > 0
+            ? `, ${drawnRounds(state) === 1 ? 'one of them drawn' : `${drawnRounds(state)} of them drawn`} and scored for both sides.`
+            : '.'}
         </p>
         <div className="menu__actions" style={{ margin: '0 auto' }}>
           <button className="btn btn--primary" onClick={() => (inRun ? onFinish!(state) : onExit())}>
@@ -901,11 +910,37 @@ function sortedHand(iids: InstanceId[], state: GameState): InstanceId[] {
 }
 
 /** Two round-win pips (best of three: first to two takes the battle). */
-function RoundPips({ n, lead }: { n: number; lead: boolean }) {
+/**
+ * How many rounds ended level. A drawn round awards a win to BOTH seats, so
+ * without this the pips silently claim rounds that were never played: two
+ * rounds can finish 2-2, which is four pips for two rounds, and it reads as a
+ * four-round battle in a game that stops at three. Reported from play as
+ * exactly that ("it went to 4 once and ended 2-2").
+ */
+function drawnRounds(state: GameState): number {
+  return state.log.filter((e) => e.t === 'roundEnd' && e.winner === 'tie').length;
+}
+
+/**
+ * The two pips on a scoreboard: filled for a round won outright, hollow for a
+ * round that ended level, empty for one not yet taken. Pure and exported so the
+ * hollow case can be tested, because it is unreachable by hand: the AI never
+ * opens with a pass, so a drawn round cannot be forced from the UI.
+ */
+export function pipClasses(n: number, drawn: number): string[] {
+  const won = Math.max(0, n - drawn);
+  return [0, 1].map((i) => 'pip' + (i < won ? ' pip--won' : i < n ? ' pip--drawn' : ''));
+}
+
+function RoundPips({ n, drawn, lead }: { n: number; drawn: number; lead: boolean }) {
+  const title =
+    drawn > 0
+      ? `${n} of 2 rounds, ${drawn} of them drawn (a drawn round counts for both sides)`
+      : `${n} of 2 rounds won`;
   return (
-    <span className="pips" title={`${n} of 2 rounds won`}>
-      {[0, 1].map((i) => (
-        <span key={i} className={'pip' + (i < n ? ' pip--won' : '')} />
+    <span className="pips" title={title}>
+      {pipClasses(n, drawn).map((cls, i) => (
+        <span key={i} className={cls} />
       ))}
       {lead && <span className="pip-lead" title="ahead this round">▲</span>}
     </span>

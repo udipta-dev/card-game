@@ -259,6 +259,14 @@
   opacity: 0.5;
 }
 .pip--won { background: currentColor; opacity: 1; }
+/* A round that ended level scored for BOTH sides, so it is shown hollow rather
+   than filled. Without it, one drawn round puts a solid pip on each scoreboard
+   and the two together read as two rounds played instead of one. */
+.pip--drawn {
+  background: transparent;
+  border: 1.5px solid currentColor;
+  opacity: 0.85;
+}
 .pip-lead { font-size: 8px; margin-left: 1px; opacity: 0.9; }
 
 /* Hand: a thin divider where warriors give way to astras/fates. */
