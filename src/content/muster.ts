@@ -17,6 +17,7 @@
 //
 // Pure and dependency-free, so the rules can be tested without a screen.
 import { allCards, getCard, provisionOf } from './cards';
+import { cheapestWielder, orphanWeapons, unpackedWeapons, wieldersOf } from './arsenal';
 import { DECK_BUDGET, type DeckList } from './decks';
 import type { Card, CardId, House } from '@engine/types';
 
@@ -148,4 +149,122 @@ export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId
   take(rest, target);
   take(warriors, target); // any room the arsenal could not use goes back to bodies
   return picked;
+}
+
+// ---------------------------------------------------------------------------
+// The loading station: what is wrong with this host, and how to fix it.
+// ---------------------------------------------------------------------------
+
+/** One thing worth telling the player about the host they have built. */
+export interface Advisory {
+  kind: 'orphan-weapon' | 'unpacked-weapon';
+  /** The astra this is about. */
+  astra: CardId;
+  /** For an orphan, the cheapest man who could fire it. For unpacked, the bearer. */
+  suggest: CardId | undefined;
+  text: string;
+}
+
+/**
+ * Everything the host is carrying that does not add up.
+ *
+ * Two kinds, and they are mirror images. An ORPHAN WEAPON is a real fault: you
+ * have spent provisions on something nobody present can fire, and it will sit in
+ * your hand for the whole battle. An UNPACKED WEAPON is not a fault at all, it
+ * is an opportunity: one of your men bears a weapon you have not brought.
+ *
+ * Neither ever blocks you. In a campaign "I will earn the wielder later" is a
+ * real answer, and in quickplay you may be deliberately testing something.
+ */
+export function advise(chosen: readonly CardId[], pool: readonly CardId[]): Advisory[] {
+  const out: Advisory[] = [];
+
+  for (const astra of orphanWeapons(chosen)) {
+    const suggest = cheapestWielder(pool, astra);
+    out.push({
+      kind: 'orphan-weapon',
+      astra,
+      suggest,
+      text: suggest
+        ? `Nobody in this host can fire the ${getCard(astra).name}. ${getCard(suggest).name} can.`
+        : `Nobody in this host can fire the ${getCard(astra).name}, and nobody available can.`,
+    });
+  }
+
+  for (const { astra, bearers } of unpackedWeapons(chosen)) {
+    if (!pool.includes(astra)) continue; // cannot be added, so not worth saying
+    const who = bearers.map((b) => getCard(b).name);
+    const named = who.length > 1 ? `${who.slice(0, -1).join(', ')} and ${who[who.length - 1]}` : who[0];
+    out.push({
+      kind: 'unpacked-weapon',
+      astra,
+      suggest: astra,
+      text: `${named} ${who.length > 1 ? 'bear' : 'bears'} the ${getCard(astra).name}, which is not in your host.`,
+    });
+  }
+
+  return out;
+}
+
+/**
+ * Apply an advisory: add the card it suggests, making room if there is none.
+ *
+ * Room is made by dropping the cheapest card that is NOT load-bearing, which
+ * means never dropping a warrior below the legal floor and never dropping the
+ * only man who can fire something else you are carrying. Returns the host
+ * unchanged if it cannot be done without breaking a different rule, because a
+ * "fix" that quietly creates a second fault is worse than no fix.
+ */
+export function applyAdvisory(
+  chosen: readonly CardId[],
+  advisory: Advisory,
+): { cards: CardId[]; dropped: CardId[] } {
+  const add = advisory.suggest;
+  if (!add || chosen.includes(add)) return { cards: [...chosen], dropped: [] };
+
+  const cost = provisionOf(getCard(add));
+  let cards = [...chosen];
+  const dropped: CardId[] = [];
+
+  // Drop the cheapest expendable card until the addition fits on both counts.
+  const roomFor = () =>
+    cards.length < MUSTER_MAX && musterProvisions(cards) + cost <= DECK_BUDGET;
+  let guard = 0;
+  while (!roomFor() && guard++ < MUSTER_MAX) {
+    const victim = cheapestExpendable(cards, add);
+    if (!victim) break;
+    cards = cards.filter((c) => c !== victim);
+    dropped.push(victim);
+  }
+  if (!roomFor()) return { cards: [...chosen], dropped: [] };
+
+  cards.push(add);
+  return { cards, dropped };
+}
+
+/**
+ * The cheapest card we may remove without breaking something else: not a
+ * warrior if that would drop us under the floor, and never the last man who can
+ * fire a weapon we are keeping.
+ */
+function cheapestExpendable(cards: readonly CardId[], adding: CardId): CardId | undefined {
+  const warriors = cards.filter((id) => getCard(id).type === 'unit').length;
+  const addingWarrior = getCard(adding).type === 'unit';
+  const candidates = cards.filter((id) => {
+    const c = getCard(id);
+    // Keep enough warriors to be a legal host.
+    if (c.type === 'unit' && warriors + (addingWarrior ? 1 : 0) - 1 < MIN_WARRIORS) return false;
+    // Never strand a weapon by removing its only wielder.
+    if (c.type === 'unit') {
+      const without = cards.filter((x) => x !== id);
+      const strands = without.some(
+        (x) => getCard(x).type === 'astra' && wieldersOf(without, x).length === 0,
+      );
+      if (strands) return false;
+    }
+    return true;
+  });
+  return [...candidates].sort(
+    (a, b) => provisionOf(getCard(a)) - provisionOf(getCard(b)),
+  )[0];
 }

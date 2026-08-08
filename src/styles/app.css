@@ -1923,3 +1923,76 @@
   border: 1px solid var(--gold-dim);
   box-shadow: 0 0 26px rgba(194, 160, 78, 0.25);
 }
+
+/* ============================================ The muster's loading station */
+/* A divine weapon needs a warrior who can fire it, and nothing said so: you
+   could spend 14 provisions on the Vaishnava, cut the only man in your house
+   who can loose it, and march. It would sit in your hand for three rounds. */
+.advice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px clamp(8px, 2vw, 20px);
+  border-bottom: 1px solid var(--panel-edge);
+  background: rgba(238, 228, 210, 0.02);
+}
+.advice__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--ink-dim);
+  border-left: 2px solid var(--gold-dim);
+  padding-left: 10px;
+}
+.advice__row--bad { border-left-color: var(--kaurava); color: #e0a99f; }
+.advice__text { flex: 1; min-width: 200px; }
+.advice__done {
+  padding: 6px clamp(8px, 2vw, 20px);
+  font-size: 12.5px;
+  color: #a8cfae;
+}
+
+/* The arsenal panel on the setup screen: what this host can actually do. */
+.arsenal {
+  border: 1px solid var(--panel-edge);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  padding: 12px 14px;
+  margin: 14px 0 4px;
+  max-width: 620px;
+}
+.arsenal__head {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold-dim);
+  margin-bottom: 8px;
+}
+.arsenal__head--sub { margin-top: 12px; }
+.arsenal__row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13px;
+  padding: 3px 0;
+  flex-wrap: wrap;
+}
+.arsenal__row--faint { opacity: 0.72; }
+.arsenal__row--dead .arsenal__name { color: #e0a99f; }
+.arsenal__tier {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1px 6px;
+  border-radius: 2px;
+  border: 1px solid var(--panel-edge);
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.arsenal__tier--3 { color: var(--gold); border-color: var(--gold-dim); }
+.arsenal__tier--2 { color: var(--ink-dim); }
+.arsenal__name { color: var(--ink); font-weight: 600; }
+.arsenal__who { color: var(--ink-faint); font-size: 12px; }
+.arsenal__warn { margin: 8px 0 0; font-size: 12.5px; color: #e0a99f; }

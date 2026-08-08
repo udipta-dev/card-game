@@ -9,6 +9,8 @@ import { DECK_BUDGET } from '@content/decks';
 import {
   MUSTER_MAX,
   MUSTER_MIN,
+  advise,
+  applyAdvisory,
   autoMuster,
   checkMuster,
   poolFor,
@@ -38,8 +40,14 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
   );
   const [chosen, setChosen] = useState<CardId[]>(initial);
   const [inspect, setInspect] = useState<Card | null>(null);
+  /** What the last auto-fix did, so a deck never changes silently under you. */
+  const [lastFix, setLastFix] = useState<string | null>(null);
 
   const check = checkMuster(chosen);
+  // The loading station. A weapon nobody can fire is a real fault; a weapon one
+  // of your men bears and you have not packed is an opportunity. Neither ever
+  // blocks you from marching.
+  const advisories = advise(chosen, available.map((c) => c.id));
   const left = DECK_BUDGET - check.provisions;
   const chosenSet = new Set(chosen);
 
@@ -87,6 +95,38 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
           Take the field
         </button>
       </div>
+
+      {advisories.length > 0 && (
+        <div className="advice">
+          {advisories.map((a) => (
+            <div
+              key={`${a.kind}-${a.astra}`}
+              className={'advice__row' + (a.kind === 'orphan-weapon' ? ' advice__row--bad' : '')}
+            >
+              <span className="advice__text">{a.text}</span>
+              {a.suggest && (
+                <button
+                  className="btn btn--ghost btn--sm"
+                  onClick={() => {
+                    const { cards, dropped } = applyAdvisory(chosen, a);
+                    setChosen(cards);
+                    setLastFix(
+                      dropped.length
+                        ? `Added ${getCard(a.suggest!).name}, dropped ${dropped
+                            .map((d) => getCard(d).name)
+                            .join(', ')}.`
+                        : `Added ${getCard(a.suggest!).name}.`,
+                    );
+                  }}
+                >
+                  Add {getCard(a.suggest).name}
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+      {lastFix && <div className="advice__done">{lastFix}</div>}
 
       <div className="codex__scroll">
         <div className="codex__group">

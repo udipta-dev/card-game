@@ -10,6 +10,7 @@ import { Aksha } from '@ui/ornament';
 import { loadMuster, hasCustomMuster } from '@content/savedMuster';
 import { toDeckList } from '@content/muster';
 import { HelpButton } from '@ui/HelpButton';
+import { arsenalOf, orphanWeapons, unpackedWeapons, TIER_WORD } from '@content/arsenal';
 
 const FACTIONS: { house: House; deck: DeckList }[] = [
   { house: 'pandava', deck: PANDAVA_DECK },
@@ -144,6 +145,16 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
           ))}
         </div>
 
+        {/* WHAT THIS HOST CAN DO, under the cards rather than inside them.
+            A divine weapon needs a warrior standing who is trained to its rank
+            or bears it by name, and nothing anywhere said so: you could carry
+            the Vaishnava with nobody able to fire it and the game would never
+            mention it. And the reverse was just as hidden, that Bhagadatta
+            walks on carrying one at all. Ranked mightiest first, because rank
+            is the thing worth learning and the codex was the only place it
+            showed. */}
+        <Arsenal cards={playerDeck.cards} />
+
         {/* The campaign note is said as a sequence of things that will happen
             to you, rather than as one sentence about "carrying a host up a
             ladder", which was reported as confusing and was doing three jobs at
@@ -178,6 +189,63 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
       </div>
 
       {inspect && <InspectSheet card={inspect} onClose={() => setInspect(null)} />}
+    </div>
+  );
+}
+
+/**
+ * The weapons a host carries, what it cannot fire, and what it is leaving at
+ * home. Read-only: the muster screen is where you act on any of it.
+ */
+function Arsenal({ cards }: { cards: readonly string[] }) {
+  const arsenal = arsenalOf(cards);
+  const orphans = orphanWeapons(cards);
+  const unpacked = unpackedWeapons(cards);
+  if (!arsenal.length && !unpacked.length) return null;
+
+  return (
+    <div className="arsenal">
+      <div className="arsenal__head">Divine weapons in this host</div>
+
+      {arsenal.map((e) => {
+        const dead = e.wielders.length === 0;
+        return (
+          <div key={e.astra} className={'arsenal__row' + (dead ? ' arsenal__row--dead' : '')}>
+            <span className={`arsenal__tier arsenal__tier--${e.tier}`}>{TIER_WORD[e.tier]}</span>
+            <span className="arsenal__name">{getCard(e.astra).name}</span>
+            <span className="arsenal__who">
+              {dead
+                ? 'nobody here can fire it'
+                : `fired by ${e.wielders.map((w) => getCard(w).name).join(', ')}`}
+            </span>
+          </div>
+        );
+      })}
+
+      {orphans.length > 0 && (
+        <p className="arsenal__warn">
+          {orphans.length === 1 ? 'That weapon is' : 'Those weapons are'} dead weight as this host
+          stands. Add someone who can fire {orphans.length === 1 ? 'it' : 'them'}, or spend the
+          provisions elsewhere.
+        </p>
+      )}
+
+      {unpacked.length > 0 && (
+        <>
+          <div className="arsenal__head arsenal__head--sub">Carried, but left at home</div>
+          {unpacked.map((u) => (
+            <div key={u.astra} className="arsenal__row arsenal__row--faint">
+              <span className={`arsenal__tier arsenal__tier--${getCard(u.astra).astraTier ?? 1}`}>
+                {TIER_WORD[getCard(u.astra).astraTier ?? 1]}
+              </span>
+              <span className="arsenal__name">{getCard(u.astra).name}</span>
+              <span className="arsenal__who">
+                {u.bearers.map((b) => getCard(b).name).join(' or ')} can bear it
+              </span>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }
