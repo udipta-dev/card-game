@@ -18,6 +18,24 @@ import { FACTION_DOT, FACTION_NAME, ROW_GLOSS, TIER_LABEL, TYPE_LABEL, rulesText
 import { Fan, ROW_GLYPH, Rosette } from '@ui/ornament';
 import { HowToPlay } from '@ui/HowToPlay';
 import { eventText } from './eventText';
+import { deityArt } from '@ui/card/deityArt';
+import { DEITIES } from '@run/shrine';
+
+/**
+ * The god who owns a given weapon, for the warning shown before it is fired.
+ *
+ * Derived from the shrine's own domain table rather than a second hand-written
+ * mapping, so a weapon moved between gods cannot fall out of step with the face
+ * shown when you loose it.
+ */
+function astraGod(astraId: string): string | undefined {
+  for (const d of DEITIES) {
+    for (const ids of Object.values(d.domain)) {
+      if (ids.includes(astraId)) return deityArt(d.id);
+    }
+  }
+  return undefined;
+}
 
 const ROW_LABEL: Record<Row, string> = { ratha: 'Ratha', gaja: 'Gaja', padati: 'Padati' };
 const AI_DELAY = 700;
@@ -936,8 +954,16 @@ function SanctionGate({
   return (
     <div className="overlay sanction" onClick={onCancel}>
       <div className="sanction__box" onClick={(e) => e.stopPropagation()} role="alertdialog" aria-modal="true">
+        {/* THE GOD WHOSE WEAPON IT IS, come to say what it will cost. This
+            was an om glyph for every weapon in the game, which said nothing
+            about which power you were about to borrow. It falls back to the
+            glyph for any weapon whose god has no portrait yet. */}
         <div className="sanction__eye" aria-hidden="true">
-          <span className="sanction__trident">ॐ</span>
+          {astraGod(card.id) ? (
+            <img className="sanction__god" src={astraGod(card.id)!} alt="" />
+          ) : (
+            <span className="sanction__trident">ॐ</span>
+          )}
         </div>
         <div className="sanction__who">
           {(card.astraTier ?? 1) >= 3 ? 'Shiva stays your hand' : 'Know the price before you fire it'}

@@ -1893,3 +1893,33 @@
   color: #e0a99f;
   font-variant-numeric: tabular-nums;
 }
+
+/* The god at a shrine. One of exactly two places a deity is ever seen, and it
+   was a name and nothing else: you were asked to give up a warrior for several
+   battles by a line of text. */
+.shrine__deity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.shrine__deity-img {
+  width: 46px;
+  height: 58px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 3px;
+  border: 1px solid var(--panel-edge);
+  flex: 0 0 auto;
+}
+
+/* The god come to warn you, in place of a generic om. */
+.sanction__god {
+  width: 72px;
+  height: 90px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 4px;
+  border: 1px solid var(--gold-dim);
+  box-shadow: 0 0 26px rgba(194, 160, 78, 0.25);
+}

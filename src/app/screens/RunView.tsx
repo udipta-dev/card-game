@@ -3,6 +3,7 @@ import { getCard } from '@content/cards';
 import type { GameState } from '@engine/types';
 import { getCurse } from '@engine/curses';
 import { battlesLeftText } from '@run/dharma';
+import { deityArt } from '@ui/card/deityArt';
 import { MatchView } from '@ui/match/MatchView';
 import { FACTION_NAME } from '@ui/card/cardTheme';
 import { chooseReward, chooseShrineOffer, currentEncounter, fieldedRoster, marchingCards, planBattle, resolveBattle } from '@run/run';
@@ -353,6 +354,7 @@ function PenanceCard({
   onChoose: (o: ShrineOffer) => void;
 }) {
   const deity = getDeity(offer.deityId);
+  const art = deityArt(offer.deityId);
   const warrior = getCard(offer.warrior);
   const o = offer.odds;
   const bands: { label: string; share: number; cls: string }[] = [
@@ -367,7 +369,14 @@ function PenanceCard({
       <div className="shrine__kind">
         Tapasya · {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'}
       </div>
-      <div className="shrine__name">{deity?.name}</div>
+      {/* The god you would be sending a man to. This is one of exactly two
+          places a deity is ever seen, and until now it was a name and nothing
+          else: you were asked to give up a warrior for several battles by a
+          line of text. */}
+      <div className="shrine__deity">
+        {art && <img className="shrine__deity-img" src={art} alt="" loading="lazy" />}
+        <div className="shrine__name">{deity?.name}</div>
+      </div>
       <div className="shrine__text">
         Send <strong>{warrior.name}</strong> <span className="shrine__worth">standing {worthOf(offer.warrior)}</span>{' '}
         to {deity?.epithet}.
