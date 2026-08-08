@@ -2160,6 +2160,22 @@
   pointer-events: none;
   z-index: 0;
 }
+/* A SCRIM, because atmosphere must never cost legibility. At 0.34 the clip
+   alone left the strapline sitting on painted grass at roughly 2:1 contrast.
+   This darkens the ground under the text without flattening the whole image:
+   strongest at top and bottom where the copy lives, lightest across the middle
+   where the drifting is worth seeing. */
+.ambient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 10, 9, 0.72) 0%, rgba(12, 10, 9, 0.15) 38%,
+      rgba(12, 10, 9, 0.2) 62%, rgba(12, 10, 9, 0.8) 100%),
+    radial-gradient(120% 80% at 50% 50%, rgba(12, 10, 9, 0) 40%, rgba(12, 10, 9, 0.55) 100%);
+  pointer-events: none;
+}
+
 .ambient__clip {
   position: absolute;
   inset: 0;
@@ -2277,4 +2293,17 @@
 @media (max-height: 560px) and (orientation: landscape) {
   .match { gap: 4px; padding-top: 4px; padding-bottom: 4px; }
   .lintel { margin: 14px 0 10px; }
+}
+
+/* The menu's plaques want to be a readable column, not full-bleed on a wide
+   screen. The ornament reads as architecture at this width and as wallpaper
+   past it. */
+.menu__actions {
+  width: min(440px, 88vw);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+@media (min-width: 900px) {
+  .menu__actions { width: min(520px, 60vw); }
 }

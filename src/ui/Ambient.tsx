@@ -37,11 +37,16 @@ interface Props {
   /**
    * How far to sink it behind the content. These are backgrounds, and a
    * background that competes with the text on top of it has failed at its job.
+   *
+   * Raised from 0.34 alongside the scrim in app.css. Fading the clip toward the
+   * ground was the wrong lever: it washed the painting out AND still left the
+   * strapline sitting on painted grass. Darkening under the text instead lets
+   * the image be an image.
    */
   opacity?: number;
 }
 
-export function Ambient({ scene, opacity = 0.34 }: Props) {
+export function Ambient({ scene, opacity = 0.5 }: Props) {
   const src = sourceFor(scene);
   const [front, setFront] = useState(true);
   const a = useRef<HTMLVideoElement>(null);

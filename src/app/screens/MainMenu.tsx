@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HowToPlay } from '@ui/HowToPlay';
 import { Ambient } from '@ui/Ambient';
-import { Crown } from '@ui/ornament';
+import { Abhaya, Chakra, Crown, Kalasha, Spears } from '@ui/ornament';
 import { loadMeta } from '@run/meta';
 
 interface Props {
@@ -60,25 +60,45 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
         tide with curses and boons across three rounds of war. Raw power is never destiny. The right
         vow undoes the mightiest warrior.
       </p>
+      {/* PLAQUES, not buttons in a column. Each carries a mark, a name and a
+          line saying what it is, which is the difference between a menu you
+          read and a menu you scan past. The primary action keeps its lit
+          treatment so the eye still lands somewhere first. */}
       <div className="menu__actions">
-        <button className="btn btn--primary" onClick={onCampaign}>
-          Begin a Campaign
+        <button className="plaque plaque--lit" onClick={onCampaign}>
+          <Chakra size={26} className="plaque__mark" />
+          <span className="plaque__body">
+            <span className="plaque__title">Campaign</span>
+            <span className="plaque__sub">Carry one army up a ladder of battles</span>
+          </span>
         </button>
-        <button className="btn btn--ghost" onClick={onPlay}>
-          Quickplay · a single battle
+        <button className="plaque" onClick={onPlay}>
+          <Spears size={26} className="plaque__mark" />
+          <span className="plaque__body">
+            <span className="plaque__title">Quickplay</span>
+            <span className="plaque__sub">A single battle, nothing carried</span>
+          </span>
         </button>
-        <button className="btn btn--ghost" onClick={onCodex}>
-          Codex · browse all cards
+        <button className="plaque" onClick={onCodex}>
+          <Kalasha size={26} className="plaque__mark" />
+          <span className="plaque__body">
+            <span className="plaque__title">Codex</span>
+            <span className="plaque__sub">Every card, and what it does</span>
+          </span>
         </button>
         <button
-          className={`btn btn--ghost${firstVisit ? ' btn--beckon' : ''}`}
+          className={`plaque${firstVisit ? ' btn--beckon' : ''}`}
           onClick={openHelp}
         >
-          How to play
+          <Abhaya size={26} className="plaque__mark" />
+          <span className="plaque__body">
+            <span className="plaque__title">How to play</span>
+            <span className="plaque__sub">Three rounds, first to two</span>
+          </span>
         </button>
       </div>
       <p className="menu__sub" style={{ fontSize: 12, opacity: 0.6, marginTop: 8 }}>
-        Campaign: carry one army up a ladder of battles. Win what you keep, lose it all in one defeat.
+        Win what you keep, lose it all in one defeat.
         {meta.bestDepth > 0 && ` · Best run: ${meta.bestDepth} won`}
       </p>
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
