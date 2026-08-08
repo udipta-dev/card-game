@@ -7,6 +7,10 @@
 
 /* ---------------------------------------------------------------- Main menu */
 .menu {
+  /* Positioned so the ambient layer anchors to the screen rather than escaping
+     to the body, and so its children can sit above it. */
+  position: relative;
+  isolation: isolate;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -2135,4 +2139,31 @@
   .astra-reveal__name,
   .astra-reveal__who { transition-duration: 1ms; }
   .astra-reveal.is-lit .astra-reveal__frame { animation: none; }
+}
+
+/* ---- Ambient backgrounds -------------------------------------------------
+   Two copies of one clip, offset by half its length and crossfading, because
+   the clips do not loop seamlessly and nothing generates ones that do. On slow
+   drifting haze the seam is invisible.
+
+   The clips are portrait 9:16, which is right for a phone and gets cropped on a
+   wide screen. `cover` is the correct compromise: these carry colour and
+   texture, not composition, so losing the edges costs nothing. */
+/* Everything that is not the background sits above it. Without this the video
+   paints over the title, which is a very confusing five seconds. */
+.menu > *:not(.ambient) { position: relative; z-index: 1; }
+
+.ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.ambient__clip {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

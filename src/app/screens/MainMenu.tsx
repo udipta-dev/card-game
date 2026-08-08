@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HowToPlay } from '@ui/HowToPlay';
+import { Ambient } from '@ui/Ambient';
 import { Crown } from '@ui/ornament';
 import { loadMeta } from '@run/meta';
 
@@ -25,6 +26,9 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
 
   return (
     <div className="menu">
+      {/* Dawn for a first visit, dusk once you have played. A returning player
+          should not be greeted by the same morning forever. */}
+      <Ambient scene={meta.runsStarted > 0 ? 'menu-dusk' : 'menu-dawn'} />
       <div className="menu__devanagari">कुरुक्षेत्र</div>
       {/* "18 Days" leads because "Kurukshetra" alone means nothing to anyone
           who does not already know the epic, and the whole point of the name is
@@ -56,7 +60,7 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
         </button>
       </div>
       <p className="menu__sub" style={{ fontSize: 12, opacity: 0.6, marginTop: 8 }}>
-        Campaign: carry one host up a ladder of battles. Win what you keep, lose it all in one defeat.
+        Campaign: carry one army up a ladder of battles. Win what you keep, lose it all in one defeat.
         {meta.bestDepth > 0 && ` · Best run: ${meta.bestDepth} won`}
       </p>
       {showHelp && <HowToPlay onClose={() => setShowHelp(false)} />}
