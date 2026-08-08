@@ -98,10 +98,15 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     }
   }, [state]);
 
-  // --- Auto-mulligan for the AI once the player is done ---
+  // --- The AI's mulligan, once the player is done ---
   useEffect(() => {
     if (state.phase === 'mulligan' && state.mulliganDone.player && !state.mulliganDone.ai) {
-      dispatch({ type: 'MULLIGAN', seat: 'ai', iids: [] });
+      // ASK THE AI, do not hand it an empty list. This dispatched `iids: []`
+      // unconditionally, so the opponent kept whatever six cards it was dealt
+      // in every real match, exactly as it did in every lab run. The policy now
+      // exists in hand.ts and chooseAction answers the mulligan phase; passing
+      // [] here would have kept the AI stupid in the only place a human sees.
+      dispatch(chooseAction(state, 'ai'));
     }
   }, [state]);
 

@@ -107,15 +107,56 @@ describe('what the trade does', () => {
 });
 
 describe('the AI and the trade', () => {
-  // The AI does NOT use the trade. The heuristic exists and is correct play,
-  // but it is unevenly available: measured over 60 matches Pandava traded 0
-  // times and won 35%, Kaurava traded 19 and won 65%, because Pandava astras
-  // always keep a possible wielder while the other decks carry astras tied to
-  // one named man. Deck spread went 3.0 -> 15.7 points. See AI_USES_ROUND_SWAP.
-  it('leaves the trade alone, so the lottery cannot decide matches', () => {
+  // The AI DOES use the trade now, and the history is the point of these tests.
+  //
+  // The first heuristic asked one question, "is this astra dead?". Correct
+  // play, and unevenly available: over 60 matches Pandava traded 0 times and
+  // won 35%, Kaurava traded 19 and won 65%, because every Pandava astra keeps
+  // a possible wielder while the other houses carry weapons tied to one named
+  // man. Deck spread went 3.0 -> 15.7 points and the flag was turned off.
+  //
+  // hand.ts judges every card in hand on one scale instead, so the guard here
+  // is no longer "never trade". It is "trade for a reason, and let every house
+  // do it".
+  it('throws a weapon that nobody left alive can fire', () => {
+    // Uluka is no astra-master and knows nothing, so the Pashupata in this
+    // hand is a brick and the trade is free value.
     const s = intoRoundTwo({
       aiHand: ['pashupatastra', 'uluka'],
       aiDeck: ['durmukha', 'vinda', 'anuvinda', 'susharma', 'jalasandha'],
+      playerHand: ['nakula'],
+      playerDeck: ['sahadeva'],
+    });
+    s.activeSeat = 'ai';
+    const move = chooseAction(s, 'ai');
+    expect(move.type).toBe('ROUND_SWAP');
+    if (move.type === 'ROUND_SWAP')
+      expect(s.instances[move.iid]?.cardId, 'traded the wrong card').toBe('pashupatastra');
+  });
+
+  it('keeps a weapon its own man can still fire', () => {
+    // Same weapon, but Arjuna is in the deck and he bears the Pashupata. A
+    // rule that threw this away is the one that read the board instead of the
+    // whole host, and it cost the lab 3.0 -> 8.6 points of spread.
+    const s = intoRoundTwo({
+      aiHand: ['pashupatastra', 'uluka'],
+      aiDeck: ['arjuna', 'vinda', 'anuvinda', 'susharma', 'jalasandha'],
+      playerHand: ['nakula'],
+      playerDeck: ['sahadeva'],
+    });
+    s.activeSeat = 'ai';
+    const move = chooseAction(s, 'ai');
+    if (move.type === 'ROUND_SWAP')
+      expect(s.instances[move.iid]?.cardId, 'threw away a usable weapon').not.toBe('pashupatastra');
+  });
+
+  it('never trades a card for one it values less', () => {
+    // A hand of good cards is left alone. Cycling a fine card for an unknown
+    // one is a coin flip, not a play, and an AI that trades every round out of
+    // habit is the "lottery decides matches" failure the old flag guarded.
+    const s = intoRoundTwo({
+      aiHand: ['bhishma', 'drona'],
+      aiDeck: ['durmukha', 'uluka', 'shakuni'],
       playerHand: ['nakula'],
       playerDeck: ['sahadeva'],
     });
