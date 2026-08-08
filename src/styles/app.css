@@ -2408,3 +2408,13 @@
 }
 .sheet__link:hover { text-decoration-style: solid; color: var(--gold); }
 .sheet__link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
+
+/* Every screen that carries an ambient layer has to be a positioning context,
+   or the absolutely-positioned clip escapes to the body and paints over the
+   whole app instead of sitting behind one screen. */
+.codex,
+.match,
+.run { position: relative; isolation: isolate; }
+.codex > *:not(.ambient),
+.match > *:not(.ambient),
+.run > *:not(.ambient) { position: relative; z-index: 1; }

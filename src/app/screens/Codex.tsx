@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { allCards } from '@content/cards';
 import type { Card, House } from '@engine/types';
+import { Ambient } from '@ui/Ambient';
 import { Lintel } from '@ui/frame';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
@@ -105,6 +106,7 @@ export function Codex({ onBack }: { onBack: () => void }) {
 
   return (
     <div className="codex">
+      <Ambient scene="codex" opacity={0.4} />
       <div className="codex__bar">
         <button className="btn btn--ghost btn--sm" onClick={onBack}>
           ‹ Back

@@ -18,6 +18,7 @@ import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_DOT, FACTION_NAME, ROW_GLOSS, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
 import { Fan, ROW_GLYPH, Rosette } from '@ui/ornament';
 import { HowToPlay } from '@ui/HowToPlay';
+import { Ambient } from '@ui/Ambient';
 import { AstraReveal } from './AstraReveal';
 import { eventText } from './eventText';
 import { deityArt } from '@ui/card/deityArt';
@@ -372,6 +373,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
 
   return (
     <div className="match">
+      <Ambient scene="board-haze" opacity={0.22} />
       <Topbar
         state={state}
         playerHouse={playerDeck.house}

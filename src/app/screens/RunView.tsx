@@ -13,6 +13,7 @@ import { getDeity, worthOf } from '@run/shrine';
 import type { PenanceOffer, ShrineOffer, VardaanOffer } from '@run/shrine';
 import type { RewardOption, RunState } from '@run/types';
 import { recordRunEnd } from '@run/meta';
+import { Ambient } from '@ui/Ambient';
 import { Bindu, Rosette } from '@ui/ornament';
 
 interface Props {
@@ -123,6 +124,7 @@ function MapScreen({
   const canChoose = roster.length > MUSTER_MAX;
   return (
     <div className="run">
+      <Ambient scene="map-road" opacity={0.34} />
       <header className="run__top">
         <button className="btn btn--ghost btn--sm" onClick={onExit}>
           ‹ Abandon
@@ -282,6 +284,7 @@ function ShrineScreen({
   const offers = run.shrineOffers ?? [];
   return (
     <div className="run shrine">
+      <Ambient scene="shrine" opacity={0.4} />
       <header className="run__top run__top--center">
         <div className="shrine__om" aria-hidden="true">ॐ</div>
         <div className="run__title">A shrine on the road</div>
