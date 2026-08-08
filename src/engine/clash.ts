@@ -11,6 +11,10 @@ import type { Card, CurseId, GameState, Seat } from './types';
 
 /** The curses an act of adharma can draw. */
 export const ADHARMA_CURSES: CurseId[] = [
+  // FIRST, and it is the one that should usually land. The others scour the
+  // whole host, which reads as the game punishing you for using the content it
+  // gave you. A divine weapon costs its INVOKER.
+  'invokers_price',
   'scorched_earth',
   'broken_bowstring',
   'withered_host',

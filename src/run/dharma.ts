@@ -15,7 +15,7 @@
 // knows about rounds and a single battle; only a run knows what "three battles
 // from now" means. The engine stays a pure function of one battle, and each
 // battle is simply handed the curses that are still live when it starts.
-import type { CurseId } from '@engine/types';
+import type { House, CurseId } from '@engine/types';
 
 /**
  * How many battles each act of adharma costs you.
@@ -39,9 +39,25 @@ export const CURSE_BATTLES: Record<number, number> = {
  */
 export const PASHUPATA_BATTLES = 15;
 
-export function curseBattlesFor(astraId: string, tier: number): number {
-  if (astraId === 'pashupatastra') return PASHUPATA_BATTLES;
-  return CURSE_BATTLES[tier] ?? 0;
+/**
+ * An asura serves one battle longer for the same act, and it is his own fault.
+ *
+ * Ahankar. The word means the "I-maker": the sense of being a separate self that
+ * takes credit for what it does. It is the flaw the whole asura tradition is
+ * built on, and it is exactly why penance works so well for them and forgiveness
+ * so badly. Hiranyakashipu, Ravana and Bali all won enormous boons by sitting
+ * still, and every one of them lost everything the moment he decided the boon
+ * was his by right.
+ *
+ * So the same weapon fired by the same hand costs an asura more, because he
+ * cannot put down the part of himself that is proud of firing it.
+ */
+export const ASURA_SHRAP_PENALTY = 1;
+
+export function curseBattlesFor(astraId: string, tier: number, house?: House): number {
+  const base = astraId === 'pashupatastra' ? PASHUPATA_BATTLES : (CURSE_BATTLES[tier] ?? 0);
+  if (base <= 0) return 0;
+  return base + (house === 'asura' ? ASURA_SHRAP_PENALTY : 0);
 }
 
 /** A curse and how many battles of it are left to serve. */

@@ -156,14 +156,64 @@ export interface PenanceOdds {
  * true astra-master AND a long absence, so the ultimates stay rare by design
  * rather than by price.
  */
+/**
+ * Which houses a god looks kindly on, and which he does not.
+ *
+ * The gods in this story are not neutral. Agni, Varuna, Vayu and Indra fathered
+ * or armed the Pandavas directly: Indra IS Arjuna's father, Vayu is Bhima's, and
+ * the twins are the Ashwins' work. Brahma and Parashurama are the other side of
+ * the ledger, because Parashurama taught Karna his whole art and the Brahma line
+ * is the Kaurava commanders' inheritance, Bhishma and Drona both being trained
+ * in it.
+ *
+ * And every one of them is being asked for a weapon by an asura, which is what
+ * the -1 is. It is not spite: the devas spent several ages at war with these
+ * houses, and Vishnu's weapons in particular were made to end them. That the
+ * asuras get anything at all is the interesting part, and they earn it the way
+ * they always have, by sitting still longer than anyone else can bear to.
+ */
+const FAVOUR: Record<string, Partial<Record<House, number>>> = {
+  agni: { pandava: 1, asura: -1 },
+  varuna: { pandava: 1, asura: -1 },
+  vayu: { pandava: 1, asura: -1 },
+  indra: { pandava: 1, asura: -1 },
+  brahma: { kaurava: 1, asura: -1 },
+  parashurama: { kaurava: 1, asura: -1 },
+  narayana: { asura: -1 },
+  shiva: { asura: -1 },
+};
+
+/**
+ * How this god weighs a petitioner of this house, in battles of penance.
+ *
+ * Expressed as battles rather than as a probability so it lands on the thing the
+ * player is actually deciding: how long to send a man away. A favoured house
+ * reaches the same odds for one battle less, and an asura pays one more.
+ */
+export function favourFor(deityId: string, house?: House): number {
+  if (!house) return 0;
+  return FAVOUR[deityId]?.[house] ?? 0;
+}
+
 export function penanceOdds(
   warrior: CardId,
   battles: number,
   /** Astras this warrior has ALREADY earned through an earlier tapasya. */
   earned: readonly CardId[] = [],
+  /**
+   * The god being petitioned and the house doing the petitioning. Optional so
+   * every existing caller and test keeps working unchanged; when given, the
+   * god's favour counts as battles served. See FAVOUR above.
+   */
+  favour = 0,
 ): PenanceOdds {
   const worth = worthOf(warrior);
   const mastery = getCard(warrior).astraMastery ?? 0;
+  // Favour is spent as if the man had sat longer, so a Pandava at Indra's fire
+  // reaches the same odds a battle sooner and an asura anywhere reaches them a
+  // battle later. Floored at 1 so hostility can never make a penance
+  // meaningless, only slow.
+  const sat = Math.max(1, battles + favour);
   // Each tier is now a different KIND of undertaking, not the same errand at a
   // different length. Before this, all three tiers were bought with the same
   // currency and differed only in how many battles they cost, which is exactly
@@ -172,17 +222,17 @@ export function penanceOdds(
   // TIER 2, the Brahma line: a TRAINED astra-master, full stop. Standing 9 let
   // through anyone merely strong, so Bhima qualified for weapons he was never
   // taught the mantras for. Mastery is the thing the tier actually implies.
-  const canReachTwo = mastery >= 2 && battles >= 2;
+  const canReachTwo = mastery >= 2 && sat >= 2;
   // TIER 3, the ultimates: a CHAIN. Standing and length are necessary but no
   // longer sufficient. The warrior must already have come back from a tapasya
   // bearing something, so the ultimates sit at the end of a path rather than at
   // a price. You cannot buy one in a single wager, however long you sit.
-  const canReachThree = worth >= 13 && battles >= 3 && earned.length > 0;
+  const canReachThree = worth >= 13 && sat >= 3 && earned.length > 0;
 
-  const w3 = canReachThree ? (worth - 10) * 2 + (battles - 2) * 6 : 0;
-  const w2 = canReachTwo ? 10 + battles * 3 : 0;
+  const w3 = canReachThree ? (worth - 10) * 2 + (sat - 2) * 6 : 0;
+  const w2 = canReachTwo ? 10 + sat * 3 : 0;
   const w1 = 14;
-  const wFail = Math.max(2, 18 - worth - battles * 3);
+  const wFail = Math.max(2, 18 - worth - sat * 3);
 
   const total = w3 + w2 + w1 + wFail;
   return { t3: w3 / total, t2: w2 / total, t1: w1 / total, fail: wFail / total };
@@ -204,8 +254,10 @@ export function effectiveOdds(
   battles: number,
   held: ReadonlySet<CardId> = new Set(),
   earned: readonly CardId[] = [],
+  /** The petitioning house, for this god's favour. */
+  house?: House,
 ): PenanceOdds {
-  const raw = penanceOdds(warrior, battles, earned);
+  const raw = penanceOdds(warrior, battles, earned, favourFor(deity.id, house));
   const out: PenanceOdds = { fail: raw.fail, t1: 0, t2: 0, t3: 0 };
   for (const tier of [3, 2, 1] as const) {
     const share = tier === 3 ? raw.t3 : tier === 2 ? raw.t2 : raw.t1;
@@ -263,8 +315,10 @@ export function rollPenanceOutcome(
   seed: number,
   exclude: ReadonlySet<CardId>,
   earned: readonly CardId[] = [],
+  /** The petitioning house, for this god's favour. MUST match effectiveOdds. */
+  house?: House,
 ): { astra: CardId | null; seed: number } {
-  const odds = penanceOdds(warrior, battles, earned);
+  const odds = penanceOdds(warrior, battles, earned, favourFor(deity.id, house));
   const [next, roll] = nextRandom(seed);
   let acc = odds.t3;
   let tier: 1 | 2 | 3 | null = null;
@@ -413,7 +467,11 @@ export function rollShrine(run: RunState): ShrineOffer[] {
     // elemental tier, so a short penance to him would be a guaranteed nothing:
     // that is not a wager, it is a trap, and it does not get shown.
     const viable = wagers
-      .map((w) => ({ ...w, odds: effectiveOdds(deity, w.warrior, w.battles, held, earnedBy(w.warrior)) }))
+      // run.house, so the god's favour is in the number the player is shown.
+      .map((w) => ({
+        ...w,
+        odds: effectiveOdds(deity, w.warrior, w.battles, held, earnedBy(w.warrior), run.house),
+      }))
       .filter((w) => w.odds.t1 + w.odds.t2 + w.odds.t3 >= MIN_VIABLE_CHANCE)
       .slice(0, 3);
     if (!viable.length) continue;

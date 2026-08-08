@@ -5,7 +5,7 @@ import { getCard } from '@content/cards';
 import { canInvokeAstra } from '@engine/queries';
 import type { GameState } from '@engine/types';
 import { chooseReward, chooseShrineOffer, createRun, fieldedRoster, planBattle, resolveBattle } from '@run/run';
-import { DEITIES, effectiveOdds, getDeity, isShrineIndex, mayApproach, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
+import { DEITIES, effectiveOdds, favourFor, getDeity, isShrineIndex, mayApproach, penanceOdds, rollPenanceOutcome, rollShrine, worthOf } from '@run/shrine';
 import type { PenanceOffer, VardaanOffer } from '@run/shrine';
 import type { RunState } from '@run/types';
 import { makeState } from '../engine/helpers';
@@ -396,5 +396,48 @@ describe('the ultimates are a path, not a price', () => {
     // mace, go and come back with a divyastra? Yes. Just not the Brahma line.
     expect(mayApproach(agni, 'bhima', 'pandava', [])).toBe(true);
     expect(penanceOdds('bhima', 2).t1).toBeGreaterThan(0);
+  });
+});
+
+describe('the gods are not neutral', () => {
+  // Agni, Varuna, Vayu and Indra fathered or armed the Pandavas directly: Indra
+  // IS Arjuna's father and Vayu is Bhima's. Brahma and Parashurama are the other
+  // side of the ledger, Parashurama having taught Karna his whole art and the
+  // Brahma line being Bhishma and Drona's inheritance. And every one of them is
+  // being asked for a weapon by an asura, which is what the -1 is.
+  it('favours the Pandavas at the deva shrines', () => {
+    for (const god of ['agni', 'varuna', 'vayu', 'indra']) {
+      expect(favourFor(god, 'pandava'), god).toBe(1);
+      expect(favourFor(god, 'kaurava'), god).toBe(0);
+    }
+  });
+
+  it('and the Kauravas at Brahma and Parashurama', () => {
+    for (const god of ['brahma', 'parashurama']) {
+      expect(favourFor(god, 'kaurava'), god).toBe(1);
+      expect(favourFor(god, 'pandava'), god).toBe(0);
+    }
+  });
+
+  it('and looks coldly on an asura wherever he kneels', () => {
+    for (const god of ['agni', 'varuna', 'vayu', 'indra', 'brahma', 'parashurama', 'narayana', 'shiva']) {
+      expect(favourFor(god, 'asura'), god).toBe(-1);
+    }
+  });
+
+  it('favour is worth a battle of sitting, and hostility costs one', () => {
+    // Expressed in battles rather than probability so it lands on the thing the
+    // player is deciding: how long to send a man away.
+    const kind = penanceOdds('arjuna', 3, ['agneyastra'], 1);
+    const plain = penanceOdds('arjuna', 3, ['agneyastra'], 0);
+    const cold = penanceOdds('arjuna', 3, ['agneyastra'], -1);
+    expect(kind.fail).toBeLessThan(plain.fail);
+    expect(cold.fail).toBeGreaterThan(plain.fail);
+  });
+
+  it('but hostility can never make a penance pointless', () => {
+    // Floored at one battle served, so an asura is slowed and never blocked.
+    const odds = penanceOdds('arjuna', 1, [], -1);
+    expect(odds.t1 + odds.t2 + odds.t3).toBeGreaterThan(0);
   });
 });

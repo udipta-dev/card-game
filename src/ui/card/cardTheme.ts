@@ -249,6 +249,7 @@ const FLAG_LINE: Record<string, (target: string) => string> = {
   hidden: (t) => `Hides ${t}: nothing can be aimed at him while he is unseen.`,
   'wheel-sunk': (t) => `Sinks ${t} chariot in the earth.`,
   disarmed: (t) => `Disarms ${t}.`,
+  'mantra-spent': (t) => `${cap(t)} has spent his mantra, and will call no other weapon.`,
   denied: (t) => `Bars ${t} from taking the field this round.`,
 };
 

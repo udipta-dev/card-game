@@ -145,3 +145,30 @@ describe('the weapons that carry a price actually exist at those tiers', () => {
     expect(getCard('pashupatastra').astraTier).toBe(3);
   });
 });
+
+describe('an asura serves longer for the same act', () => {
+  // Ahankar, the "I-maker": the sense of being a separate self that takes credit
+  // for what it does. It is the flaw the whole asura tradition is built on, and
+  // exactly why penance works so well for them and forgiveness so badly.
+  // Hiranyakashipu, Ravana and Bali all won enormous boons by sitting still, and
+  // each lost everything the moment he decided the boon was his by right.
+  it('adds a battle to a great weapon’s mark', () => {
+    expect(curseBattlesFor('brahmastra', 2, 'asura')).toBe(curseBattlesFor('brahmastra', 2) + 1);
+  });
+
+  it('and to the Pashupata, which is already the longest in the game', () => {
+    expect(curseBattlesFor('pashupatastra', 3, 'asura')).toBe(PASHUPATA_BATTLES + 1);
+  });
+
+  it('but never invents a mark where there was none', () => {
+    // An elemental weapon carries no shrap at all, and a penalty on zero would
+    // hand asuras a curse for firing an Agneyastra.
+    expect(curseBattlesFor('agneyastra', 1, 'asura')).toBe(0);
+  });
+
+  it('and the other houses are untouched', () => {
+    for (const house of ['pandava', 'kaurava'] as const) {
+      expect(curseBattlesFor('brahmastra', 2, house)).toBe(curseBattlesFor('brahmastra', 2));
+    }
+  });
+});

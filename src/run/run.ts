@@ -144,7 +144,13 @@ export function resolveBattle(run: RunState, finalState: GameState, playerSeat: 
   for (const ev of finalState.log ?? []) {
     if (ev.t !== 'afflict' || ev.seat !== playerSeat || !ev.by) continue;
     const weapon = getCard(ev.by);
-    curseClock = bind(curseClock, ev.curse, curseBattlesFor(weapon.id, weapon.astraTier ?? 0));
+    // The house is passed because an asura serves a battle longer for the same
+    // act: ahankar, the part of himself he cannot put down. See dharma.ts.
+    curseClock = bind(
+      curseClock,
+      ev.curse,
+      curseBattlesFor(weapon.id, weapon.astraTier ?? 0, run.house),
+    );
   }
   // This battle has been fought, so every sentence is one battle shorter.
   curseClock = serveOneBattle(curseClock);
@@ -253,6 +259,10 @@ export function chooseShrineOffer(run: RunState, offer: ShrineOffer | null): Run
         mixSeed(run.seed, run.index + 997),
         held,
         run.astraGrants[offer.warrior] ?? [],
+        // MUST match what effectiveOdds showed him, or the game advertises one
+        // chance and rolls another. That invariant is written down in
+        // effectiveOdds' own comment and this is the line that could break it.
+        run.house,
       )
     : { astra: null };
 

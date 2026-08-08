@@ -139,6 +139,10 @@ export function canInvokeAstra(state: GameState, seat: Seat, astraId: CardId): b
   }
 
   return units.some((u) => {
+    // A man whose mantra is spent calls nothing else. Without this line the
+    // Invoker's Price would print a sentence and change nothing, which is the
+    // most common bug in this codebase.
+    if (u.flags.has('mantra-spent')) return false;
     const w = getCard(u.cardId);
     if ((w.astraMastery ?? 0) >= tier) return true;
     return !!w.knownAstras?.includes(astraId);

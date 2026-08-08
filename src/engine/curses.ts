@@ -1,3 +1,4 @@
+import { getCard } from '@content/cards';
 // Adharma has a price. Loosing a Brahma-line weapon wins you the field and
 // then marks you: the curse lands on the one who fired, not the one who was
 // struck. Curses are data + a small pure payload, resolved like every other
@@ -6,7 +7,7 @@ import { nextRandom } from './ids';
 import { lowerPower } from './keywords';
 import { highestUnit, isFinalRound, unitsOf } from './queries';
 import { ROWS } from './types';
-import type { CurseId, GameState, Seat } from './types';
+import type { CurseId, GameState, Seat, CardInstance } from './types';
 
 export interface CurseDef {
   id: CurseId;
@@ -14,7 +15,7 @@ export interface CurseDef {
   /** Shown to the player when it lands. Written from their side of the screen. */
   text: string;
   /** One-shot mechanical payload, applied the moment the curse takes hold. */
-  onAfflict?: (state: GameState, seat: Seat) => void;
+  onAfflict?: (state: GameState, seat: Seat, by?: string) => void;
   /**
    * While carried, this seat cannot invoke astras: either for the whole battle,
    * or only when it actually matters.
@@ -29,7 +30,55 @@ export interface CurseDef {
   barsAstras?: 'battle' | 'finalRound';
 }
 
+/**
+ * The warrior most likely to have loosed a weapon on this side.
+ *
+ * Nothing records who fired: canInvokeAstra asks whether ANY standing man
+ * could, and the reducer never picks one. Rather than thread a firer through
+ * every path an astra can take (played, countered, drawn onto a rod, resolved
+ * out of a pending counter), the price falls on the man who most plausibly
+ * spoke the mantra: the deepest-trained warrior on the field, and a named
+ * bearer ahead of him, since for an ultimate he is the only one who could.
+ */
+function likelyInvoker(s: GameState, seat: Seat, astraId?: string): CardInstance | undefined {
+  const own = unitsOf(s, seat);
+  if (astraId) {
+    const bearer = own.find((u) => getCard(u.cardId).knownAstras?.includes(astraId));
+    if (bearer) return bearer;
+  }
+  return own
+    .slice()
+    .sort(
+      (a, b) =>
+        (getCard(b.cardId).astraMastery ?? 0) - (getCard(a.cardId).astraMastery ?? 0) ||
+        b.currentPower - a.currentPower,
+    )[0];
+}
+
 const DEFS: CurseDef[] = [
+  {
+    // THE PRICE FALLS ON THE MAN WHO PAID IT, not on his whole army.
+    //
+    // Every other curse here scours the host: rows withered, every warrior
+    // weakened, the mightiest man's bowstring cut. That reads as the game
+    // punishing you for using the content it gave you, and it is not what the
+    // epic describes either. A divine weapon costs its INVOKER: the mantra is
+    // spent, the merit is gone, and he cannot call another.
+    //
+    // A quarter of his strength rather than a flat number, so it costs a
+    // maharathi more than it costs a footman, and it can never take a man to
+    // nothing.
+    id: 'invokers_price',
+    name: 'The Invoker’s Price',
+    text: 'The man who spoke the mantra pays for it: a quarter of his strength, and he will call no other weapon.',
+    onAfflict: (s, seat, by) => {
+      const u = likelyInvoker(s, seat, by);
+      if (!u) return;
+      lowerPower(s, u, Math.max(1, Math.round(u.currentPower / 4)));
+      // Spent for the battle: canInvokeAstra skips him from here on.
+      u.flags.add('mantra-spent');
+    },
+  },
   {
     id: 'scorched_earth',
     name: 'Scorched Earth',
@@ -127,7 +176,7 @@ export function afflict(state: GameState, seat: Seat, pool: CurseId[], by?: stri
   state.seed = nextSeed;
   const curse = CURSES[available[Math.floor(roll * available.length)]];
   state.curses[seat].push(curse.id);
-  curse.onAfflict?.(state, seat);
+  curse.onAfflict?.(state, seat, by);
   state.log.push({ t: 'afflict', seat, curse: curse.id, name: curse.name, text: curse.text, by });
   return curse;
 }
