@@ -176,7 +176,19 @@ export const ASURA_CARDS: Card[] = [
     tier: 'rathi',
     basePower: 5,
     rows: ['padati'],
-    keywords: [],
+    // THE FIVE REFUSALS, as armour. He was a blank 5-power body with no keyword
+    // and no effect, and he measured 41.1% win when played against a field
+    // whose median warrior sits near 50%. A card that does nothing is not
+    // neutral; it is a commitment you paid provisions for and got a number
+    // back from.
+    //
+    // Armour rather than an invented ability, because it is the one thing the
+    // story is actually about: Hiranyakashipu had his own son fed poison,
+    // thrown from a cliff, given to the elephants, bound and dropped in the
+    // sea, and set in fire, and none of it landed. Three blows absorbed also
+    // happens to be what carries him through Arrow Rain, which is the effect
+    // presently deciding too many games.
+    keywords: [{ kind: 'armor', amount: 3 }],
     tags: ['daitya'],
     effects: [],
     flavor:

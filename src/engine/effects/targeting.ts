@@ -82,8 +82,9 @@ function selectTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[] {
       );
     case 'unitByCard': {
       const side = sel.side === 'own' ? actorOwner : enemy;
+      const named = new Set(sel.cards ?? (sel.card ? [sel.card] : []));
       return unitsOf(state, side)
-        .filter((u) => u.cardId === sel.card)
+        .filter((u) => named.has(u.cardId))
         .map((u) => u.iid);
     }
     case 'chosen':

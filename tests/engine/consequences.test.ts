@@ -223,20 +223,31 @@ describe('a maharathi who completes tapasya may loose what he earned', () => {
 });
 
 describe('a named astra arrives with its warrior', () => {
-  it('Karna takes the field and the Vasavi Shakti goes on top of his deck', () => {
+  it('Karna takes the field holding the Vasavi Shakti, in hand and usable now', () => {
     // It was hand-listed in the deck beside him, as if the two were unrelated.
     // The spear is his, traded for the armour off his own body.
     //
-    // It goes to the DECK, not the hand. Into the hand it was free card
-    // advantage, and Arjuna, who knows two ultimates, measured 95.2% win when
-    // played because committing him simply drew you two extra cards.
+    // It lands in the HAND, and the deck was tried first. On top of the deck it
+    // cost a draw rather than being a gift, which reads fair and plays dead: a
+    // carried weapon needs its bearer standing, and every unit dies at the end
+    // of the round, so you drew it the round AFTER the only man who could fire
+    // it was cleared off the field. Granted 230 times over 400 games, drawn in
+    // 80% of those, loosed 0.0%. In hand it arrives inside the one window it
+    // can be used in, which is also what the epic says: Bhagadatta does not
+    // send for the Vaishnava, he rides in holding it.
     const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima'] });
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
-    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
-    expect(s1.decks.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(true);
-    // On TOP, so it is the next thing he draws.
-    expect(s1.instances[s1.decks.player[0]]?.cardId).toBe('vasavi_shakti');
+    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(true);
+    expect(s1.decks.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
     expect(hasEvent(s1, (e) => e.t === 'granted' && e.cardId === 'vasavi_shakti')).toBe(true);
+  });
+
+  it('and the man who brought it can loose it while he still stands', () => {
+    // The whole point of the change, stated as the rule rather than the place:
+    // the grant is worthless unless its bearer is on the field to use it.
+    const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima'] });
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    expect(canInvokeAstra(s1, 'player', 'vasavi_shakti')).toBe(true);
   });
 
   it('a warrior with no named astra brings nothing', () => {

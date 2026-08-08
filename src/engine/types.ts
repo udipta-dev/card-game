@@ -330,7 +330,14 @@ export type TargetSelector =
   // Own units in the row(s) adjacent to where this astra was played.
   | { pick: 'ownAdjacentToPlayed' }
   // A specific named card on a given side (Shalya finds Karna, Dhrishtadyumna finds Drona).
-  | { pick: 'unitByCard'; side: 'own' | 'enemy'; card: CardId }
+  /**
+   * A named man, wherever he stands. `card` for one, `cards` for a list.
+   *
+   * The list exists for the vows: Bhima's whole card is the men he swore to
+   * kill and did, and writing that as seven separate effects would render as
+   * seven separate lines on a card that is making one promise.
+   */
+  | { pick: 'unitByCard'; side: 'own' | 'enemy'; card?: CardId; cards?: CardId[] }
   | { pick: 'chosen'; filter: UnitFilter };
 
 export interface UnitFilter {

@@ -428,8 +428,28 @@ export const ASTRA_CARDS: Card[] = [
     provision: 4,
     rows: ['ratha'],
     keywords: [],
-    cost: { consequence: 'A half-truth: the elephant, not the man.' },
-    effects: [{ on: 'onPlay', target: { pick: 'none' }, actions: [] }],
+    cost: {
+      consequence:
+        'Yudhishthira says it, and the whole field hears it. Drona lays down his bow where he stands. Everyone else on that side falters at the news.',
+    },
+    // IT HAD AN EMPTY ACTION LIST, and its rules panel printed nothing at all.
+    //
+    // The card's only function was to be a KEY: playing it trips Drona's
+    // immuneUntilPlayed and drops him from 9 to 4. That is a real effect, and
+    // the player was never told about it, because a card with no actions
+    // generates no rules text. So it read as a blank card that cost a turn.
+    //
+    // And when Drona was not on the field it genuinely did nothing: two cards
+    // and two turns for zero board power, in a game decided by board power. It
+    // measured 14.7% win when played against a next-worst of 40.8%, by a
+    // distance the worst card in the game.
+    //
+    // Now the lie lands on the whole host, which is what the passage describes:
+    // it goes up along the line and the fighting stops while men look at each
+    // other. Drona still takes the specific hit through his keyword.
+    effects: [
+      { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 1 }] },
+    ],
     flavor: 'Naro va kunjaro va, the man, or the elephant.',
   },
   // ---------------------------------------------------------------------
@@ -496,6 +516,14 @@ export const ASTRA_CARDS: Card[] = [
     effects: [
       { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'removeFlag', flag: 'stupefied' }] },
       { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'removeFlag', flag: 'denied' }] },
+      // AND IT ROUSES THEM, whether or not anyone was asleep.
+      //
+      // Its real job is to be HELD, as the one answer to the Praswapa, and it
+      // does that well. But the moment you play it for its own sake it did
+      // something only if a friendly warrior happened to be stupefied, which
+      // measured 1% of the times it was committed. A waking horn that wakes
+      // nobody is a wasted turn, so it now also lifts the host that hears it.
+      { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'buff', amount: 1 }] },
     ],
     flavor: 'The waking that Prajapati gave along with the sleep.',
   },

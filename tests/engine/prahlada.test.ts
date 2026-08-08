@@ -68,7 +68,18 @@ describe('the Narayana lifts for him as it does for Krishna', () => {
 
 describe('he is no longer a demon in a demon line', () => {
   it('carries no clan bond, because refusing that is his whole story', () => {
-    expect(getCard('prahlada').keywords).toEqual([]);
+    // The assertion used to be `keywords` is EMPTY, which said more than it
+    // meant. What matters is that he draws no strength from the daitya line he
+    // was born into and would not worship: Narakasura rallies his clan, and
+    // Prahlada, who was thrown off a cliff by its king, does not.
+    expect(getCard('prahlada').keywords.filter((k) => k.kind === 'bond')).toEqual([]);
+  });
+
+  it('but the five refusals are on him, since a blank card is not a neutral one', () => {
+    // Poison, the cliff, the elephants, the sea and the fire all declined to
+    // kill him. He was a 5-power body with nothing at all and measured 41.1%
+    // win when played, the second worst warrior in the game.
+    expect(getCard('prahlada').keywords).toContainEqual({ kind: 'armor', amount: 3 });
   });
 
   it('holds no astra and no weapon of his own', () => {

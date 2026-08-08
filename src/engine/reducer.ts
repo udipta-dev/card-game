@@ -298,14 +298,6 @@ export function reduce(state: GameState, action: Action): GameState {
         // could sit there with its wielder cut, which is where "why is this in
         // my deck?" came from in playtesting.
         //
-        // It goes on top of the DECK, not into the hand.
-        //
-        // Into the hand it was free card advantage, and in a game decided by
-        // card economy that is the strongest thing a card can do. Arjuna knows
-        // TWO ultimates, so committing him drew you two extra cards, and he
-        // measured 95.2% win when played against a 36-63% spread across the
-        // three factions. On top of the deck you still get his weapon, it is
-        // still his, and it costs you a draw instead of being a gift.
         // ONE weapon, not the whole armoury. A warrior who knows several
         // grants only the first, which is his signature: Arjuna the Pashupata
         // he won from Shiva, Ashwatthama the Narayana his father gave him.
@@ -318,6 +310,27 @@ export function reduce(state: GameState, action: Action): GameState {
         // does not have it in a bag. Handing him the card put a
         // battle-winning weapon on top of his deck every time he was
         // committed, and he measured 64.1% win when played.
+        //
+        // It goes into the HAND, and the road there is worth writing down,
+        // because the deck was measured too and the measurement was misread.
+        //
+        // On top of the deck it cost you a draw instead of being a gift, which
+        // is the right instinct and the wrong rule. A carried weapon needs its
+        // bearer STANDING to be loosed, and every unit on the field dies at the
+        // end of a round. So the chain ran: commit the carrier, put the weapon
+        // on his deck, lose the carrier to clearBoard, then draw the weapon
+        // next round with nobody alive who can fire it. Granted 230 times over
+        // 400 games, drawn in 80% of those, and fired 0.0%. Not rare. Never.
+        // Deck-top made the grant arrive exactly one round too late, always,
+        // and the 75% that rotted in hand were the player wondering what they
+        // had done wrong.
+        //
+        // In hand it lands while the man who carries it is still on the field,
+        // which is the only window it can ever be used in, and it is what the
+        // epic says anyway: Bhagadatta does not send for the Vaishnava, he
+        // rides in holding it. The card advantage that once bought a 95% win
+        // rate is bounded three ways now: two cards in the game are carried,
+        // both cost 14 provisions, and ULTIMATES_PER_BATTLE looses one.
         for (const astraId of (getCard(card.id).knownAstras ?? []).filter(
           (a) => getCard(a).carried,
         )) {
@@ -326,7 +339,7 @@ export function reduce(state: GameState, action: Action): GameState {
           if (s.hands[seat].some(known) || s.decks[seat].some(known)) continue;
           const inst = makeInstance(astraId, seat);
           s.instances[inst.iid] = inst;
-          s.decks[seat].unshift(inst.iid);
+          s.hands[seat].push(inst.iid);
           s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
         }
       } else if (card.type === 'boon' || card.type === 'shastra') {

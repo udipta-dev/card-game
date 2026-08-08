@@ -36,15 +36,42 @@ export const PANDAVA_CARDS: Card[] = [
     rows: ['ratha', 'gaja'],
     keywords: [],
     tags: ['pandava-brother'],
+    // THE MEN HE ACTUALLY KILLED, which is a much longer list than one.
+    //
+    // This was "destroy a chosen enemy who has the diamond body", and only one
+    // card in the game has that flag, so the effect fired in 2% of the games he
+    // was played in. His entire card was a vow that never came due.
+    //
+    // Bhima is the executioner of the epic. He kills Hidimba in the forest by
+    // Varanavata, Baka at Ekachakra, Kirmira in Kamyaka, Jatasura after the
+    // brahmana disguise, Jarasandha by tearing him in two, Dushasana at the
+    // promise about the blood, and Duryodhana with the thigh. Seven named men,
+    // and every one of them is a card in this game.
+    //
+    // The diamond-body strip stays because Duryodhana is armoured and would
+    // otherwise be the one man on the list the vow could not touch. It is
+    // harmless against the other six.
     effects: [
       {
         on: 'onPlay',
-        target: { pick: 'chosen', filter: { side: 'enemy' } },
-        condition: { q: 'targetHasFlag', flag: 'diamond-body' },
+        target: {
+          pick: 'unitByCard',
+          side: 'enemy',
+          cards: [
+            'duryodhana',
+            'dushasana',
+            'hidimba',
+            'bakasura',
+            'kirmira',
+            'jatasura',
+            'jarasandha',
+          ],
+        },
         actions: [{ kind: 'removeFlag', flag: 'diamond-body' }, { kind: 'destroy' }],
       },
     ],
-    flavor: 'His mace-vow: to break the thigh of Duryodhana.',
+    flavor:
+      'His vows, and he kept every one of them: the thigh of Duryodhana, the blood of Dushasana, and before the war, the man-eaters of the forest.',
   },
   {
     id: 'yudhishthira',

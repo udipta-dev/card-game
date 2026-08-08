@@ -352,7 +352,20 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 5,
     rows: ['ratha'],
     keywords: [],
-    effects: [],
+    // HE IS A HERALD, so let him do the one thing a herald does.
+    //
+    // Uluka was the worst warrior in the game at 40.9% win when played: a blank
+    // 5 with no keyword and no effect, which is a card you spend a commitment
+    // on to receive a number.
+    //
+    // Shakuni's son was sent into the Pandava camp on the eve of the war with a
+    // message calculated to make peace impossible, delivered it to all of them
+    // in turn, and rode back with their answers. A man who walks into the enemy
+    // camp and returns brings something back with him, and in a game this
+    // decided by card economy, one card is a real gift for a rathi body.
+    effects: [
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'draw', count: 1, side: 'own' }] },
+    ],
     flavor: 'He carried the message that made peace impossible.',
   },
 

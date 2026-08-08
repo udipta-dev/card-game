@@ -77,7 +77,14 @@ function checkTarget(card: Card, t: TargetSelector, errs: ContentError[]): void 
         errs.push({ cardId: card.id, message: `chosen.filter references bad row '${r}'` });
     }
   }
-  if (t.pick === 'unitByCard') checkCardRef(card.id, t.card, 'unitByCard.card', errs);
+  if (t.pick === 'unitByCard') {
+    // Either form, and at least one of them: a selector naming nobody would
+    // silently target nothing, which is the class of bug this file exists for.
+    const named = t.cards ?? (t.card ? [t.card] : []);
+    if (!named.length)
+      errs.push({ cardId: card.id, message: 'unitByCard names neither card nor cards' });
+    for (const id of named) checkCardRef(card.id, id, 'unitByCard', errs);
+  }
 }
 
 function checkAction(card: Card, a: EffectAction, errs: ContentError[]): void {

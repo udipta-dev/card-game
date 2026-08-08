@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { reduce } from '@engine/reducer';
 import { attemptDestroy } from '@engine/keywords';
-import { getCard } from '@content/cards';
+import { allCards, getCard } from '@content/cards';
 import { rulesText } from '@ui/card/cardTheme';
 import type { GameState } from '@engine/types';
 import { firstOf, makeState } from './helpers';
@@ -49,10 +49,20 @@ describe('a card now says when its drawback fires', () => {
     expect(text).toMatch(/decides the battle/i);
   });
 
-  it('and did not before: no card in the game showed a condition', () => {
-    // Bhima's vow is gated on the target being armoured, and read as an
-    // unconditional "slays a chosen foe" until conditions became visible.
-    expect(rulesText(getCard('bhima')).join(' ')).toMatch(/armoured foe/i);
+  it('and EVERY conditional card does, not just Karna', () => {
+    // Written as a property rather than by naming a card, because the specific
+    // examples keep moving: it was Bhima until his vow stopped being gated, and
+    // Krishna until his kill was removed. What must hold is that a drawback the
+    // player cannot see is a trap, so no gated effect may render silently.
+    const gated = allCards().filter((c) => c.effects.some((e) => e.condition));
+    expect(gated.length, 'there must be conditional cards to check').toBeGreaterThan(0);
+    for (const c of gated) {
+      const text = rulesText(c).join(' ');
+      expect(text.length, `${c.id} has a condition and renders nothing`).toBeGreaterThan(0);
+      // The condition is joined onto the sentence it governs, so it reads as
+      // one clause rather than a dangling fragment.
+      expect(text, `${c.id}`).not.toMatch(/:\s*$/);
+    }
   });
 
   it('says nothing extra for a card with no conditions', () => {

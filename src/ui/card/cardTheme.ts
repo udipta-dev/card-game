@@ -143,7 +143,12 @@ function whom(t: Card['effects'][number]['target']): string {
     case 'allOwnUnits': return 'every ally';
     case 'allUnits': return 'everyone on the field';
     case 'chosen': return t.filter?.side === 'own' ? 'a chosen ally' : 'a chosen foe';
-    case 'unitByCard': return nameOf(t.card);
+    case 'unitByCard': {
+      const ids = t.cards ?? (t.card ? [t.card] : []);
+      const names = ids.map(nameOf);
+      if (names.length <= 1) return names[0] ?? 'a named foe';
+      return `${names.slice(0, -1).join(', ')} or ${names[names.length - 1]}`;
+    }
     case 'enemyRow':
     case 'enemyRowSameAsPlayed': return 'the struck enemy rank';
     case 'lineBothSides':
@@ -159,6 +164,13 @@ function conditionText(c: Card['effects'][number]['condition']): string | null {
   if (c.q === 'cardOnBoard')
     return `While ${nameOf(c.card)} stands${c.side === 'enemy' ? ' against you' : ''}:`;
   if (c.q === 'targetHasFlag' && c.flag === 'diamond-body') return 'Against an armoured foe:';
+  // An unhandled clause returns null, and inside an `and` it is silently
+  // dropped rather than failing loudly, so the card renders a HALF-condition
+  // that reads as the whole rule. The Vaishnava is turned aside by two things,
+  // Krishna's shield and Prahlada's presence, and it was printing only
+  // Prahlada, which made Krishna's entire purpose invisible on the one card he
+  // exists to stop.
+  if (c.q === 'targetHasBoon') return `While ${nameOf(c.boon)} guards your mark:`;
   if (c.q === 'and') {
     // ONE SENTENCE, not two glued together. Each clause returns its own
     // colon-terminated fragment, and joining them with a space produced
@@ -179,13 +191,53 @@ function conditionText(c: Card['effects'][number]['condition']): string | null {
     const inner = conditionText(c.c);
     if (!inner) return null;
     const bare = inner.replace(/:$/, '');
-    // "While X stands against you" negates to "so long as X does NOT stand",
-    // which reads far better than "Unless while X stands".
-    const cleaned = bare.replace(/^While /, 'so long as ').replace(/ stands/, ' does not stand');
-    return cleaned !== bare ? `${cleaned}:` : `unless ${bare.toLowerCase()}:`;
+    // A NEGATION HAS TO NEGATE, and the pretty rewrite must not be trusted to
+    // notice when it failed to.
+    //
+    // This read `bare.replace(/^While /, 'so long as ').replace(/ stands/, ' does
+    // not stand')` and took "the string changed" as proof the negation had
+    // landed. On "While Krishna, the Charioteer guards your mark" the first
+    // replace fired and the second found nothing to match, so the string had
+    // changed, and the Vaishnava printed "so long as Krishna guards your mark,
+    // slays a chosen foe": the exact inverse of the rule, on the single clause
+    // that decides whether the weapon kills.
+    //
+    // Each rewrite now has to match the WHOLE clause or not at all, so a
+    // half-match can no longer pass itself off as a success. Anything unmatched
+    // falls through to "unless ...", which is plainer but always true.
+    const NEGATIONS: [RegExp, string][] = [
+      [/^While (.+) stands against you$/, 'so long as $1 does not stand against you'],
+      [/^While (.+) stands$/, 'so long as $1 does not stand'],
+      [/^While (.+) guards your mark$/, 'so long as $1 does not guard your mark'],
+    ];
+    for (const [pattern, into] of NEGATIONS) {
+      if (pattern.test(bare)) return `${bare.replace(pattern, into)}:`;
+    }
+    return `unless ${bare[0].toLowerCase()}${bare.slice(1)}:`;
   }
   return null;
 }
+
+/**
+ * What adding a flag means, in words. Takes who it lands on, because the same
+ * flag reads differently on yourself and on an enemy.
+ *
+ * Every flag a card can apply needs an entry. A card that silently applies one
+ * is a card whose rules panel is lying by omission, and it also strands any
+ * condition attached to it, since the condition is joined to the sentence its
+ * actions produce.
+ */
+const FLAG_LINE: Record<string, (target: string) => string> = {
+  'diamond-body': () =>
+    'A body of adamant: cannot be slain, and cannot be worn below a third of his strength, until a vow strips it from him.',
+  'krishna-guarded': (t) => `Shields ${t}: a killing weapon aimed at him is turned aside.`,
+  stupefied: (t) => `Stupefies ${t}: senseless, and worth nothing this round.`,
+  stripped: (t) => `Strips ${t} of his protections, so an ordinary weapon can reach him.`,
+  hidden: (t) => `Hides ${t}: nothing can be aimed at him while he is unseen.`,
+  'wheel-sunk': (t) => `Sinks ${t}'s chariot in the earth.`,
+  disarmed: (t) => `Disarms ${t}.`,
+  denied: (t) => `Bars ${t} from taking the field this round.`,
+};
 
 /** Sentence-case the first letter, for a clause that may arrive lowercased. */
 const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : s);
@@ -227,7 +279,17 @@ export function rulesText(card: Card): string[] {
       );
     if (kw.kind === 'drawsAstra')
       lines.push('A lightning rod: an enemy astra aimed at your host strikes him instead.');
-    if (kw.kind === 'armor') lines.push(`Kavacha-Kundala: armour absorbs the first strike.`);
+    // NOT "Kavacha-Kundala" on everyone. That is Karna's armour specifically,
+    // born onto his body and given by Surya, and the line was hardcoded, so
+    // Shikhandi and Prahlada were both being told they wore it. It also said
+    // "the first strike" whatever the amount, which is wrong for any armour
+    // above 1.
+    if (kw.kind === 'armor')
+      lines.push(
+        card.id === 'karna'
+          ? `Kavacha-Kundala: the armour he was born in turns aside the first ${kw.amount} of harm.`
+          : `Armoured: turns aside the first ${kw.amount} of harm.`,
+      );
     if (kw.kind === 'noAstrasInFinalRound') lines.push(`His curse bars astras in the final round.`);
   }
   for (const eff of card.effects) {
@@ -252,7 +314,7 @@ export function rulesText(card: Card): string[] {
       if (a.kind === 'destroy' && eff.target.pick === 'chosen')
         lines.push('Slays a chosen foe.');
       if (a.kind === 'destroy' && eff.target.pick === 'unitByCard')
-        lines.push(`Slays ${nameOf((eff.target as { card: string }).card)}, wherever he stands.`);
+        lines.push(`Slays ${whom(eff.target)}, wherever he stands.`);
       if (a.kind === 'destroy' && eff.target.pick === 'allEnemyUnits')
         lines.push('Slays every foe.');
       if (a.kind === 'destroy' && eff.target.pick === 'self')
@@ -268,10 +330,14 @@ export function rulesText(card: Card): string[] {
             ? `He takes −${a.amount} himself, armour first.`
             : `Strikes ${whom(eff.target)} for −${a.amount}.`,
         );
-      if (a.kind === 'addFlag' && a.flag === 'diamond-body')
-        lines.push(
-          'A body of adamant: cannot be slain, and cannot be worn below a third of his strength, until a vow strips it from him.',
-        );
+      // EVERY flag, not just the adamant body. Only diamond-body had wording,
+      // so Krishna's shield rendered nothing at all on Krishna's own card, and
+      // Vinda's bowstring rendered nothing either, which left his condition
+      // ("While Anuvinda stands:") dangling on its own as a fragment.
+      if (a.kind === 'addFlag') {
+        const said = FLAG_LINE[a.flag]?.(whom(eff.target));
+        if (said) lines.push(said);
+      }
       if (a.kind === 'cleanse') lines.push('Lifts every penalty from your own lines.');
       if (a.kind === 'dismount') lines.push('Puts a chariot-warrior on foot (−2).');
 
