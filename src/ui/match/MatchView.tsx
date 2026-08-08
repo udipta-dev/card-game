@@ -8,6 +8,7 @@ import type { BattleInit } from '@engine/createMatch';
 import { isLegalAbility, reduce } from '@engine/reducer';
 import { canInvokeAstra, isFinalRound, rowPower, seatPower } from '@engine/queries';
 import { cursedAgainstAstras, getCurse } from '@engine/curses';
+import { ADHARMA_CURSES } from '@engine/clash';
 import { fieldedMastery } from '@engine/clash';
 import { legalMoves } from '@engine/selectors';
 import { ROWS } from '@engine/types';
@@ -1046,6 +1047,10 @@ function SanctionGate({
             was an om glyph for every weapon in the game, which said nothing
             about which power you were about to borrow. It falls back to the
             glyph for any weapon whose god has no portrait yet. */}
+        {/* THE GOD GETS THE TOP OF THE DIALOG. He was a 72x90 portrait crammed
+            inside a 64x64 circle, so the one screen where a deity appears
+            showed a clipped thumbnail of him. Reported as "the image of the god
+            is too tiny". */}
         <div className="sanction__eye" aria-hidden="true">
           {astraGod(card.id) ? (
             <img className="sanction__god" src={astraGod(card.id)!} alt="" />
@@ -1058,6 +1063,27 @@ function SanctionGate({
         </div>
         <h2 className="sanction__name">{card.name}</h2>
         <p className="sanction__warn">{card.cost?.consequence}</p>
+        {/* WHAT THE SHRAP ACTUALLY IS. The dialog said a curse would follow and
+            never which, so "we don't even know what the punishment is" was a
+            fair complaint about a screen whose entire job is stating the price.
+            Named rather than described, because one of them is far likelier
+            than the others and the player should know its name when it lands. */}
+        {(card.astraTier ?? 1) >= 3 && (
+          <div className="sanction__shrap">
+            <span className="sanction__shrap-label">The shrap that follows</span>
+            <ul className="sanction__shrap-list">
+              {ADHARMA_CURSES.map((id) => {
+                const c = getCurse(id);
+                return c ? (
+                  <li key={id}>
+                    <strong>{c.name}</strong> {c.text}
+                  </li>
+                ) : null;
+              })}
+            </ul>
+            <span className="sanction__shrap-note">One of these, and it holds for battles to come.</span>
+          </div>
+        )}
         <p className="sanction__ask">Fire it anyway?</p>
         <div className="sanction__actions">
           <button className="btn btn--ghost" onClick={onCancel} autoFocus>

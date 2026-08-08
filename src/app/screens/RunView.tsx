@@ -366,8 +366,12 @@ function PenanceCard({
 
   return (
     <button className="shrine__card shrine__card--penance" onClick={() => onChoose(offer)}>
+      {/* EVERY SANSKRIT WORD GLOSSED WHERE IT APPEARS. "Tapasya · 3 battles"
+          told a player who does not already know the word precisely nothing,
+          and this is the screen where they meet it. */}
       <div className="shrine__kind">
-        Tapasya · {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'}
+        Tapasya <span className="shrine__gloss">(penance)</span> ·{' '}
+        {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'}
       </div>
       {/* The god you would be sending a man to. This is one of exactly two
           places a deity is ever seen, and until now it was a name and nothing
@@ -377,9 +381,15 @@ function PenanceCard({
         {art && <img className="shrine__deity-img" src={art} alt="" loading="lazy" />}
         <div className="shrine__name">{deity?.name}</div>
       </div>
+      {/* "standing 14" was a number with no unit and no meaning. It is the
+          card's provision cost, which is the game's own measure of how great a
+          man is, so it says that instead of naming an internal scale. */}
       <div className="shrine__text">
-        Send <strong>{warrior.name}</strong> <span className="shrine__worth">standing {worthOf(offer.warrior)}</span>{' '}
-        to {deity?.epithet}.
+        Send <strong>{warrior.name}</strong> to {deity?.epithet}, and sit in penance.
+        <span className="shrine__worth">
+          A warrior worth {worthOf(offer.warrior)} provisions. The greater the man and the
+          longer he sits, the higher the weapon he may return with.
+        </span>
       </div>
 
       <div className="odds">
@@ -401,8 +411,8 @@ function PenanceCard({
 
       <div className="shrine__foot">
         <span className="shrine__price">
-          Absent for {offer.battles} {offer.battles === 1 ? 'battle' : 'battles'}, and he may return
-          with nothing.
+          He fights in none of the next {offer.battles}{' '}
+          {offer.battles === 1 ? 'battle' : 'battles'}, and he may return with nothing.
         </span>
       </div>
     </button>

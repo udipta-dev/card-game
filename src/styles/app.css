@@ -1324,9 +1324,12 @@
     0 24px 70px rgba(0, 0, 0, 0.7),
     0 0 90px rgba(226, 122, 32, 0.18);
 }
+/* Sized to the PORTRAIT, not to a glyph. This was 64x64 with a 72x90 image
+   inside it, so the deity was clipped on every side on the one screen where a
+   god is ever seen. */
 .sanction__eye {
-  width: 64px;
-  height: 64px;
+  width: auto;
+  height: auto;
   margin: 0 auto 14px;
   border-radius: 50%;
   display: grid;
@@ -1919,8 +1922,9 @@
 
 /* The god come to warn you, in place of a generic om. */
 .sanction__god {
-  width: 72px;
-  height: 90px;
+  width: min(150px, 34vw);
+  height: auto;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: top;
   border-radius: 4px;
@@ -2307,3 +2311,50 @@
 @media (min-width: 900px) {
   .menu__actions { width: min(520px, 60vw); }
 }
+
+/* Glosses sit beside the Sanskrit rather than replacing it: the game keeps its
+   own words and explains them where they are met. Lighter and smaller, so the
+   term still leads. */
+.shrine__gloss { color: var(--ink-faint); font-style: italic; }
+.shrine__worth {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+}
+
+
+/* What the shrap will be, named. The dialog's whole job is stating the price,
+   and it used to say only that there would be one. */
+.sanction__shrap {
+  margin: 12px 0 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(176, 87, 74, 0.35);
+  border-radius: 4px;
+  background: rgba(176, 87, 74, 0.07);
+  text-align: left;
+}
+.sanction__shrap-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--kaurava);
+  margin-bottom: 6px;
+}
+.sanction__shrap-list {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+.sanction__shrap-list strong { color: var(--ink); }
+.sanction__shrap-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+}
+/* The consequence prose is compressed to make room for the god and the shrap. */
+.sanction__warn { font-size: 0.85rem; line-height: 1.5; }
