@@ -168,7 +168,23 @@ export const ASURA_DECK: DeckList = {
     'kumbhakarna',
     'hiranyakashipu',
     'mahishasura',
-    'vritra',
+    // POWER-NEUTRAL, PROVISION-NEUTRAL SWAP, so the measurement means something.
+    // Out: Shumbha (7, costs 9) and Vritra (7, costs 9). In: Baka (8, costs 10)
+    // and Trishira (6, costs 8). Same 14 power, same 18 provisions, and both of
+    // the new men actually do something when they arrive.
+    //
+    // The reason: this host had TWO units in thirteen with any onPlay effect at
+    // all, against Pandava's six and Kaurava's seven, and it measured 41.0%
+    // against their 46.7% and 57.7%. Their own pool was full of men who act
+    // (Baka, Trishira, Hidimbi, Kalanemi, Maricha, Shambara, Maya) and the
+    // curated list had taken almost none of them, so the faction's weakness was
+    // a deckbuilding accident rather than a card-design one.
+    //
+    // Shumbha's bond keyed on 'asura-lord', of which the deck held two, so it
+    // was nearly a dead keyword. Baka is a Bhima target by name, which is a real
+    // cost against Pandava and canonically exactly right.
+    'trishira',
+    'bakasura',
     'bali',
     'hiranyaksha',
     // Nishumbha (6, costs 8) out for Prahlada (4, costs 6), paying for
@@ -181,7 +197,6 @@ export const ASURA_DECK: DeckList = {
     'tarakasura',
     // One horde traded for a king. Two power-2 chaff cards against a Pandava
     // rathi floor of 5 is most of why this deck measured 41.4%.
-    'shumbha',
     'narakasura',
     'brahmastra',
     'nagastra',
