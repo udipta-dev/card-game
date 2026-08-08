@@ -572,11 +572,41 @@
    border. Mixing against the house edge instead means the hierarchy works for
    every house, including any added later, and a card still says which host it
    belongs to. */
+/* THE GOLD LINE GLOWS PROPERLY NOW. At 14px and 22% it read as a slightly
+   brighter border rather than as "this is one of the eleven": reported as "nice,
+   but it has to glow more". Two rings and a wider bloom, plus a faint inner
+   light so the glow looks like it comes off the card rather than sitting behind
+   it. */
 .card--maharathi {
   border-width: 2.5px;
-  border-color: color-mix(in srgb, var(--pal-edge) 100%, #fff 22%);
-  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--pal-edge) 35%, transparent),
-    0 0 14px color-mix(in srgb, var(--pal-edge) 22%, transparent);
+  border-color: color-mix(in srgb, var(--pal-edge) 100%, #fff 35%);
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--pal-edge) 55%, transparent),
+    0 0 10px color-mix(in srgb, var(--pal-edge) 40%, transparent),
+    0 0 28px color-mix(in srgb, var(--pal-edge) 26%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--pal-edge) 14%, transparent);
+}
+
+/* A DIVINE WEAPON GETS ITS OWN LIGHT, and deliberately not the house brass:
+   an astra belongs to a god rather than to an army, so it reads cold against
+   everything else on the board. The ultimates burn hardest, the Brahma line
+   below them, and elementals keep the ordinary frame: the hierarchy is legible
+   at a glance without reading a word. */
+.card--astra3,
+.card--astra2 {
+  --astra-light: #7fb6d8;
+  border-color: color-mix(in srgb, var(--astra-light) 70%, var(--pal-edge));
+}
+.card--astra3 {
+  border-width: 2.5px;
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--astra-light) 60%, transparent),
+    0 0 12px color-mix(in srgb, var(--astra-light) 45%, transparent),
+    0 0 32px color-mix(in srgb, var(--astra-light) 28%, transparent),
+    inset 0 0 14px color-mix(in srgb, var(--astra-light) 16%, transparent);
+}
+.card--astra2 {
+  border-width: 2px;
+  box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--astra-light) 40%, transparent),
+    0 0 14px color-mix(in srgb, var(--astra-light) 22%, transparent);
 }
 .card--maharathi .card__tier {
   color: color-mix(in srgb, var(--pal-edge) 100%, #fff 30%);

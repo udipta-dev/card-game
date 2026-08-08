@@ -103,7 +103,7 @@ export const TYPE_LABEL: Record<Card['type'], string> = {
 // Maharathi should never be blocked by the word, and a player who has should
 // never see it watered down.
 export const TYPE_GLOSS: Record<Card['type'], string> = {
-  unit: 'a warrior of the host',
+  unit: 'a warrior of the army',
   astra: 'a divine weapon invoked by mantra',
   shastra: 'a named weapon, carried in the hand',
   boon: 'a divine gift, granted at a shrine',
@@ -476,7 +476,12 @@ export function rulesText(card: Card): string[] {
         : `Answered by: ${card.counteredBy.map(nameOf).join(', ')}, and by no one else.`,
     );
   if (card.astraMastery)
-    lines.push(`An astra-master, trained to tier ${card.astraMastery}.`);
+    lines.push(
+      card.astraMastery >= 2
+        ? 'An astra-master, trained in the Brahma line: he can speak the mantra of any ' +
+          'great or elemental weapon.'
+        : 'Astra-trained: he can speak the mantra of an elemental weapon.',
+    );
   if (card.knownAstras?.length)
     lines.push(`Bears the ${card.knownAstras.map(nameOf).join(', ')}.`);
   if (card.cost?.consequence) lines.push(card.cost.consequence);

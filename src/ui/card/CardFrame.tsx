@@ -60,6 +60,10 @@ export function CardFrame({
     // layering rank as weight and ornament keeps both readable at once, and
     // keeps working at 51px where the tier chevron is far too small to see.
     card.tier ? `card--${card.tier}` : '',
+    // A divine weapon carries its RANK as light, the same way a warrior carries
+    // his. Cold rather than the house brass, because an astra belongs to a god
+    // and not to an army.
+    card.type === 'astra' ? `card--astra${card.astraTier ?? 1}` : '',
     mini ? 'card--mini' : '',
     onClick ? 'card--hand' : '',
     selected ? 'card--selected' : '',

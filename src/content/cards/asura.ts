@@ -105,6 +105,9 @@ export const ASURA_CARDS: Card[] = [
     // He is one below Ravana because he ruled the three worlds and Ravana took
     // them from the gods who held them.
     basePower: 9,
+    // Pinned, so the pool-wide trim below cannot make him cheaper as a side
+    // effect of anything done to his neighbours.
+    provision: 11,
     rows: ['ratha'],
     keywords: [{ kind: 'armor', amount: 2 }],
     tags: ['daitya'],
@@ -149,10 +152,17 @@ export const ASURA_CARDS: Card[] = [
     // shape as Ravana and Hiranyakashipu, a man who had to be tricked rather
     // than defeated, and both of those are maharathis here.
     tier: 'maharathi',
-    basePower: 10,
-    // 13, the same override Bhishma pays and for the same reason: ten power that
-    // cannot be destroyed at all is worth more than ten power that can. He is
-    // one of the chiranjivi, still ruling Sutala, and due to be the next Indra.
+    // NINE, NOT TEN, and the provision is pinned so this is a nerf rather than a
+    // discount. Power drives cost at power+2, so dropping a point normally makes
+    // a card cheaper and refunds half the nerf straight back.
+    //
+    // The asura pool measured 84% when a deck search optimised it, against 65
+    // and 67 for the other two, and the cause is SHAPE rather than efficiency:
+    // their best eight warriors are 73 power for 90 provisions against Pandava's
+    // 65 for 81, which is the same rate, but six of them are power 9 or above
+    // where Pandava has two. Same power in fewer cards is card economy, and this
+    // game is decided by card economy.
+    basePower: 9,
     provision: 13,
     rows: ['ratha'],
     keywords: [{ kind: 'deathless' }],
@@ -234,7 +244,8 @@ export const ASURA_CARDS: Card[] = [
     // and a shifting sequence of forms. Same standard that put Ravana at 10 and
     // Hiranyakashipu at 9: a being the existing gods could not answer.
     tier: 'maharathi',
-    basePower: 9,
+    basePower: 8,
+    provision: 11,
     rows: ['gaja'],
     keywords: [],
     tags: ['asura-lord'],
@@ -312,7 +323,8 @@ export const ASURA_CARDS: Card[] = [
     // and had to flee his own heaven. Killing him cost the king of the devas
     // more than any other fight in the Vedas.
     tier: 'maharathi',
-    basePower: 9,
+    basePower: 8,
+    provision: 11,
     rows: ['ratha'],
     keywords: [{ kind: 'nightGrowth', amount: 1 }],
     tags: ['serpent'],

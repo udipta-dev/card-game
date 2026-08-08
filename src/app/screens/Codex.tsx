@@ -22,6 +22,8 @@ interface Group {
   gloss?: string;
   house?: House;
   types?: Card['type'][];
+  /** Astra rank, so the hierarchy the game runs on is visible in the codex. */
+  tier?: number;
 }
 
 const GROUPS: Group[] = [
@@ -37,10 +39,25 @@ const GROUPS: Group[] = [
     house: 'legend',
   },
   {
-    title: 'Astras',
-    gloss: 'divine weapons, invoked by mantra',
+    title: 'Ultimate Astras',
+    gloss: 'the world-enders, borne by one man or earned through penance',
     house: 'neutral',
     types: ['astra'],
+    tier: 3,
+  },
+  {
+    title: 'Great Astras',
+    gloss: 'the Brahma line, for a warrior trained to it',
+    house: 'neutral',
+    types: ['astra'],
+    tier: 2,
+  },
+  {
+    title: 'Elemental Astras',
+    gloss: 'fire, water and wind, for any astra-trained warrior',
+    house: 'neutral',
+    types: ['astra'],
+    tier: 1,
   },
   {
     title: 'Shastras',
@@ -102,7 +119,10 @@ export function Codex({ onBack }: { onBack: () => void }) {
         {GROUPS.map((g) => {
           const group = sortCards(
             all.filter(
-              (c) => c.house === g.house && (!g.types || g.types.includes(c.type)),
+              (c) =>
+                c.house === g.house &&
+                (!g.types || g.types.includes(c.type)) &&
+                (g.tier === undefined || (c.astraTier ?? 1) === g.tier),
             ),
           );
           if (!group.length) return null;
