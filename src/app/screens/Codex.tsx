@@ -146,7 +146,12 @@ export function Codex({ onBack }: { onBack: () => void }) {
         <div className="codex__foot">Tap a card for its full lore and abilities.</div>
       </div>
 
-      {inspect && <InspectSheet card={inspect} onClose={() => setInspect(null)} />}
+      {/* Tapping a card named in the rules opens THAT card, which is the whole
+          point of the codex: follow the thread rather than remember the name
+          and come back for it. */}
+      {inspect && (
+        <InspectSheet card={inspect} onClose={() => setInspect(null)} onPeek={setInspect} />
+      )}
     </div>
   );
 }

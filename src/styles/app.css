@@ -2388,3 +2388,23 @@
 }
 /* The consequence prose is compressed to make room for the god and the shrap. */
 .sanction__warn { font-size: 0.85rem; line-height: 1.5; }
+
+/* A card named inside another card's rules is a button. "Bears the
+   Pashupat-Astra, Brahmashirsha-Astra" was a promise the player could not check
+   without leaving the card, opening the codex and finding two weapons by name.
+   Underlined rather than coloured, so it reads as a link without competing with
+   the brass the rest of the panel uses for emphasis. */
+.sheet__link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--gold-dim);
+}
+.sheet__link:hover { text-decoration-style: solid; color: var(--gold); }
+.sheet__link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }

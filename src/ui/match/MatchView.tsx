@@ -618,6 +618,10 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           onSwap={inspect.onSwap}
           blockedReason={inspect.blockedReason}
           onClose={() => setInspect(null)}
+          // Peeking mid-battle keeps the play/swap actions off the peeked card:
+          // you are reading it, not committing it, and the man in your hand is
+          // still the one you were deciding about.
+          onPeek={(c) => setInspect({ card: c })}
         />
       )}
       {state.phase === 'mulligan' && (

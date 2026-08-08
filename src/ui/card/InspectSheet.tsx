@@ -1,10 +1,44 @@
 import { provisionOf } from '@content/cards';
+import { allCards } from '@content/cards';
 import type { Card, CardInstance } from '@engine/types';
 import { CardFrame } from './CardFrame';
 import { artFor } from './cardArt';
 import { ROW_GLOSS, TIER_GLOSS, TIER_LABEL, TYPE_GLOSS, TYPE_LABEL, rulesText } from './cardTheme';
 
 const ROW_LABEL_OF: Record<string, string> = { ratha: 'Ratha', gaja: 'Gaja', padati: 'Padati' };
+
+/**
+ * Every card NAMED in a rules line becomes tappable.
+ *
+ * "Bears the Pashupat-Astra, Brahmashirsha-Astra" is a promise the player cannot
+ * check without leaving the card, closing it, opening the codex and finding two
+ * weapons by name. Now the names are buttons.
+ *
+ * Longest name first, so "Brahma-Astra" cannot match inside
+ * "Brahmashirsha-Astra" and leave a stray fragment behind.
+ */
+const LINKABLE = allCards()
+  .map((c) => c.name)
+  .sort((a, b) => b.length - a.length);
+
+function linkCards(line: string, onPeek?: (card: Card) => void): React.ReactNode {
+  if (!onPeek) return line;
+  const pattern = new RegExp(`(${LINKABLE.map(escapeForRegExp).join('|')})`, 'g');
+  const parts = line.split(pattern);
+  if (parts.length === 1) return line;
+  return parts.map((part, i) => {
+    const card = allCards().find((c) => c.name === part);
+    return card ? (
+      <button key={i} type="button" className="sheet__link" onClick={() => onPeek(card)}>
+        {part}
+      </button>
+    ) : (
+      part
+    );
+  });
+}
+
+const escapeForRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /** Wounded, raised, or as printed. Colour carries it; the number states it. */
 function powerClass(now: number, printed: number): string {
@@ -103,6 +137,7 @@ export function InspectSheet({
   onPlay,
   onSwap,
   blockedReason,
+  onPeek,
 }: {
   card: Card;
   inst?: CardInstance;
@@ -113,6 +148,8 @@ export function InspectSheet({
   onSwap?: () => void;
   /** Why it cannot be, if it cannot. Shown instead of the play button. */
   blockedReason?: string;
+  /** Open another card named in this one's rules. */
+  onPeek?: (card: Card) => void;
 }) {
   const rules = rulesText(card);
   // The board card crops the art to a square. This is the one place the whole
@@ -174,7 +211,7 @@ export function InspectSheet({
           )}
           {rules.map((r, i) => (
             <div key={i} className="sheet__rule">
-              {r}
+              {linkCards(r, onPeek)}
             </div>
           ))}
           {card.flavor && <div className="sheet__flavor">{card.flavor}</div>}
