@@ -56,26 +56,55 @@ the next one visible, rare enough that it still lands.
 
 ## The schedule
 
-| level | cap | budget | what walks through the door |
-|---|---|---|---|
-| 1 | 7 | 120 | the rathi bulk. A wide, cheap host |
-| 5 | 8 | 128 | **Nakula and Sahadeva** |
-| 10 | 9 | 138 | **Ghatotkacha** |
-| 15 | 10 | 149 | **Ashwatthama** |
-| 20 | 11 | 159 | **Bhima** |
-| 26 | 12 | 171 | **Karna** |
-| 32 | 13 | 183 | **Bhishma** |
-| 38 | 14 | 196 | **Vasavi Shakti**, Karna's spear |
-| 42 | 15 | 204 | **Narayan-Astra** |
-| 46 | 16 | 212 | **Brahmashirsha-Astra** |
-| 50 | 18 | 220 | **Pashupat-Astra** |
+RETIMED on 2026-08-09 against the card set that actually exists. The costs are
+not spread evenly and never were:
+
+| cost | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 18 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| cards | 4 | 6 | 5 | 24 | 27 | 20 | 17 | 10 | 7 | 3 | 3 | 1 | 1 | 1 |
+
+120 of 129 cards cost twelve or less. The first cut of this table reached cap 12
+at level 26, which spent the first half of the ladder on those 120 and the second
+half on the remaining nine: everything a player could be given had been given by
+the halfway point. Worse per house, past level 26 no army gained a single card of
+its OWN, because the only house cards above twelve are Bhishma and Bali.
+
+| level | cap | budget | what walks through the door | cards |
+|---|---|---|---|---|
+| 1 | 7 | 120 | the rathi bulk. A wide, cheap host | 16-19 |
+| 6 | 8 | 130 | **Nakula and Sahadeva** | 10 |
+| 12 | 9 | 142 | **Ghatotkacha** | 10 |
+| 19 | 10 | 157 | **Ashwatthama** | 10 |
+| 26 | 11 | 171 | **Bhima** | 4 |
+| 33 | 12 | 185 | **Karna**, **Arjuna**, **Ravana** | 3 |
+| 38 | 13 | 196 | **Bhishma**, **Bali** | 1-2 |
+| 42 | 14 | 204 | **Vasavi Shakti**, **Vishwaroop** | 3 |
+| 45 | 15 | 210 | **Narayan-Astra** | 1 |
+| 47 | 16 | 214 | **Brahmashirsha-Astra** | 1 |
+| 50 | 18 | 220 | **Pashupat-Astra** | 1 |
 
 Budget between the steps is linear: `120 + round((level - 1) * 100 / 49)`.
 
-Note that level 26 is where the game today begins: cap 12, budget 171, which is
-within a point of the 170 the starter decks spend now. Everything below 26 is
-new territory that no one has played, and everything above is the part that has
-never had cards big enough to need it.
+The dense bands now run across the first two thirds, and the last stretch is the
+world-enders one at a time, which is the right shape for a top end: rare, named,
+worth the climb.
+
+### What this does not fix
+
+There are still only nine cards above cost twelve, and only two of them belong to
+a house. From level 42 up, no army gains a card of its own; every unlock is a
+neutral astra. Retiming spreads the pacing, it does not create content.
+
+Two ways out, and the second needs a decision rather than a measurement:
+
+1. **Content.** Three or four house cards priced 13 to 15 each, so the top of the
+   ladder has a Pandava, a Kaurava and an Asura face on it.
+2. **Repricing the marquee warriors.** Arjuna, Karna, Ravana and Indrajit all sit
+   at 12 and are the greatest warriors in the epic; at 13 to 14 they would fill
+   the late ladder with house cards and arguably be priced closer to what they
+   do. This is a balance change: the three armies currently sit within 3.0 points
+   of each other and that was expensive to reach, so it wants a lab session and
+   an explicit yes before anyone touches it.
 
 The last five bands are the three world-enders and the two carried spears. You
 finish the ladder by earning the weapons, which is the right ending for this

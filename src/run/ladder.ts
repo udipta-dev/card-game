@@ -45,17 +45,40 @@ export interface Step {
   headline: CardId;
 }
 
+/**
+ * RETIMED AGAINST THE ACTUAL CARD SET, which the first cut of this table was not.
+ *
+ * The costs are not spread evenly and never were. Of 129 cards, 120 cost twelve
+ * or less:
+ *
+ *   cost   4   5   6    7    8    9   10   11   12   13   14   15   16   18
+ *   cards  4   6   5   24   27   20   17   10    7    3    3    1    1    1
+ *
+ * The old schedule reached cap 12 at level 26, which spent the first half of the
+ * ladder on 120 cards and the second half on nine. Everything a player could
+ * actually be given had been given by the halfway point, and levels 26 to 50
+ * handed out one neutral astra every few rungs. Worse per house: past level 26 no
+ * army gained a single card of its OWN, because the only house cards above twelve
+ * are Bhishma and Bali.
+ *
+ * The bands now climb through the dense range across two thirds of the ladder and
+ * leave the last stretch to the world-enders, one at a time, which is the right
+ * shape for a top end: rare, named, and worth the climb.
+ *
+ * The nine cards above twelve are still nine cards. Retiming is worth doing and
+ * is not a substitute for content at the top; see docs/ladder.md.
+ */
 export const STEPS: Step[] = [
   { level: 1, cap: 7, headline: 'shakuni' },
-  { level: 5, cap: 8, headline: 'nakula' },
-  { level: 10, cap: 9, headline: 'ghatotkacha' },
-  { level: 15, cap: 10, headline: 'ashwatthama' },
-  { level: 20, cap: 11, headline: 'bhima' },
-  { level: 26, cap: 12, headline: 'karna' },
-  { level: 32, cap: 13, headline: 'bhishma' },
-  { level: 38, cap: 14, headline: 'vasavi_shakti' },
-  { level: 42, cap: 15, headline: 'narayanastra' },
-  { level: 46, cap: 16, headline: 'brahmashirsha' },
+  { level: 6, cap: 8, headline: 'nakula' },
+  { level: 12, cap: 9, headline: 'ghatotkacha' },
+  { level: 19, cap: 10, headline: 'ashwatthama' },
+  { level: 26, cap: 11, headline: 'bhima' },
+  { level: 33, cap: 12, headline: 'karna' },
+  { level: 38, cap: 13, headline: 'bhishma' },
+  { level: 42, cap: 14, headline: 'vasavi_shakti' },
+  { level: 45, cap: 15, headline: 'narayanastra' },
+  { level: 47, cap: 16, headline: 'brahmashirsha' },
   { level: 50, cap: 18, headline: 'pashupatastra' },
 ];
 
