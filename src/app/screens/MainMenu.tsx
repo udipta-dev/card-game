@@ -16,13 +16,28 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
   const [showHelp, setShowHelp] = useState(false);
   const meta = loadMeta();
 
-  // First-time visitors get the rules once, automatically.
+  // A FIRST-TIMER IS OFFERED THE RULES, NOT AMBUSHED BY THEM.
+  //
+  // This opened HowToPlay automatically, and HowToPlay is a modal whose
+  // backdrop closes it on click. So a new player's very first tap on "Quickplay"
+  // landed on the backdrop, dismissed the overlay, and left them looking at the
+  // menu again. Reported as "I click a menu to play and it goes back to the
+  // homescreen", which is exactly what it looks like from the outside.
+  //
+  // The button glows for them instead. Nothing is stolen, nothing is covered,
+  // and the rules are one obvious tap away.
+  const [firstVisit, setFirstVisit] = useState(false);
   useEffect(() => {
-    if (!localStorage.getItem(SEEN_KEY)) {
-      setShowHelp(true);
-      localStorage.setItem(SEEN_KEY, '1');
-    }
+    if (!localStorage.getItem(SEEN_KEY)) setFirstVisit(true);
   }, []);
+
+  function openHelp() {
+    setShowHelp(true);
+    // Marked seen on OPEN rather than on show, so a player who never opens it
+    // keeps being offered it, and one who reads it is not offered it forever.
+    localStorage.setItem(SEEN_KEY, '1');
+    setFirstVisit(false);
+  }
 
   return (
     <div className="menu">
@@ -55,7 +70,10 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
         <button className="btn btn--ghost" onClick={onCodex}>
           Codex · browse all cards
         </button>
-        <button className="btn btn--ghost" onClick={() => setShowHelp(true)}>
+        <button
+          className={`btn btn--ghost${firstVisit ? ' btn--beckon' : ''}`}
+          onClick={openHelp}
+        >
           How to play
         </button>
       </div>

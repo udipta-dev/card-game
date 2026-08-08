@@ -440,15 +440,28 @@ export function rulesText(card: Card): string[] {
 
   if (card.type === 'astra') {
     const tier = card.astraTier ?? 1;
+    // EVERY SANSKRIT WORD IS GLOSSED THE FIRST TIME IT APPEARS, and the rank
+    // lines are where a player meets most of them. "An elemental astra" told
+    // nobody anything; "a divya-astra (a divine weapon)" tells them what kind of
+    // thing they are holding before it tells them who may hold it.
     if (tier >= 3) {
       const holders = astraWielders(card.id);
       lines.push(
-        `An ultimate astra. Only ${holders.length ? holders.join(', ') : 'a warrior granted it by a god'} can fire it.`,
+        `An ultimate divya-astra (divine weapon). ${
+          holders.length ? `Borne by ${holders.join(' and ')}` : 'Given only by a god'
+        }, or by any warrior who earns it through tapasya (penance at a shrine).`,
       );
     } else if (tier === 2) {
-      lines.push('A great astra. Only a warrior trained in the Brahma line can fire it.');
+      lines.push(
+        'A great divya-astra (divine weapon), of the Brahma line. Only a warrior ' +
+          'trained to that rank can speak its mantra, or one who earns it through ' +
+          'tapasya (penance at a shrine).',
+      );
     } else {
-      lines.push('An elemental astra. Any astra-trained warrior can fire it.');
+      lines.push(
+        'An elemental astra (a weapon of fire, water or wind). Any astra-trained ' +
+          'warrior can loose it.',
+      );
     }
   }
   // OUTSIDE the astra branch. This was nested inside it, so a warrior's answer

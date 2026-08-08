@@ -15,7 +15,7 @@ export const PANDAVA_CARDS: Card[] = [
     keywords: [],
     ability: {
       name: 'Arrow Rain',
-      text: 'Darkens the sky over the enemy host (-2 to every foe). Once per battle.',
+      text: 'Darkens the sky over the enemy army (-2 to every foe). Once per battle.',
       charges: 1,
       target: { pick: 'allEnemyUnits' },
       actions: [{ kind: 'damage', amount: 2 }],

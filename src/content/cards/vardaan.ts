@@ -65,7 +65,7 @@ export const VARDAAN_CARDS: Card[] = [
     keywords: [],
     cost: {
       consequence:
-        'Brahma will not grant immortality. He makes you name your own death: this warrior fears nothing in the three worlds, save what stands beside him in his own host.',
+        'Brahma will not grant immortality. He makes you name your own death: this warrior fears nothing in the three worlds, save what stands beside him in his own army.',
     },
     effects: [
       {

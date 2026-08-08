@@ -20,7 +20,7 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: ['brahmastra'],
     cost: {
       consequence:
-        'It takes the whole enemy host at once, five to every warrior standing in every rank. Then your own army sickens for it: a quarter off each of your men, rounded up, for the rest of the battle. Loosing it is an act of adharma, and the shrap holds for five battles after this one. Only another Brahma-Astra can answer it.',
+        'It takes the whole enemy army at once, five to every warrior standing in every rank. Then your own army sickens for it: a quarter off each of your men, rounded up, for the rest of the battle. Loosing it is an act of adharma, and the shrap (curse) holds for five battles after this one. Only another Brahma-Astra can answer it.',
     },
     effects: [
       // THE WHOLE HOST, not a line. There is no row to choose because there is
@@ -77,7 +77,7 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: ['brahmashirsha', 'brahmastra'],
     cost: {
       consequence:
-        'The four-headed weapon takes the enemy host entire, and the round with it. Only the deathless walk out. The land it touched is poisoned: a third off every man you have left. The shrap of it holds for ten battles.',
+        'The four-headed weapon takes the enemy army entire, and the round with it. Only the deathless walk out. The land it touched is poisoned: a third off every man you have left. The shrap (curse) of it holds for ten battles.',
     },
     effects: [
       // WAS: destroy allUnits, both hosts. That measured a 17.2% win rate, the
@@ -135,7 +135,7 @@ export const ASTRA_CARDS: Card[] = [
     keywords: [],
     cost: {
       consequence:
-        'You win this battle the instant it is loosed, every round of it, and the weapon burns from your grasp. Then it is remembered: the shrap of loosing it hangs over your host for fifteen battles, which is most of a war. Nothing answers it. Nothing survives it.',
+        'You win this battle the instant it is loosed, every round of it, and the weapon burns from your grasp. Then it is remembered: the shrap (curse) of loosing it hangs over your army for fifteen battles, which is most of a war. Nothing answers it. Nothing survives it.',
     },
     effects: [
       {
@@ -172,7 +172,7 @@ export const ASTRA_CARDS: Card[] = [
     counteredBy: [],
     cost: {
       consequence:
-        'It does not strike and end. It hangs over their host and comes again every round, harder each time. The only escape is the one Krishna ordered: lay down arms and pass.',
+        'It does not strike and end. It hangs over their army and comes again every round, harder each time. The only escape is the one Krishna ordered: lay down arms and pass.',
     },
     effects: [
       // THE ONLY WEAPON IN THE GAME THAT DOES NOT RESOLVE. It becomes a
@@ -492,7 +492,7 @@ export const ASTRA_CARDS: Card[] = [
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
     counteredBy: ['prajna'],
-    cost: { consequence: 'The host sees a thousand of you, and strikes at every one of them.' },
+    cost: { consequence: 'The army sees a thousand of you, and strikes at every one of them.' },
     effects: [
       // They cut each other down: the whole enemy line takes it, not one man.
       { on: 'onPlay', target: { pick: 'enemyRowSameAsPlayed' }, actions: [{ kind: 'damage', amount: 3 }] },
@@ -560,7 +560,7 @@ export const ASTRA_CARDS: Card[] = [
     provision: 5,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'Sense returns. Whatever was clouding your host lifts.' },
+    cost: { consequence: 'Sense returns. Whatever was clouding your army lifts.' },
     effects: [
       { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'removeFlag', flag: 'stupefied' }] },
       { on: 'onPlay', target: { pick: 'allOwnUnits' }, actions: [{ kind: 'buff', amount: 1 }] },

@@ -2167,3 +2167,18 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* A first-time visitor's nudge toward the rules. Replaces an auto-opening modal
+   whose backdrop ate their first tap on "Quickplay" and looked like the game
+   bouncing them back to the menu. */
+.btn--beckon {
+  border-color: var(--brass, #a98c45);
+  box-shadow: 0 0 0 1px rgba(169, 140, 69, 0.35), 0 0 18px rgba(169, 140, 69, 0.22);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn--beckon { animation: beckon 2.8s ease-in-out infinite; }
+  @keyframes beckon {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(169, 140, 69, 0.30), 0 0 12px rgba(169, 140, 69, 0.16); }
+    50%      { box-shadow: 0 0 0 1px rgba(169, 140, 69, 0.55), 0 0 22px rgba(169, 140, 69, 0.34); }
+  }
+}
