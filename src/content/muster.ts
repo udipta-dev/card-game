@@ -115,26 +115,86 @@ export function toDeckList(house: House, name: string, ids: readonly CardId[]): 
  *
  * Used for the "Auto" button and, more importantly, as the default for anyone
  * who never opens the muster screen: a run must never hand the engine an
- * illegal deck just because the player did not choose. Greedy by power per
- * provision, which is not optimal and does not need to be; it needs to be
- * legal, sensible, and the same every time for a given pool.
+ * illegal deck just because the player did not choose.
+ *
+ * REWRITTEN, because the old one was a trap. It ranked by power per provision
+ * and stopped at MUSTER_MAX cards, which optimises the wrong quantity: card
+ * COUNT rather than budget. Nineteen efficient cheap cards spend about 152 of
+ * 170, so the button handed the player an army with 18 provisions left on the
+ * table. Measured against the curated starters it produced pandava 26.2%,
+ * kaurava 52.7%, asura 68.6%, where the curated armies sit at 42.9 / 53.7 /
+ * 50.6. A Pandava player pressing the convenience button lost 17 points for it.
+ *
+ * It also predated valours entirely, so it could not see that a maharathi now
+ * carries three choices and a rathi one.
+ *
+ * The objective is now the thing that actually wins rounds: TOTAL WORTH ON THE
+ * FIELD, maximised against the budget rather than against a card count. Greedy
+ * fill to the legal floor, then an upgrade pass that spends what is left.
+ *
+ * AND IT IS STILL ONLY A FALLBACK, which is worth saying plainly. Three
+ * heuristics were measured against the curated armies and all three produced
+ * roughly the same 42-point spread:
+ *
+ *   power per provision, 19 cards, 152 spent   pandava 26.2  kaurava 52.7  asura 68.6
+ *   worth, 15 cards, budget spent                      38.2          33.8         76.3
+ *   worth per provision then upgrade, 19, spent        29.6          45.4         72.1
+ *
+ * A ranking function cannot see that a weapon needs a wielder standing, that a
+ * bond wants five men of the same banner, or that a house whose answer to
+ * removal is armour folds to a house that removes by destruction. The published
+ * work on this says the same thing: heuristic deckbuilders "don't transfer to
+ * real gameplay".
+ *
+ * So the real answer is sim/deck-search.ts, which plays actual games, and the
+ * armies it finds get shipped as data. This function exists for the case that
+ * search cannot cover: an arbitrary pool the player has restricted by hand.
  */
+
+/**
+ * What a card is worth to an army, in rough board-power points.
+ *
+ * A warrior is his power plus his valours, because a valour is a real effect he
+ * lands the moment he arrives and rank buys how many of them he chooses from.
+ * Everything else is priced by what it does when it lands: an astra by its rank,
+ * a boon or a named weapon at about a mid warrior, a stratagem below that.
+ *
+ * Deliberately coarse. This has to rank cards against each other and be the same
+ * every time; it is not trying to be the deck search in sim/deck-search.ts,
+ * which plays actual games because that is the only way to know.
+ */
+function worthOf(c: Card): number {
+  if (c.type === 'unit') return c.basePower + (c.valours?.length ?? 0);
+  if (c.type === 'astra') return 4 + (c.astraTier ?? 1) * 2;
+  if (c.type === 'stratagem') return 3;
+  return 5;
+}
+
 export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId[] {
-  const value = (c: Card) => (c.type === 'unit' ? (c.basePower ?? 0) : 6) / provisionOf(c);
-  const byValue = (a: CardId, b: CardId) => {
-    const d = value(getCard(b)) - value(getCard(a));
+  const byWorth = (a: CardId, b: CardId) => {
+    const d = worthOf(getCard(b)) - worthOf(getCard(a));
+    return d !== 0 ? d : a.localeCompare(b);
+  };
+  // EFFICIENCY FILLS, WORTH UPGRADES, and the order matters more than either.
+  //
+  // Filling by raw worth takes the most expensive warriors first and runs the
+  // budget out at fifteen cards. Measured: that army loses harder than the one
+  // that left 18 provisions unspent, because this game is decided by card
+  // economy and running out of cards in round three loses the round outright.
+  // Fill for COUNT, then spend the remainder on quality.
+  const byEfficiency = (a: CardId, b: CardId) => {
+    const d = worthOf(getCard(b)) / provisionOf(getCard(b)) - worthOf(getCard(a)) / provisionOf(getCard(a));
     return d !== 0 ? d : a.localeCompare(b);
   };
 
   // WARRIORS FIRST, to the minimum the line needs, then the arsenal.
   //
-  // A single value-ranked pass looks tidier and produces a host that cannot
-  // fight. Cheap astras score well per provision, so greedy filled the Asura
-  // muster with ten warriors and nine weapons, and an astra with nobody left
-  // standing to loose it is a dead card. The floor has to be satisfied before
-  // efficiency gets a say.
-  const warriors = pool.filter((id) => getCard(id).type === 'unit').sort(byValue);
-  const rest = pool.filter((id) => getCard(id).type !== 'unit').sort(byValue);
+  // A single ranked pass looks tidier and produces an army that cannot fight.
+  // Cheap astras score well, so greedy filled the Asura muster with ten warriors
+  // and nine weapons, and an astra with nobody left standing to loose it is a
+  // dead card. The floor has to be satisfied before efficiency gets a say.
+  const warriors = pool.filter((id) => getCard(id).type === 'unit').sort(byEfficiency);
+  const rest = pool.filter((id) => getCard(id).type !== 'unit').sort(byEfficiency);
   const needWarriors = Math.min(AUTO_WARRIORS, warriors.length);
 
   const picked: CardId[] = [];
@@ -148,6 +208,29 @@ export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId
   take(warriors, Math.min(needWarriors, target));
   take(rest, target);
   take(warriors, target); // any room the arsenal could not use goes back to bodies
+
+  // SPEND WHAT IS LEFT. The pass above fills to a card count and then stops,
+  // which is exactly how 18 provisions went unused. Trade the weakest card in
+  // hand for the best one the leftover budget can now afford, and keep doing it
+  // while that is an improvement.
+  for (let guard = 0; guard < 60; guard++) {
+    const spent = musterProvisions(picked);
+    const weakest = picked.slice().sort((a, b) => worthOf(getCard(a)) - worthOf(getCard(b)))[0];
+    if (!weakest) break;
+    const freed = DECK_BUDGET - spent + provisionOf(getCard(weakest));
+    const upgrade = pool
+      .filter((id) => !picked.includes(id) && provisionOf(getCard(id)) <= freed)
+      .filter((id) => worthOf(getCard(id)) > worthOf(getCard(weakest)))
+      .sort(byWorth)[0];
+    if (!upgrade) break;
+    const trial = picked.filter((id) => id !== weakest).concat(upgrade);
+    // Never trade into an illegal army: the warrior floor and the arsenal rules
+    // outrank the upgrade.
+    if (whyNotAdd(picked.filter((id) => id !== weakest), upgrade) !== null) break;
+    if (trial.filter((id) => getCard(id).type === 'unit').length < MIN_WARRIORS) break;
+    picked.length = 0;
+    picked.push(...trial);
+  }
   return picked;
 }
 
