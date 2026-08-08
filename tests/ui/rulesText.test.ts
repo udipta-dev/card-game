@@ -203,3 +203,28 @@ describe('armour belongs to whoever is wearing it', () => {
     expect(rulesText(getCard('prahlada')).join(' ')).toMatch(/first 3 of harm/);
   });
 });
+
+describe('a card that cannot be beaten says who beats it', () => {
+  it('Duryodhana names Bhima on his own card', () => {
+    // "Cannot be slain ... until a vow strips it from him" tells you a vow
+    // exists and not whose. `counteredBy` was rendered inside the `card.type
+    // === 'astra'` branch, so a warrior's answer was typed, stored, validated
+    // and then silently never shown, and the answer lived only on Bhima's card
+    // where a Kaurava player holding Duryodhana would never look.
+    const text = rulesText(getCard('duryodhana')).join(' ');
+    expect(text).toMatch(/cannot be slain/i);
+    expect(text).toMatch(/Answered by: Bhima/);
+  });
+
+  it('and every counteredBy in the set reaches the panel, astra or not', () => {
+    for (const card of allCards()) {
+      if (!card.counteredBy?.length) continue;
+      const text = rulesText(card).join(' ');
+      for (const answer of card.counteredBy) {
+        expect(text, `${card.id} hides its answer ${answer}`).toMatch(
+          new RegExp(getCard(answer).name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')),
+        );
+      }
+    }
+  });
+});

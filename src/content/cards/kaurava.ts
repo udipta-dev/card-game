@@ -152,6 +152,15 @@ export const KAURAVA_CARDS: Card[] = [
     // himself cannot pierce it with his thunder." Then the contempt that makes
     // the card: "He weareth it only like a woman."
     effects: [{ on: 'onPlay', target: { pick: 'self' }, actions: [{ kind: 'addFlag', flag: 'diamond-body' }] }],
+    // NAME THE MAN WHO ANSWERS HIM. His own card said the armour holds "until a
+    // vow strips it from him", which tells you a vow exists and not whose, and
+    // "so what actually kills Duryodhana?" was a real question off a real
+    // playtest. The answer was written only on Bhima's card, so a Kaurava
+    // player holding Duryodhana had no way to reach it.
+    //
+    // The vow is the thigh: Bhima swore it in the assembly hall when Duryodhana
+    // bared it to Draupadi, and he collects at the lake at Kurukshetra.
+    counteredBy: ['bhima'],
     flavor: 'Cased by Drona in mail that Indra’s own thunder could not pierce. He wore it like a man borrowing a coat.',
   },
   {

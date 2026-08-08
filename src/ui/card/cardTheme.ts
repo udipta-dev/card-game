@@ -419,9 +419,18 @@ export function rulesText(card: Card): string[] {
     } else {
       lines.push('An elemental astra. Any astra-trained warrior can fire it.');
     }
-    if (card.counteredBy?.length)
-      lines.push(`Answered by: ${card.counteredBy.map(nameOf).join(', ')} in the enemy hand.`);
   }
+  // OUTSIDE the astra branch. This was nested inside it, so a warrior's answer
+  // was accepted by the type, stored, validated, and then silently never shown.
+  // Duryodhana's own card said his armour holds "until a vow strips it from
+  // him", which tells you a vow exists and not whose, and the answer lived only
+  // on Bhima's card where a Kaurava player would never look.
+  if (card.counteredBy?.length)
+    lines.push(
+      card.type === 'astra'
+        ? `Answered by: ${card.counteredBy.map(nameOf).join(', ')} in the enemy hand.`
+        : `Answered by: ${card.counteredBy.map(nameOf).join(', ')}, and by no one else.`,
+    );
   if (card.astraMastery)
     lines.push(`An astra-master, trained to tier ${card.astraMastery}.`);
   if (card.knownAstras?.length)
