@@ -95,12 +95,33 @@ export function checkMuster(ids: readonly CardId[]): MusterCheck {
   return { ok: problems.length === 0, count, provisions, problems };
 }
 
+/**
+ * How much an army may spend, and the most any one card in it may cost.
+ *
+ * Quickplay uses the defaults and always has. The LADDER is why this is a
+ * parameter: a level-4 opponent must field an army built the way a level-4
+ * player's is, out of cheap men, and that is the whole of the early difficulty
+ * curve. No hand-written ladder of decks to keep in step with the card set.
+ */
+export interface Limits {
+  budget?: number;
+  /** The most a single card may cost. Undefined means no ceiling. */
+  cap?: number;
+}
+
 /** Would adding this card break the muster? Returns why, or null if it fits. */
-export function whyNotAdd(ids: readonly CardId[], id: CardId): string | null {
+export function whyNotAdd(
+  ids: readonly CardId[],
+  id: CardId,
+  limits: Limits = {},
+): string | null {
+  const budget = limits.budget ?? DECK_BUDGET;
   if (ids.includes(id)) return 'Already mustered';
   if (ids.length >= MUSTER_MAX) return `A host is ${MUSTER_MAX} cards at most`;
   const cost = provisionOf(getCard(id));
-  const left = DECK_BUDGET - musterProvisions(ids);
+  if (limits.cap != null && cost > limits.cap)
+    return `Costs ${cost} provisions, and you may not field above ${limits.cap} yet`;
+  const left = budget - musterProvisions(ids);
   if (cost > left) return `Costs ${cost} provisions, ${left} left`;
   return null;
 }
@@ -170,7 +191,14 @@ function worthOf(c: Card): number {
   return 5;
 }
 
-export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId[] {
+export function autoMuster(
+  pool: readonly CardId[],
+  target = MUSTER_MAX,
+  limits: Limits = {},
+): CardId[] {
+  const budget = limits.budget ?? DECK_BUDGET;
+  const affordable = (id: CardId) =>
+    limits.cap == null || provisionOf(getCard(id)) <= limits.cap;
   // A KNOWN-GOOD ARMY BEATS ANY HEURISTIC, so hand one back when the pool can
   // hold it. The curated starters ARE the searched armies: they carry what
   // sim/deck-search.ts reached for, and the Brahma-Astra it threw out of all
@@ -180,9 +208,16 @@ export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId
   // Only when the whole army fits the pool, so a player who has cut the pool
   // down by hand still gets a legal answer from the greedy pass rather than a
   // list containing cards they excluded.
+  //
+  // Skipped once a cap or a reduced budget is in force, because a curated army
+  // is built for the full 170 and a ladder opponent that quietly ignored its
+  // own ceiling would be the difficulty curve defeating itself.
   const held = new Set(pool);
-  for (const deck of Object.values(DECKS)) {
-    if (deck.cards.length && deck.cards.every((id) => held.has(id))) return [...deck.cards];
+  const capped = limits.cap != null || budget !== DECK_BUDGET;
+  if (!capped) {
+    for (const deck of Object.values(DECKS)) {
+      if (deck.cards.length && deck.cards.every((id) => held.has(id))) return [...deck.cards];
+    }
   }
 
   const byWorth = (a: CardId, b: CardId) => {
@@ -207,15 +242,16 @@ export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId
   // Cheap astras score well, so greedy filled the Asura muster with ten warriors
   // and nine weapons, and an astra with nobody left standing to loose it is a
   // dead card. The floor has to be satisfied before efficiency gets a say.
-  const warriors = pool.filter((id) => getCard(id).type === 'unit').sort(byEfficiency);
-  const rest = pool.filter((id) => getCard(id).type !== 'unit').sort(byEfficiency);
+  const usable = pool.filter(affordable);
+  const warriors = usable.filter((id) => getCard(id).type === 'unit').sort(byEfficiency);
+  const rest = usable.filter((id) => getCard(id).type !== 'unit').sort(byEfficiency);
   const needWarriors = Math.min(AUTO_WARRIORS, warriors.length);
 
   const picked: CardId[] = [];
   const take = (ids: readonly CardId[], upTo: number) => {
     for (const id of ids) {
       if (picked.length >= upTo) break;
-      if (whyNotAdd(picked, id) === null) picked.push(id);
+      if (whyNotAdd(picked, id, limits) === null) picked.push(id);
     }
   };
 
@@ -231,8 +267,8 @@ export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId
     const spent = musterProvisions(picked);
     const weakest = picked.slice().sort((a, b) => worthOf(getCard(a)) - worthOf(getCard(b)))[0];
     if (!weakest) break;
-    const freed = DECK_BUDGET - spent + provisionOf(getCard(weakest));
-    const upgrade = pool
+    const freed = budget - spent + provisionOf(getCard(weakest));
+    const upgrade = usable
       .filter((id) => !picked.includes(id) && provisionOf(getCard(id)) <= freed)
       .filter((id) => worthOf(getCard(id)) > worthOf(getCard(weakest)))
       .sort(byWorth)[0];
@@ -240,7 +276,7 @@ export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId
     const trial = picked.filter((id) => id !== weakest).concat(upgrade);
     // Never trade into an illegal army: the warrior floor and the arsenal rules
     // outrank the upgrade.
-    if (whyNotAdd(picked.filter((id) => id !== weakest), upgrade) !== null) break;
+    if (whyNotAdd(picked.filter((id) => id !== weakest), upgrade, limits) !== null) break;
     if (trial.filter((id) => getCard(id).type === 'unit').length < MIN_WARRIORS) break;
     picked.length = 0;
     picked.push(...trial);

@@ -45,6 +45,15 @@ export interface RunState {
   seed: number;
   /** The player's chosen host. */
   house: House;
+  /**
+   * The ladder level this run is an attempt at. Sets how well the opponents
+   * play and how big an army they may field.
+   *
+   * Optional because runs saved before the ladder existed have no level, and a
+   * returning player must not lose their campaign to a new field. Readers
+   * default it to the top rung, which is the game those runs were started in.
+   */
+  level?: number;
   /** The persistent card pool. Grows by recruiting, shrinks when spent or burnt. */
   roster: CardId[];
   /** The escalating sequence of fights. */

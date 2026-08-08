@@ -3,7 +3,7 @@ import type { DeckList } from '@content/decks';
 import type { House } from '@engine/types';
 import { MatchView } from '@ui/match/MatchView';
 import { createRun } from '@run/run';
-import { recordRunStart } from '@run/meta';
+import { recordRunStart, currentStanding } from '@run/meta';
 import { clearRun, loadRun, saveRun } from '@run/savedRun';
 import type { RunState } from '@run/types';
 import { Codex } from './screens/Codex';
@@ -12,7 +12,7 @@ import { RunView } from './screens/RunView';
 import { Setup } from './screens/Setup';
 import { Muster } from './screens/Muster';
 import { LadderPreview } from './screens/LadderPreview';
-import { NEW_STANDING } from '@run/ladder';
+import type { Standing } from '@run/ladder';
 import { loadMuster, saveMuster } from '@content/savedMuster';
 
 interface MatchConfig {
@@ -39,6 +39,9 @@ export function App() {
   const [run, setRun] = useState<RunState | null>(() => loadRun());
   /** Which house the muster screen is editing, and where to return to. */
   const [mustering, setMustering] = useState<{ house: House; back: Screen } | null>(null);
+  // Read once per mount rather than on every render: it is a localStorage hit,
+  // and it only changes when a run ends, which unmounts this anyway.
+  const [standing, setStanding] = useState<Standing>(() => currentStanding());
 
   // Persist on every change rather than at checkpoints, because the moments a
   // player actually loses a tab (sleep, crash, update) are not checkpoints.
@@ -55,9 +58,10 @@ export function App() {
   const startCampaign = (playerDeck: DeckList) => {
     recordRunStart();
     setScreen('menu');
+    // The run is an attempt at whatever rung the player currently stands on.
     // playerDeck is the host mustered on the setup screen. Passing only the
     // house threw that choice away and started every campaign on the starter list.
-    setRun(createRun(makeSeed(), playerDeck.house as House, playerDeck.cards));
+    setRun(createRun(makeSeed(), playerDeck.house as House, playerDeck.cards, standing.level));
   };
 
   if (match) {
@@ -77,7 +81,15 @@ export function App() {
   if (run) {
     return (
       <div className="app">
-        <RunView run={run} onExit={() => setRun(null)} />
+        <RunView
+          run={run}
+          onExit={() => {
+            // The run recorded its own result on the way out, so re-read the
+            // standing rather than computing it twice and risking two answers.
+            setStanding(currentStanding());
+            setRun(null);
+          }}
+        />
       </div>
     );
   }
@@ -115,9 +127,8 @@ export function App() {
       ) : screen === 'ladder' ? (
         // Shown from the menu, before a run exists, so a brand new player can
         // see what fifty levels actually contains. Pandava by default because a
-        // house has not been chosen at that point; once runs carry a standing
-        // this takes theirs.
-        <LadderPreview house="pandava" standing={NEW_STANDING} onBack={() => setScreen('menu')} />
+        // house has not been chosen at that point.
+        <LadderPreview house="pandava" standing={standing} onBack={() => setScreen('menu')} />
       ) : screen === 'codex' ? (
         <Codex onBack={() => setScreen('menu')} />
       ) : (

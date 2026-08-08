@@ -271,6 +271,19 @@ export function chooseAction(
    * comparison stays reproducible.
    */
   worldCount: number = WORLDS,
+  /**
+   * May it cycle its worst card at the top of a round? A knob rather than a
+   * const because the ladder turns it off for the lower rungs: free card
+   * quality is one of the two things that separates a level-40 opponent from
+   * a level-4 one.
+   */
+  roundSwap: boolean = AI_USES_ROUND_SWAP,
+  /**
+   * Does it throw its worst cards back at the deal? The ladder's other brain
+   * dial. Measured at 6.4 points, so a beginner opponent keeps whatever six it
+   * was dealt, which is what this AI did for its whole life before hand.ts.
+   */
+  mulligan: boolean = true,
 ): Action {
   // The returned action references the AI's own card ids, which are unchanged,
   // so it is valid to apply against the real state.
@@ -290,10 +303,19 @@ export function chooseAction(
   // loop only ever calls this for state.activeSeat.
   if (realState.phase === 'mulligan') {
     const owes: Seat = realState.mulliganDone[seat] ? opponentOf(seat) : seat;
-    return { type: 'MULLIGAN', seat: owes, iids: worstCards(realState, owes, MULLIGAN_MAX) };
+    // The skill knob governs THIS opponent's own hand only. When answering for
+    // the other seat (which the lab does, driving both sides through one call)
+    // the full policy applies, or one side's handicap would be dealt to the
+    // other side's cards.
+    const keep = owes === seat && !mulligan;
+    return {
+      type: 'MULLIGAN',
+      seat: owes,
+      iids: keep ? [] : worstCards(realState, owes, MULLIGAN_MAX),
+    };
   }
 
-  if (AI_USES_ROUND_SWAP) {
+  if (roundSwap) {
     const swap = worstCardSwap(realState, seat);
     if (swap) return swap;
   }

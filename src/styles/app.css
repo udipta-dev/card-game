@@ -5,6 +5,41 @@
   flex-direction: column;
 }
 
+/* ---- Screen transitions --------------------------------------------------
+   Every screen settles in rather than snapping in. Done in pure CSS on the
+   roots that already exist, with no wrapper and no state: React swaps one
+   component for another when the screen changes, the element mounts, and a
+   CSS animation on mount runs exactly once. A JS transition layer here would
+   have meant a wrapper element in the middle of a `height: 100%` chain, which
+   is how you break a full-height layout for a fade.
+
+   Deliberately short and deliberately small. This is furniture between two
+   places you actually wanted to be, so it must never make you wait: 280ms, and
+   a 1.5% scale that reads as settling rather than as zooming.
+
+   NOTE the missing fill-mode, which is load-bearing. `both` would leave the
+   transform applied forever, and a transformed ancestor becomes the containing
+   block for `position: fixed` children, which would quietly re-anchor the astra
+   reveal and the god manifestation to this element for the rest of the run. */
+.menu,
+.codex,
+.run,
+.match {
+  animation: screen-in 280ms cubic-bezier(0.22, 0.72, 0.3, 1);
+}
+
+@keyframes screen-in {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .codex,
+  .run,
+  .match { animation: none; }
+}
+
 /* ---------------------------------------------------------------- Main menu */
 .menu {
   /* Positioned so the ambient layer anchors to the screen rather than escaping
@@ -2175,6 +2210,118 @@
   .astra-reveal.is-lit .astra-reveal__frame { animation: none; }
 }
 
+/* ---- A god manifesting ---------------------------------------------------
+   The counterpart to the astra reveal, and made the same way: out of the
+   painting we already own rather than out of generated footage.
+
+   It reads differently on purpose. An astra ARRIVES: it scales up hard, blooms
+   and jolts, because it is an explosion. A god does not arrive, he is simply
+   there and the light finds him, so this one holds still and lets a band of
+   light cross the painting once. Same technique, opposite temperament. */
+.manifest {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: radial-gradient(closest-side, rgba(6, 3, 12, 0.78), rgba(0, 0, 0, 0.94));
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.manifest.is-lit { opacity: 1; }
+
+.manifest__frame {
+  position: relative;
+  width: min(52vw, 260px);
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--brass, #a98c45);
+  border-radius: 999px 999px 12px 12px; /* an arched niche, as a murti stands in */
+  overflow: hidden;
+  transform: scale(0.96);
+  filter: brightness(0.45) saturate(0.7);
+  transition: transform 900ms cubic-bezier(0.16, 0.84, 0.28, 1), filter 900ms ease;
+}
+.manifest.is-lit .manifest__frame {
+  transform: scale(1);
+  filter: brightness(1.04) saturate(1);
+}
+.manifest__art { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* The halo: steady, behind the niche, breathing rather than blooming. */
+.manifest__halo {
+  position: absolute;
+  width: min(84vw, 440px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(240, 206, 122, 0.34), rgba(240, 206, 122, 0));
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 1100ms ease, transform 1100ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.manifest.is-lit .manifest__halo {
+  opacity: 1;
+  transform: scale(1);
+  animation: manifest-breathe 4200ms 1100ms ease-in-out infinite;
+}
+
+/* One pass of light across the face. This is the whole trick: a still painting
+   with a highlight travelling over it reads as a figure resolving out of the
+   dark, where a plain fade reads as a picture being faded in. */
+.manifest__sweep {
+  position: absolute;
+  inset: -20% -60%;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 240, 200, 0) 42%,
+    rgba(255, 240, 200, 0.42) 50%,
+    rgba(255, 240, 200, 0) 58%
+  );
+  transform: translateX(-70%);
+  opacity: 0;
+  pointer-events: none;
+}
+.manifest.is-lit .manifest__sweep { animation: manifest-sweep 1500ms 260ms ease-out; }
+
+.manifest__name {
+  font-size: 1.45rem;
+  letter-spacing: 0.05em;
+  color: var(--brass, #a98c45);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 520ms 620ms ease, transform 520ms 620ms ease;
+}
+.manifest__epithet {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0;
+  transition: opacity 520ms 820ms ease;
+}
+.manifest.is-lit .manifest__name { opacity: 1; transform: none; }
+.manifest.is-lit .manifest__epithet { opacity: 0.66; }
+
+@keyframes manifest-sweep {
+  0% { transform: translateX(-70%); opacity: 0; }
+  18% { opacity: 1; }
+  100% { transform: translateX(70%); opacity: 0; }
+}
+@keyframes manifest-breathe {
+  0%, 100% { opacity: 0.82; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.045); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifest__frame,
+  .manifest__name,
+  .manifest__epithet { transition-duration: 1ms; }
+  .manifest.is-lit .manifest__halo { animation: none; }
+  .manifest.is-lit .manifest__sweep { animation: none; }
+}
+
 /* ---- Ambient backgrounds -------------------------------------------------
    Two copies of one clip, offset by half its length and crossfading, because
    the clips do not loop seamlessly and nothing generates ones that do. On slow
@@ -2479,4 +2626,56 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .ladder-card.is-locked img { transition: filter 200ms ease; }
+}
+
+/* ---- Ascending: what a level was worth -----------------------------------
+   Most rises are one rung and one provision, stated plainly. Roughly one in
+   five crosses a step, and THAT is the moment the ladder exists for, so the
+   band of newly affordable cards arrives one after another rather than all at
+   once: an unlock you can count is worth more than a grid that appears. */
+.ascend__line {
+  margin: 4px 0 22px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.ascend__cap {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  color: var(--gold-dim);
+}
+.ascend__next {
+  margin: 22px 0 0;
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+}
+.ascend__go { margin: 26px auto 40px; display: block; }
+
+/* Newly opened cards arrive lit, and settle. The stagger is capped at ten
+   because a band can be larger than that and a player should not sit through
+   a queue to reach the button. */
+.ladder-card.is-new img { border-color: var(--brass, #a98c45); }
+@media (prefers-reduced-motion: no-preference) {
+  .ladder-card.is-new {
+    animation: unlock-in 520ms cubic-bezier(0.16, 0.84, 0.28, 1) backwards;
+  }
+  .ladder-card.is-new:nth-child(1) { animation-delay: 60ms; }
+  .ladder-card.is-new:nth-child(2) { animation-delay: 130ms; }
+  .ladder-card.is-new:nth-child(3) { animation-delay: 200ms; }
+  .ladder-card.is-new:nth-child(4) { animation-delay: 270ms; }
+  .ladder-card.is-new:nth-child(5) { animation-delay: 340ms; }
+  .ladder-card.is-new:nth-child(6) { animation-delay: 410ms; }
+  .ladder-card.is-new:nth-child(7) { animation-delay: 480ms; }
+  .ladder-card.is-new:nth-child(8) { animation-delay: 550ms; }
+  .ladder-card.is-new:nth-child(9) { animation-delay: 620ms; }
+  .ladder-card.is-new:nth-child(n + 10) { animation-delay: 690ms; }
+}
+
+@keyframes unlock-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+    filter: brightness(2.2) saturate(0.4);
+  }
+  to { opacity: 1; transform: none; filter: none; }
 }

@@ -3,6 +3,9 @@ import type { MouseEvent } from 'react';
 import { getCard } from '@content/cards';
 import type { DeckList } from '@content/decks';
 import { chooseAction } from '@ai/ai';
+import { skillFor } from '@ai/difficulty';
+import type { Skill } from '@ai/difficulty';
+import { MAX_LEVEL } from '@run/ladder';
 import { createMatch } from '@engine/createMatch';
 import type { BattleInit } from '@engine/createMatch';
 import { isLegalAbility, reduce } from '@engine/reducer';
@@ -59,9 +62,16 @@ interface Props {
   init?: BattleInit;
   /** Run mode: hand the finished state back to the run instead of exiting. */
   onFinish?: (finalState: GameState) => void;
+  /**
+   * How well the opponent plays. Quickplay leaves this out and gets the full
+   * brain; a campaign passes the rung it is an attempt at, so a level-4
+   * opponent keeps whatever six cards it was dealt and never cycles.
+   */
+  skill?: Skill;
 }
 
-export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: Props) {
+export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish, skill }: Props) {
+  const brain = skill ?? skillFor(MAX_LEVEL);
   // The AI opens (firstMover 'ai') so the human plays second and gets the
   // last-say edge, which keeps a single-player match feeling fair.
   const [state, dispatch] = useReducer(reduce, undefined, () =>
@@ -104,7 +114,13 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     const aiToMove =
       (state.phase === 'playing' || state.phase === 'awaitingCounter') && state.activeSeat === 'ai';
     if (aiToMove) {
-      const t = setTimeout(() => dispatch(chooseAction(state, 'ai')), AI_DELAY);
+      const t = setTimeout(
+        () =>
+          dispatch(
+            chooseAction(state, 'ai', undefined, undefined, undefined, brain.roundSwap, brain.mulligan),
+          ),
+        AI_DELAY,
+      );
       return () => clearTimeout(t);
     }
   }, [state]);
@@ -117,7 +133,9 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
       // in every real match, exactly as it did in every lab run. The policy now
       // exists in hand.ts and chooseAction answers the mulligan phase; passing
       // [] here would have kept the AI stupid in the only place a human sees.
-      dispatch(chooseAction(state, 'ai'));
+      dispatch(
+        chooseAction(state, 'ai', undefined, undefined, undefined, brain.roundSwap, brain.mulligan),
+      );
     }
   }, [state]);
 

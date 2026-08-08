@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { HowToPlay } from '@ui/HowToPlay';
 import { Ambient } from '@ui/Ambient';
 import { Abhaya, Chakra, Crown, Kalasha, Spears } from '@ui/ornament';
-import { loadMeta } from '@run/meta';
+import { currentStanding, loadMeta } from '@run/meta';
+import { MAX_LEVEL, MIN_LEVEL, budgetAt, capAt } from '@run/ladder';
 
 interface Props {
   onPlay: () => void;
@@ -14,6 +15,7 @@ interface Props {
 const SEEN_KEY = 'kuru_seen_help';
 
 export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
+  const standing = currentStanding();
   const [showHelp, setShowHelp] = useState(false);
   const meta = loadMeta();
 
@@ -70,7 +72,12 @@ export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
           <Chakra size={26} className="plaque__mark" />
           <span className="plaque__body">
             <span className="plaque__title">Campaign</span>
-            <span className="plaque__sub">Carry one army up a ladder of battles</span>
+            {/* WHERE YOU STAND, on the button that changes it. A ladder whose
+                only readout lives on a different screen is a ladder you forget
+                you are on. */}
+            <span className="plaque__sub">
+              Level {standing.level} of {MAX_LEVEL} · {budgetAt(standing.level)} provisions
+            </span>
           </span>
         </button>
         <button className="plaque" onClick={onPlay}>
@@ -84,7 +91,11 @@ export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
           <Kalasha size={26} tiers={3} className="plaque__mark" />
           <span className="plaque__body">
             <span className="plaque__title">The Long March</span>
-            <span className="plaque__sub">Fifty levels, and what waits on each</span>
+            <span className="plaque__sub">
+              {standing.highWater > MIN_LEVEL
+                ? `Cards up to ${capAt(standing.highWater)} provisions are yours`
+                : 'Fifty levels, and what waits on each'}
+            </span>
           </span>
         </button>
         <button className="plaque" onClick={onCodex}>

@@ -12,8 +12,13 @@ import { Muster } from './Muster';
 import { getDeity, worthOf } from '@run/shrine';
 import type { PenanceOffer, ShrineOffer, VardaanOffer } from '@run/shrine';
 import type { RewardOption, RunState } from '@run/types';
-import { recordRunEnd } from '@run/meta';
+import { currentStanding, recordRunEnd } from '@run/meta';
 import { Ambient } from '@ui/Ambient';
+import { Manifest } from '@ui/Manifest';
+import { skillFor } from '@ai/difficulty';
+import { MAX_LEVEL } from '@run/ladder';
+import type { Standing } from '@run/ladder';
+import { Ascend } from './Ascend';
 import { Bindu, Rosette } from '@ui/ornament';
 
 interface Props {
@@ -31,6 +36,15 @@ export function RunView({ run: initial, onExit }: Props) {
   const [inBattle, setInBattle] = useState(false);
   const [mustering, setMustering] = useState(false);
   const recorded = useRef(false);
+  /**
+   * What this run did to your standing, captured at the moment it was filed.
+   *
+   * Held here rather than re-read on the ascend screen, because recordRunEnd
+   * has already moved the number by then and the screen needs BOTH sides of the
+   * move to say what it opened.
+   */
+  const [ascend, setAscend] = useState<{ before: Standing; after: Standing } | null>(null);
+  const [showAscend, setShowAscend] = useState(false);
 
   const plan = useMemo(() => (inBattle ? planBattle(run) : null), [inBattle, run]);
 
@@ -47,7 +61,8 @@ export function RunView({ run: initial, onExit }: Props) {
     if (run.phase !== 'won' && run.phase !== 'lost') return;
     if (recorded.current) return;
     recorded.current = true;
-    recordRunEnd(run.phase === 'won', run.depth);
+    const before = currentStanding();
+    setAscend({ before, after: recordRunEnd(run.phase === 'won', run.depth).standing });
   }, [run.phase, run.depth]);
 
   if (inBattle && plan) {
@@ -58,6 +73,10 @@ export function RunView({ run: initial, onExit }: Props) {
         playerDeck={plan.playerDeck}
         aiDeck={plan.aiDeck}
         init={plan.init}
+        // The rung this run is an attempt at. A run started before the ladder
+        // existed has no level and meets the full brain, which is the game it
+        // was started in.
+        skill={skillFor(run.level ?? MAX_LEVEL)}
         onExit={onExit}
         onFinish={(finalState: GameState) => {
           setInBattle(false);
@@ -74,7 +93,15 @@ export function RunView({ run: initial, onExit }: Props) {
     return <ShrineScreen run={run} onChoose={(o) => setRun((r) => chooseShrineOffer(r, o))} />;
   }
   if (run.phase === 'won' || run.phase === 'lost') {
-    return <RunEndScreen run={run} onExit={onExit} />;
+    // The result, then what it was worth. Two screens rather than one because
+    // they answer different questions and the second is the one a player came
+    // back for: not "did I win" but "what did that get me".
+    if (showAscend && ascend) {
+      return (
+        <Ascend house={run.house} before={ascend.before} after={ascend.after} onDone={onExit} />
+      );
+    }
+    return <RunEndScreen run={run} onExit={() => (ascend ? setShowAscend(true) : onExit())} />;
   }
   if (mustering) {
     return (
@@ -118,6 +145,16 @@ function MapScreen({
   const enc = currentEncounter(run);
   const roster = fieldedRoster(run);
   const marching = marchingCards(run);
+
+  // THE PAYOFF OF THE WHOLE TAPASYA SYSTEM, which until now was one line of
+  // text. You gave up your best warrior for three battles on a wager; when the
+  // god pays out, the god should appear. Queued rather than shown all at once
+  // because two can return on the same rung.
+  const boons = (run.returned ?? []).filter((p) => p.astra);
+  const [shown, setShown] = useState(0);
+  const boon = boons[shown];
+  const deity = boon ? getDeity(boon.deityId) : undefined;
+  const art = boon ? deityArt(boon.deityId) : undefined;
   // Only worth offering once there is a real decision: below the cap, every
   // card marches anyway and a "choose your host" button is a button that
   // changes nothing.
@@ -125,6 +162,17 @@ function MapScreen({
   return (
     <div className="run">
       <Ambient scene="map-road" opacity={0.34} />
+      {/* Only when there is art. A ceremony for a god with no face is a black
+          rectangle, and the text line beneath still says what happened. */}
+      {boon && deity && art && (
+        <Manifest
+          key={boon.warrior}
+          src={art}
+          name={deity.name}
+          epithet={`${deity.epithet} · grants the ${getCard(boon.astra!).name}`}
+          onDone={() => setShown((n) => n + 1)}
+        />
+      )}
       <header className="run__top">
         <button className="btn btn--ghost btn--sm" onClick={onExit}>
           ‹ Abandon

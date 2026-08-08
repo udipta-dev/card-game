@@ -10,6 +10,7 @@ import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
 import { activeCurses, bind, curseBattlesFor, serveOneBattle } from './dharma';
 import { buildLadder } from './encounters';
+import { MAX_LEVEL } from './ladder';
 import { mixSeed, rollRewards } from './rewards';
 import { getDeity, isShrineIndex, rollPenanceOutcome, rollShrine } from './shrine';
 import type { ShrineOffer } from './shrine';
@@ -36,12 +37,18 @@ function startingRoster(house: House, chosen?: readonly CardId[]): CardId[] {
 }
 
 /** Begin a fresh run for the chosen host. */
-export function createRun(seed: number, house: House, chosen?: readonly CardId[]): RunState {
+export function createRun(
+  seed: number,
+  house: House,
+  chosen?: readonly CardId[],
+  level: number = MAX_LEVEL,
+): RunState {
   return {
     seed: seed >>> 0,
     house,
+    level,
     roster: startingRoster(house, chosen),
-    ladder: buildLadder(seed, house),
+    ladder: buildLadder(seed, house, level),
     index: 0,
     phase: 'map',
     banned: [],
