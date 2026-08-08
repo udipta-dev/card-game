@@ -154,6 +154,7 @@ function whom(t: Card['effects'][number]['target']): string {
     case 'lineBothSides':
     case 'lineBothSidesSameAsPlayed': return 'that rank on both sides of the field';
     case 'ownAdjacentToPlayed': return 'your neighbouring ranks';
+    case 'ownRowSameAsPlayed': return 'the rank he joins';
     default: return 'the field';
   }
 }
@@ -172,6 +173,7 @@ function whose(t: Card['effects'][number]['target']): string {
 function conditionText(c: Card['effects'][number]['condition']): string | null {
   if (!c) return null;
   if (c.q === 'isFinalRound') return 'In the round that decides the battle:';
+  if (c.q === 'behindOnPower') return 'While you are losing the field:';
   if (c.q === 'cardOnBoard')
     return `While ${nameOf(c.card)} stands${c.side === 'enemy' ? ' against you' : ''}:`;
   if (c.q === 'targetHasFlag' && c.flag === 'diamond-body') return 'Against an armoured foe:';
@@ -368,6 +370,8 @@ export function rulesText(card: Card): string[] {
         );
       // Armour granted by a card, as opposed to armour a man was born in. Both
       // land in the same counter, so both must read the same way.
+      if (a.kind === 'restore')
+        lines.push(`Restores ${whom(eff.target)} to full strength.`);
       if (a.kind === 'armour')
         lines.push(`Clothes ${whom(eff.target)} in armour: turns aside the first ${a.amount} of harm.`);
       if (a.kind === 'debuffRow') {
@@ -421,6 +425,17 @@ export function rulesText(card: Card): string[] {
   // none of it was ever rendered, so Balarama's card was blank and nothing told
   // you he had a button at all. The text says its own charge cost.
   if (card.ability) lines.push(`${card.ability.name}: ${card.ability.text}`);
+  // THE MENU, listed in full on the card face. A player choosing one of three
+  // as he commits the man needs to have read all three before he gets there,
+  // not discover them in a popup at the moment of the decision.
+  if (card.valours?.length) {
+    lines.push(
+      card.valours.length > 1
+        ? `As he takes the field he does one of these ${card.valours.length}.`
+        : 'As he takes the field.',
+    );
+    for (const v of card.valours) lines.push(`${v.name}: ${v.text}`);
+  }
 
   if (card.type === 'astra') {
     const tier = card.astraTier ?? 1;

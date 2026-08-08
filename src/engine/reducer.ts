@@ -25,12 +25,45 @@ function beginPlaying(s: GameState): void {
   s.activeSeat = s.firstMover;
 }
 
+/**
+ * How many valours a man of this rank is offered, and therefore chooses from.
+ *
+ * The ladder is the point: rank is what you already read off the chevrons on
+ * his card, so it should be what decides how much say you get over him.
+ */
+export const VALOURS_PER_TIER = { maharathi: 3, atirathi: 2, rathi: 1 } as const;
+
+/**
+ * Do the one thing he chose as he took the field.
+ *
+ * Fired here rather than offered as a later turn action, which is the whole
+ * difference between a valour and an ability: choosing IS doing. One card, one
+ * turn, one decision, made looking at the board it lands on.
+ */
+function runValour(
+  s: GameState,
+  ctx: EffectCtx,
+  card: Card,
+  index: number | undefined,
+): void {
+  const valour = card.valours?.[index ?? -1];
+  if (!valour) return;
+  runEffect(ctx, {
+    on: 'onPlay',
+    condition: valour.condition,
+    target: valour.target,
+    actions: valour.actions,
+  });
+  s.log.push({ t: 'valour', iid: ctx.actorIid!, cardId: card.id, name: valour.name });
+}
+
 /** Is this a legal PLAY_CARD for the active seat? Cheap structural check. */
 export function isLegalPlay(
   state: GameState,
   seat: Seat,
   iid: string,
   row: Row,
+  valour?: number,
 ): boolean {
   if (state.phase !== 'playing' || state.activeSeat !== seat) return false;
   if (!state.hands[seat].includes(iid)) return false;
@@ -44,6 +77,10 @@ export function isLegalPlay(
   if (u.flags.has('denied')) return false;
   // Spent for the run. A great astra fires once and the arsenal is empty.
   if (state.bannedThisRun.includes(card.id)) return false;
+  // A valour index has to name one of HIS valours. Out of range would
+  // otherwise resolve to undefined and silently do nothing, which is the
+  // quietest possible way to lose a player's decision.
+  if (valour !== undefined && !card.valours?.[valour]) return false;
   if (card.type === 'astra') {
     if (!canPlayAstras(state, seat, isFinalRound(state))) return false;
     if (!canInvokeAstra(state, seat, card.id)) return false; // needs a warrior who knows it
@@ -262,7 +299,7 @@ export function reduce(state: GameState, action: Action): GameState {
 
     case 'PLAY_CARD': {
       const seat = s.activeSeat;
-      if (!isLegalPlay(s, seat, action.iid, action.row)) return state;
+      if (!isLegalPlay(s, seat, action.iid, action.row, action.valour)) return state;
       s.playedThisRound[seat] = true;
       const iid = action.iid;
       const u = s.instances[iid]!;
@@ -300,6 +337,7 @@ export function reduce(state: GameState, action: Action): GameState {
         s.board[seat][action.row].push(iid);
         initInstanceRuntime(s, iid);
         runCardEffects(ctx, 'onPlay');
+        runValour(s, ctx, card, action.valour);
 
         // A NAMED ASTRA ARRIVES WITH ITS WARRIOR. Karna's spear is his, traded
         // for the armour off his own body; it has no business in a hand that

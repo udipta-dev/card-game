@@ -22,6 +22,7 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'cleanse',
   'buff',
   'armour',
+  'restore',
   'destroy',
   'debuffRow',
   'banFromRun',
@@ -44,6 +45,7 @@ const TARGET_ACTIONS: ReadonlySet<EffectActionKind> = new Set<EffectActionKind>(
   'cleanse',
   'buff',
   'armour',
+  'restore',
   'destroy',
   'addFlag',
   'removeFlag',
@@ -75,6 +77,17 @@ export function applyTargetAction(
       }
       u.currentPower = Math.max(powerFloor(state, u), u.currentPower - remaining);
       emit(ctx, { t: 'damage', iid, amount: remaining, power: u.currentPower });
+      break;
+    }
+    case 'restore': {
+      // NEVER LOWERS. A man raised above his base by a rally keeps it: this is
+      // healing, not a reset, and writing it as a plain setPower would make it
+      // a disguised nerf on exactly the men you most want to save.
+      const base = getCard(u.cardId).basePower;
+      if (u.currentPower < base) {
+        u.currentPower = base;
+        emit(ctx, { t: 'setPower', iid, value: u.currentPower });
+      }
       break;
     }
     case 'armour': {

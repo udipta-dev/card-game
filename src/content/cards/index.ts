@@ -1,4 +1,5 @@
 import type { Card, CardId } from '@engine/types';
+import { VALOURS } from '../valours';
 import { PANDAVA_CARDS } from './pandava';
 import { KAURAVA_CARDS } from './kaurava';
 import { ASURA_CARDS } from './asura';
@@ -24,6 +25,23 @@ export const CARD_DB: Record<CardId, Card> = Object.freeze(
     return db;
   }, {}),
 );
+
+// VALOURS ARE ATTACHED HERE, not written into each card file.
+//
+// Eleven men, three each. Keeping them in one place makes the tier readable as
+// a tier: you can see at a glance that every maharathi is offered three, that
+// no mechanic lands on three of the strongest cards at once, and that the
+// numbers sit where they were priced. Scattered across three card files, that
+// is a diff nobody can review.
+for (const [cardId, valours] of Object.entries(VALOURS)) {
+  const card = CARD_DB[cardId];
+  if (!card) throw new Error(`VALOURS names an unknown card: ${cardId}`);
+  card.valours = valours;
+  // The old single ability is superseded by the menu. Arrow Rain lived here on
+  // three cards, cost a whole turn, and hit EVERY enemy; it is now one of three
+  // choices, rides along with committing the man, and hits one rank.
+  delete card.ability;
+}
 
 export function getCard(id: CardId): Card {
   const card = CARD_DB[id];

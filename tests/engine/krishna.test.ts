@@ -192,11 +192,13 @@ describe('an attached card can still act, which was a real bug', () => {
   // enumeration walked board units only, so nothing riding with a warrior could
   // ever act, and boons never got initInstanceRuntime so they had no charges.
   // Both are latent today and both would have bitten the first shastra we give
-  // an ability to. The Ravana case guards the path that already worked.
+  // an ability to. The Balarama case guards the path that already worked.
   it('offers a fielded warrior his own ability', () => {
-    const s = makeState({ playerBoard: { ratha: ['ravana'] } });
+    // Balarama, since the maharathis moved to valours and he is the last card
+    // still holding a turn-costing ability.
+    const s = makeState({ playerBoard: { gaja: ['balarama'] } });
     s.activeSeat = 'player';
-    const iid = s.board.player.ratha[0];
+    const iid = s.board.player.gaja[0];
     expect(legalMoves(s, 'player').some((m) => m.type === 'USE_ABILITY' && m.iid === iid)).toBe(true);
   });
 

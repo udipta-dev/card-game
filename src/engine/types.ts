@@ -142,6 +142,11 @@ export interface Card {
    * that a maharathi still feels like one with no astra in hand.
    */
   ability?: Ability;
+  /**
+   * Up to three, of which exactly one is done on arrival. The tier says how
+   * many a man is offered: maharathi 3, atirathi 2, rathi 1.
+   */
+  valours?: Valour[];
   /** Free-form tags for bond/synergy (clan, squad, "rakshasa", "vrishni", ...). */
   tags?: string[];
   /** Path under public/art/cards/. Undefined => placeholder frame. */
@@ -160,6 +165,28 @@ export interface Ability {
   text: string;
   /** Uses per battle. Refreshed when the next battle begins, not each round. */
   charges: number;
+  target: TargetSelector;
+  actions: EffectAction[];
+}
+
+/**
+ * One of the things a warrior may choose to do as he takes the field.
+ *
+ * Distinct from `Ability`, which is a skill spent on a LATER turn and costs
+ * that turn. A valour is picked and fired in the same breath as committing the
+ * man, so it costs no tempo of its own, and the choice is locked the moment he
+ * lands. That makes it a real decision made in front of a real board, rather
+ * than a plan formed before anyone had moved.
+ *
+ * Priced accordingly: these are individually smaller than a turn-costing
+ * ability, because riding along with the card is worth a great deal on its own.
+ */
+export interface Valour {
+  name: string;
+  /** Shown in the picker and on the card face. */
+  text: string;
+  /** Gate, same shape an effect uses. Barbarika's oath only binds when losing. */
+  condition?: Condition;
   target: TargetSelector;
   actions: EffectAction[];
 }
@@ -266,6 +293,9 @@ export type EffectAction =
   // clears hazards since the beginning, for the same reason.
   | { kind: 'cleanse' }
   | { kind: 'buff'; amount: number }
+  // Back to the strength he started at. Never lowers, so it cannot be used as
+  // a disguised nerf on a man who has been raised above his base.
+  | { kind: 'restore' }
   // Armour, granted rather than born with. A kavacha turns blows aside; it does
   // not make the man stronger, which is the whole difference between wearing
   // one and being raised by a boon.
@@ -333,6 +363,9 @@ export type TargetSelector =
   | { pick: 'lineBothSidesSameAsPlayed' }
   // Own units in the row(s) adjacent to where this astra was played.
   | { pick: 'ownAdjacentToPlayed' }
+  // The rank he joined: own units in the row this card was played into. A
+  // rally lifts the line you step into, so WHERE you place him is the decision.
+  | { pick: 'ownRowSameAsPlayed' }
   // A specific named card on a given side (Shalya finds Karna, Dhrishtadyumna finds Drona).
   /**
    * A named man, wherever he stands. `card` for one, `cards` for a list.
@@ -348,11 +381,23 @@ export interface UnitFilter {
   side?: 'enemy' | 'own' | 'any';
   rows?: Row[];
   type?: CardType;
+  /**
+   * Only these named men may be picked.
+   *
+   * Bhima's vow needs it. It used to take EVERY one of the seven he swore to
+   * kill who happened to be standing, so two 9-power men could die to one card
+   * with no decision made by anybody. Now the game offers whoever is reachable
+   * and the player chooses which promise to collect.
+   */
+  cards?: CardId[];
 }
 
 export type Condition =
   | { q: 'cardOnBoard'; card: CardId; side?: 'own' | 'enemy' | 'any' }
   | { q: 'isFinalRound' }
+  // The board is against you right now. For the oaths that only bind when a
+  // man is losing: Barbarika swore to fight for whichever side was weaker.
+  | { q: 'behindOnPower' }
   | { q: 'targetHasBoon'; boon: CardId }
   | { q: 'targetHasFlag'; flag: string }
   | { q: 'not'; c: Condition }
@@ -525,7 +570,12 @@ export interface GameState {
 // ---------------------------------------------------------------------------
 
 export type Action =
-  | { type: 'PLAY_CARD'; iid: InstanceId; row: Row; targets?: InstanceId[] }
+  /**
+   * `valour` indexes into the card's `valours`: which of the three he does as
+   * he arrives. Absent means none, which is legal only for a card that offers
+   * none.
+   */
+  | { type: 'PLAY_CARD'; iid: InstanceId; row: Row; targets?: InstanceId[]; valour?: number }
   | { type: 'USE_ABILITY'; iid: InstanceId; targets?: InstanceId[] }
   | { type: 'PASS'; seat: Seat }
   | { type: 'MULLIGAN'; seat: Seat; iids: InstanceId[] }
@@ -575,6 +625,7 @@ export type GameEvent =
   // Banned, but recoverable: the next warrior home from penance brings it back.
   | { t: 'suspended'; cardId: CardId }
   | { t: 'ability'; iid: InstanceId; cardId: CardId; name: string; left: number }
+  | { t: 'valour'; iid: InstanceId; cardId: CardId; name: string }
   // `by` is the card that earned it, so the run layer can price the curse
   // without re-deriving which weapon was fired. Absent when a curse comes from
   // somewhere other than a weapon (a shrine's shrap, say).

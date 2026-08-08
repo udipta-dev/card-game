@@ -6,10 +6,14 @@ import { isLegalAbility, isLegalPlay } from './reducer';
 import type { Action, Card, GameState, InstanceId, Seat, UnitFilter } from './types';
 
 /** The `chosen` selector filter this card uses, if any. */
-function chosenFilter(card: Card): UnitFilter | null {
+function chosenFilter(card: Card, valour?: number): UnitFilter | null {
   for (const eff of card.effects) {
     if (eff.target.pick === 'chosen') return eff.target.filter;
   }
+  // The chosen valour may want a mark of its own. Content validation forbids a
+  // card from having both, so there is never a fight over targets[0].
+  const v = card.valours?.[valour ?? -1];
+  if (v && v.target.pick === 'chosen') return v.target.filter;
   // Boons attach to a unit even if their effect selector is 'self'-like.
   if (card.type === 'boon') return { side: 'own' };
   return null;
@@ -17,8 +21,11 @@ function chosenFilter(card: Card): UnitFilter | null {
 
 type TargetNeed = 'none' | 'optional' | 'required';
 
-function targetNeed(card: Card): TargetNeed {
-  const hasChosen = card.effects.some((e) => e.target.pick === 'chosen') || card.type === 'boon';
+function targetNeed(card: Card, valour?: number): TargetNeed {
+  const hasChosen =
+    card.effects.some((e) => e.target.pick === 'chosen') ||
+    card.valours?.[valour ?? -1]?.target.pick === 'chosen' ||
+    card.type === 'boon';
   if (!hasChosen) return 'none';
   // Boons and targeted astras must have a target; unit abilities are optional.
   if (card.type === 'boon' || card.type === 'astra') return 'required';
@@ -33,6 +40,9 @@ function candidateTargets(state: GameState, seat: Seat, filter: UnitFilter): Ins
   for (const s of seats) {
     for (const u of unitsOf(state, s)) {
       if (filter.rows && u.row && !filter.rows.includes(u.row)) continue;
+      // Named men only, when the card names them. Without this the UI would
+      // highlight every enemy for Bhima's vow and then refuse most of them.
+      if (filter.cards && !filter.cards.includes(u.cardId)) continue;
       out.push(u.iid);
     }
   }
@@ -64,19 +74,29 @@ export function legalMoves(state: GameState, seat: Seat): Action[] {
   for (const iid of state.hands[seat]) {
     const card = getCard(state.instances[iid]!.cardId);
 
-    const need = targetNeed(card);
-    const filter = need === 'none' ? null : chosenFilter(card);
-    const targets = filter ? candidateTargets(state, seat, filter) : [];
+    // WHICH VALOUR, as part of the play rather than as a later move. A man who
+    // offers three is three different plays, and every one of them has to be
+    // on this list or the AI can never weigh them and the sim reports the
+    // choice as worthless.
+    const valours: (number | undefined)[] = card.valours?.length
+      ? card.valours.map((_, i) => i)
+      : [undefined];
 
-    for (const row of card.rows) {
-      // Single source of truth: the reducer decides what is legal. Enumerating
-      // with a second copy of the rules is how a "legal" move becomes a no-op.
-      if (!isLegalPlay(state, seat, iid, row)) continue;
-      if (need === 'none') {
-        moves.push({ type: 'PLAY_CARD', iid, row });
-      } else {
-        if (need === 'optional') moves.push({ type: 'PLAY_CARD', iid, row });
-        for (const t of targets) moves.push({ type: 'PLAY_CARD', iid, row, targets: [t] });
+    for (const valour of valours) {
+      const need = targetNeed(card, valour);
+      const filter = need === 'none' ? null : chosenFilter(card, valour);
+      const targets = filter ? candidateTargets(state, seat, filter) : [];
+
+      for (const row of card.rows) {
+        // Single source of truth: the reducer decides what is legal. Enumerating
+        // with a second copy of the rules is how a "legal" move becomes a no-op.
+        if (!isLegalPlay(state, seat, iid, row, valour)) continue;
+        if (need === 'none') {
+          moves.push({ type: 'PLAY_CARD', iid, row, valour });
+        } else {
+          if (need === 'optional') moves.push({ type: 'PLAY_CARD', iid, row, valour });
+          for (const t of targets) moves.push({ type: 'PLAY_CARD', iid, row, targets: [t], valour });
+        }
       }
     }
   }

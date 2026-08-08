@@ -7,6 +7,7 @@ import type {
   TargetSelector,
 } from '@engine/types';
 import { EFFECT_ACTION_KINDS } from '@engine/effects/handlers';
+import { VALOURS_PER_TIER } from '@engine/reducer';
 import { CARD_DB, allCards } from './cards';
 import { DECKS } from './decks';
 
@@ -118,6 +119,32 @@ export function validateContent(): ContentError[] {
       else if (CARD_DB[a].type !== 'astra')
         errs.push({ cardId: card.id, message: `knownAstras '${a}' is not an astra` });
     }
+    // VALOURS: rank decides how many, and a card may not fight itself for a
+    // target. Both are the kind of mistake that is invisible at runtime: too
+    // many valours just means the extra ones are never offered, and two chosen
+    // targets on one card means the second silently reuses the first's mark.
+    if (card.valours?.length) {
+      const allowed = card.tier ? VALOURS_PER_TIER[card.tier] : 0;
+      if (card.valours.length > allowed)
+        errs.push({
+          cardId: card.id,
+          message: `has ${card.valours.length} valours but a ${card.tier ?? 'rankless card'} is offered ${allowed}`,
+        });
+      const cardChooses = card.effects.some((e) => e.target.pick === 'chosen');
+      const valourChooses = card.valours.some((v) => v.target.pick === 'chosen');
+      if (cardChooses && valourChooses)
+        errs.push({
+          cardId: card.id,
+          message: 'both its own effect and a valour ask for a chosen target; they would share one mark',
+        });
+      for (const v of card.valours) {
+        if (!v.name.trim() || !v.text.trim())
+          errs.push({ cardId: card.id, message: `valour "${v.name}" is missing a name or its text` });
+        if (!v.actions.length)
+          errs.push({ cardId: card.id, message: `valour "${v.name}" does nothing at all` });
+      }
+    }
+
     for (const a of card.counteredBy ?? []) {
       if (!CARD_DB[a]) errs.push({ cardId: card.id, message: `counteredBy references unknown card '${a}'` });
     }

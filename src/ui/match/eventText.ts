@@ -96,6 +96,8 @@ export function eventText(state: GameState, ev: GameEvent): string | null {
     // line to explain any of it. An ability fired and the feed stayed silent.
     case 'ability':
       return `${getCard(ev.cardId).name} used ${ev.name}.`;
+    case 'valour':
+      return `${getCard(ev.cardId).name} takes the field: ${ev.name}.`;
     case 'armour':
       return `${getCard(ev.cardId).name} is clothed in armour (${ev.amount}).`;
     case 'afflict':

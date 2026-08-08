@@ -7,7 +7,7 @@ import { EffectCtx } from './effects/context';
 import { emit } from './effects/context';
 import { applyGlobalAction, applyTargetAction, isTargetAction } from './effects/handlers';
 import { resolveTargets } from './effects/targeting';
-import { boonCardIds, cardOnBoard, isFinalRound } from './queries';
+import { boonCardIds, cardOnBoard, isFinalRound, opponentOf, seatPower } from './queries';
 import { ROWS } from './types';
 import type { Condition, EffectDef, GameState, InstanceId, Seat, TriggerEvent } from './types';
 
@@ -18,6 +18,8 @@ function evalCondition(ctx: EffectCtx, cond: Condition, target?: InstanceId): bo
       return cardOnBoard(state, actorOwner, cond.card, cond.side ?? 'any');
     case 'isFinalRound':
       return isFinalRound(state);
+    case 'behindOnPower':
+      return seatPower(state, actorOwner) < seatPower(state, opponentOf(actorOwner));
     case 'targetHasBoon':
       return target ? boonCardIds(state, target).includes(cond.boon) : false;
     case 'targetHasFlag':

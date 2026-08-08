@@ -54,18 +54,31 @@ export const PANDAVA_CARDS: Card[] = [
     effects: [
       {
         on: 'onPlay',
+        // ONE OF THEM, CHOSEN, not all of them at once.
+        //
+        // This took EVERY one of the seven who happened to be standing, so two
+        // 9-power men could die to a single card with nobody making a decision
+        // anywhere. Now the game offers whichever of the seven are reachable
+        // and you pick which promise to collect, which is a read of the board
+        // rather than a windfall.
+        //
+        // It stays a TRAIT rather than one of his three valours, because
+        // Duryodhana's card says "Answered by: Bhima, and by no one else", and
+        // an answer you might choose not to give is not an answer.
         target: {
-          pick: 'unitByCard',
-          side: 'enemy',
-          cards: [
-            'duryodhana',
-            'dushasana',
-            'hidimba',
-            'bakasura',
-            'kirmira',
-            'jatasura',
-            'jarasandha',
-          ],
+          pick: 'chosen',
+          filter: {
+            side: 'enemy',
+            cards: [
+              'duryodhana',
+              'dushasana',
+              'hidimba',
+              'bakasura',
+              'kirmira',
+              'jatasura',
+              'jarasandha',
+            ],
+          },
         },
         actions: [{ kind: 'removeFlag', flag: 'diamond-body' }, { kind: 'destroy' }],
       },

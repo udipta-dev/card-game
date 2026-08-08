@@ -75,6 +75,8 @@ function selectTargets(ctx: EffectCtx, sel: TargetSelector): InstanceId[] {
             (u) => u.iid,
           )
         : [];
+    case 'ownRowSameAsPlayed':
+      return playedRow ? rowUnits(state, actorOwner, playedRow).map((u) => u.iid) : [];
     case 'ownAdjacentToPlayed':
       if (!playedRow) return [];
       return adjacentRows(playedRow).flatMap((r) =>
@@ -99,6 +101,7 @@ function matchesFilter(ctx: EffectCtx, iid: InstanceId, filter: UnitFilter): boo
   if (filter.side === 'own' && u.owner !== ctx.actorOwner) return false;
   if (filter.side === 'enemy' && u.owner !== enemy) return false;
   if (filter.rows && !filter.rows.includes(u.row)) return false;
+  if (filter.cards && !filter.cards.includes(u.cardId)) return false;
   return true;
 }
 

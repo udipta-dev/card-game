@@ -126,37 +126,38 @@ describe('Pashupatastra wins, and is remembered for it', () => {
 });
 
 describe('a warrior’s skill at arms', () => {
+  // BALARAMA, not Arjuna. The maharathis used to hold turn-costing abilities and
+  // now hold valours instead: three listed, one chosen and fired in the same
+  // breath as committing the man. Balarama is the last card in the game still
+  // carrying the older shape, so he is what this rule is tested on.
   it('spends a charge, costs the turn, and runs dry within the battle', () => {
     const s = makeState({
-      playerBoard: { ratha: ['arjuna'] },
-      aiBoard: { ratha: ['dushasana'], gaja: ['jayadratha'] },
+      playerBoard: { gaja: ['balarama'] },
+      aiBoard: { ratha: ['dushasana'] },
     });
-    const arjuna = s.board.player.ratha[0];
+    const balarama = s.board.player.gaja[0];
     const dushasana = s.board.ai.ratha[0];
-    const jayadratha = s.board.ai.gaja[0];
-    const before = [s.instances[dushasana].currentPower, s.instances[jayadratha].currentPower];
+    const before = s.instances[dushasana].currentPower;
 
-    const s1 = reduce(s, { type: 'USE_ABILITY', iid: arjuna });
-    // Arrow Rain falls on the whole enemy host, not one target.
-    expect(s1.instances[dushasana].currentPower).toBe(before[0] - 2);
-    expect(s1.instances[jayadratha].currentPower).toBe(before[1] - 2);
-    expect(s1.instances[arjuna].counters.charges).toBe(0);
+    const s1 = reduce(s, { type: 'USE_ABILITY', iid: balarama });
+    // The mace falls on the mightiest foe, not the whole host.
+    expect(s1.instances[dushasana].currentPower).toBeLessThan(before);
+    expect(s1.instances[balarama].counters.charges).toBe(0);
     expect(s1.activeSeat).toBe('ai'); // using a skill costs the turn
-    expect(hasEvent(s1, (e) => e.t === 'ability' && e.name === 'Arrow Rain')).toBe(true);
+    expect(hasEvent(s1, (e) => e.t === 'ability' && e.name === 'Mace of the Plough')).toBe(true);
 
     // Out of charges: the same warrior cannot loose it again this battle.
     const s2 = { ...s1, activeSeat: 'player' as const };
-    expect(isLegalAbility(s2, 'player', arjuna)).toBe(false);
-    expect(reduce(s2, { type: 'USE_ABILITY', iid: arjuna })).toBe(s2);
+    expect(isLegalAbility(s2, 'player', balarama)).toBe(false);
+    expect(reduce(s2, { type: 'USE_ABILITY', iid: balarama })).toBe(s2);
   });
 
   it('is offered to the AI and the UI through legalMoves', () => {
     const s = makeState({
-      playerBoard: { ratha: ['arjuna'] },
+      playerBoard: { gaja: ['balarama'] },
       aiBoard: { ratha: ['dushasana'] },
     });
-    const moves = legalMoves(s, 'player');
-    expect(moves.some((m) => m.type === 'USE_ABILITY')).toBe(true);
+    expect(legalMoves(s, 'player').some((m) => m.type === 'USE_ABILITY')).toBe(true);
   });
 });
 
