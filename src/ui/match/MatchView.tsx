@@ -490,7 +490,12 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
       </div>
 
       {tip && <Tooltip {...tip} />}
-      <EventFeed state={state} onOpenLog={() => setShowLog(true)} />
+      {/* On a phone the rail is `display: contents`, so the feed flows exactly
+          where it always did. On a wide screen it becomes the column beside the
+          board, which is the whole point of having room. */}
+      <div className="rail">
+        <EventFeed state={state} onOpenLog={() => setShowLog(true)} />
+      </div>
       {banner && (
         <div className="overlay" style={{ background: 'transparent', pointerEvents: 'none' }}>
           <div className="banner">{banner}</div>

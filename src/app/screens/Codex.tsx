@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { allCards } from '@content/cards';
 import type { Card, House } from '@engine/types';
+import { Lintel } from '@ui/frame';
 import { CardFrame } from '@ui/card/CardFrame';
 import { InspectSheet } from '@ui/card/InspectSheet';
 import { HelpButton } from '@ui/HelpButton';
@@ -107,13 +108,13 @@ export function Codex({ onBack }: { onBack: () => void }) {
           if (!group.length) return null;
           return (
             <section key={g.title} className="codex__section">
-              <h3 className="codex__group">
-                <span>
-                  {g.title}
-                  {g.gloss && <span className="codex__gloss">{g.gloss}</span>}
-                </span>
-                <span className="codex__group-n">{group.length}</span>
-              </h3>
+              {/* A DRAWN heading rather than a larger one. A section with a
+                  lintel and a garland over it reads as a place you have arrived
+                  at; the same words at 1.1rem read as a table row. */}
+              <Lintel count={group.length}>
+                {g.title}
+                {g.gloss && <span className="codex__gloss">{g.gloss}</span>}
+              </Lintel>
               <div className="codex__grid">
                 {group.map((c) => (
                   <CardFrame key={c.id} card={c} mini onClick={() => setInspect(c)} />

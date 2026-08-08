@@ -2182,3 +2182,99 @@
     50%      { box-shadow: 0 0 0 1px rgba(169, 140, 69, 0.55), 0 0 22px rgba(169, 140, 69, 0.34); }
   }
 }
+
+/* ===========================================================================
+   DESKTOP AND LANDSCAPE
+   ---------------------------------------------------------------------------
+   There was no breakpoint above 640px anywhere in this file. Every query was a
+   max-width, so a wide screen got the phone layout with acres of dead space
+   either side, reported as "if people play on desktop it looks shit".
+
+   The fix is a different ARRANGEMENT, not a bigger one. Scaling a portrait
+   column up to 1440px is exactly what looked wrong. A card game wants width:
+   the board spans it, and the things that were stacked above and below become
+   panels beside it.
+
+   Keyed on width AND height, because a phone held sideways is wide and short,
+   and a three-column layout with 380px of vertical space is worse than the
+   stack it replaced.
+   ========================================================================= */
+
+/* Below the desktop breakpoint the rail is not a layout at all: its children
+   take part in the normal flow exactly as they did before.
+   DECLARED FIRST ON PURPOSE. Same specificity as the rule inside the media
+   query below, so if this came after it would win at every width and the rail
+   would never become a column. */
+.rail { display: contents; }
+
+@media (min-width: 900px) and (min-height: 560px) {
+  .match {
+    /* BOARD | RAIL, not rail-board-rail.
+       The first version reserved 260px on each side for rails, and there was
+       only ever one thing to put in them, so 520px of a 1400px screen was held
+       for nothing and the board was squeezed to 350px: narrower than it is on a
+       phone. The board takes the room and the feed sits beside it. */
+    grid-template-columns: minmax(0, 1fr) clamp(240px, 22vw, 320px);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'top    top'
+      'board  right'
+      'hand   hand';
+    gap: 12px;
+    padding: calc(10px + env(safe-area-inset-top)) clamp(16px, 3vw, 40px)
+      calc(10px + env(safe-area-inset-bottom));
+    /* WIDTH IS EXPLICIT because `margin-inline: auto` cancels the cross-axis
+       stretch a flex child would otherwise get from `.app`. Without it the grid
+       shrank to fit its own content: 875px of a 1400px screen, with the board
+       narrower than it is on a phone. */
+    width: 100%;
+    max-width: 1600px;
+    margin-inline: auto;
+  }
+  .topbar { grid-area: top; }
+  .board { grid-area: board; }
+  .hand-tray { grid-area: hand; }
+
+  /* The rail exists only here. On a phone its contents live inline, so it is
+     display:contents below this width and never disturbs the stack. */
+  .rail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+    grid-area: right;
+  }
+
+  /* A wider board can afford to breathe between the ranks. */
+  .board { gap: 10px; }
+  .board__group { gap: 10px; }
+
+  /* The hand has room to sit larger rather than being crushed to fit. */
+  .hand { gap: 10px; }
+
+  /* The hand grows into the room. Board cards deliberately do NOT: they are
+     sized by row HEIGHT with `width: auto` and a 5/7 ratio, so setting --card-w
+     on them does nothing at all, and the vertical space is what is scarce.
+     Verified before writing this: the rule had no effect. */
+  .match .hand .card { --card-w: 136px; }
+
+  /* CENTRE THE RANK. This is what actually fixed the look. A 1000px-wide row
+     holding one 44px card left-aligned reads as an empty shelf with something
+     forgotten in the corner; centred, the same card reads as a line forming up.
+     The width was never the problem, the alignment was. */
+  .row__cards { justify-content: center; }
+}
+
+/* Very wide screens: stop the board growing past what a card frame is drawn
+   for, and let the ground show at the edges instead of stretching everything. */
+@media (min-width: 1700px) {
+  .match { max-width: 1600px; }
+}
+
+/* Landscape on a phone. Wide but short, so the three-column arrangement above
+   is deliberately NOT used; the stack stays, with its vertical padding cut so
+   the board still gets the room. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .match { gap: 4px; padding-top: 4px; padding-bottom: 4px; }
+  .lintel { margin: 14px 0 10px; }
+}
