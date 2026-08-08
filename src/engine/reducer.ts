@@ -11,7 +11,6 @@ import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
 import { resolveRound } from './rounds';
 import { MULLIGAN_MAX, makeInstance } from './createMatch';
 import { nextRandom } from './ids';
-import { labFlag } from './labFlag';
 import type { Action, Card, CardInstance, GameState, Row, Seat } from './types';
 
 /** How many tier-3 weapons one side may loose in a single battle. */
@@ -340,8 +339,26 @@ export function reduce(state: GameState, action: Action): GameState {
           if (s.hands[seat].some(known) || s.decks[seat].some(known)) continue;
           const inst = makeInstance(astraId, seat);
           s.instances[inst.iid] = inst;
-          if (labFlag('KURU_GRANT_TO_DECK') === '1') s.decks[seat].unshift(inst.iid);
-          else s.hands[seat].push(inst.iid);
+          s.hands[seat].push(inst.iid);
+          // AND IT COSTS A DRAW. The weapon arrives in hand, where it is usable
+          // while its bearer stands, and the top of the deck is burned to pay
+          // for it, so the host is not one card richer for having brought him.
+          //
+          // The deck-top version was trying to charge this and charged it in
+          // the wrong currency. It made the weapon arrive a round too late to
+          // ever fire (0.0% over 400 games) while still costing the draw. Hand
+          // plus a burn separates the two: you get the TIMING, which was the
+          // whole fix, and you pay the CARD, which was the whole price.
+          //
+          // Not optional, and measured. Free into hand, one house holds both
+          // carried weapons, Bhagadatta and Karna, so Kaurava alone collected
+          // 28 provisions of free ultimate and the faction spread went from 2.3
+          // points to 37.5. Pandava carries neither and got nothing.
+          const burned = s.decks[seat].shift();
+          if (burned) {
+            s.log.push({ t: 'burn', seat, cardIds: [s.instances[burned]!.cardId] });
+            delete s.instances[burned];
+          }
           s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
         }
       } else if (card.type === 'boon' || card.type === 'shastra') {

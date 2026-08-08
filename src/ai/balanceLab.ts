@@ -23,8 +23,23 @@ interface GameResult {
 
 function playout(seed: number, first: DeckList, second: DeckList): GameResult {
   let s: GameState = createMatch(seed, first, second);
-  s = reduce(s, { type: 'MULLIGAN', seat: 'player', iids: [] });
-  s = reduce(s, { type: 'MULLIGAN', seat: 'ai', iids: [] });
+  // ASK THE AI FOR ITS MULLIGAN, do not hand it an empty list.
+  //
+  // These two lines used to pass `iids: []` unconditionally, which meant every
+  // number this lab has ever produced came from two opponents who kept
+  // whatever six cards they were dealt. When a mulligan policy was finally
+  // written, it changed nothing here, and a run with it on was byte-identical
+  // to a run with it off, which is a very convincing way to conclude a feature
+  // does not matter.
+  //
+  // chooseAction answers the mulligan phase for whichever seat still owes one,
+  // so driving it through the same loop as every other decision keeps the lab
+  // measuring the player the game actually ships.
+  while (s.phase === 'mulligan') {
+    const next = reduce(s, chooseAction(s, s.activeSeat));
+    if (next === s) break;
+    s = next;
+  }
 
   let steps = 0;
   while (s.phase !== 'battleEnd' && steps < MAX_STEPS) {

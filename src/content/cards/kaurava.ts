@@ -361,20 +361,21 @@ export const KAURAVA_CARDS: Card[] = [
     basePower: 5,
     rows: ['ratha'],
     keywords: [],
-    // HE IS A HERALD, so let him do the one thing a herald does.
+    // NO DRAW. He is a herald and a herald brings something back, which is why
+    // he was given "draw 1" to lift him off 40.9% win, the worst warrior in the
+    // game. It worked on him and cost the game its balance.
     //
-    // Uluka was the worst warrior in the game at 40.9% win when played: a blank
-    // 5 with no keyword and no effect, which is a card you spend a commitment
-    // on to receive a number.
+    // Measured, one revert at a time against the full lab: that single card of
+    // draw was worth 12.7 POINTS OF FACTION SPREAD on its own. Kaurava 71.4% to
+    // 62.7%. A cheap body that draws is not a small buff in a game this decided
+    // by card economy, and my own note on the carried astras had already said
+    // exactly that before I did it again here.
     //
-    // Shakuni's son was sent into the Pandava camp on the eve of the war with a
-    // message calculated to make peace impossible, delivered it to all of them
-    // in turn, and rode back with their answers. A man who walks into the enemy
-    // camp and returns brings something back with him, and in a game this
-    // decided by card economy, one card is a real gift for a rathi body.
-    effects: [
-      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'draw', count: 1, side: 'own' }] },
-    ],
+    // He goes back to a plain 5 rather than getting a hastily invented
+    // replacement, because a 40.9% card is a card that needs tuning and a
+    // 40-point spread is a broken game. He is a rathi, and the rathi tier is
+    // getting one real ability each in its own pass. He can wait for that.
+    effects: [],
     flavor: 'He carried the message that made peace impossible.',
   },
 
