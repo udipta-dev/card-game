@@ -207,9 +207,11 @@ export const ASTRA_CARDS: Card[] = [
         on: 'onPlay',
         target: { pick: 'chosen', filter: { side: 'enemy' } },
         // Two things turn it aside, and both are Vishnu refusing his own weapon.
+        //
         // Krishna took it on his chest and it became a garland. And Prahlada is
-        // the asura Vishnu came in person to preserve, five times over, so the
-        // weapon made to end asuras will not end the host he is standing in.
+        // the one asura Vishnu came in person to save, five separate times, so
+        // this weapon will not kill an asura standing next to him. It was made
+        // to end his kind, and he is the exception it was never willing to make.
         condition: {
           q: 'and',
           cs: [

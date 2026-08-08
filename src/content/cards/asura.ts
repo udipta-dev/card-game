@@ -139,13 +139,27 @@ export const ASURA_CARDS: Card[] = [
     name: 'Bali',
     house: 'asura',
     type: 'unit',
-    tier: 'atirathi',
-    basePower: 7,
+    // MAHARATHI, and he was costing the same as Shumbha.
+    //
+    // He is arguably the most successful asura in the whole corpus. He took
+    // heaven, earth and the underworld and HELD them; Indra could not beat him
+    // and had to go and ask for help. Vishnu did not fight him either, because
+    // there was no beating him in the field: he came as a dwarf, asked for three
+    // paces of ground, and stepped over everything Bali owned. That is the same
+    // shape as Ravana and Hiranyakashipu, a man who had to be tricked rather
+    // than defeated, and both of those are maharathis here.
+    tier: 'maharathi',
+    basePower: 10,
+    // 13, the same override Bhishma pays and for the same reason: ten power that
+    // cannot be destroyed at all is worth more than ten power that can. He is
+    // one of the chiranjivi, still ruling Sutala, and due to be the next Indra.
+    provision: 13,
     rows: ['ratha'],
     keywords: [{ kind: 'deathless' }],
     tags: ['daitya'],
     effects: [],
-    flavor: 'The generous king, deathless in the underworld he was granted.',
+    flavor:
+      'He took the three worlds and gave them back for the asking, and Vishnu let him keep the underworld and a promise of heaven.',
   },
   {
     // NOT A VILLAIN, and he was carrying the most generic card in the game: a
@@ -214,8 +228,13 @@ export const ASURA_CARDS: Card[] = [
     name: 'Mahishasura',
     house: 'asura',
     type: 'unit',
-    tier: 'atirathi',
-    basePower: 7,
+    // MAHARATHI. He beat the combined armies of the devas and took heaven off
+    // them, and no god could remove him: the Devi had to be made for the job,
+    // out of the pooled fury of all of them, and it still took her nine days
+    // and a shifting sequence of forms. Same standard that put Ravana at 10 and
+    // Hiranyakashipu at 9: a being the existing gods could not answer.
+    tier: 'maharathi',
+    basePower: 9,
     rows: ['gaja'],
     keywords: [],
     tags: ['asura-lord'],
@@ -256,8 +275,14 @@ export const ASURA_CARDS: Card[] = [
     name: 'Raktabija',
     house: 'asura',
     type: 'unit',
-    tier: 'rathi',
-    basePower: 5,
+    // ATIRATHI. Every drop of his blood that touched the ground stood up as
+    // another of him, so wounding him made the problem worse and the battlefield
+    // filled with copies. The answer was not a better weapon: Kali had to drink
+    // the blood out of the air before it landed. He already carries `unwoundable`
+    // for exactly this, and a rathi is the wrong rank for a man whose gimmick is
+    // that the ordinary way of killing things does not apply.
+    tier: 'atirathi',
+    basePower: 6,
     rows: ['ratha'],
     keywords: [{ kind: 'nightGrowth', amount: 2 }, { kind: 'unwoundable' }],
     tags: ['daitya'],
@@ -281,8 +306,13 @@ export const ASURA_CARDS: Card[] = [
     name: 'Vritra',
     house: 'asura',
     type: 'unit',
-    tier: 'atirathi',
-    basePower: 7,
+    // MAHARATHI. Indra's great enemy, who held the world's waters and could not
+    // be killed by any weapon then existing. The vajra had to be forged out of
+    // a sage's bones for it, and Indra carried brahmin-murder guilt afterwards
+    // and had to flee his own heaven. Killing him cost the king of the devas
+    // more than any other fight in the Vedas.
+    tier: 'maharathi',
+    basePower: 9,
     rows: ['ratha'],
     keywords: [{ kind: 'nightGrowth', amount: 1 }],
     tags: ['serpent'],
@@ -302,8 +332,13 @@ export const ASURA_CARDS: Card[] = [
     name: 'Tarakasura',
     house: 'asura',
     type: 'unit',
-    tier: 'rathi',
-    basePower: 6,
+    // ATIRATHI, not rathi. His boon was that only a son of Shiva could kill
+    // him, and at the time Shiva had no son and no intention of having one.
+    // Kartikeya EXISTS because of this card: the gods had to arrange a marriage
+    // and a birth to produce the one being permitted to end him. That is the
+    // same structure as Ravana's boon, and it was priced at six power.
+    tier: 'atirathi',
+    basePower: 7,
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'daitya', amount: 1 }],
     tags: ['daitya'],

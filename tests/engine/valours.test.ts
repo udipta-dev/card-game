@@ -28,9 +28,13 @@ describe('every maharathi is offered three', () => {
     expect(getCard('balarama').valours).toBeUndefined();
   });
 
-  it('all eleven have a full menu', () => {
+  it('every maharathi has a full menu, however many there are', () => {
+    // Was pinned at eleven. Three asuras were promoted into the rank on canon
+    // grounds (Bali held the three worlds, the Devi had to be created to remove
+    // Mahishasura, killing Vritra cost Indra his throne for a while), so the
+    // count is not the invariant. That every man of the rank is offered three is.
     const maharathis = allCards().filter((c) => c.tier === 'maharathi');
-    expect(maharathis.length).toBe(11);
+    expect(maharathis.length).toBeGreaterThanOrEqual(11);
     for (const c of maharathis) {
       expect(c.valours?.length, `${c.name} has no full menu`).toBe(VALOURS_PER_TIER.maharathi);
     }

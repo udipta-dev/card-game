@@ -127,17 +127,23 @@ export const ATIRATHI_VALOURS: Record<string, Valour[]> = {
     { name: 'Six Months’ Sleep', text: 'He wakes hungry and takes −2 off the rank he faces.', ...volley(3) },
     { name: 'The Mountain', text: 'An army emptied itself into him once, armoured against what comes.', ...steel(3) },
   ],
+  // BALI, MAHISHASURA AND VRITRA are maharathis now, so three each. All three
+  // were men the existing gods could not answer: Bali had to be tricked out of
+  // the three worlds, the Devi had to be created to remove Mahishasura, and
+  // killing Vritra cost Indra the vajra and his own throne for a while.
   bali: [
     { name: 'Three Paces', text: 'He gave away the world and kept his word, +1 to the rank he joins.', ...rally(2) },
     { name: 'King Below', text: 'Deathless in the realm he was granted, and he stands like it.', ...steel(3) },
+    { name: 'Lord of Three Worlds', text: 'He has held all of them at once, and fights at +3.', ...surge(3) },
   ],
   narakasura: [
     { name: 'Born of the Earth', text: 'The ground itself holds him up, +2 to himself.', ...surge(3) },
     { name: 'Pragjyotisha', text: 'His city marches, +1 to the rank he joins.', ...rally(2) },
   ],
   mahishasura: [
-    { name: 'The Shifting Form', text: 'Buffalo, lion, man: the mightiest opposite is senseless this round.', ...daze() },
+    { name: 'The Shifting Form', text: 'Buffalo, lion, man. The mightiest opposite is senseless this round.', ...daze() },
     { name: 'Nine Nights', text: 'He held the goddess nine days, armoured against what comes.', ...steel(3) },
+    { name: 'He Took Heaven', text: 'The devas’ own armies broke on him, −2 to the rank he faces.', ...volley(3) },
   ],
   shumbha: [
     { name: 'Lord of Asuras', text: 'The lords form up behind him, +1 to the rank he joins.', ...rally(2) },
@@ -146,6 +152,7 @@ export const ATIRATHI_VALOURS: Record<string, Valour[]> = {
   vritra: [
     { name: 'The Drought', text: 'He holds the rivers back, −2 to the rank he faces.', ...volley(3) },
     { name: 'Coils of the Serpent', text: 'Neither wet nor dry could kill him, armoured against what comes.', ...steel(3) },
+    { name: 'Indra’s Enemy', text: 'It took the vajra and a sage’s bones, −3 off the mightiest man opposite.', ...strike(3) },
   ],
   hidimba: [
     { name: 'The Forest Ambush', text: 'He takes them in the trees, −2 off the mightiest man opposite.', ...strike(3) },
@@ -162,6 +169,19 @@ export const ATIRATHI_VALOURS: Record<string, Valour[]> = {
   atikaya: [
     { name: 'Ravana’s Son', text: 'His father’s armour and his own, doubled against what comes.', ...steel(3) },
     { name: 'The Brahma Arrow', text: 'Only one weapon could reach him, −2 to the mightiest man opposite.', ...strike(3) },
+  ],
+
+  // TARAKASURA AND RAKTABIJA moved up from rathi, so they get a choice now.
+  // Taraka's boon meant only a son of Shiva could end him, which is the reason
+  // Kartikeya was born at all; Raktabija could not be wounded without making
+  // more of himself, and Kali had to drink the blood out of the air.
+  tarakasura: [
+    { name: 'Only a Child Could', text: 'A boy of seven was the only answer, +2 to himself.', ...surge(3) },
+    { name: 'The Boon Holds', text: 'No grown man may end him, armoured against what comes.', ...steel(3) },
+  ],
+  raktabija: [
+    { name: 'Every Drop', text: 'Each one that falls stands up again, +2 to himself.', ...surge(3) },
+    { name: 'The Field Fills', text: 'More of him than there is room for, −2 to the rank he faces.', ...volley(3) },
   ],
 
   // ---- Neutral ----
@@ -218,8 +238,6 @@ export const RATHI_VALOURS: Record<string, Valour[]> = {
   hiranyaksha: [{ name: 'The Earth Dragged Under', text: 'He takes the ground with him, −1 to the rank he faces.', ...volley(1) }],
   prahlada: [{ name: 'The Five Refusals', text: 'Nothing his father tried would land, armoured against what comes.', ...steel(3) }],
   nishumbha: [{ name: 'The Other Brother', text: 'Never seen apart from Shumbha, +1 to the rank he joins.', ...rally(2) }],
-  raktabija: [{ name: 'Every Drop', text: 'Each one that falls stands up again, +2 to himself.', ...surge(3) }],
-  tarakasura: [{ name: 'Only a Child Could', text: 'A boy of seven was the only answer, +2 to himself.', ...surge(3) }],
   asura_horde: [{ name: 'The Swarm', text: 'They come on together, +1 to the rank they join.', ...rally(2) }],
   kirmira: [{ name: 'Kamyaka Wood', text: 'He takes them among the trees, −1 off the mightiest man opposite.', ...strike(1) }],
   namuchi: [{ name: 'Neither Wet Nor Dry', text: 'No weapon of the kind he was promised, armoured against what comes.', ...steel(3) }],

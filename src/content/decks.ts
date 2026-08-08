@@ -167,7 +167,12 @@ export const ASURA_DECK: DeckList = {
     'indrajit', // astra-master of the host
     'kumbhakarna',
     'hiranyakashipu',
-    'mahishasura',
+    // MAHISHASURA IS ALSO A CLIMB, for the same reason. His promotion took this
+    // house to four maharathis, one more than Kaurava, and the valour work
+    // established that maharathi COUNT drives deck strength because each one is
+    // another three-way choice. Taking Bali out alone left them at 57.8%.
+    // Atikaya replaces him at 10: Ravana's son, armoured, and still Lanka.
+    'atikaya',
     // POWER-NEUTRAL, PROVISION-NEUTRAL SWAP, so the measurement means something.
     // Out: Shumbha (7, costs 9) and Vritra (7, costs 9). In: Baka (8, costs 10)
     // and Trishira (6, costs 8). Same 14 power, same 18 provisions, and both of
@@ -185,7 +190,15 @@ export const ASURA_DECK: DeckList = {
     // cost against Pandava and canonically exactly right.
     'trishira',
     'bakasura',
-    'bali',
+    // BALI IS NOT A STARTER CARD, and that is the point of promoting him.
+    //
+    // He is a 13-provision maharathi now, and 13 is a late band: at an early
+    // per-card cap he is simply unaffordable, which is exactly what the ladder
+    // is for. Fielding him at level 1 took this house to 59.9% against Pandava's
+    // 38.7%. He goes back in the pool as something to climb towards, which also
+    // gives the asuras their first card above cost 12 and their first late
+    // unlock ceremony.
+    'narakasura',
     'hiranyaksha',
     // Nishumbha (6, costs 8) out for Prahlada (4, costs 6), paying for
     // Indrajit's rise to 10. Nishumbha is "the other brother, never seen apart
@@ -197,7 +210,11 @@ export const ASURA_DECK: DeckList = {
     'tarakasura',
     // One horde traded for a king. Two power-2 chaff cards against a Pandava
     // rathi floor of 5 is most of why this deck measured 41.4%.
-    'narakasura',
+    // NARAKASURA IS OUT, and the promotions are why. Bali to a 13-cost maharathi
+    // alone put this deck 8 provisions over its 170, and Narakasura was the
+    // cheapest thing to give up: 39.2% win when played, one of the weakest cards
+    // in the game, and the daitya bonds still have six men to count (Hiranyakashipu,
+    // Bali, Hiranyaksha, Prahlada, Raktabija, Tarakasura). He stays in the pool.
     'brahmastra',
     'nagastra',
     // Sauparna out for Prajna, both 5 provisions so the budget is untouched.
