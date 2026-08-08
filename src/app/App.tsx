@@ -128,7 +128,12 @@ export function App() {
         // Shown from the menu, before a run exists, so a brand new player can
         // see what fifty levels actually contains. Pandava by default because a
         // house has not been chosen at that point.
-        <LadderPreview house="pandava" standing={standing} onBack={() => setScreen('menu')} />
+        <LadderPreview
+          house="pandava"
+          standing={standing}
+          onBack={() => setScreen('menu')}
+          onMarch={() => setScreen('campaignSetup')}
+        />
       ) : screen === 'codex' ? (
         <Codex onBack={() => setScreen('menu')} />
       ) : (

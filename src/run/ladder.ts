@@ -108,6 +108,17 @@ export function affordable(id: CardId, highWater: number): boolean {
 export interface Unlock {
   step: Step;
   cards: CardId[];
+  /**
+   * The card this step is remembered by, FROM THIS ARMY.
+   *
+   * Not `step.headline`, and the difference was a real bug on screen. The
+   * headline in the table is one canonical name per band, and a band is a price
+   * band across the whole game: Karna heads the 12s, and a Pandava player was
+   * shown "Level 26 · Karna" above a list that could never contain him, because
+   * Karna is a Kaurava. The step is named after the biggest card YOU actually
+   * gain there, and falls back to the canonical name only when you gain none.
+   */
+  headline: CardId;
 }
 
 export function unlockSchedule(pool: readonly CardId[]): Unlock[] {
@@ -117,7 +128,7 @@ export function unlockSchedule(pool: readonly CardId[]): Unlock[] {
     const cards = pool
       .filter((id) => provisionOf(id) > previousCap && provisionOf(id) <= step.cap)
       .sort((a, b) => provisionOf(b) - provisionOf(a) || getCard(a).name.localeCompare(getCard(b).name));
-    out.push({ step, cards });
+    out.push({ step, cards, headline: cards[0] ?? step.headline });
     previousCap = step.cap;
   }
   return out;

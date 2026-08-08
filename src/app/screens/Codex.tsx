@@ -102,6 +102,10 @@ function sortCards(cards: Card[]): Card[] {
 
 export function Codex({ onBack }: { onBack: () => void }) {
   const [inspect, setInspect] = useState<Card | null>(null);
+  // The run the open card belongs to, so the sheet can flick straight through
+  // it. Held separately from `inspect` because following a link out of a card's
+  // rules can land you in a different army, and the pager should follow.
+  const [run, setRun] = useState<Card[]>([]);
   const all = allCards();
 
   return (
@@ -137,22 +141,51 @@ export function Codex({ onBack }: { onBack: () => void }) {
                 {g.title}
                 {g.gloss && <span className="codex__gloss">{g.gloss}</span>}
               </Lintel>
-              <div className="codex__grid">
+              {/* A SHELF, not a wrapping grid. Thirty-two Pandava cards wrapped
+                  into eight rows of four pushed every other army below the
+                  fold, so the codex read as one endless pile rather than as
+                  three armies you could compare. A rail keeps each army to one
+                  line you scan sideways, and the next army is always visible
+                  underneath. */}
+              <div className="codex__shelf">
                 {group.map((c) => (
-                  <CardFrame key={c.id} card={c} mini onClick={() => setInspect(c)} />
+                  <CardFrame
+                    key={c.id}
+                    card={c}
+                    mini
+                    onClick={() => {
+                      setRun(group);
+                      setInspect(c);
+                    }}
+                  />
                 ))}
               </div>
             </section>
           );
         })}
-        <div className="codex__foot">Tap a card for its full lore and abilities.</div>
+        <div className="codex__foot">
+          Swipe each row sideways for the rest of that army. Tap a card for its full lore
+          and abilities.
+        </div>
       </div>
 
       {/* Tapping a card named in the rules opens THAT card, which is the whole
           point of the codex: follow the thread rather than remember the name
           and come back for it. */}
       {inspect && (
-        <InspectSheet card={inspect} onClose={() => setInspect(null)} onPeek={setInspect} />
+        <InspectSheet
+          card={inspect}
+          onClose={() => setInspect(null)}
+          onPeek={(c) => {
+            // A card reached by following a name may not be in the run you were
+            // flicking through. Re-home the pager on the army it belongs to, so
+            // "7 of 32" never lies about where you are.
+            setRun(all.filter((x) => x.house === c.house));
+            setInspect(c);
+          }}
+          siblings={run}
+          onNavigate={setInspect}
+        />
       )}
     </div>
   );

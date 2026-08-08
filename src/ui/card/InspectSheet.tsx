@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from 'react';
 import { provisionOf } from '@content/cards';
 import { allCards } from '@content/cards';
 import type { Card, CardInstance } from '@engine/types';
@@ -129,6 +130,15 @@ function InstanceState({ inst, card }: { inst: CardInstance; card: Card }) {
   );
 }
 
+/**
+ * How far a flick must travel before it counts as "next card", in pixels.
+ *
+ * Generous, because this gesture competes with scrolling and losing your place
+ * in a card you were reading is far more annoying than a flick that did not
+ * take. Only fires at a scroll boundary anyway.
+ */
+const FLICK = 70;
+
 // A tap-to-inspect card detail sheet, shared by the match view and the codex.
 export function InspectSheet({
   card,
@@ -138,6 +148,8 @@ export function InspectSheet({
   onSwap,
   blockedReason,
   onPeek,
+  siblings,
+  onNavigate,
 }: {
   card: Card;
   inst?: CardInstance;
@@ -150,13 +162,93 @@ export function InspectSheet({
   blockedReason?: string;
   /** Open another card named in this one's rules. */
   onPeek?: (card: Card) => void;
+  /**
+   * The run of cards this one sits in, for flicking straight through them.
+   *
+   * The codex passes the army you opened the card from. The match view does
+   * not pass anything, because there is no "next card" when you are inspecting
+   * a man standing on the field.
+   */
+  siblings?: readonly Card[];
+  onNavigate?: (card: Card) => void;
 }) {
   const rules = rulesText(card);
   // The board card crops the art to a square. This is the one place the whole
   // picture is shown, uncropped, at a size worth the effort of making it.
   const art = artFor(card);
+
+  const scroller = useRef<HTMLDivElement | null>(null);
+  const at = siblings ? siblings.findIndex((c) => c.id === card.id) : -1;
+  const paging = at >= 0 && !!onNavigate && siblings!.length > 1;
+  const go = useCallback(
+    (by: number) => {
+      if (!paging) return;
+      const next = siblings![at + by];
+      if (!next) return;
+      // Back to the top, or you land halfway down a card you have not read.
+      if (scroller.current) scroller.current.scrollTop = 0;
+      onNavigate!(next);
+    },
+    [paging, siblings, at, onNavigate],
+  );
+
+  // Arrow keys and Escape. A sheet you can only leave by aiming at a small ✕ is
+  // a sheet that is annoying on a desktop, and this is the one screen a player
+  // reads at length.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') return onClose();
+      if (!paging) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); go(1); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); go(-1); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose, go, paging]);
+
+  /**
+   * Flick to the next card, WITHOUT breaking the ability to read this one.
+   *
+   * A plain vertical swipe would fight the sheet's own scrolling, and these
+   * sheets are long. So a vertical flick only counts at the scroll boundary:
+   * push up from the bottom for the next card, pull down from the top for the
+   * previous one. A horizontal flick always counts, because nothing else on
+   * this sheet uses horizontal movement.
+   */
+  const from = useRef<{ x: number; y: number; top: number; bottom: boolean } | null>(null);
+  const onDown = (e: React.PointerEvent) => {
+    const el = scroller.current;
+    if (!el) return;
+    from.current = {
+      x: e.clientX,
+      y: e.clientY,
+      top: el.scrollTop,
+      bottom: el.scrollTop + el.clientHeight >= el.scrollHeight - 2,
+    };
+  };
+  const onUp = (e: React.PointerEvent) => {
+    const start = from.current;
+    from.current = null;
+    if (!start || !paging) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx <= -FLICK) go(1);
+      else if (dx >= FLICK) go(-1);
+      return;
+    }
+    if (dy <= -FLICK && start.bottom) go(1);
+    else if (dy >= FLICK && start.top <= 0) go(-1);
+  };
+
   return (
-    <div className="overlay" onClick={onClose}>
+    <div
+      className="overlay"
+      onClick={onClose}
+      ref={scroller}
+      onPointerDown={onDown}
+      onPointerUp={onUp}
+    >
       <div className="sheet" onClick={(e) => e.stopPropagation()}>
         {art ? (
           <div className="sheet__art">
@@ -239,6 +331,34 @@ export function InspectSheet({
             {onPlay ? 'Back' : 'Close'}
           </button>
         </div>
+
+        {/* THE PAGER. The flick is the point, and a gesture with no visible
+            control is a gesture nobody discovers, so the same move is also two
+            buttons and the arrow keys. The counter is what tells you the flick
+            exists at all. */}
+        {paging && (
+          <div className="sheet__pager">
+            <button
+              className="btn btn--ghost btn--sm"
+              onClick={() => go(-1)}
+              disabled={at === 0}
+              aria-label="Previous card"
+            >
+              ‹
+            </button>
+            <span className="sheet__pager-count">
+              {at + 1} of {siblings!.length}
+            </span>
+            <button
+              className="btn btn--ghost btn--sm"
+              onClick={() => go(1)}
+              disabled={at === siblings!.length - 1}
+              aria-label="Next card"
+            >
+              ›
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

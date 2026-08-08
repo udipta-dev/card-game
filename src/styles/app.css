@@ -5,40 +5,11 @@
   flex-direction: column;
 }
 
-/* ---- Screen transitions --------------------------------------------------
-   Every screen settles in rather than snapping in. Done in pure CSS on the
-   roots that already exist, with no wrapper and no state: React swaps one
-   component for another when the screen changes, the element mounts, and a
-   CSS animation on mount runs exactly once. A JS transition layer here would
-   have meant a wrapper element in the middle of a `height: 100%` chain, which
-   is how you break a full-height layout for a fade.
-
-   Deliberately short and deliberately small. This is furniture between two
-   places you actually wanted to be, so it must never make you wait: 280ms, and
-   a 1.5% scale that reads as settling rather than as zooming.
-
-   NOTE the missing fill-mode, which is load-bearing. `both` would leave the
-   transform applied forever, and a transformed ancestor becomes the containing
-   block for `position: fixed` children, which would quietly re-anchor the astra
-   reveal and the god manifestation to this element for the rest of the run. */
-.menu,
-.codex,
-.run,
-.match {
-  animation: screen-in 280ms cubic-bezier(0.22, 0.72, 0.3, 1);
-}
-
-@keyframes screen-in {
-  from { opacity: 0; transform: scale(0.985); }
-  to { opacity: 1; transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .menu,
-  .codex,
-  .run,
-  .match { animation: none; }
-}
+/* Screen transitions live in polish.css, which already had a `screen-in` on
+   exactly these four roots. A second one here was a duplicate under the same
+   name, and duplicate @keyframes do not merge: the last one declared replaces
+   the other outright for every element using it, so which animation the game
+   played would have depended on stylesheet order. */
 
 /* ---------------------------------------------------------------- Main menu */
 .menu {
@@ -50,7 +21,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* CENTRED WHEN IT FITS, SCROLLABLE WHEN IT DOES NOT, and both halves are
+     needed. `body` is `overflow: hidden` because a card game must not rubber
+     band, so every screen has to carry its own scroll or it has none at all,
+     and this one carried none: on a 600px-tall phone the menu is 685px, so it
+     was clipped 79px at the top and 37px at the bottom with no way to reach
+     either.
+     `safe center` is the other half. A plain centred flex column overflows in
+     BOTH directions, and the overflow above the start edge is unreachable even
+     once the box scrolls, because there is no negative scroll. `safe` drops it
+     to flex-start exactly when it would overflow and leaves it centred the rest
+     of the time. The plain `center` above it is the fallback for anything that
+     does not know the keyword. */
   justify-content: center;
+  justify-content: safe center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   gap: 28px;
   text-align: center;
   padding: 24px;
@@ -881,6 +867,74 @@
   gap: 10px;
   justify-content: center;
 }
+
+/* ---- The codex shelf -----------------------------------------------------
+   One army, one row, scrolled sideways.
+
+   A wrapping grid put thirty-two Pandava cards into eight rows and pushed the
+   Kaurava heading off the bottom of the screen, so the codex read as one pile
+   with occasional headings rather than as three armies you could compare. A
+   rail keeps each army to a single line and the next army is always visible
+   underneath it.
+
+   THE PEEK IS THE AFFORDANCE. Cards are sized so a fraction of one is always
+   cut off at the right edge: a half-visible card is the only cue that reliably
+   says "there is more this way" without a hint nobody reads. The scrollbar is
+   left visible and styled rather than hidden for the same reason. */
+.codex__shelf {
+  display: grid;
+  grid-auto-flow: column;
+  /* 3.4 cards in view, so the fourth is always cut. */
+  grid-auto-columns: calc((100% - 2.4 * 10px) / 3.4);
+  gap: 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-bottom: 8px;
+  /* A phone flicking a rail sideways must not also drag the page. */
+  touch-action: pan-x pan-y;
+}
+.codex__shelf > * {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.codex__shelf::-webkit-scrollbar { height: 5px; }
+.codex__shelf::-webkit-scrollbar-track {
+  background: var(--panel-edge);
+  border-radius: 3px;
+}
+.codex__shelf::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 3px;
+}
+.codex__shelf { scrollbar-width: thin; scrollbar-color: var(--gold-dim) var(--panel-edge); }
+
+@media (min-width: 700px) {
+  .codex__shelf { grid-auto-columns: calc((100% - 4.5 * 10px) / 5.5); }
+}
+@media (min-width: 1100px) {
+  .codex__shelf { grid-auto-columns: calc((100% - 6.5 * 10px) / 7.5); }
+}
+
+/* The pager on an open card. The flick is the real control; these exist so it
+   is discoverable and so a keyboard and a mouse can do the same thing. */
+.sheet__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 6px 0 2px;
+  border-top: 1px solid var(--panel-edge);
+  margin-top: 10px;
+}
+.sheet__pager-count {
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.sheet__pager .btn { min-width: 44px; font-size: 1.1rem; line-height: 1; }
+.sheet__pager .btn:disabled { opacity: 0.3; }
 .codex__foot {
   text-align: center;
   font-size: 12px;
@@ -2331,8 +2385,21 @@
    wide screen. `cover` is the correct compromise: these carry colour and
    texture, not composition, so losing the edges costs nothing. */
 /* Everything that is not the background sits above it. Without this the video
-   paints over the title, which is a very confusing five seconds. */
-.menu > *:not(.ambient) { position: relative; z-index: 1; }
+   paints over the title, which is a very confusing five seconds.
+
+   NO `position: relative` HERE, and that is the whole point of this comment.
+   It used to set one, and at specificity (0,2,0) it beat `.overlay`'s own
+   (0,1,0) `position: fixed`. So the How to play modal, which renders as a child
+   of the menu, stopped being a modal: it became an ordinary item in a centred
+   flex column and laid out 85px BELOW the fold on a phone. Clicking the button
+   appeared to do nothing at all. On a taller desktop window it landed inside
+   the viewport, which is why it looked like a page rather than a bug.
+
+   z-index alone is enough. A flex item takes a z-index without being
+   positioned (Flexbox 4.3: a z-index other than auto creates a stacking
+   context even when position is static), so the layer order is unchanged and
+   `position: fixed` on a child is left alone. */
+.menu > *:not(.ambient) { z-index: 1; }
 
 .ambient {
   position: absolute;
@@ -2562,9 +2629,24 @@
 .codex,
 .match,
 .run { position: relative; isolation: isolate; }
-.codex > *:not(.ambient),
-.match > *:not(.ambient),
-.run > *:not(.ambient) { position: relative; z-index: 1; }
+/* THE `:not(.overlay)` IS THE WHOLE POINT OF THIS RULE, so it goes first.
+   Every modal in the game (the card sheet, How to play, the astra warning, the
+   shrine) renders as a child of one of these three screens and covers the
+   viewport with `position: fixed`. This selector is specificity (0,2,0) and
+   `.overlay` is (0,1,0), so without the exclusion it silently won and turned
+   every one of them into an ordinary block in the middle of the layout.
+   Measured on a 375x600 phone: the codex card sheet came out 375x510 at y=89
+   instead of covering the screen, and the How to play sheet landed 85px BELOW
+   the fold, so the button appeared to do nothing at all. */
+.codex > *:not(.ambient):not(.overlay),
+.match > *:not(.ambient):not(.overlay),
+.run > *:not(.ambient):not(.overlay) { position: relative; z-index: 1; }
+/* Modals still need to sit above the ambient layer; they just keep their own
+   positioning while they do it. */
+.codex > .overlay,
+.match > .overlay,
+.run > .overlay,
+.menu > .overlay { z-index: 30; }
 
 /* ---- The long march: what you are climbing towards -----------------------
    Name and face only. A locked card whose stats you can read is a spoiler; one
@@ -2579,20 +2661,24 @@
 }
 .ladder-step.is-reached .ladder-step__cap { color: var(--gold-dim); }
 
-.ladder-step__cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
-  gap: 10px;
-}
-@media (min-width: 900px) {
-  .ladder-step__cards { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
-}
+/* The ladder's card rows are codex shelves too: one level, one line you scan
+   sideways. Nineteen cards wrapping into five rows at level 1 was the "complete
+   mess" complaint, and it pushed level 5 off the bottom of the screen. */
 
 .ladder-card {
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  /* It is a button now, because tapping a card you can see should open it and
+     doing nothing read as the page being broken. Stripped back to looking like
+     the figure it replaced. */
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
 }
 .ladder-card img,
 .ladder-card__blank {
@@ -2604,11 +2690,26 @@
   background: var(--bg-2);
   display: block;
 }
-.ladder-card figcaption {
+.ladder-card figcaption,
+.ladder-card__name {
   font-size: 0.72rem;
   color: var(--ink-dim);
   text-align: center;
   line-height: 1.25;
+}
+.ladder-card:hover img { border-color: var(--gold-dim); }
+.ladder-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+.ladder-preview__intro {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.ladder-preview__march {
+  display: block;
+  margin: 6px auto 26px;
+  min-width: 240px;
 }
 
 /* Locked cards are DIMMED AND DESATURATED, never hidden and never blanked out.

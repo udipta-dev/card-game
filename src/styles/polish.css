@@ -79,7 +79,17 @@ button,
 }
 
 /* Whole screens crossfade, so moving between the menu, the setup and a battle
-   feels like navigation instead of a reload. */
+   feels like navigation instead of a reload.
+
+   NO `both` FILL, and it is load-bearing rather than tidy. These roots contain
+   the game's fixed-position overlays (the How to play sheet, the astra reveal,
+   a god manifesting), and a transformed ancestor becomes the containing block
+   for a fixed descendant. With `both` the animation keeps filling forever, so
+   the menu stayed a containing block for good and every "cover the screen"
+   overlay was quietly re-anchored to it: measured at 367x592 offset 6px down,
+   instead of the 375x600 viewport. Without a fill mode the transform is gone
+   the moment the animation ends, and there is no delay for `backwards` to
+   cover anyway. */
 @keyframes screen-in {
   from {
     opacity: 0;
@@ -94,7 +104,7 @@ button,
 .codex,
 .run,
 .match {
-  animation: screen-in 0.22s ease-out both;
+  animation: screen-in 0.22s ease-out;
 }
 
 /* Dialogs come forward rather than cutting in. */

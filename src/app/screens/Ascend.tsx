@@ -51,7 +51,7 @@ export function Ascend({ house, before, after, onDone }: Props) {
 
   return (
     <div className="codex ascend">
-      <header className="codex__top">
+      <header className="codex__bar">
         <h2 className="codex__title">{rose ? 'You rise' : 'You fall back'}</h2>
         <span className="codex__count">
           Level {before.level} → {after.level}
@@ -77,13 +77,15 @@ export function Ascend({ house, before, after, onDone }: Props) {
 
         {opened.length > 0 && (
           <section className="ascend__unlocks">
+            {/* Named after a card YOU just gained, not the canonical name for
+                the price band, which may belong to another army entirely. */}
             <Lintel count={`${opened.length} cards`}>
-              {step.cap} provisions · {getCard(step.headline).name}
+              Up to {step.cap} provisions · {getCard(opened[0]).name}
             </Lintel>
             <p className="ascend__cap">
               A band you could not afford yesterday. These may take the field from here on.
             </p>
-            <div className="ladder-step__cards">
+            <div className="codex__shelf">
               {opened.map((id) => {
                 const card = getCard(id);
                 const art = artFor(card);
@@ -104,8 +106,8 @@ export function Ascend({ house, before, after, onDone }: Props) {
 
         {nextAt && (
           <p className="ascend__next">
-            Next door at <strong>level {nextAt.level}</strong>: cards up to {nextAt.cap} provisions,
-            and {getCard(nextAt.headline).name} with them.
+            Next door at <strong>level {nextAt.level}</strong>: cards up to {nextAt.cap}{' '}
+            provisions.
           </p>
         )}
 
