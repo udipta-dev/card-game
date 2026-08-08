@@ -284,6 +284,12 @@ export function chooseAction(
    * was dealt, which is what this AI did for its whole life before hand.ts.
    */
   mulligan: boolean = true,
+  /**
+   * May it open a round by passing? Off by default and kept as a knob rather
+   * than deleted so the head-to-head that justified it stays reproducible:
+   * `npm run open-pass`.
+   */
+  mayConcedeOpening: boolean = false,
 ): Action {
   // The returned action references the AI's own card ids, which are unchanged,
   // so it is valid to apply against the real state.
@@ -329,10 +335,43 @@ export function chooseAction(
   const plays = moves.filter(isPlay);
   if (plays.length === 0) return { type: 'PASS', seat };
 
+  // NEVER OPEN A ROUND BY CONCEDING IT, and this is a READABILITY rule rather
+  // than a strength one. That distinction is the whole reason it is safe.
+  //
+  // The behaviour it removes is real. Under the ladder's early cap the opponent
+  // opened a round by passing 34 times in 60 at level 1, always with legal plays
+  // in hand, and at every other level never once. The cause is a gap in
+  // evaluate(): it weighs board power against cards held, those weights were
+  // tuned on the full game where a card is worth 7 to 12 power, and at cap 7 a
+  // card is worth 5, so the card term outweighs the board term and passing wins
+  // the comparison.
+  //
+  // MY FIRST EXPLANATION OF WHY THAT WAS BAD WAS WRONG, and the numbers said so.
+  // "Passing into an empty field sells a round for one card" sounds obvious and
+  // is not true: guarded against unguarded, identical armies, only the rule
+  // differing, the guarded seat wins
+  //
+  //   level  1   48.9% +-4.5      level 33   48.7% +-4.4
+  //   level  6   49.2% +-4.5      level 50   50.1% +-4.4
+  //   level 19   52.3% +-4.4
+  //
+  // which is no difference anywhere. The rule is kept anyway, for the one thing
+  // it does change: the first thing that happens in a new player's first game
+  // was the enemy folding before a card was played, more often than not. That
+  // reads as a broken opponent whatever the win rate says. Costing nothing is
+  // what makes it worth having, not what makes it pointless.
+  //
+  // Re-measure with `npm run open-pass`.
+  const opensTheRound =
+    !realState.playedThisRound[seat] &&
+    !realState.playedThisRound[opponentOf(seat)] &&
+    !realState.passed[opponentOf(seat)];
+  const choices = opensTheRound && !mayConcedeOpening ? plays : moves;
+
   if (worlds[0].passed[opponentOf(seat)])
     return chooseWhenOppPassed(worlds, seat, plays, w, look);
 
-  return greedy(worlds, seat, moves, w, look);
+  return greedy(worlds, seat, choices, w, look);
 }
 
 /**

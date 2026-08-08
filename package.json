@@ -18,6 +18,7 @@
     "duel": "vite-node sim/ai-duel.ts",
     "ladder-ai": "vite-node sim/ladder-ai.ts",
     "first-mover-fix": "vite-node sim/first-mover-fix.ts",
+    "open-pass": "vite-node sim/open-pass.ts",
     "art:import": "vite-node sim/art-import.ts",
     "ship": "CF_PAGES=1 vite build && wrangler pages deploy dist --project-name kurukshetra --branch main --commit-dirty=true",
     "art:deities": "vite-node sim/deity-import.ts"
