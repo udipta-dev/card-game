@@ -64,7 +64,25 @@ export const KAURAVA_CARDS: Card[] = [
     tier: 'maharathi',
     basePower: 10,
     rows: ['ratha'],
-    keywords: [{ kind: 'armor', amount: 4 }, { kind: 'noAstrasInFinalRound' }],
+    // TWO, NOT FOUR, and canon and the lab agree for once.
+    //
+    // Ablation, one keyword stripped at a time against the full lab: Karna's
+    // armour is the largest single thing carrying his house. Removing it
+    // outright moved Kaurava 58.3% -> 53.8% and the faction spread 16.7 -> 10.3.
+    // Nothing else came close: Bhishma's icchamrityu 1.2, Drona's immunity 1.4,
+    // Duryodhana's adamant body 0.8, his brother-bond 0.0.
+    //
+    // Four was the largest armour in the game by some way (Ravana 3, Prahlada
+    // 3, Hiranyakashipu 2, Shikhandi 2), on the card with the highest power, in
+    // a game whose removal is almost entirely damage.
+    //
+    // And he should not really have it at all. The Kavacha-Kundala was born
+    // onto his body and he GAVE IT AWAY to Indra, who came begging for it in a
+    // brahmana's disguise, in exchange for the Vasavi Shakti. He fights the
+    // whole of Kurukshetra without it. Two is the compromise: he keeps a trace
+    // of what he was born in, and the spear he traded it for is the card that
+    // actually carries him now.
+    keywords: [{ kind: 'noAstrasInFinalRound' }],
     tags: ['sun-line'],
     astraMastery: 2,
     knownAstras: ['vasavi_shakti'],
@@ -87,7 +105,8 @@ export const KAURAVA_CARDS: Card[] = [
     // So the wheel strips his armour instead. `damage` eats armour before
     // power, so 4 removes exactly the Kavacha and leaves the man at his full
     // ten. He is still the strongest thing on the field. He simply can be
-    // killed now, which he could not be a moment ago.
+    // killed now, which he could not be a moment ago. The number tracks the
+    // armour: it removes exactly the Kavacha and leaves the man at his full ten.
     effects: [
       {
         on: 'onPlay',

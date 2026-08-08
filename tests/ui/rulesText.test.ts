@@ -194,7 +194,10 @@ describe('armour belongs to whoever is wearing it', () => {
         /Kavacha-Kundala/,
       );
     }
-    expect(rulesText(getCard('karna')).join(' ')).toMatch(/Kavacha-Kundala/);
+    // Karna himself no longer wears it either: he traded the Kavacha to Indra
+    // for the Vasavi Shakti before the war, and the card was handing it back.
+    // The named line survives for whoever carries armour by that name later.
+    expect(getCard('karna').keywords.some((k) => k.kind === 'armor')).toBe(false);
   });
 
   it('and the line states how much it turns aside', () => {

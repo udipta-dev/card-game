@@ -65,11 +65,15 @@ describe('the counsel strips a warrior of what makes him unkillable', () => {
   });
 
   it('works on every protection, not just the one it was written for', () => {
-    // deathless (Ashwatthama), diamond-body (Duryodhana), armor (Karna).
+    // deathless (Ashwatthama), diamond-body (Duryodhana), armor (Ravana).
+    //
+    // Ravana rather than Karna, who used to stand here: Karna traded the
+    // Kavacha-Kundala to Indra for the Vasavi Shakti before the war and carries
+    // no armour on his card any more. Ravana's is his own penance.
     for (const [card, setup] of [
       ['ashwatthama', () => {}],
       ['duryodhana', (s: GameState, i: string) => s.instances[i].flags.add('diamond-body')],
-      ['karna', () => {}],
+      ['ravana', () => {}],
     ] as const) {
       const s = makeState({ aiBoard: { ratha: [card] } });
       const iid = s.board.ai.ratha[0];

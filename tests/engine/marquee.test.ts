@@ -143,7 +143,7 @@ describe('Karna — chariot-wheel curse in the final round', () => {
     expect(firstOf(s1, 'player', 'karna').currentPower).toBe(10);
   });
 
-  it('loses his armour, not his strength, in the decider', () => {
+  it('is caught helpless in the decider', () => {
     // WAS: collapses to 0. Deliberately changed. Zeroing him made the best card
     // in the Kaurava deck one you must not play in the round that decides the
     // battle, and the card never said so, so it read as a trap rather than a
@@ -153,8 +153,11 @@ describe('Karna — chariot-wheel curse in the final round', () => {
     const s0 = makeState({ round: 3, playerHand: ['karna'] });
     const s1 = reduce(s0, { type: 'PLAY_CARD', iid: firstOf(s0, 'player', 'karna').iid, row: 'ratha' });
     const karna = firstOf(s1, 'player', 'karna');
-    expect(karna.currentPower, 'still the strongest man on the field').toBe(10);
-    expect(karna.counters.armor ?? 0, 'but the Kavacha is gone').toBe(0);
+    // He carries no Kavacha at all now: he traded it to Indra for the Vasavi
+    // Shakti before the war, and the lab found it was the largest single thing
+    // holding his house up (Kaurava 58.3% -> 53.8% when stripped).
+    expect(karna.currentPower, 'the wheel takes four off him').toBe(6);
+    expect(karna.counters.armor ?? 0, 'he never had the Kavacha here').toBe(0);
     expect(karna.flags.has('wheel-sunk')).toBe(true);
   });
 });

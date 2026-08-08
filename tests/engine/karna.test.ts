@@ -16,30 +16,42 @@ function fieldKarna(round: number, wins: { player: number; ai: number }): GameSt
   return reduce(s, { type: 'PLAY_CARD', iid: firstOf(s, 'player', 'karna').iid, row: 'ratha' });
 }
 
-describe('the wheel takes his guard, not his strength', () => {
-  it('leaves him at full power in the deciding round', () => {
-    // He used to arrive as a ZERO here: a 10-power maharathi you must not play
-    // in the round that matters, which is a trap and not a choice.
+describe('the wheel takes what he has left', () => {
+  // HE HAS NO ARMOUR ANY MORE, and the reason is both canon and the lab.
+  //
+  // The Kavacha-Kundala was born onto his body and he GAVE IT AWAY, to Indra
+  // begging in a brahmana's disguise, in exchange for the Vasavi Shakti. He
+  // fights the whole of Kurukshetra without it. The card was handing it back.
+  //
+  // And it was the single largest thing carrying his house. Ablation, one
+  // keyword stripped at a time against the full lab: removing Karna's armour
+  // moved Kaurava 58.3% -> 53.8% and the faction spread 16.7 -> 10.3, where
+  // Bhishma's icchamrityu was worth 1.2, Drona's immunity 1.4 and Duryodhana's
+  // adamant body 0.8. Four was the largest armour in the game, on the highest
+  // power in the game, in a game whose removal is almost entirely damage.
+  //
+  // So the wheel now takes his STRENGTH, which is what it always meant. He
+  // stepped down to lift it and asked for the pause the rules allowed him, and
+  // Arjuna shot him where he stood.
+  it('takes four off him in the round that decides the battle', () => {
     const s = fieldKarna(2, { player: 1, ai: 0 });
     const karna = firstOf(s, 'player', 'karna');
-    expect(karna.currentPower).toBe(getCard('karna').basePower);
+    expect(karna.currentPower).toBe(getCard('karna').basePower - 4);
     expect(karna.flags.has('wheel-sunk')).toBe(true);
   });
 
-  it('but strips the armour that made him untouchable', () => {
+  it('and he is killable, because there is no armour left to eat the blow', () => {
     const s = fieldKarna(2, { player: 1, ai: 0 });
     const karna = firstOf(s, 'player', 'karna');
-    expect(karna.counters.armor ?? 0, 'the Kavacha is gone').toBe(0);
-    // Helpless, not weak: he can be killed now, and a moment ago he could not.
+    expect(karna.counters.armor ?? 0).toBe(0);
     expect(attemptDestroy(s, 'ai', karna.iid)).toBe(true);
   });
 
-  it('and in an early round he keeps both, which is the control', () => {
+  it('in an early round he stands at his full ten, which is the control', () => {
     const s = fieldKarna(1, { player: 0, ai: 0 });
     const karna = firstOf(s, 'player', 'karna');
     expect(karna.currentPower).toBe(getCard('karna').basePower);
-    expect(karna.counters.armor ?? 0).toBeGreaterThan(0);
-    expect(attemptDestroy(s, 'ai', karna.iid), 'armour eats the first blow').toBe(false);
+    expect(karna.flags.has('wheel-sunk')).toBe(false);
   });
 });
 
