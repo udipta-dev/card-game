@@ -9,7 +9,7 @@ import { runCardEffects, runEffect } from './events';
 import { applyImmuneDisarm, canPlayAstras, initInstanceRuntime, removeInstance } from './keywords';
 import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
 import { resolveRound } from './rounds';
-import { MULLIGAN_MAX, makeInstance } from './createMatch';
+import { MULLIGAN_MAX } from './createMatch';
 import { nextRandom } from './ids';
 import type { Action, Card, CardInstance, GameState, Row, Seat } from './types';
 
@@ -321,44 +321,41 @@ export function reduce(state: GameState, action: Action): GameState {
         // on his deck, lose the carrier to clearBoard, then draw the weapon
         // next round with nobody alive who can fire it. Granted 230 times over
         // 400 games, drawn in 80% of those, and fired 0.0%. Not rare. Never.
-        // Deck-top made the grant arrive exactly one round too late, always,
-        // and the 75% that rotted in hand were the player wondering what they
-        // had done wrong.
         //
-        // In hand it lands while the man who carries it is still on the field,
-        // which is the only window it can ever be used in, and it is what the
-        // epic says anyway: Bhagadatta does not send for the Vaishnava, he
-        // rides in holding it. The card advantage that once bought a 95% win
-        // rate is bounded three ways now: two cards in the game are carried,
-        // both cost 14 provisions, and ULTIMATES_PER_BATTLE looses one.
+        // HE FETCHES IT. HE DOES NOT CONJURE IT.
+        //
+        // Both earlier versions built the weapon out of nothing, and that is
+        // the whole fault. No starter deck packs the Vaishnava or the Vasavi
+        // Shakti, so committing the bearer minted a 14-provision ultimate for
+        // free, and only for houses whose men happen to bear one. Bhagadatta
+        // and Karna are BOTH Kaurava. So Kaurava collected 28 provisions of
+        // free ultimate, Asura got 14 through Indrajit, and Pandava got
+        // nothing at all. Measured against the same lab, everything else
+        // current, AI hand-management off:
+        //
+        //     conjured into hand   pandava 35.4  kaurava 60.4  asura 51.1   25.0
+        //     fetched from deck    pandava 47.7  kaurava 47.4  asura 49.6    2.2
+        //
+        // A burn off the top of the deck was tried as the price and paid for
+        // nothing: you draw about ten cards of eighteen, so the card burned is
+        // usually one you were never going to see.
+        //
+        // So the weapon has to be MUSTERED like anything else, at its full 14
+        // provisions, and what the bearer gives you is the one thing that was
+        // ever actually broken: he puts it in your hand at the moment he is
+        // standing, which is the only window it can be fired in. Pack it and he
+        // hands it to you. Leave it at home and he arrives empty-handed, which
+        // is exactly what the muster screen already warns you about.
         for (const astraId of (getCard(card.id).knownAstras ?? []).filter(
           (a) => getCard(a).carried,
         )) {
           if (s.bannedThisRun.includes(astraId)) continue; // already spent for the run
           const known = (h: string) => s.instances[h]?.cardId === astraId;
-          if (s.hands[seat].some(known) || s.decks[seat].some(known)) continue;
-          const inst = makeInstance(astraId, seat);
-          s.instances[inst.iid] = inst;
-          s.hands[seat].push(inst.iid);
-          // AND IT COSTS A DRAW. The weapon arrives in hand, where it is usable
-          // while its bearer stands, and the top of the deck is burned to pay
-          // for it, so the host is not one card richer for having brought him.
-          //
-          // The deck-top version was trying to charge this and charged it in
-          // the wrong currency. It made the weapon arrive a round too late to
-          // ever fire (0.0% over 400 games) while still costing the draw. Hand
-          // plus a burn separates the two: you get the TIMING, which was the
-          // whole fix, and you pay the CARD, which was the whole price.
-          //
-          // Not optional, and measured. Free into hand, one house holds both
-          // carried weapons, Bhagadatta and Karna, so Kaurava alone collected
-          // 28 provisions of free ultimate and the faction spread went from 2.3
-          // points to 37.5. Pandava carries neither and got nothing.
-          const burned = s.decks[seat].shift();
-          if (burned) {
-            s.log.push({ t: 'burn', seat, cardIds: [s.instances[burned]!.cardId] });
-            delete s.instances[burned];
-          }
+          if (s.hands[seat].some(known)) continue; // already to hand
+          const at = s.decks[seat].findIndex(known);
+          if (at < 0) continue; // not packed: he rides in without it
+          const [found] = s.decks[seat].splice(at, 1);
+          s.hands[seat].push(found);
           s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
         }
       } else if (card.type === 'boon' || card.type === 'shastra') {

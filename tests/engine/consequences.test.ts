@@ -223,23 +223,42 @@ describe('a maharathi who completes tapasya may loose what he earned', () => {
 });
 
 describe('a named astra arrives with its warrior', () => {
-  it('Karna takes the field holding the Vasavi Shakti, in hand and usable now', () => {
+  it('Karna packs the Vasavi Shakti and takes the field holding it', () => {
     // It was hand-listed in the deck beside him, as if the two were unrelated.
     // The spear is his, traded for the armour off his own body.
     //
-    // It lands in the HAND, and the deck was tried first. On top of the deck it
-    // cost a draw rather than being a gift, which reads fair and plays dead: a
-    // carried weapon needs its bearer standing, and every unit dies at the end
-    // of the round, so you drew it the round AFTER the only man who could fire
-    // it was cleared off the field. Granted 230 times over 400 games, drawn in
-    // 80% of those, loosed 0.0%. In hand it arrives inside the one window it
-    // can be used in, which is also what the epic says: Bhagadatta does not
-    // send for the Vaishnava, he rides in holding it.
-    const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima'] });
+    // He FETCHES it out of the deck. He does not conjure it. Both earlier
+    // versions built the weapon from nothing, and no starter deck packs it, so
+    // committing the bearer minted a 14-provision ultimate for free and only
+    // for the houses whose men happen to bear one. Bhagadatta and Karna are
+    // both Kaurava. Measured, everything else held still:
+    //
+    //   conjured into hand   pandava 35.4  kaurava 60.4  asura 51.1   spread 25.0
+    //   fetched from deck    pandava 47.7  kaurava 47.4  asura 49.6   spread  2.2
+    const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima', 'vasavi_shakti'] });
     const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
     expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(true);
     expect(s1.decks.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
     expect(hasEvent(s1, (e) => e.t === 'granted' && e.cardId === 'vasavi_shakti')).toBe(true);
+  });
+
+  it('and rides in empty-handed when it was left at home', () => {
+    // The muster screen already warns about exactly this, and now the warning
+    // has teeth: an unpacked weapon is a weapon you do not get.
+    const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima'] });
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    expect(s1.hands.player.some((i) => s1.instances[i]?.cardId === 'vasavi_shakti')).toBe(false);
+    expect(hasEvent(s1, (e) => e.t === 'granted')).toBe(false);
+  });
+
+  it('costs the host nothing extra: the weapon moves, it is not created', () => {
+    // The whole regression in one assertion. Card count across hand and deck is
+    // unchanged, because he is handing you something you already paid 14
+    // provisions to bring.
+    const s = makeState({ playerHand: ['karna'], playerDeck: ['bhima', 'vasavi_shakti'] });
+    const before = s.hands.player.length + s.decks.player.length;
+    const s1 = reduce(s, { type: 'PLAY_CARD', iid: s.hands.player[0], row: 'ratha' });
+    expect(s1.hands.player.length + s1.decks.player.length).toBe(before - 1); // Karna himself left hand
   });
 
   it('and the man who brought it can loose it while he still stands', () => {
