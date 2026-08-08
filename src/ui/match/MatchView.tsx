@@ -160,7 +160,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
         const names = e.cardIds.map((c) => getCard(c).name).join(', ');
         setOmen({
           tone: 'burn',
-          title: e.seat === 'player' ? 'Torn from your host' : 'Torn from the enemy host',
+          title: e.seat === 'player' ? 'Torn from your army' : 'Torn from the enemy army',
           text: `${names}. Lost for the rest of the run.`,
         });
       } else if (e.t === 'clash') {
@@ -168,7 +168,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           tone: 'clash',
           title: 'The weapons meet in the air',
           text:
-            `${getCard(e.astra).name} against ${getCard(e.against).name}. Both hosts are scoured for ${e.blast}.` +
+            `${getCard(e.astra).name} against ${getCard(e.against).name}. Both armies are scoured for ${e.blast}.` +
             (e.unwithdrawn
               ? ` ${e.unwithdrawn === 'player' ? 'You could not withdraw yours.' : 'The enemy could not withdraw his.'}`
               : ' Both weapons were recalled in time.'),
@@ -875,14 +875,14 @@ function MulliganOverlay({
 const HOUSE_WIN: Record<House, string> = {
   pandava: 'Dharma holds the field. The conches sound for the Pandavas.',
   kaurava: 'The field is held. Hastinapura’s banners stand over it.',
-  asura: 'The field is taken. The asura host does not yield it back.',
+  asura: 'The field is taken. The asura army does not yield it back.',
   neutral: 'The field is held.',
   legend: 'The field is held.',
 };
 const HOUSE_LOSS: Record<House, string> = {
   pandava: 'The line is broken. The Pandava banners fall back.',
   kaurava: 'The line is broken. Hastinapura’s banners fall back.',
-  asura: 'The line is broken. The asura host is scattered.',
+  asura: 'The line is broken. The asura army is scattered.',
   neutral: 'The line is broken.',
   legend: 'The line is broken.',
 };
@@ -910,7 +910,7 @@ function ResultOverlay({
         <h2>{draw ? 'Stalemate' : won ? 'Victory' : 'Defeat'}</h2>
         <p className="panel__sub">
           {draw
-            ? 'The field is soaked, and neither host yields. A drawn round counts for both sides, so three rounds can end two-all.'
+            ? 'The field is soaked, and neither army yields. A drawn round counts for both sides, so three rounds can end two-all.'
             : won
               ? HOUSE_WIN[house]
               : HOUSE_LOSS[house]}
@@ -1173,7 +1173,7 @@ function whyNotPlayable(state: GameState, iid: InstanceId, myTurn: boolean): str
       const names = [...new Set(inDeck.map((c) => c.name))].slice(0, 3);
       return names.length
         ? `No one on the field is trained to fire this. Rank does not decide it: ${names.join(', ')} can.`
-        : 'No warrior left in your host is trained to fire this.';
+        : 'No warrior left in your army is trained to fire this.';
     }
   }
   return undefined;

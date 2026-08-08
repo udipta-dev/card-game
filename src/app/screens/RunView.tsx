@@ -249,7 +249,7 @@ function RewardScreen({
         <div className="run__title">The field is yours</div>
         <div className="run__depth">Battle {run.depth} won</div>
       </header>
-      <p className="reward__lede">Take one to your host before you march on.</p>
+      <p className="reward__lede">Take one to your army before you march on.</p>
       <div className="reward__grid">
         {choices.map((opt, i) => (
           <button key={i} className={`reward__card reward__card--${opt.kind}`} onClick={() => onChoose(opt)}>
@@ -420,13 +420,13 @@ function RunEndScreen({ run, onExit }: { run: RunState; onExit: () => void }) {
   return (
     <div className="run run--end">
       <div className={'panel ' + (won ? 'result--win' : drew ? '' : 'result--lose')}>
-        <h2>{won ? 'The war is won' : drew ? 'Neither host yields' : 'The run ends'}</h2>
+        <h2>{won ? 'The war is won' : drew ? 'Neither army yields' : 'The run ends'}</h2>
         <p className="panel__sub">
           {won
-            ? 'You carried your host through every rung of the ladder. Dharma prevails.'
+            ? 'You carried your army through every rung of the ladder. Dharma prevails.'
             : drew
               ? `The field was level ${record}, and a drawn battle carries no one forward. The next run begins anew.`
-              : `Your host is broken ${record}. The next run begins anew, a little wiser.`}
+              : `Your army is broken ${record}. The next run begins anew, a little wiser.`}
         </p>
         <div className="menu__actions" style={{ margin: '0 auto' }}>
           <button className="btn btn--primary" onClick={onExit}>

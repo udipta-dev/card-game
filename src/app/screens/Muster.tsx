@@ -86,7 +86,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
         </span>
         <button
           className="btn btn--ghost btn--sm"
-          title="Fill the host automatically, best value first"
+          title="Fill the army automatically, best value first"
           onClick={() => setChosen(autoMuster(available.map((c) => c.id)))}
         >
           Auto
@@ -130,7 +130,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
 
       <div className="codex__scroll">
         <div className="codex__group">
-          Your host
+          Your army
           <span className="codex__group-n">
             {check.count} of {MUSTER_MIN}–{MUSTER_MAX} · {left} provisions unspent
           </span>
@@ -163,7 +163,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
             .map((c) => {
               const why = whyNotAdd(chosen, c.id);
               return (
-                <div key={`out-${c.id}`} className="muster__slot" title={why ?? 'Add to your host'}>
+                <div key={`out-${c.id}`} className="muster__slot" title={why ?? 'Add to your army'}>
                   <CardFrame
                     mini
                     card={c}

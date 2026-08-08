@@ -94,7 +94,7 @@ export function planBattle(run: RunState): BattlePlan {
   const [battleSeed] = nextRandom((run.seed ^ (run.index * 0x85ebca6b)) >>> 0);
   return {
     seed: battleSeed,
-    playerDeck: { id: 'run-host', name: 'Your host', house: run.house, cards: marchingCards(run) },
+    playerDeck: { id: 'run-host', name: 'Your army', house: run.house, cards: marchingCards(run) },
     aiDeck: { id: enc.id, name: enc.name, house: enc.house, cards: enc.deckCards },
     init: {
       banned: run.banned,

@@ -33,7 +33,7 @@ const HOUSE_BRIEF: Record<string, { line: string; strength: string; weakness: st
   pandava: {
     line: 'A few enormous men, and Krishna to keep one of them alive.',
     strength: 'The heaviest warriors in the game and the best answers to a weapon in flight.',
-    weakness: 'Top-heavy. Lose Arjuna or Bhima and the host is thin behind them.',
+    weakness: 'Top-heavy. Lose Arjuna or Bhima and the army is thin behind them.',
   },
   kaurava: {
     line: 'Guile. Bhishma at the front and Shakuni behind, emptying your hand.',
@@ -101,12 +101,12 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
         <button className="btn btn--ghost btn--sm" onClick={onBack}>
           ‹ Back
         </button>
-        <h2 className="codex__title">Choose your host</h2>
+        <h2 className="codex__title">Choose your army</h2>
         <span className="codex__count"><HelpButton className="btn btn--ghost btn--sm" /></span>
       </div>
 
       <div className="codex__scroll">
-        <div className="setup__label">Your host</div>
+        <div className="setup__label">Your army</div>
         <div className="faction-picker">
           {FACTIONS.map((f) => factionButton(f.house, playerHouse === f.house, () => setPlayerHouse(f.house)))}
         </div>
@@ -134,7 +134,7 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
                 title="Choose which cards go to war"
                 onClick={() => onMuster(playerHouse)}
               >
-                {custom ? 'Change host' : 'Choose your host'}
+                {custom ? 'Change army' : 'Choose your army'}
               </button>
             )}
           </span>
@@ -205,7 +205,7 @@ function Arsenal({ cards }: { cards: readonly string[] }) {
 
   return (
     <div className="arsenal">
-      <div className="arsenal__head">Divine weapons in this host</div>
+      <div className="arsenal__head">Divine weapons in this army</div>
 
       {arsenal.map((e) => {
         const dead = e.wielders.length === 0;

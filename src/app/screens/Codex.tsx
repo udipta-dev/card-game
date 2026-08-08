@@ -24,9 +24,9 @@ interface Group {
 }
 
 const GROUPS: Group[] = [
-  { title: 'The Pandava Host', house: 'pandava' },
-  { title: 'The Kaurava Host', house: 'kaurava' },
-  { title: 'The Asura Host', house: 'asura' },
+  { title: 'The Pandava Army', house: 'pandava' },
+  { title: 'The Kaurava Army', house: 'kaurava' },
+  { title: 'The Asura Army', house: 'asura' },
   {
     // "Those Who Stood Apart" is a nice phrase and tells a new player nothing.
     // These are the warriors who fought for neither side, so the heading now

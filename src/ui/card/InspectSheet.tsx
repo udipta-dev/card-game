@@ -156,7 +156,7 @@ export function InspectSheet({
             )}
             {/* "Cost" reads as a cost to PLAY, which does not exist in this
                 game: there is no per-turn or per-round pool of anything. It is
-                the price the card charges when you are building your host, and
+                the price the card charges when you are building your army, and
                 it does nothing at all once the battle starts. */}
             {` · ${provisionOf(card)} provisions to muster`}
           </div>
