@@ -8,7 +8,7 @@
 // curated one sits at 42.9%.
 import { describe, expect, it } from 'vitest';
 import { autoMuster, poolFor, checkMuster, MUSTER_MAX, MIN_WARRIORS, musterProvisions } from '@content/muster';
-import { DECK_BUDGET } from '@content/decks';
+import { DECK_BUDGET, DECKS } from '@content/decks';
 import { orphanWeapons } from '@content/arsenal';
 import { getCard } from '@content/cards';
 
@@ -33,8 +33,22 @@ describe('the auto-muster builds something worth fielding', () => {
     // raw worth takes the most expensive warriors first and runs out of budget
     // at fifteen cards, which loses harder than underspending did, because this
     // game is decided by card economy.
+    //
+    // Not pinned to MUSTER_MAX any more. It hands back a known-good army when
+    // the pool can hold one, and the Asura starter is a deliberate 18: it lost
+    // the Brahma-Astra, which cost every army in the game 7 to 9 points. A rule
+    // demanding exactly 19 would forbid the better army.
     const built = autoMuster(poolFor(house).map((c) => c.id));
-    expect(built.length).toBe(MUSTER_MAX);
+    expect(built.length).toBeGreaterThanOrEqual(MUSTER_MAX - 1);
+    expect(built.length).toBeLessThanOrEqual(MUSTER_MAX);
+  });
+
+  it.each(HOUSES)('%s: hands back a known-good army rather than a guess', (house) => {
+    // Three heuristics were measured and all three produced roughly the same
+    // 42-point spread. Handing back the curated armies instead measures 3.0.
+    const built = autoMuster(poolFor(house).map((c) => c.id));
+    const starter = Object.values(DECKS).find((d) => d.house === house);
+    expect(built).toEqual(starter?.cards);
   });
 
   it.each(HOUSES)('%s: enough warriors to hold a line', (house) => {

@@ -18,7 +18,7 @@
 // Pure and dependency-free, so the rules can be tested without a screen.
 import { allCards, getCard, provisionOf } from './cards';
 import { cheapestWielder, orphanWeapons, unpackedWeapons, wieldersOf } from './arsenal';
-import { DECK_BUDGET, type DeckList } from './decks';
+import { DECKS, DECK_BUDGET, type DeckList } from './decks';
 import type { Card, CardId, House } from '@engine/types';
 
 /**
@@ -171,6 +171,20 @@ function worthOf(c: Card): number {
 }
 
 export function autoMuster(pool: readonly CardId[], target = MUSTER_MAX): CardId[] {
+  // A KNOWN-GOOD ARMY BEATS ANY HEURISTIC, so hand one back when the pool can
+  // hold it. The curated starters ARE the searched armies: they carry what
+  // sim/deck-search.ts reached for, and the Brahma-Astra it threw out of all
+  // three. Measured, they sit within four points of each other; the best
+  // heuristic below measured a 42-point spread.
+  //
+  // Only when the whole army fits the pool, so a player who has cut the pool
+  // down by hand still gets a legal answer from the greedy pass rather than a
+  // list containing cards they excluded.
+  const held = new Set(pool);
+  for (const deck of Object.values(DECKS)) {
+    if (deck.cards.length && deck.cards.every((id) => held.has(id))) return [...deck.cards];
+  }
+
   const byWorth = (a: CardId, b: CardId) => {
     const d = worthOf(getCard(b)) - worthOf(getCard(a));
     return d !== 0 ? d : a.localeCompare(b);
