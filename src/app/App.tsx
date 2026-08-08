@@ -11,6 +11,8 @@ import { MainMenu } from './screens/MainMenu';
 import { RunView } from './screens/RunView';
 import { Setup } from './screens/Setup';
 import { Muster } from './screens/Muster';
+import { LadderPreview } from './screens/LadderPreview';
+import { NEW_STANDING } from '@run/ladder';
 import { loadMuster, saveMuster } from '@content/savedMuster';
 
 interface MatchConfig {
@@ -19,7 +21,7 @@ interface MatchConfig {
   aiDeck: DeckList;
 }
 
-type Screen = 'menu' | 'quickSetup' | 'campaignSetup' | 'codex' | 'muster';
+type Screen = 'menu' | 'quickSetup' | 'campaignSetup' | 'codex' | 'muster' | 'ladder';
 
 function makeSeed(): number {
   // ?seed=17 replays an exact match. Every match is deterministic from its
@@ -110,6 +112,12 @@ export function App() {
           onMuster={(house) => setMustering({ house, back: 'campaignSetup' })}
           onBack={() => setScreen('menu')}
         />
+      ) : screen === 'ladder' ? (
+        // Shown from the menu, before a run exists, so a brand new player can
+        // see what fifty levels actually contains. Pandava by default because a
+        // house has not been chosen at that point; once runs carry a standing
+        // this takes theirs.
+        <LadderPreview house="pandava" standing={NEW_STANDING} onBack={() => setScreen('menu')} />
       ) : screen === 'codex' ? (
         <Codex onBack={() => setScreen('menu')} />
       ) : (
@@ -117,6 +125,7 @@ export function App() {
           onPlay={() => setScreen('quickSetup')}
           onCampaign={() => setScreen('campaignSetup')}
           onCodex={() => setScreen('codex')}
+          onLadder={() => setScreen('ladder')}
         />
       )}
     </div>

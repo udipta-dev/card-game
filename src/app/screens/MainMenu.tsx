@@ -8,11 +8,12 @@ interface Props {
   onPlay: () => void;
   onCampaign: () => void;
   onCodex: () => void;
+  onLadder: () => void;
 }
 
 const SEEN_KEY = 'kuru_seen_help';
 
-export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
+export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
   const [showHelp, setShowHelp] = useState(false);
   const meta = loadMeta();
 
@@ -77,6 +78,13 @@ export function MainMenu({ onPlay, onCampaign, onCodex }: Props) {
           <span className="plaque__body">
             <span className="plaque__title">Quickplay</span>
             <span className="plaque__sub">A single battle, nothing carried</span>
+          </span>
+        </button>
+        <button className="plaque" onClick={onLadder}>
+          <Kalasha size={26} tiers={3} className="plaque__mark" />
+          <span className="plaque__body">
+            <span className="plaque__title">The Long March</span>
+            <span className="plaque__sub">Fifty levels, and what waits on each</span>
           </span>
         </button>
         <button className="plaque" onClick={onCodex}>

@@ -2418,3 +2418,65 @@
 .codex > *:not(.ambient),
 .match > *:not(.ambient),
 .run > *:not(.ambient) { position: relative; z-index: 1; }
+
+/* ---- The long march: what you are climbing towards -----------------------
+   Name and face only. A locked card whose stats you can read is a spoiler; one
+   you can only look at is a promise. */
+.ladder-step { margin-bottom: 26px; }
+.ladder-step__cap {
+  margin: 0 0 10px;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.ladder-step.is-reached .ladder-step__cap { color: var(--gold-dim); }
+
+.ladder-step__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+}
+@media (min-width: 900px) {
+  .ladder-step__cards { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+}
+
+.ladder-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ladder-card img,
+.ladder-card__blank {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--panel-edge);
+  background: var(--bg-2);
+  display: block;
+}
+.ladder-card figcaption {
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* Locked cards are DIMMED AND DESATURATED, never hidden and never blanked out.
+   You are supposed to want them, and you cannot want a silhouette. */
+.ladder-card.is-locked img { filter: grayscale(0.75) brightness(0.55); }
+.ladder-card.is-locked figcaption { color: var(--ink-faint); }
+.ladder-card.is-locked img:hover { filter: grayscale(0.35) brightness(0.75); }
+
+.ladder-preview__foot {
+  margin: 18px 0 40px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ladder-card.is-locked img { transition: filter 200ms ease; }
+}
