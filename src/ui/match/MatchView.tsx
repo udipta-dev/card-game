@@ -17,6 +17,7 @@ import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_DOT, FACTION_NAME, ROW_GLOSS, TIER_LABEL, TYPE_LABEL, rulesText } from '@ui/card/cardTheme';
 import { Fan, ROW_GLYPH, Rosette } from '@ui/ornament';
 import { HowToPlay } from '@ui/HowToPlay';
+import { AstraReveal } from './AstraReveal';
 import { eventText } from './eventText';
 import { deityArt } from '@ui/card/deityArt';
 import { DEITIES } from '@run/shrine';
@@ -83,6 +84,10 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   const [banner, setBanner] = useState<string | null>(null);
   const [awaitingSanction, setAwaitingSanction] = useState<{ action: Action; card: Card } | null>(null);
   const [omen, setOmen] = useState<{ tone: 'curse' | 'burn' | 'clash'; title: string; text: string } | null>(null);
+  // The weapon going off, built from its own painting. Queued rather than shown
+  // directly, because two astras can resolve inside one reduce (a clash spends
+  // both) and the second would otherwise replace the first before it was seen.
+  const [reveal, setReveal] = useState<{ astra: string; mine: boolean }[]>([]);
   const [abilityPrompt, setAbilityPrompt] = useState<{ iid: InstanceId; card: Card } | null>(null);
   const roundEndsSeen = useRef(0);
   const logSeen = useRef(0);
@@ -149,6 +154,17 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   useEffect(() => {
     const fresh = state.log.slice(logSeen.current);
     logSeen.current = state.log.length;
+    // A DIVINE WEAPON GETS ITS OWN BEAT. Read off the log rather than the play,
+    // so it fires wherever the weapon actually resolved: straight through, out
+    // of a pending counter, or after being answered.
+    const fired = fresh
+      .filter((e) => e.t === 'unanswered' || e.t === 'countered')
+      .map((e) => ({
+        astra: e.t === 'unanswered' ? e.astra : e.astra,
+        mine: e.t === 'unanswered' ? e.seat === 'ai' : e.seat !== 'player',
+      }));
+    if (fired.length) setReveal((q) => [...q, ...fired]);
+
     for (const e of fresh) {
       if (e.t === 'afflict') {
         setOmen({
@@ -487,6 +503,13 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
           <div className="omen__title">{omen.title}</div>
           <div className="omen__text">{omen.text}</div>
         </div>
+      )}
+      {reveal.length > 0 && (
+        <AstraReveal
+          astra={reveal[0].astra}
+          mine={reveal[0].mine}
+          onDone={() => setReveal((q) => q.slice(1))}
+        />
       )}
       {abilityPrompt && (
         <div className="overlay" onClick={() => setAbilityPrompt(null)}>

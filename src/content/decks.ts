@@ -88,10 +88,37 @@ export const PANDAVA_DECK: DeckList = {
     // matsya here. Nakula also closes an oddity: Sahadeva was in this deck and
     // his twin was not, and the two are never apart anywhere in the epic.
     'nakula',
-    'brahmastra',
+    // THE BRAHMA-ASTRA IS NOT A STARTER CARD.
+    //
+    // Every army in the game measured 7 to 9 points BETTER without it, and all
+    // three independent deck searches threw it out unprompted. Three variants
+    // were tried before touching the deck lists and none of them helped: at 25%
+    // self-sap it costs its owner 8.8 points, at 10% it costs 7.8, and with the
+    // self-cost removed entirely it still costs 2.5 to 10.3. So the price was
+    // never the problem.
+    //
+    // The counter is. `counteredBy: ['brahmastra']` means only another
+    // Brahma-Astra answers one, which is exactly right and canonical, and every
+    // starter deck held one. So firing it usually fired it into an answer, and
+    // the clash scours BOTH armies. An 11-provision card whose most likely
+    // outcome is mutual destruction is a trap, and it was in all three decks by
+    // default.
+    //
+    // The card is good. The meta was wrong. It stays in every pool as a
+    // deckbuilding decision, where holding the only one on the field is exactly
+    // the threat it should be.
+    //
+    // Its 11 provisions go to what sim/deck-search.ts reached for in this pool,
+    // rather than to a guess: Virata and Anjanaparvan for the Pandavas.
+    'virata',
+    'anjanaparvan',
     'agneyastra',
     'varunastra',
-    'aindrastra',
+    // Aindra-Astra out with it. The very first generation of the deck search
+    // swapped exactly this card and gained 5.2 points doing it, and the final
+    // army dropped it too. Two cards in, one card out leaves an army over
+    // budget and a card over the limit, which is how this deck briefly shipped
+    // at 20 cards and 171 provisions.
     // Arjuna alone in this host can loose it, and it takes his own army too.
     // Brahmashirsha removed from the opening hand. At 16 provisions it put the
     // deck 4 over budget, and more importantly the ultimates are meant to be
@@ -142,7 +169,6 @@ export const KAURAVA_DECK: DeckList = {
     // fathered Bhurishravas. One of those is worth a slot.
     'vikarna',
     'nagastra',
-    'brahmastra',
     'agneyastra',
     'varunastra',
     // Bhargavastra removed: Karna was TAUGHT it by Parashurama, so it belongs
@@ -155,6 +181,9 @@ export const KAURAVA_DECK: DeckList = {
     // to him in a dream by eight Brahmanas (Udyoga CLXXXVI).
     'praswapa',
 
+    // The Brahma-Astra's freed provisions, spent on what the deck search
+    // reached for in this pool rather than on a guess.
+    'jalasandha',
   ],
 };
 
@@ -215,7 +244,6 @@ export const ASURA_DECK: DeckList = {
     // cheapest thing to give up: 39.2% win when played, one of the weakest cards
     // in the game, and the daitya bonds still have six men to count (Hiranyakashipu,
     // Bali, Hiranyaksha, Prahlada, Raktabija, Tarakasura). He stays in the pool.
-    'brahmastra',
     'nagastra',
     // Sauparna out for Prajna, both 5 provisions so the budget is untouched.
     //
@@ -232,6 +260,9 @@ export const ASURA_DECK: DeckList = {
     'tvashtra',
     'antardhana',
     // Indrajit bears it, as he did against Rama's host.
+    // Likewise here. Vritra is a maharathi now and the search wanted him back,
+    // which is a fair trade for the weapon that was losing every army points.
+    'vritra',
   ],
 };
 
