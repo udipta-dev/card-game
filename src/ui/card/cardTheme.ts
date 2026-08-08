@@ -158,6 +158,17 @@ function whom(t: Card['effects'][number]['target']): string {
   }
 }
 
+/**
+ * The possessive form of a target, which `whom` cannot give you.
+ *
+ * "Sinks himself's chariot in the earth" is what you get by gluing an
+ * apostrophe-s onto whom(), and that is what Karna's card printed. Any flag or
+ * action that owns something needs this instead.
+ */
+function whose(t: Card['effects'][number]['target']): string {
+  return t.pick === 'self' ? 'his own' : `${whom(t)}'s`;
+}
+
 function conditionText(c: Card['effects'][number]['condition']): string | null {
   if (!c) return null;
   if (c.q === 'isFinalRound') return 'In the round that decides the battle:';
@@ -234,7 +245,7 @@ const FLAG_LINE: Record<string, (target: string) => string> = {
   stupefied: (t) => `Stupefies ${t}: senseless, and worth nothing this round.`,
   stripped: (t) => `Strips ${t} of his protections, so an ordinary weapon can reach him.`,
   hidden: (t) => `Hides ${t}: nothing can be aimed at him while he is unseen.`,
-  'wheel-sunk': (t) => `Sinks ${t}'s chariot in the earth.`,
+  'wheel-sunk': (t) => `Sinks ${t} chariot in the earth.`,
   disarmed: (t) => `Disarms ${t}.`,
   denied: (t) => `Bars ${t} from taking the field this round.`,
 };
@@ -327,7 +338,7 @@ export function rulesText(card: Card): string[] {
       if (a.kind === 'damage')
         lines.push(
           eff.target.pick === 'self'
-            ? `He takes −${a.amount} himself, armour first.`
+            ? `He takes −${a.amount} himself.`
             : `Strikes ${whom(eff.target)} for −${a.amount}.`,
         );
       // EVERY flag, not just the adamant body. Only diamond-body had wording,
@@ -335,7 +346,7 @@ export function rulesText(card: Card): string[] {
       // Vinda's bowstring rendered nothing either, which left his condition
       // ("While Anuvinda stands:") dangling on its own as a fragment.
       if (a.kind === 'addFlag') {
-        const said = FLAG_LINE[a.flag]?.(whom(eff.target));
+        const said = FLAG_LINE[a.flag]?.(a.flag === 'wheel-sunk' ? whose(eff.target) : whom(eff.target));
         if (said) lines.push(said);
       }
       if (a.kind === 'cleanse') lines.push('Lifts every penalty from your own lines.');

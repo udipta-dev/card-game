@@ -88,6 +88,59 @@ export function eventText(state: GameState, ev: GameEvent): string | null {
     }
     case 'ban':
       return `${getCard(ev.cardId).name} is spent for the rest of the run.`;
+
+    // ---- Everything below rendered NOTHING ------------------------------
+    // Sixteen event types fell through to the default and vanished. The engine
+    // was raising them, the log was dropping them, and the player watched
+    // curses land, weapons clash and warriors be barred from the field with no
+    // line to explain any of it. An ability fired and the feed stayed silent.
+    case 'ability':
+      return `${getCard(ev.cardId).name} used ${ev.name}.`;
+    case 'armour':
+      return `${getCard(ev.cardId).name} is clothed in armour (${ev.amount}).`;
+    case 'afflict':
+      return `${who(ev.seat)} ${ev.seat === 'player' ? 'are' : 'is'} cursed: ${ev.name}. ${ev.text}`;
+    case 'attach': {
+      const boon = nameOf(state, ev.boon);
+      return `${boon} goes to ${nameOf(state, ev.to)}.`;
+    }
+    case 'clash':
+      return (
+        `${getCard(ev.astra).name} meets ${getCard(ev.against).name}. ` +
+        `The blast scours both hosts for ${ev.blast}.`
+      );
+    case 'cleanse':
+      return ev.cleared > 0
+        ? `${who(ev.seat)} shed ${ev.cleared} affliction${ev.cleared === 1 ? '' : 's'}.`
+        : null;
+    case 'denied':
+      // Own side only. Naming a card in the enemy's hand would leak it.
+      return ev.seat === 'player'
+        ? `${getCard(ev.cardId).name} cannot be committed this round.`
+        : 'A man in the enemy host cannot be committed this round.';
+    case 'draw':
+      return ev.seat === 'player' ? `You drew ${getCard(ev.cardId).name}.` : null;
+    case 'burn':
+      return ev.cardIds.length
+        ? `${who(ev.seat)} lost ${ev.cardIds.length} card${ev.cardIds.length === 1 ? '' : 's'} off the deck.`
+        : null;
+    case 'hazard':
+      return `A weapon hangs over ${ev.seat === 'player' ? 'your' : 'the enemy'} host.`;
+    case 'mulligan':
+      return ev.count > 0
+        ? `${who(ev.seat)} threw back ${ev.count} card${ev.count === 1 ? '' : 's'}.`
+        : null;
+    case 'suspended':
+      return `${getCard(ev.cardId).name} was wasted, and may yet be recovered.`;
+    case 'unanswered':
+      return `${getCard(ev.astra).name} was not answered.`;
+    case 'battleEnd':
+      return ev.winner === 'player' ? 'You hold the field.' : 'The field is lost.';
+    // Deliberately silent: 'roundStart' is drawn as a banner, and 'flag' is the
+    // raw mechanism behind lines that are already reported in their own words.
+    case 'roundStart':
+    case 'flag':
+      return null;
     default:
       return null;
   }
