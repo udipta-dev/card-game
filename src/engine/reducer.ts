@@ -222,7 +222,17 @@ export function reduce(state: GameState, action: Action): GameState {
       if (drawn) s.hands[seat].push(drawn);
       // Buried at a seeded-random position, not the bottom: the bottom is a
       // memorisable place, and this deck is only 19 cards deep.
-      const [r, nextSeed] = nextRandom(s.seed);
+      // [nextSeed, value], IN THAT ORDER, and getting it backwards here did two
+      // silent things at once. `r` became the next seed, an integer in the
+      // billions, so the insert position was ~2.2e10 and splice clamped it to
+      // the end: the card was always buried at the bottom, which is the exact
+      // memorisable place this line exists to avoid. And `s.seed` became a
+      // float between 0 and 1, which is not a seed: every roll AFTER a trade
+      // (curses, discards, penance, shuffles) ran off a poisoned generator, and
+      // it collapsed into a short cycle within three calls.
+      //
+      // Every other call site in the codebase already destructured it correctly.
+      const [nextSeed, r] = nextRandom(s.seed);
       s.seed = nextSeed;
       const at = Math.floor(r * (s.decks[seat].length + 1));
       s.decks[seat].splice(at, 0, action.iid);
