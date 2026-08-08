@@ -21,6 +21,19 @@ const DECKS = [PANDAVA_DECK, KAURAVA_DECK, ASURA_DECK];
 const GAMES = Number(process.argv[2] ?? 1500);
 /** How many extra opening cards to try handing the first mover. */
 const BONUSES = [0, 1, 2];
+/**
+ * The fourth option, and the interesting one: a LOAN rather than a gift.
+ *
+ * The first mover opens with one extra card and then draws one fewer at the
+ * start of round two, so his card count over the match is unchanged. It pays
+ * the debt exactly where the debt is, which is having to commit to round one
+ * blind, and stops paying the moment round one is over.
+ *
+ * This is the shape of Gwent's answer (a stratagem playable only in round one)
+ * rather than raw card advantage, which the numbers below show overshoots by
+ * roughly three times.
+ */
+const LOAN = 'loan';
 
 /** Deal the first mover `n` more cards off the top of his own deck. */
 function compensate(s: GameState, n: number): GameState {
@@ -32,12 +45,26 @@ function compensate(s: GameState, n: number): GameState {
   return s;
 }
 
-function playOut(seed: number, a: number, b: number, first: Seat, bonus: number) {
-  let s = compensate(createMatch(seed, DECKS[a], DECKS[b], first), bonus);
-  for (let guard = 0; guard < 4000 && !s.winner; guard++) {
-    const act = chooseAction(s, s.activeSeat);
-    if (!act) break;
-    s = reduce(s, act);
+function playOut(seed: number, a: number, b: number, first: Seat, bonus: number | typeof LOAN) {
+  const loaned = bonus === LOAN;
+  let s = compensate(createMatch(seed, DECKS[a], DECKS[b], first), loaned ? 1 : (bonus as number));
+  // Out of the mulligan phase first, or the match never plays a card at all.
+  // Omitting this did not throw; it span the guard 4000 times per game and
+  // reported NaN for every variant after an hour of work.
+  s = reduce(s, { type: 'MULLIGAN', seat: 'player', iids: [] });
+  s = reduce(s, { type: 'MULLIGAN', seat: 'ai', iids: [] });
+  let repaid = false;
+  for (let guard = 0; guard < 800 && s.phase !== 'battleEnd'; guard++) {
+    const next = reduce(s, chooseAction(s, s.activeSeat));
+    if (next === s) break;
+    s = next;
+    // Call the loan in the moment round two opens: one card back off the top
+    // of the hand, so the match total is identical to an uncompensated one.
+    if (loaned && !repaid && s.round > 1) {
+      repaid = true;
+      const back = s.hands[first].pop();
+      if (back) s.decks[first].push(back);
+    }
   }
   return s;
 }
@@ -45,7 +72,7 @@ function playOut(seed: number, a: number, b: number, first: Seat, bonus: number)
 console.log(`\nPAYING THE FIRST MOVER   ${GAMES} games per size, both seats\n`);
 console.log('  extra cards   first mover wins   draws   swing from even');
 
-for (const bonus of BONUSES) {
+for (const bonus of [...BONUSES, LOAN] as (number | typeof LOAN)[]) {
   let n = 0;
   let firstWins = 0;
   let draws = 0;
@@ -64,9 +91,13 @@ for (const bonus of BONUSES) {
     }
   }
 
+  // An empty or degenerate sample is a broken harness, not a result.
+  if (!n || firstWins + draws === 0)
+    throw new Error(`bonus ${bonus} produced no decided games: the harness is broken`);
+
   const pct = (firstWins / n) * 100;
   console.log(
-    `  ${String(bonus).padStart(11)}   ${pct.toFixed(1).padStart(15)}%   ` +
+    `  ${String(bonus === LOAN ? '1, repaid' : bonus).padStart(11)}   ${pct.toFixed(1).padStart(15)}%   ` +
       `${((draws / n) * 100).toFixed(1).padStart(4)}%   ${(pct - 50).toFixed(1).padStart(14)}`,
   );
 }

@@ -61,10 +61,17 @@ for (const v of VARIANTS) {
     const a = g % 3;
     const b = (g + 1 + (g % 2)) % 3;
     let s: GameState = createMatch(g * 7919 + 13, DECKS[a], DECKS[b]);
-    for (let guard = 0; guard < 4000 && !s.winner; guard++) {
-      const act = chooseAction(s, s.activeSeat);
-      if (!act) break;
-      s = reduce(s, act);
+    // THE MULLIGAN IS A PHASE, and a match that is never taken out of it never
+    // plays a card. Leaving these two out did not fail loudly: chooseAction
+    // kept returning something, reduce kept returning a new object, and the
+    // guard span 4000 times per game producing an empty log. Two probes ran
+    // for an hour each and reported NaN across every column.
+    s = reduce(s, { type: 'MULLIGAN', seat: 'player', iids: [] });
+    s = reduce(s, { type: 'MULLIGAN', seat: 'ai', iids: [] });
+    for (let guard = 0; guard < 800 && s.phase !== 'battleEnd'; guard++) {
+      const next = reduce(s, chooseAction(s, s.activeSeat));
+      if (next === s) break;
+      s = next;
     }
     // Who committed each bearer, from the log, and did that seat go on to win.
     const by: Partial<Record<string, Seat>> = {};
@@ -76,6 +83,11 @@ for (const v of VARIANTS) {
       if (s.winner === seat) won[card] = (won[card] ?? 0) + 1;
     }
   }
+
+  // FAIL LOUDLY ON AN EMPTY SAMPLE. Printing NaN is how an hour of compute got
+  // reported as a measurement instead of as "this probe did not run".
+  const total = Object.values(played).reduce((n, v) => n + v, 0);
+  if (!total) throw new Error(`variant "${v.label}" recorded zero plays: the harness is broken, not the card`);
 
   const rates = BEARERS.map((id) => (played[id] ? ((won[id] ?? 0) / played[id]) * 100 : NaN));
   const spread = Math.max(...rates) - Math.min(...rates);
