@@ -9,7 +9,7 @@ import { checkMuster } from '@content/muster';
 import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
 import { activeCurses, bind, curseBattlesFor, serveOneBattle } from './dharma';
-import { buildLadder } from './ladder';
+import { buildLadder } from './encounters';
 import { mixSeed, rollRewards } from './rewards';
 import { getDeity, isShrineIndex, rollPenanceOutcome, rollShrine } from './shrine';
 import type { ShrineOffer } from './shrine';
