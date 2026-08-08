@@ -18,18 +18,26 @@
 //
 // Each man gets one that presses, one that protects, and one that is narrow and
 // situational, so the choice is a read of the board rather than a ranking.
+//
+// SIZED DOWN ONCE ALREADY, by measurement. At strike 4 / surge 4 / steel 4 these
+// were roughly twice an atirathi's, and the houses do not field maharathis
+// evenly: kaurava 4, asura 3, pandava 2. So the SIZE of a maharathi valour is
+// the faction gap, and at the larger numbers the ladder measured
+// pandava 38.4 / kaurava 57.0 / asura 51.5 even though the three decks carried
+// near-identical total valour value (27 / 24 / 28). Concentration beat volume:
+// big valours on big bodies that survive to matter.
 import type { Valour } from '@engine/types';
 
 /** Shared shapes, named per man. Same mechanic, different aura, as agreed. */
-const strike = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
+export const strike = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
   target: { pick: 'highestEnemyUnit' },
   actions: [{ kind: 'damage', amount }],
 });
-const volley = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
+export const volley = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
   target: { pick: 'enemyRowSameAsPlayed' },
   actions: [{ kind: 'damage', amount }],
 });
-const rally = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
+export const rally = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
   target: { pick: 'ownRowSameAsPlayed' },
   actions: [{ kind: 'buff', amount }],
 });
@@ -42,13 +50,24 @@ const rally = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
  * host, because a card that promises more than it does is the single most
  * common bug in this codebase.
  */
-const host = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
+export const host = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
   target: { pick: 'allOwnUnits' },
   actions: [{ kind: 'buff', amount }],
 });
-const steel = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
+export const steel = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
   target: { pick: 'self' },
   actions: [{ kind: 'armour', amount }],
+});
+
+/** He fights harder for having chosen to. */
+export const surge = (amount: number): Pick<Valour, 'target' | 'actions'> => ({
+  target: { pick: 'self' },
+  actions: [{ kind: 'buff', amount }],
+});
+/** Takes the wind out of the biggest man opposite without killing him. */
+export const daze = (): Pick<Valour, 'target' | 'actions'> => ({
+  target: { pick: 'highestEnemyUnit' },
+  actions: [{ kind: 'addFlag', flag: 'stupefied' }],
 });
 
 export const VALOURS: Record<string, Valour[]> = {
@@ -76,12 +95,12 @@ export const VALOURS: Record<string, Valour[]> = {
     // might choose not to give is not an answer.
     {
       name: 'Gada of Vayu',
-      text: 'Brings the mace down on the mightiest man opposite, −4.',
-      ...strike(4),
+      text: 'Brings the mace down on the mightiest man opposite, −3.',
+      ...strike(3),
     },
     {
       name: 'Vrikodara’s Rage',
-      text: 'The wolf-belly’s hunger. He fights at +4 this round.',
+      text: 'The wolf-belly’s hunger. He fights at +3 this round.',
       target: { pick: 'self' },
       actions: [{ kind: 'buff', amount: 4 }],
     },
@@ -139,8 +158,8 @@ export const VALOURS: Record<string, Valour[]> = {
     },
     {
       name: 'Anga’s Charge',
-      text: 'The king of Anga rides down the mightiest man opposite, −4.',
-      ...strike(4),
+      text: 'The king of Anga rides down the mightiest man opposite, −3.',
+      ...strike(3),
     },
     {
       name: 'Radheya’s Defiance',
@@ -162,8 +181,8 @@ export const VALOURS: Record<string, Valour[]> = {
     },
     {
       name: 'Balarama’s Pupil',
-      text: 'The mace he was taught by Rama of the plough, −4 to the mightiest foe.',
-      ...strike(4),
+      text: 'The mace he was taught by Rama of the plough, −3 to the mightiest foe.',
+      ...strike(3),
     },
   ],
 
@@ -207,7 +226,7 @@ export const VALOURS: Record<string, Valour[]> = {
     {
       name: 'Brahma’s Boon',
       text: 'Not by man nor beast, day nor night. He is armoured against what comes.',
-      ...steel(4),
+      ...steel(3),
     },
     {
       name: 'Tyrant of the Three Worlds',
@@ -237,9 +256,9 @@ export const VALOURS: Record<string, Valour[]> = {
     },
     {
       name: 'Oath to the Weaker Side',
-      text: 'He swore to fight for whoever was losing. While you are, the rank he joins gains +4.',
+      text: 'He swore to fight for whoever was losing. While you are, the rank he joins gains +3.',
       condition: { q: 'behindOnPower' },
-      ...rally(4),
+      ...rally(3),
     },
     {
       name: 'The Watcher on the Hill',
@@ -262,8 +281,8 @@ export const VALOURS: Record<string, Valour[]> = {
     },
     {
       name: 'Magadha’s Wrestler',
-      text: 'He wrestled Bhima fourteen days, −4 to the mightiest foe.',
-      ...strike(4),
+      text: 'He wrestled Bhima fourteen days, −3 to the mightiest foe.',
+      ...strike(3),
     },
   ],
 };

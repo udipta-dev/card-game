@@ -1,5 +1,6 @@
 import type { Card, CardId } from '@engine/types';
 import { VALOURS } from '../valours';
+import { ATIRATHI_VALOURS, RATHI_VALOURS } from '../valours-rank';
 import { PANDAVA_CARDS } from './pandava';
 import { KAURAVA_CARDS } from './kaurava';
 import { ASURA_CARDS } from './asura';
@@ -33,7 +34,11 @@ export const CARD_DB: Record<CardId, Card> = Object.freeze(
 // no mechanic lands on three of the strongest cards at once, and that the
 // numbers sit where they were priced. Scattered across three card files, that
 // is a diff nobody can review.
-for (const [cardId, valours] of Object.entries(VALOURS)) {
+for (const [cardId, valours] of Object.entries({
+  ...VALOURS,
+  ...ATIRATHI_VALOURS,
+  ...RATHI_VALOURS,
+})) {
   const card = CARD_DB[cardId];
   if (!card) throw new Error(`VALOURS names an unknown card: ${cardId}`);
   card.valours = valours;

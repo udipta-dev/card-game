@@ -19,6 +19,15 @@ describe('every maharathi is offered three', () => {
     expect(validateContent()).toEqual([]);
   });
 
+  it('Balarama alone keeps the older turn-costing shape', () => {
+    // One card left on the previous model, deliberately, while the new one is
+    // this young. If he ever gains valours the ability system loses its last
+    // user and should be deleted rather than left as dead machinery.
+    const withAbility = allCards().filter((c) => c.ability).map((c) => c.id);
+    expect(withAbility).toEqual(['balarama']);
+    expect(getCard('balarama').valours).toBeUndefined();
+  });
+
   it('all eleven have a full menu', () => {
     const maharathis = allCards().filter((c) => c.tier === 'maharathi');
     expect(maharathis.length).toBe(11);

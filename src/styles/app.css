@@ -1996,3 +1996,51 @@
 .arsenal__name { color: var(--ink); font-weight: 600; }
 .arsenal__who { color: var(--ink-faint); font-size: 12px; }
 .arsenal__warn { margin: 8px 0 0; font-size: 12.5px; color: #e0a99f; }
+
+
+/* ---- Valours: what a man does as he takes the field ----------------------
+   Shown between the board and the controls the moment a warrior who offers a
+   choice is picked up. It has to be readable at a glance while the player is
+   still looking at the board, because that is the entire argument for choosing
+   live rather than at muster. */
+.valours {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px auto 0;
+  max-width: 640px;
+  padding: 10px 12px;
+  border: 1px solid var(--brass, #a98c45);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.45);
+}
+.valours__ask {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brass, #a98c45);
+}
+.valours__pick {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  text-align: left;
+  border: 1px solid rgba(169, 140, 69, 0.35);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.valours__pick:hover { border-color: var(--brass, #a98c45); }
+.valours__pick:focus-visible { outline: 2px solid var(--brass, #a98c45); outline-offset: 2px; }
+.valours__pick.is-chosen {
+  border-color: var(--brass, #a98c45);
+  background: rgba(169, 140, 69, 0.16);
+}
+.valours__name { font-weight: 600; }
+.valours__text { font-size: 0.86rem; opacity: 0.85; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .valours__pick { transition: border-color 120ms ease, background 120ms ease; }
+}

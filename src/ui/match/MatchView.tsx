@@ -65,6 +65,10 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     createMatch(seed, playerDeck, aiDeck, 'ai', init),
   );
   const [selected, setSelected] = useState<InstanceId | null>(null);
+  // WHICH VALOUR, chosen before he is committed and locked the moment he lands.
+  // Null means "he offers some and you have not said yet", which is what the
+  // picker below is for; undefined means he offers none.
+  const [valour, setValour] = useState<number | null>(null);
   const [mSel, setMSel] = useState<InstanceId[]>([]);
   const [showHelp, setShowHelp] = useState(false);
   const [showLog, setShowLog] = useState(false);
@@ -186,12 +190,26 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   if (import.meta.env?.DEV) (window as unknown as { kuru?: unknown }).kuru = { state, myTurn, myMoves };
 
   const selectedCard = selected ? getCard(state.instances[selected]!.cardId) : null;
+  const selectedValours = selectedCard?.valours ?? [];
   const plan: Plan | null = useMemo(() => {
     if (!selectedCard || !selected) return null;
     return planFor(selectedCard, selected, myMoves);
   }, [selectedCard, selected, myMoves]);
 
   // ---- Actions ----
+  /**
+   * Pick a man up, and reset whatever valour was chosen for the last one.
+   *
+   * A man offering exactly one has no decision to make, so it is taken for him;
+   * leaving it null there would mean a rathi silently did nothing, which is the
+   * failure mode this whole feature keeps producing.
+   */
+  function chooseCard(iid: InstanceId) {
+    setSelected(iid);
+    const v = getCard(state.instances[iid]!.cardId).valours;
+    setValour(v?.length === 1 ? 0 : null);
+  }
+
   function play(action: Action) {
     // The great weapons do not go off by a stray tap. Anything that unmakes the
     // field asks once, and says plainly what it will cost you.
@@ -228,7 +246,7 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
     setInspect({
       card,
       inst,
-      onPlay: canPlay ? () => { setInspect(null); setSelected(iid); } : undefined,
+      onPlay: canPlay ? () => { setInspect(null); chooseCard(iid); } : undefined,
       onSwap: canSwap
         ? () => { setInspect(null); dispatch({ type: 'ROUND_SWAP', seat: 'player', iid }); }
         : undefined,
@@ -237,19 +255,27 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
   }
   function onRowClick(seat: Seat, row: Row) {
     if (!plan || !selected) return;
+    // He is not going anywhere until you have said what he does. Committing him
+    // with no valour chosen would put a maharathi on the field to do nothing,
+    // silently, which is the exact failure this feature keeps producing.
+    if (selectedValours.length > 1 && valour === null) return;
     if (plan.mode === 'drop-own' && seat === 'player' && plan.rows.includes(row)) {
-      play(buildUnitPlay(state, selected, row));
+      // buildUnitPlay returns a PLAY_CARD, but its declared type is the whole
+      // Action union, so spreading a valour onto it does not typecheck. Narrow
+      // it first rather than casting the result.
+      const base = buildUnitPlay(state, selected, row);
+      play(base.type === 'PLAY_CARD' ? { ...base, valour: valour ?? undefined } : base);
     } else if (plan.mode === 'drop-enemy' && seat === 'ai' && plan.rows.includes(row)) {
-      play({ type: 'PLAY_CARD', iid: selected, row });
+      play({ type: 'PLAY_CARD', iid: selected, row, valour: valour ?? undefined });
     }
   }
   function onUnitClick(iid: InstanceId) {
     if (!plan || !selected) return;
     const card = getCard(state.instances[selected]!.cardId);
     if (plan.mode === 'target-enemy' && plan.candidates.includes(iid)) {
-      play({ type: 'PLAY_CARD', iid: selected, row: card.rows[0], targets: [iid] });
+      play({ type: 'PLAY_CARD', iid: selected, row: card.rows[0], targets: [iid], valour: valour ?? undefined });
     } else if (plan.mode === 'target-own' && plan.candidates.includes(iid)) {
-      play({ type: 'PLAY_CARD', iid: selected, row: card.rows[0], targets: [iid] });
+      play({ type: 'PLAY_CARD', iid: selected, row: card.rows[0], targets: [iid], valour: valour ?? undefined });
     }
   }
 
@@ -398,11 +424,40 @@ export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish }: 
             );
           })}
         </div>
+        {/* WHICH VALOUR. Shown the moment a man who offers a choice is picked
+            up, before the board will take him, because the whole point of
+            choosing live is that you are looking at the board when you do it.
+            Without this panel the feature exists only for the AI: the reducer
+            accepts a valour, legalMoves offers all three, and a human had no
+            way to say which. */}
+        {selectedValours.length > 1 && (
+          <div className="valours" role="group" aria-label="Choose what he does as he takes the field">
+            <div className="valours__ask">{selectedCard?.name} takes the field:</div>
+            {selectedValours.map((v, i) => (
+              <button
+                key={v.name}
+                className={`valours__pick${valour === i ? ' is-chosen' : ''}`}
+                aria-pressed={valour === i}
+                onClick={() => setValour(i)}
+              >
+                <span className="valours__name">{v.name}</span>
+                <span className="valours__text">{v.text}</span>
+              </button>
+            ))}
+          </div>
+        )}
         <div className="controls">
           {plan?.mode === 'cast' && selected && (
             <button
               className="btn btn--primary btn--sm"
-              onClick={() => play({ type: 'PLAY_CARD', iid: selected, row: (plan as { row: Row }).row })}
+              onClick={() =>
+                play({
+                  type: 'PLAY_CARD',
+                  iid: selected,
+                  row: (plan as { row: Row }).row,
+                  valour: valour ?? undefined,
+                })
+              }
             >
               Invoke {selectedCard?.name}
             </button>
