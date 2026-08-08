@@ -2,6 +2,7 @@ import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 import { getCard } from '@content/cards';
 import type { DeckList } from '@content/decks';
+import { setInBattle } from '../../pwa';
 import { chooseAction } from '@ai/ai';
 import { skillFor } from '@ai/difficulty';
 import type { Skill } from '@ai/difficulty';
@@ -72,6 +73,13 @@ interface Props {
 
 export function MatchView({ seed, playerDeck, aiDeck, onExit, init, onFinish, skill }: Props) {
   const brain = skill ?? skillFor(MAX_LEVEL);
+
+  // A battle lives in a reducer and is saved nowhere, so a new build that
+  // arrives mid-fight waits until the fight is over before taking the page.
+  useEffect(() => {
+    setInBattle(true);
+    return () => setInBattle(false);
+  }, []);
   // The AI opens (firstMover 'ai') so the human plays second and gets the
   // last-say edge, which keeps a single-player match feeling fair.
   const [state, dispatch] = useReducer(reduce, undefined, () =>
