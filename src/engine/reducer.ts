@@ -11,6 +11,7 @@ import { canInvokeAstra, isFinalRound, opponentOf, unitsOf } from './queries';
 import { resolveRound } from './rounds';
 import { MULLIGAN_MAX, makeInstance } from './createMatch';
 import { nextRandom } from './ids';
+import { labFlag } from './labFlag';
 import type { Action, Card, CardInstance, GameState, Row, Seat } from './types';
 
 /** How many tier-3 weapons one side may loose in a single battle. */
@@ -339,7 +340,8 @@ export function reduce(state: GameState, action: Action): GameState {
           if (s.hands[seat].some(known) || s.decks[seat].some(known)) continue;
           const inst = makeInstance(astraId, seat);
           s.instances[inst.iid] = inst;
-          s.hands[seat].push(inst.iid);
+          if (labFlag('KURU_GRANT_TO_DECK') === '1') s.decks[seat].unshift(inst.iid);
+          else s.hands[seat].push(inst.iid);
           s.log.push({ t: 'granted', seat, cardId: astraId, by: card.id });
         }
       } else if (card.type === 'boon' || card.type === 'shastra') {

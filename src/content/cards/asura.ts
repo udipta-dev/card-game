@@ -21,7 +21,7 @@ export const ASURA_CARDS: Card[] = [
     basePower: 10,
     rows: ['ratha'],
     keywords: [{ kind: 'armor', amount: 3 }],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     astraMastery: 2,
     ability: {
       name: 'Arrow Rain',
@@ -46,7 +46,7 @@ export const ASURA_CARDS: Card[] = [
     basePower: 8,
     rows: ['gaja'],
     keywords: [{ kind: 'nightGrowth', amount: 1 }],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     effects: [{ on: 'onPlay', target: { pick: 'highestEnemyUnit' }, actions: [{ kind: 'damage', amount: 2 }] }],
     flavor: 'The mountain that sleeps half the year and wakes to devour armies.',
   },
@@ -65,7 +65,7 @@ export const ASURA_CARDS: Card[] = [
     basePower: 10,
     rows: ['ratha'],
     keywords: [],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     astraMastery: 2,
     knownAstras: ['vaishnavastra'],
     // HE FIGHTS UNSEEN, which is the only reason Rama's army could not answer
@@ -428,7 +428,7 @@ export const ASURA_CARDS: Card[] = [
     basePower: 7,
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'rakshasa', amount: 2 }],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     effects: [],
     flavor: 'Ravana’s commander, who led the first sortie out of Lanka and did not come back through the gate.',
   },
@@ -443,7 +443,7 @@ export const ASURA_CARDS: Card[] = [
     // Brahma's own armour, which no ordinary shaft could pierce: Lakshmana had
     // to use the Brahmastra on him in the end.
     keywords: [{ kind: 'armor', amount: 3 }],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     effects: [],
     flavor:
       'Ravana’s son by Dhanyamalini, cased in armour Brahma gave him. Nothing short of a Brahma weapon would open it.',
@@ -457,7 +457,7 @@ export const ASURA_CARDS: Card[] = [
     basePower: 6,
     rows: ['ratha'],
     keywords: [{ kind: 'bond', tag: 'rakshasa', amount: 2 }],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     // Three heads, and Rama took all three.
     effects: [
       { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 1 }] },
@@ -473,7 +473,7 @@ export const ASURA_CARDS: Card[] = [
     basePower: 5,
     rows: ['padati'],
     keywords: [],
-    tags: ['rakshasa'],
+    tags: ['rakshasa', 'lanka'],
     // The golden deer. He knew it would kill him and he did it anyway, because
     // he was more afraid of Ravana than of Rama.
     effects: [

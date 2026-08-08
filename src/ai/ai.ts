@@ -16,6 +16,7 @@ import { legalMoves } from '@engine/selectors';
 import type { Action, GameState, Seat } from '@engine/types';
 import { evaluate } from './evaluate';
 import { MULLIGAN_MAX } from '@engine/createMatch';
+import { labFlag } from '@engine/labFlag';
 import { worstCards } from './hand';
 import { WEIGHTS } from './policy';
 import type { Weights } from './policy';
@@ -218,7 +219,7 @@ const WORLDS = 4;
  * weapon, and both are simply discarding their worst card. Same rule from
  * every seat. Deck spread is the acceptance test, and it is measured below.
  */
-const AI_USES_ROUND_SWAP = true;
+const AI_USES_ROUND_SWAP = labFlag('KURU_AI_SWAP') !== '0';
 
 /**
  * The worst card in hand, if it is bad enough to be worth cycling.
@@ -290,7 +291,9 @@ export function chooseAction(
   // loop only ever calls this for state.activeSeat.
   if (realState.phase === 'mulligan') {
     const owes: Seat = realState.mulliganDone[seat] ? opponentOf(seat) : seat;
-    return { type: 'MULLIGAN', seat: owes, iids: worstCards(realState, owes, MULLIGAN_MAX) };
+    const throwBack =
+      labFlag('KURU_AI_MULLIGAN') === '0' ? [] : worstCards(realState, owes, MULLIGAN_MAX);
+    return { type: 'MULLIGAN', seat: owes, iids: throwBack };
   }
 
   if (AI_USES_ROUND_SWAP) {
