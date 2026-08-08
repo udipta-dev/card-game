@@ -266,6 +266,10 @@ export type EffectAction =
   // clears hazards since the beginning, for the same reason.
   | { kind: 'cleanse' }
   | { kind: 'buff'; amount: number }
+  // Armour, granted rather than born with. A kavacha turns blows aside; it does
+  // not make the man stronger, which is the whole difference between wearing
+  // one and being raised by a boon.
+  | { kind: 'armour'; amount: number }
   | { kind: 'destroy' }
   | {
       kind: 'debuffRow';
@@ -576,6 +580,7 @@ export type GameEvent =
   // somewhere other than a weapon (a shrine's shrap, say).
   | { t: 'afflict'; seat: Seat; curse: CurseId; name: string; text: string; by?: CardId }
   | { t: 'burn'; seat: Seat; cardIds: CardId[] }
+  | { t: 'armour'; iid: InstanceId; cardId: CardId; amount: number }
   // Two great astras meet. Both hosts are scoured; the wielder who never
   // learned to withdraw his weapon pays the greater price.
   | { t: 'clash'; astra: CardId; against: CardId; blast: number; unwithdrawn: Seat | null }

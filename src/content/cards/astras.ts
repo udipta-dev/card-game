@@ -447,8 +447,27 @@ export const ASTRA_CARDS: Card[] = [
     // Now the lie lands on the whole host, which is what the passage describes:
     // it goes up along the line and the fighting stops while men look at each
     // other. Drona still takes the specific hit through his keyword.
+    // AND IT FINISHES THE JOB WHEN THE SLAYER IS ALREADY STANDING.
+    //
+    // Drona takes two cards to kill and the ORDER used to decide whether it
+    // worked at all. Dhrishtadyumna's whole card is "slays Drona, wherever he
+    // stands", and it fires once, on arrival. Commit him before the lie is
+    // told and the kill is refused, silently, and it never comes back: you
+    // have spent your answer and Drona is still there. Nothing on either card
+    // said so, and the two read as a flat contradiction side by side.
+    //
+    // So the lie collects too. Whichever of the pair arrives second, Drona
+    // falls, which is also how the passage runs: the fire-born is standing in
+    // front of him the whole time, waiting for the one thing that will make
+    // him put the bow down.
     effects: [
       { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'damage', amount: 1 }] },
+      {
+        on: 'onPlay',
+        condition: { q: 'cardOnBoard', card: 'dhrishtadyumna', side: 'own' },
+        target: { pick: 'unitByCard', side: 'enemy', card: 'drona' },
+        actions: [{ kind: 'destroy' }],
+      },
     ],
     flavor: 'Naro va kunjaro va, the man, or the elephant.',
   },

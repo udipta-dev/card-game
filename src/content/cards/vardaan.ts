@@ -111,12 +111,30 @@ export const VARDAAN_CARDS: Card[] = [
     provision: 10,
     rows: ['ratha', 'gaja', 'padati'],
     keywords: [],
-    cost: { consequence: 'Armour born of the sun. The warrior it clothes is greatly strengthened.' },
+    cost: {
+      consequence:
+        'Armour born of the sun. Blows turn aside from the warrior it clothes, and no weapon reaches him until it is cut through.',
+    },
+    // ARMOUR, NOT +5 POWER, because that is what a kavacha is. It turns blows
+    // aside; it does not make the man bigger.
+    //
+    // This also closes a loop that was left open. Karna's card used to carry
+    // armour 4, the largest in the game, and an ablation found it was the
+    // single biggest thing holding his whole house above everyone else
+    // (Kaurava 58.3% -> 53.8% when stripped). It is also not his to have at
+    // Kurukshetra: he GAVE the Kavacha-Kundala away, to Indra begging in a
+    // brahmana's disguise, in exchange for the Vasavi Shakti, and fights the
+    // entire war without it.
+    //
+    // So he starts the war without it, and this is how you give it back to
+    // him. Or to anyone else: it is a boon in every house's muster pool, it
+    // rides whichever warrior you put it on, and it is spent for the run once
+    // used. The gift he threw away is a thing you can win.
     effects: [
       {
         on: 'onPlay',
         target: { pick: 'chosen', filter: { side: 'own' } },
-        actions: [{ kind: 'buff', amount: 5 }],
+        actions: [{ kind: 'armour', amount: 4 }],
       },
       { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'banFromRun', card: 'surya_kavacha' }] },
     ],

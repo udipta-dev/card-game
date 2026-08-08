@@ -355,6 +355,10 @@ export function rulesText(card: Card): string[] {
             ? `Raises ${whom(eff.target)} by +${a.amount}.`
             : `Weakens ${whom(eff.target)} by ${a.amount}.`,
         );
+      // Armour granted by a card, as opposed to armour a man was born in. Both
+      // land in the same counter, so both must read the same way.
+      if (a.kind === 'armour')
+        lines.push(`Clothes ${whom(eff.target)} in armour: turns aside the first ${a.amount} of harm.`);
       if (a.kind === 'debuffRow') {
         const own = a.rows.some((r) => r.side === 'own');
         const foe = a.rows.some((r) => r.side === 'enemy');

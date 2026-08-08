@@ -21,6 +21,7 @@ export const EFFECT_ACTION_KINDS = new Set<EffectActionKind>([
   'dismount',
   'cleanse',
   'buff',
+  'armour',
   'destroy',
   'debuffRow',
   'banFromRun',
@@ -42,6 +43,7 @@ const TARGET_ACTIONS: ReadonlySet<EffectActionKind> = new Set<EffectActionKind>(
   'dismount',
   'cleanse',
   'buff',
+  'armour',
   'destroy',
   'addFlag',
   'removeFlag',
@@ -73,6 +75,14 @@ export function applyTargetAction(
       }
       u.currentPower = Math.max(powerFloor(state, u), u.currentPower - remaining);
       emit(ctx, { t: 'damage', iid, amount: remaining, power: u.currentPower });
+      break;
+    }
+    case 'armour': {
+      // TAKES THE BETTER, never stacks. Two coats of mail are not twice the
+      // mail, and stacking would make a cheap boon the best card in any deck
+      // that could draw it twice.
+      u.counters.armor = Math.max(u.counters.armor ?? 0, action.amount);
+      emit(ctx, { t: 'armour', iid, cardId: u.cardId, amount: action.amount });
       break;
     }
     case 'setPower': {

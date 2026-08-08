@@ -286,6 +286,15 @@ export function reduce(state: GameState, action: Action): GameState {
         chosen: action.targets ?? [],
       };
 
+      // THE LIE LANDS BEFORE ANYTHING RESOLVES. This used to run at the very
+      // end of PLAY_CARD, after the played card's own effects, which meant a
+      // card could not both unstring Drona and then act on him: the destroy
+      // was refused because he was still immune at the moment it fired.
+      //
+      // Speaking first is also the right order in the story. Yudhishthira says
+      // it, Drona lays down the bow, and only then does anything happen to him.
+      applyImmuneDisarm(s, card.id);
+
       if (card.type === 'unit') {
         u.row = action.row;
         s.board[seat][action.row].push(iid);
@@ -425,9 +434,6 @@ export function reduce(state: GameState, action: Action): GameState {
         banForRun(s, card);
         suspendIfWasted(s, card);
       }
-
-      // A newly played card may disarm an immune enemy (Drona).
-      applyImmuneDisarm(s, card.id);
 
       // Pashupatastra & friends can end the battle immediately.
       if (s.forcedWinner) {

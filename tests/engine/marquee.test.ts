@@ -180,10 +180,16 @@ describe('Drona — disarmed only by the elephant deception', () => {
     const elephant = firstOf(s1, 'player', 'ashwatthama_elephant');
     const s2 = reduce(s1, { type: 'PLAY_CARD', iid: elephant.iid, row: 'ratha' });
     const dronaAfter = firstOf(s2, 'ai', 'drona');
-    // Deliberately 4, not 0: the deception takes his guard and most of his
-    // fight, and Dhrishtadyumna still has to arrive. Zeroing him punished a
-    // 9 twice over off one 4-cost stratagem.
-    expect(dronaAfter.currentPower).toBe(4);
+    // Deliberately not 0: the deception takes his guard and most of his fight,
+    // and Dhrishtadyumna still has to arrive. Zeroing him punished a 9 twice
+    // over off one 4-cost stratagem.
+    //
+    // 3 rather than 4 because the disarm now resolves BEFORE the stratagem's
+    // own effects, so the -1 that the lie deals to the whole enemy host lands
+    // on him too, on top of thenSetPower 4. The order had to change so that one
+    // card could both unstring him and act on him: Dhrishtadyumna's kill was
+    // being refused for immunity that the same card was about to lift.
+    expect(dronaAfter.currentPower).toBe(3);
     expect(dronaAfter.flags.has('disarmed')).toBe(true);
   });
 });
