@@ -13,6 +13,7 @@ import { Setup } from './screens/Setup';
 import { Muster } from './screens/Muster';
 import { LadderPreview } from './screens/LadderPreview';
 import type { Standing } from '@run/ladder';
+import { limitsFor } from '@ai/difficulty';
 import { loadMuster, saveMuster } from '@content/savedMuster';
 
 interface MatchConfig {
@@ -109,6 +110,9 @@ export function App() {
             setScreen(mustering.back);
             setMustering(null);
           }}
+          // The same ceiling the campaign screen shows, so the builder cannot
+          // hand back an army the level will not accept.
+          limits={mustering.back === 'campaignSetup' ? limitsFor(standing.level) : undefined}
         />
       ) : screen === 'quickSetup' ? (
         <Setup
@@ -122,7 +126,8 @@ export function App() {
           mode="campaign"
           onStartHost={startCampaign}
           onMuster={(house) => setMustering({ house, back: 'campaignSetup' })}
-          onBack={() => setScreen('menu')}
+          onBack={() => setScreen('ladder')}
+          limits={limitsFor(standing.level)}
         />
       ) : screen === 'ladder' ? (
         // Shown from the menu, before a run exists, so a brand new player can
@@ -139,8 +144,12 @@ export function App() {
       ) : (
         <MainMenu
           onPlay={() => setScreen('quickSetup')}
-          onCampaign={() => setScreen('campaignSetup')}
           onCodex={() => setScreen('codex')}
+          // ONE ENTRY, NOT TWO. "Campaign" and "The Long March" were the same
+          // progression wearing two names on the same menu, which is exactly
+          // how it read: "campaigns and long march are the same thing? I am so
+          // confused". The march is the map; a campaign is one attempt at it,
+          // and you start it from there.
           onLadder={() => setScreen('ladder')}
         />
       )}

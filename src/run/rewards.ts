@@ -1,6 +1,8 @@
 // What a victory offers. Recruit a new warrior into your host, or, if a curse
 // clings to you, cleanse it. Choices are drawn deterministically from the seed.
-import { allCards, getCard } from '@content/cards';
+import { allCards, getCard, provisionOf } from '@content/cards';
+import { limitsFor } from '@ai/difficulty';
+import { MAX_LEVEL } from './ladder';
 import { nextRandom, shuffle } from '@engine/ids';
 import type { CardId, House } from '@engine/types';
 import type { RewardOption, RunState } from './types';
@@ -36,7 +38,18 @@ function recruitPool(house: House, roster: CardId[]): CardId[] {
  * cursed, one slot becomes a cleanse instead.
  */
 export function rollRewards(run: RunState): RewardOption[] {
-  const pool = recruitPool(run.house, run.roster);
+  // NEVER OFFER A CARD THE LEVEL WILL NOT LET YOU FIELD. A reward you cannot
+  // muster is not a reward, it is a slot wasted on a card that sits in the
+  // roster greyed out until you have climbed far enough to use it, and by then
+  // you will have been offered it again anyway.
+  const cap = limitsFor(run.level ?? MAX_LEVEL).cap ?? Infinity;
+  const affordable = recruitPool(run.house, run.roster).filter(
+    (id) => provisionOf(getCard(id)) <= cap,
+  );
+  // Falling back to the unfiltered pool rather than offering nothing: a level
+  // whose whole recruit pool is over the ceiling should still hand you a
+  // choice, and the muster screen will say why it cannot march.
+  const pool = affordable.length ? affordable : recruitPool(run.house, run.roster);
   const [shuffled] = shuffle(pool, mixSeed(run.seed, run.index));
   const picks = shuffled.slice(0, 3);
 

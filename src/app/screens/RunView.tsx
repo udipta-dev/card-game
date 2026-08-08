@@ -15,7 +15,7 @@ import type { RewardOption, RunState } from '@run/types';
 import { currentStanding, recordRunEnd } from '@run/meta';
 import { Ambient } from '@ui/Ambient';
 import { Manifest } from '@ui/Manifest';
-import { skillFor } from '@ai/difficulty';
+import { limitsFor, skillFor } from '@ai/difficulty';
 import { MAX_LEVEL } from '@run/ladder';
 import type { Standing } from '@run/ladder';
 import { Ascend } from './Ascend';
@@ -112,6 +112,8 @@ export function RunView({ run: initial, onExit }: Props) {
         pool={fieldedRoster(run)}
         initial={marchingCards(run)}
         title="Choose who marches"
+        // The same ceiling the rest of the level uses.
+        limits={limitsFor(run.level ?? MAX_LEVEL)}
         onBack={() => setMustering(false)}
         onConfirm={(ids) => {
           setRun((r) => ({ ...r, marching: ids }));

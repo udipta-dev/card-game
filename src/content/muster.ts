@@ -74,27 +74,6 @@ export function musterProvisions(ids: readonly CardId[]): number {
   return ids.reduce((n, id) => n + provisionOf(getCard(id)), 0);
 }
 
-/** Can this selection take the field? */
-export function checkMuster(ids: readonly CardId[]): MusterCheck {
-  const problems: string[] = [];
-  const count = ids.length;
-  const provisions = musterProvisions(ids);
-
-  if (count < MUSTER_MIN) problems.push(`${MUSTER_MIN - count} more card${MUSTER_MIN - count === 1 ? '' : 's'} needed`);
-  if (count > MUSTER_MAX) problems.push(`${count - MUSTER_MAX} too many`);
-  if (provisions > DECK_BUDGET) problems.push(`${provisions - DECK_BUDGET} provisions over budget`);
-  if (new Set(ids).size !== ids.length) problems.push('the same card twice');
-
-  // A host of nothing but weapons cannot fight: astras need a warrior standing
-  // to loose them, so a muster with no warriors is legal arithmetic and a lost
-  // battle. Caught here rather than discovered on the field.
-  const warriors = ids.filter((id) => getCard(id).type === 'unit').length;
-  if (count > 0 && warriors < MIN_WARRIORS)
-    problems.push(`only ${warriors} warriors: someone has to hold the line`);
-
-  return { ok: problems.length === 0, count, provisions, problems };
-}
-
 /**
  * How much an army may spend, and the most any one card in it may cost.
  *
@@ -107,6 +86,38 @@ export interface Limits {
   budget?: number;
   /** The most a single card may cost. Undefined means no ceiling. */
   cap?: number;
+}
+
+/** Can this selection take the field? */
+export function checkMuster(ids: readonly CardId[], limits: Limits = {}): MusterCheck {
+  const budget = limits.budget ?? DECK_BUDGET;
+  const problems: string[] = [];
+  const count = ids.length;
+  const provisions = musterProvisions(ids);
+
+  if (count < MUSTER_MIN) problems.push(`${MUSTER_MIN - count} more card${MUSTER_MIN - count === 1 ? '' : 's'} needed`);
+  if (count > MUSTER_MAX) problems.push(`${count - MUSTER_MAX} too many`);
+  if (provisions > budget) problems.push(`${provisions - budget} provisions over budget`);
+  // The ladder's ceiling, worn as an economy rather than as a rule: the game
+  // never says you may not have Karna, it says you cannot afford a card that
+  // big yet.
+  if (limits.cap != null) {
+    const over = ids.filter((id) => provisionOf(getCard(id)) > limits.cap!);
+    if (over.length)
+      problems.push(
+        `${getCard(over[0]).name} costs more than ${limits.cap}, which is your ceiling for now`,
+      );
+  }
+  if (new Set(ids).size !== ids.length) problems.push('the same card twice');
+
+  // A host of nothing but weapons cannot fight: astras need a warrior standing
+  // to loose them, so a muster with no warriors is legal arithmetic and a lost
+  // battle. Caught here rather than discovered on the field.
+  const warriors = ids.filter((id) => getCard(id).type === 'unit').length;
+  if (count > 0 && warriors < MIN_WARRIORS)
+    problems.push(`only ${warriors} warriors: someone has to hold the line`);
+
+  return { ok: problems.length === 0, count, provisions, problems };
 }
 
 /** Would adding this card break the muster? Returns why, or null if it fits. */

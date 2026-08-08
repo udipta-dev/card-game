@@ -2401,6 +2401,16 @@
    `position: fixed` on a child is left alone. */
 .menu > *:not(.ambient) { z-index: 1; }
 
+/* THE MENU IS ITS OWN SCROLLER, which makes its ambient layer a special case.
+   An absolutely-positioned child sizes to the PADDING box, and for a scroll
+   container that is the visible box, not the content: 592px against 819px of
+   menu. So scrolling to the bottom of the home page ran off the end of the
+   video and showed bare background under the last button. Fixed to the viewport
+   instead, which is what a full-screen backdrop wants anyway, and .menu is
+   full-screen. Every other screen keeps `absolute`, because there the ambient's
+   parent does not scroll: a separate child does. */
+.menu > .ambient { position: fixed; }
+
 .ambient {
   position: absolute;
   inset: 0;

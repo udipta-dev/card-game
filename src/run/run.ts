@@ -6,6 +6,7 @@ import type { DeckList } from '@content/decks';
 import { DECKS } from '@content/decks';
 import type { BattleInit } from '@engine/createMatch';
 import { checkMuster } from '@content/muster';
+import { limitsFor } from '@ai/difficulty';
 import { nextRandom } from '@engine/ids';
 import type { CardId, GameState, House, Seat } from '@engine/types';
 import { activeCurses, bind, curseBattlesFor, serveOneBattle } from './dharma';
@@ -92,7 +93,7 @@ export function marchingCards(run: RunState): CardId[] {
   if (!run.marching?.length) return available;
   const live = run.marching.filter((id) => available.includes(id));
   // Too small to fight is worse than too big to be reliable.
-  return checkMuster(live).ok ? live : available;
+  return checkMuster(live, limitsFor(run.level ?? MAX_LEVEL)).ok ? live : available;
 }
 
 /** Build the next battle. */

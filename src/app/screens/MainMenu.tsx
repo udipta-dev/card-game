@@ -7,14 +7,14 @@ import { MAX_LEVEL, MIN_LEVEL, budgetAt, capAt } from '@run/ladder';
 
 interface Props {
   onPlay: () => void;
-  onCampaign: () => void;
   onCodex: () => void;
+  /** The Long March: the ladder map, and where a campaign is started. */
   onLadder: () => void;
 }
 
 const SEEN_KEY = 'kuru_seen_help';
 
-export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
+export function MainMenu({ onPlay, onCodex, onLadder }: Props) {
   const standing = currentStanding();
   const [showHelp, setShowHelp] = useState(false);
   const meta = loadMeta();
@@ -68,15 +68,22 @@ export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
           read and a menu you scan past. The primary action keeps its lit
           treatment so the eye still lands somewhere first. */}
       <div className="menu__actions">
-        <button className="plaque plaque--lit" onClick={onCampaign}>
+
+        {/* ONE ENTRY FOR THE LADDER. This was two plaques, "Campaign" and "The
+            Long March", for one progression: you started a campaign from one
+            and looked at the same ladder from the other. The march is the map
+            and a campaign is one attempt at it, so it is one door with the
+            standing written on it. */}
+        <button className="plaque plaque--lit" onClick={onLadder}>
           <Chakra size={26} className="plaque__mark" />
           <span className="plaque__body">
-            <span className="plaque__title">Campaign</span>
+            <span className="plaque__title">The Long March</span>
             {/* WHERE YOU STAND, on the button that changes it. A ladder whose
                 only readout lives on a different screen is a ladder you forget
                 you are on. */}
             <span className="plaque__sub">
               Level {standing.level} of {MAX_LEVEL} · {budgetAt(standing.level)} provisions
+              {standing.highWater > MIN_LEVEL ? ` · cards up to ${capAt(standing.highWater)}` : ''}
             </span>
           </span>
         </button>
@@ -85,17 +92,6 @@ export function MainMenu({ onPlay, onCampaign, onCodex, onLadder }: Props) {
           <span className="plaque__body">
             <span className="plaque__title">Quickplay</span>
             <span className="plaque__sub">A single battle, nothing carried</span>
-          </span>
-        </button>
-        <button className="plaque" onClick={onLadder}>
-          <Kalasha size={26} tiers={3} className="plaque__mark" />
-          <span className="plaque__body">
-            <span className="plaque__title">The Long March</span>
-            <span className="plaque__sub">
-              {standing.highWater > MIN_LEVEL
-                ? `Cards up to ${capAt(standing.highWater)} provisions are yours`
-                : 'Fifty levels, and what waits on each'}
-            </span>
           </span>
         </button>
         <button className="plaque" onClick={onCodex}>

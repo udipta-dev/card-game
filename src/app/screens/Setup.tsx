@@ -8,7 +8,8 @@ import { InspectSheet } from '@ui/card/InspectSheet';
 import { FACTION_DOT, FACTION_NAME } from '@ui/card/cardTheme';
 import { Aksha } from '@ui/ornament';
 import { loadMuster, hasCustomMuster } from '@content/savedMuster';
-import { toDeckList } from '@content/muster';
+import { autoMuster, checkMuster, poolFor, toDeckList } from '@content/muster';
+import type { Limits } from '@content/muster';
 import { HelpButton } from '@ui/HelpButton';
 import { arsenalOf, orphanWeapons, unpackedWeapons, TIER_WORD } from '@content/arsenal';
 
@@ -57,9 +58,14 @@ interface Props {
   onStartHost?: (playerDeck: DeckList) => void;
   /** Open the muster screen for the currently chosen house. */
   onMuster?: (house: House) => void;
+  /**
+   * The economy in force. Quickplay omits it; a campaign passes the level it is
+   * an attempt at, and the army is held to it.
+   */
+  limits?: Limits;
 }
 
-export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
+export function Setup({ mode, onStart, onStartHost, onMuster, onBack, limits = {} }: Props) {
   const campaign = mode === 'campaign';
   const [playerHouse, setPlayerHouse] = useState<House>('pandava');
   const [oppHouse, setOppHouse] = useState<House | 'random'>('random');
@@ -70,9 +76,18 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
   // up the moment you come back to this screen.
   const musteredIds = loadMuster(playerHouse);
   const custom = hasCustomMuster(playerHouse);
-  const playerDeck = custom
-    ? toDeckList(playerHouse, `Your ${FACTION_NAME[playerHouse]}`, musteredIds)
-    : deckFor(playerHouse);
+  const chosen = custom ? musteredIds : deckFor(playerHouse).cards;
+
+  // HELD TO THE LEVEL'S ECONOMY, and rebuilt inside it when it does not fit.
+  //
+  // This was the "how did I get Sweta and some astras in level 1" bug. The
+  // ladder capped the OPPONENT and left the player on the full 170 with no
+  // ceiling, so a screen headed "level 1" handed you an 18-provision astra and
+  // the number on it meant nothing. Both sides now muster under the same rule.
+  const fits = checkMuster(chosen, limits).ok;
+  const cards = fits ? chosen : autoMuster(poolFor(playerHouse).map((c) => c.id), undefined, limits);
+  const playerDeck = toDeckList(playerHouse, `Your ${FACTION_NAME[playerHouse]}`, cards);
+  const rebuilt = !fits;
 
   const begin = () => {
     if (campaign) {
@@ -123,10 +138,22 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
           </p>
         </div>
 
+        {/* SAY IT RATHER THAN DO IT QUIETLY. An army silently replaced under
+            the player is worse than one they cannot field: they picked those
+            cards and would never find out where they went. */}
+        {rebuilt && (
+          <p className="setup__rebuilt">
+            Your saved army costs more than this level allows, so it has been mustered
+            again inside {limits.budget} provisions with nothing above {limits.cap}. Change
+            it below, or win a level or two and bring the rest back.
+          </p>
+        )}
+
         <div className="codex__group">
           {playerDeck.name}
           <span className="codex__group-n">
-            {playerDeck.cards.length} cards · {deckProvisions(playerDeck)} provisions
+            {playerDeck.cards.length} cards · {deckProvisions(playerDeck)}
+            {limits.budget ? ` / ${limits.budget}` : ''} provisions
             {onMuster && (
               <button
                 className="btn btn--ghost btn--sm"
@@ -139,7 +166,7 @@ export function Setup({ mode, onStart, onStartHost, onMuster, onBack }: Props) {
             )}
           </span>
         </div>
-        <div className="codex__grid">
+        <div className="codex__shelf">
           {playerDeck.cards.map((id, i) => (
             <CardFrame key={id + i} mini card={getCard(id)} onClick={() => setInspect(getCard(id))} />
           ))}

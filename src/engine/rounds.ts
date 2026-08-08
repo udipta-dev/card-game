@@ -3,7 +3,7 @@ import { runBoardTrigger } from './events';
 import { lowerPower, removeInstance } from './keywords';
 import { nextRandom } from './ids';
 import { MAX_ROUNDS, WINS_NEEDED, boonCardIds, seatPower, unitsOf } from './queries';
-import { ROUND_DRAW } from './createMatch';
+import { REINFORCE_OPENER, ROUND_DRAW } from './createMatch';
 import type { GameState, Seat } from './types';
 import { ROWS } from './types';
 
@@ -122,6 +122,22 @@ export function resolveRound(state: GameState): void {
   state.playedThisRound = { player: false, ai: false };
   drawCards(state, 'player', ROUND_DRAW);
   drawCards(state, 'ai', ROUND_DRAW);
+  // REINFORCEMENTS BEFORE THE LAST DAY. The seat that opened the war is paid
+  // here and nowhere else: in a decider, with the match level, and only if it
+  // lost the very day it opened. See REINFORCE_OPENER for the eleven payments
+  // measured and the ten thrown out. 41.4% to 48.5%.
+  //
+  // The level check is belt and braces rather than a real gate: a decider is
+  // only ever reached at one win each, because two ends the match and a tied
+  // round pays both seats. It is written out so the rule still says what it
+  // means if that ever stops being true.
+  if (
+    state.round === MAX_ROUNDS &&
+    state.roundWins.player === state.roundWins.ai &&
+    state.log.some((e) => e.t === 'roundEnd' && e.round === 1 && e.winner !== state.firstMover)
+  ) {
+    drawCards(state, state.firstMover, REINFORCE_OPENER);
+  }
   digForAWarrior(state, 'player');
   digForAWarrior(state, 'ai');
 

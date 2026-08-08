@@ -21,7 +21,8 @@
 // to whoever just won. That is deliberate rubber-banding for rounds 2 and 3 and
 // it works, but nothing pays back the very first opener.
 import { reduce } from '@engine/reducer';
-import { createMatch } from '@engine/createMatch';
+import { createMatch, MULLIGAN_MAX } from '@engine/createMatch';
+import { worstCards } from '@ai/hand';
 import { chooseAction } from '@ai/ai';
 import { PANDAVA_DECK, KAURAVA_DECK, ASURA_DECK } from '@content/decks';
 import type { GameState, Seat } from '@engine/types';
@@ -48,8 +49,12 @@ for (let g = 0; g < GAMES; g++) {
   // Alternate who opens so deck strength cannot masquerade as a turn-order edge.
   const opener: Seat = g % 2 === 0 ? 'player' : 'ai';
   let s: GameState = createMatch(g * 6151 + 17, a, b, opener);
-  s = reduce(s, { type: 'MULLIGAN', seat: 'player', iids: [] });
-  s = reduce(s, { type: 'MULLIGAN', seat: 'ai', iids: [] });
+  // A REAL MULLIGAN, per seat. Empty lists measured a game nobody plays: the
+  // opener's sift only pays if he chooses what to put back, and passing [] hands
+  // the extra card straight back untouched.
+  for (const seat of ['player', 'ai'] as Seat[]) {
+    s = reduce(s, { type: 'MULLIGAN', seat, iids: worstCards(s, seat, MULLIGAN_MAX) });
+  }
 
   let lastActor: Seat = opener;
   let roundOpener: Seat = opener;

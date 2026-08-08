@@ -6,6 +6,7 @@
 import { useMemo, useState } from 'react';
 import { getCard, provisionOf } from '@content/cards';
 import { DECK_BUDGET } from '@content/decks';
+import type { Limits } from '@content/muster';
 import {
   MUSTER_MAX,
   MUSTER_MIN,
@@ -31,9 +32,15 @@ interface Props {
   title?: string;
   onBack: () => void;
   onConfirm: (ids: CardId[]) => void;
+  /**
+   * The budget and per-card ceiling in force. Quickplay omits it and gets the
+   * fixed 170 with no ceiling; a campaign passes the level it is an attempt at,
+   * so "level 1" means the same thing on both sides of the field.
+   */
+  limits?: Limits;
 }
 
-export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props) {
+export function Muster({ house, pool, initial, title, onBack, onConfirm, limits = {} }: Props) {
   const available = useMemo(
     () => (pool ? pool.map(getCard) : poolFor(house)),
     [pool, house],
@@ -43,12 +50,13 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
   /** What the last auto-fix did, so a deck never changes silently under you. */
   const [lastFix, setLastFix] = useState<string | null>(null);
 
-  const check = checkMuster(chosen);
+  const check = checkMuster(chosen, limits);
   // The loading station. A weapon nobody can fire is a real fault; a weapon one
   // of your men bears and you have not packed is an opportunity. Neither ever
   // blocks you from marching.
   const advisories = advise(chosen, available.map((c) => c.id));
-  const left = DECK_BUDGET - check.provisions;
+  const budget = limits.budget ?? DECK_BUDGET;
+  const left = budget - check.provisions;
   const chosenSet = new Set(chosen);
 
   const toggle = (id: CardId) => {
@@ -56,7 +64,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
       setChosen(chosen.filter((c) => c !== id));
       return;
     }
-    if (whyNotAdd(chosen, id) === null) setChosen([...chosen, id]);
+    if (whyNotAdd(chosen, id, limits) === null) setChosen([...chosen, id]);
   };
 
   return (
@@ -79,7 +87,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
         </span>
         <span className="muster__stat">
           <b>{check.provisions}</b>
-          <span className="muster__unit">/ {DECK_BUDGET} provisions</span>
+          <span className="muster__unit">/ {budget} provisions</span>
         </span>
         <span className="muster__problems">
           {check.ok ? 'Ready to march' : check.problems.join(' · ')}
@@ -87,7 +95,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
         <button
           className="btn btn--ghost btn--sm"
           title="Fill the army automatically, best value first"
-          onClick={() => setChosen(autoMuster(available.map((c) => c.id)))}
+          onClick={() => setChosen(autoMuster(available.map((c) => c.id), undefined, limits))}
         >
           Auto
         </button>
@@ -161,7 +169,7 @@ export function Muster({ house, pool, initial, title, onBack, onConfirm }: Props
           {available
             .filter((c) => !chosenSet.has(c.id))
             .map((c) => {
-              const why = whyNotAdd(chosen, c.id);
+              const why = whyNotAdd(chosen, c.id, limits);
               return (
                 <div key={`out-${c.id}`} className="muster__slot" title={why ?? 'Add to your army'}>
                   <CardFrame
