@@ -52,20 +52,34 @@ export const PANDAVA_CARDS: Card[] = [
     house: 'pandava',
     type: 'unit',
     tier: 'atirathi',
-    basePower: 7,
+    // 6, not 7. He pays a point of his own for what he now gives everyone else.
+    basePower: 6,
     rows: ['ratha'],
     keywords: [],
     tags: ['pandava-brother'],
-    // ANANTAVIJAYA, "endless victory". He already had this effect and it was
-    // anonymous; the conch is named in the Gita's opening roll-call and the
-    // text states what the blare does: it "rent the hearts of the
-    // Dhartarashtras" (Bhishma P. XXV). A king rallying his foot is exactly
-    // what that passage describes him doing.
+    // THE KING LIFTS THE WHOLE ARMY, not one rank of foot.
+    //
+    // He was the weakest card in his own house and it was backwards: the eldest
+    // Pandava, the man the entire war is nominally about, did strictly less
+    // than either twin and cost more. Nakula rallies AND steadied a line;
+    // Sahadeva rallies, kills Shakuni outright AND withers the enemy. Both at 8
+    // provisions against Yudhishthira's 9.
+    //
+    // A row modifier is also flat in this engine: +2 to a rank is +2 whether
+    // one man stands there or five. So his old effect was worth exactly 2, ever.
+    // A per-man +1 across the whole host is worth what your army is worth,
+    // which is the right shape for a king and gives the same "hold him until
+    // the field is full" decision the rallies have.
+    //
+    // ANANTAVIJAYA, "endless victory". The conch is named in the Gita's opening
+    // roll-call and the text says the blare "rent the hearts of the
+    // Dhartarashtras" (Bhishma P. XXV). That is the whole army hearing it, not
+    // the infantry.
     effects: [
       {
         on: 'onPlay',
-        target: { pick: 'none' },
-        actions: [{ kind: 'debuffRow', amount: 2, rows: [{ side: 'own', row: 'padati' }], duration: 'round' }],
+        target: { pick: 'allOwnUnits' },
+        actions: [{ kind: 'buff', amount: 1 }],
       },
     ],
     flavor: 'The king of righteousness. He blew Anantavijaya, endless victory, and the foot-soldiers stood straighter.',
@@ -151,46 +165,45 @@ export const PANDAVA_CARDS: Card[] = [
     provision: 12,
     rows: ['ratha'],
     keywords: [],
+    // HE DOES NOT KILL ANYONE. That is the whole change, and it is the most
+    // canonical thing about him: Krishna never lifts a weapon in that war. He
+    // took a vow not to fight and kept it. He drives, he counsels, and every
+    // man he undoes is undone by something other than his hand.
+    //
+    // The card used to carry FIVE jobs: a shield, a +1, an astra answer, a
+    // final-round execution, and the Jarasandha exception to that execution. A
+    // card doing five things cannot be read at a glance or balanced at all, and
+    // the execution was the least defensible of them: it never fired when you
+    // expected it (final round only, and not while Jarasandha stood), so the
+    // card promised a kill and delivered +1. That is exactly how it played.
+    //
+    // Two jobs now. He guards, and he lifts the whole host. The Vishwaroop is
+    // its own card, because showing the universal form is its own moment and
+    // deserves to be, and because it is Vishnu doing it rather than the
+    // charioteer.
     effects: [
+      // THE SHIELD. One warrior he stands beside cannot be taken by a weapon:
+      // this is the Vaishnava on his own chest, and it covers "protect Arjuna"
+      // and "stop the Vaishnava" as one rule rather than two.
       {
         on: 'onPlay',
         target: { pick: 'chosen', filter: { side: 'own', rows: ['ratha'] } },
-        actions: [{ kind: 'buff', amount: 1 }, { kind: 'addFlag', flag: 'krishna-guarded' }],
+        actions: [{ kind: 'addFlag', flag: 'krishna-guarded' }],
       },
-      // THE EMPLOYMENT OF MEANS, and it happens the moment he arrives, not as a
-      // separate move. This was a once-per-battle ability gated to the deciding
-      // round, and it fired ZERO times in 300 simulated matches, for a reason
-      // that had nothing to do with the design: clearBoard destroys every unit
-      // at the end of each round and removeInstance takes attached boons with
-      // it, so Krishna never survives the round he is played in. The ability
-      // therefore needed a two-turn combo (commit him, live, then act) that a
-      // one-ply search will never plan and a human should not have to pay for.
+      // AND THE WHOLE HOST STANDS BETTER FOR HIM BEING THERE. He is the reason
+      // other people's power works, so his effect is other people's power.
       //
-      // As an onPlay it is one card and one turn, and it is a real decision:
-      // commit him early for the shield and the three answers, or hold him for
-      // the deciding round and take the greatest man on the other side with him.
-      // Drona put down his bow, the thigh broke, the head came off. None of them
-      // died to a better weapon.
-      //
-      // AND HE WILL NOT DO IT WHILE JARASANDHA STANDS. Krishna fled that man
-      // seventeen times and never once beat him in the field; the name Ranchhod,
-      // "he who left the battlefield", is from exactly this. He finally had the
-      // king killed by sending Bhima to wrestle him and hinting at how to tear
-      // the two halves apart, rather than face him. So Jarasandha is the one
-      // hard answer to Krishna in the game, and it is sourced rather than
-      // invented. The shield and the three astra answers still hold: Krishna
-      // still drives. He just will not make a move against that host.
+      // A third effect was tried and dropped: stripping the greatest man
+      // opposite of his protections, which is very close to what Krishna
+      // actually does in the epic (Shikhandi, the lie, the wheel). It measured
+      // ZERO change over 2400 games, because stripping is setup and the AI does
+      // not follow through, and it put a third role back on the card the whole
+      // rework existed to simplify. Worth revisiting if it ever gets a
+      // follow-through, not worth carrying as decoration.
       {
         on: 'onPlay',
-        condition: {
-          q: 'and',
-          cs: [
-            { q: 'isFinalRound' },
-            { q: 'not', c: { q: 'cardOnBoard', card: 'jarasandha', side: 'enemy' } },
-          ],
-        },
-        target: { pick: 'highestEnemyUnit' },
-        actions: [{ kind: 'addFlag', flag: 'stripped' }, { kind: 'destroy' }],
+        target: { pick: 'allOwnUnits' },
+        actions: [{ kind: 'buff', amount: 1 }],
       },
     ],
     flavor:

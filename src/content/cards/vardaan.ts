@@ -9,6 +9,40 @@ import type { Card } from '@engine/types';
 // gods give is free, which is the whole point of the epic.
 export const VARDAAN_CARDS: Card[] = [
   {
+    // VISHNU, NOT KRISHNA, and that distinction is the reason this is a card at
+    // all rather than a fourth line on the charioteer.
+    //
+    // What Arjuna is shown at Kurukshetra is the universal form: Krishna is the
+    // mouth it speaks through, not the thing itself. Putting it on the Krishna
+    // card made him a five-job card nobody could read; giving it its own card
+    // lets the biggest moment in the Gita be a moment.
+    //
+    // It does not kill. Arjuna does not watch anyone die, he watches everything
+    // that is going to die ALREADY dead inside the form, and he puts his palms
+    // together and asks it to stop. So the card takes something off every man
+    // on the other side and takes nothing off the field.
+    id: 'vishwaroop',
+    name: 'Vishwaroop',
+    house: 'neutral',
+    type: 'boon',
+    basePower: 0,
+    // 14: above every other vardaan, below the Brahmashirsha at 16. It answers
+    // a whole host rather than one man, which nothing else at this price does.
+    provision: 14,
+    rows: ['ratha', 'gaja', 'padati'],
+    keywords: [],
+    cost: {
+      consequence:
+        'The universal form, shown once. Every warrior facing it is diminished by the sight, and no weapon is raised: nothing here strikes, and nothing here dies. Then it is gone, for the rest of the run.',
+    },
+    effects: [
+      { on: 'onPlay', target: { pick: 'allEnemyUnits' }, actions: [{ kind: 'buff', amount: -1 }] },
+      { on: 'onPlay', target: { pick: 'none' }, actions: [{ kind: 'banFromRun', card: 'vishwaroop' }] },
+    ],
+    flavor:
+      'Arjuna asked to see him as he was. He saw every man on both sides already dead in that mouth, and begged him to put the shape away.',
+  },
+  {
     // WAS Gandhari's Gaze, which is not in the Mahabharata. Zero hits across all
     // four Ganguli volumes for the episode where Duryodhana comes to his mother
     // naked and she hardens his body with a look. What IS there: she blindfolds

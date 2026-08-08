@@ -91,11 +91,17 @@ describe('the counsel strips a warrior of what makes him unkillable', () => {
   });
 });
 
-describe('the counsel is a crisis, not an opening move', () => {
-  // It resolves as he ARRIVES. It used to be a separate once-per-battle move
-  // gated to the deciding round, and it fired zero times in 300 matches: the
-  // board clears every round and takes attached boons with it, so Krishna never
-  // lives to a second turn, and the ability needed two.
+describe('he does not kill anyone, and that is the point', () => {
+  // THE REWORK. Krishna carried five jobs: a shield, a +1, an astra answer, a
+  // final-round execution, and the Jarasandha exception to that execution. A
+  // card doing five things cannot be read at a glance or balanced at all, and
+  // the execution was the least defensible: it fired only in the deciding round
+  // and only while Jarasandha was absent, so the card promised a kill and
+  // delivered +1, which is exactly how it played.
+  //
+  // It is also the least canonical thing he could do. Krishna took a vow not to
+  // fight and kept it: he never lifts a weapon in that war. Showing the
+  // universal form is now its own card, and it is Vishnu doing it.
   function field(round: number, wins: { player: number; ai: number }) {
     const s = makeState({
       playerHand: ['krishna_charioteer'],
@@ -107,40 +113,47 @@ describe('the counsel is a crisis, not an opening move', () => {
     s.activeSeat = 'player';
     return s;
   }
-
-  it('takes the greatest enemy with him in the deciding round', () => {
-    const s = field(2, { player: 1, ai: 0 });
-    const bhishma = firstOf(s, 'ai', 'bhishma');
-    // Nothing in the game can otherwise touch him.
-    expect(attemptDestroy(s, 'player', bhishma.iid)).toBe(false);
-
-    const krishna = firstOf(s, 'player', 'krishna_charioteer');
-    const s1 = reduce(s, {
+  const commit = (s: GameState) =>
+    reduce(s, {
       type: 'PLAY_CARD',
-      iid: krishna.iid,
+      iid: firstOf(s, 'player', 'krishna_charioteer').iid,
       row: 'ratha',
       targets: [s.board.player.ratha[0]],
     });
 
-    expect(hasEvent(s1, (e) => e.t === 'stripped')).toBe(true);
-    expect(s1.instances[bhishma.iid], 'Bhishma is gone').toBeUndefined();
+  it('kills nobody, even in the deciding round', () => {
+    const s = field(2, { player: 1, ai: 0 });
+    const before = s.board.ai.ratha.length;
+    const s1 = commit(s);
+    expect(s1.board.ai.ratha.length, 'the enemy host is intact').toBe(before);
+    expect(hasEvent(s1, (e) => e.t === 'stripped'), 'nobody is stripped').toBe(false);
   });
 
-  it('and does nothing to them in an early round, which is the whole gate', () => {
+  it('guards the man he stands beside, from the moment he arrives', () => {
     const s = field(1, { player: 0, ai: 0 });
-    const bhishma = firstOf(s, 'ai', 'bhishma');
-    const krishna = firstOf(s, 'player', 'krishna_charioteer');
-    const s1 = reduce(s, {
-      type: 'PLAY_CARD',
-      iid: krishna.iid,
-      row: 'ratha',
-      targets: [s.board.player.ratha[0]],
-    });
+    const host = s.board.player.ratha[0];
+    const s1 = commit(s);
+    expect(s1.instances[host].flags.has('krishna-guarded')).toBe(true);
+  });
 
-    expect(s1.instances[bhishma.iid], 'still standing').toBeDefined();
-    expect(hasEvent(s1, (e) => e.t === 'stripped')).toBe(false);
-    // But the shield half applies from the moment he arrives.
-    expect(s1.instances[s.board.player.ratha[0]].flags.has('krishna-guarded')).toBe(true);
+  it('and lifts the whole host by one, not one man', () => {
+    // He is the reason other people's power works, so his effect IS other
+    // people's power. It counts who is already standing, so he is held for late.
+    const s = makeState({
+      playerHand: ['krishna_charioteer'],
+      playerBoard: { ratha: ['arjuna'], gaja: ['bhima'] },
+      aiBoard: { ratha: ['dushasana'] },
+    });
+    s.activeSeat = 'player';
+    const arjuna = firstOf(s, 'player', 'arjuna');
+    const bhima = firstOf(s, 'player', 'bhima');
+    const before = {
+      a: s.instances[arjuna.iid].currentPower,
+      b: s.instances[bhima.iid].currentPower,
+    };
+    const s1 = commit(s);
+    expect(s1.instances[arjuna.iid].currentPower, 'the man he guards').toBe(before.a + 1);
+    expect(s1.instances[bhima.iid].currentPower, 'and a man in another rank').toBe(before.b + 1);
   });
 });
 
@@ -153,9 +166,14 @@ describe('Krishna stays a Pandava card and stays affordable', () => {
     }
   });
 
-  it('adds almost no power, which is the entire point of the rework', () => {
-    const buff = getCard('krishna_charioteer').effects[0].actions[0];
-    expect(buff).toEqual({ kind: 'buff', amount: 1 });
+  it('does two things and only two, which is the entire point of the rework', () => {
+    const card = getCard('krishna_charioteer');
+    expect(card.effects).toHaveLength(2);
+    // The shield, then the host-wide lift. No destroy anywhere on the card.
+    const actions = card.effects.flatMap((e) => e.actions.map((a) => a.kind));
+    expect(actions).toContain('addFlag');
+    expect(actions).toContain('buff');
+    expect(actions, 'he never kills').not.toContain('destroy');
   });
 
   it('leaves every starter deck inside the budget', () => {
@@ -185,54 +203,7 @@ describe('an attached card can still act, which was a real bug', () => {
   });
 });
 
-describe('Krishna will not face Jarasandha', () => {
-  // The one hard answer to him, and it is sourced rather than invented: Krishna
-  // fled that man seventeen times and never beat him in the field. The name
-  // Ranchhod, "he who left the battlefield", is from precisely this. He had
-  // Bhima wrestle the king apart instead of facing him.
-  function field(enemyBoard: string[]) {
-    const s = makeState({
-      playerHand: ['krishna_charioteer'],
-      playerBoard: { ratha: ['arjuna'] },
-      aiBoard: { ratha: enemyBoard },
-    });
-    s.round = 2;
-    s.roundWins = { player: 1, ai: 0 };
-    s.activeSeat = 'player';
-    return s;
-  }
-
-  function commitKrishna(s: GameState) {
-    const k = firstOf(s, 'player', 'krishna_charioteer');
-    return reduce(s, {
-      type: 'PLAY_CARD',
-      iid: k.iid,
-      row: 'ratha',
-      targets: [s.board.player.ratha[0]],
-    });
-  }
-
-  it('spares the whole host while the king of Magadha is on the field', () => {
-    const s = field(['jarasandha', 'bhishma']);
-    const before = s.board.ai.ratha.length;
-    const s1 = commitKrishna(s);
-
-    expect(hasEvent(s1, (e) => e.t === 'stripped'), 'no kill').toBe(false);
-    expect(s1.board.ai.ratha.length, 'nobody died').toBe(before);
-  });
-
-  it('but takes the same host apart the moment he is not there', () => {
-    // The control. Identical board minus Jarasandha, so the only difference
-    // that can explain the outcome is his presence.
-    const s = field(['dushasana', 'bhishma']);
-    const s1 = commitKrishna(s);
-    expect(hasEvent(s1, (e) => e.t === 'stripped')).toBe(true);
-  });
-
-  it('and still drives: the shield holds either way', () => {
-    const s = field(['jarasandha', 'bhishma']);
-    const host = s.board.player.ratha[0];
-    const s1 = commitKrishna(s);
-    expect(s1.instances[host].flags.has('krishna-guarded')).toBe(true);
-  });
-});
+// The Jarasandha exception is gone with the kill it gated. He fled that man
+// seventeen times and the name Ranchhod is from exactly that, so it was well
+// sourced, but an exception to a rule that no longer exists is dead weight. If
+// Jarasandha is ever answered again it should be on his own card.

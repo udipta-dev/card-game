@@ -64,7 +64,23 @@ export const PANDAVA_DECK: DeckList = {
     'sweta',
     'sahadeva',
     'shikhandi',
-    'krishna_charioteer',
+    // KRISHNA IS NOT IN THE STARTER DECK ANY MORE, and this is the fix for his
+    // rework rather than a separate decision.
+    //
+    // He used to end the deciding round by executing the greatest man opposite,
+    // and this deck was built around that. Taking the kill away (he never lifts
+    // a weapon in that war) cost Pandava NINE POINTS in the lab: 51.2% to
+    // 42.0%. Measured attempts to buy it back on his own card all failed:
+    // +2 to the host instead of +1 recovered two points, and stripping the
+    // mightiest foe's protections recovered none, because stripping is setup
+    // and the follow-through has to come from somewhere.
+    //
+    // The answer is not to re-inflate him. He should be RARE: a twelve-
+    // provision support card that guards one man and lifts the host is a fine
+    // thing to earn at a shrine and a poor thing to be dealt every game. So the
+    // twelve provisions go back into the host as a body, and Krishna becomes
+    // something you go and get.
+    'chekitana',
     'drupada',
     // Virata (7, costs 9) out for Nakula (6, costs 8), paying the provision
     // Krishna's rework costs. Virata measured 41.8%, near the bottom of the

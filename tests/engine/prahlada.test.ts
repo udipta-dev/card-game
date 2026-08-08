@@ -103,29 +103,35 @@ describe('Indrajit fights from inside his own illusion', () => {
     expect(resolveTargets(c, { pick: 'allEnemyUnits' })).not.toContain(him.iid);
   });
 
-  it('so Krishna’s counsel takes somebody else', () => {
+  it('so a weapon aimed at the mightiest finds somebody else', () => {
+    // Sweta rather than Krishna. Krishna used to kill the greatest man opposite
+    // and this test rode on that; he no longer kills anyone at all, which is
+    // the whole of his rework. The property being checked here is Prahlada's
+    // and is unchanged: an unseen warrior is not a legal mark, so anything
+    // aimed at "the mightiest" steps past him to the next one down.
     const s = makeState({
-      playerHand: ['krishna_charioteer'],
+      playerHand: ['sweta'],
       playerBoard: { ratha: ['arjuna'] },
       aiBoard: { ratha: ['indrajit', 'kumbhakarna'] },
     });
-    s.round = 2;
-    s.roundWins = { player: 1, ai: 0 };
     s.activeSeat = 'player';
     // Indrajit is the biggest thing opposite, but he is unseen.
     s.instances[s.board.ai.ratha[0]].flags.add('hidden');
     const indrajit = s.board.ai.ratha[0];
     const kumbha = s.board.ai.ratha[1];
+    const before = {
+      i: s.instances[indrajit].currentPower,
+      k: s.instances[kumbha].currentPower,
+    };
 
     const s1 = reduce(s, {
       type: 'PLAY_CARD',
-      iid: firstOf(s, 'player', 'krishna_charioteer').iid,
+      iid: firstOf(s, 'player', 'sweta').iid,
       row: 'ratha',
-      targets: [s.board.player.ratha[0]],
     });
 
-    expect(s1.instances[indrajit], 'the unseen man survives').toBeDefined();
-    expect(s1.instances[kumbha], 'and the counsel finds the next one down').toBeUndefined();
+    expect(s1.instances[indrajit].currentPower, 'the unseen man is untouched').toBe(before.i);
+    expect(s1.instances[kumbha].currentPower, 'and it finds the next one down').toBe(before.k - 3);
   });
 
   it('but his own side can still reach him', () => {

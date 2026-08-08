@@ -10,6 +10,7 @@ import { getCard, allCards } from '@content/cards';
 import { DECKS } from '@content/decks';
 import { VARDAAN_CARDS } from '@content/cards/vardaan';
 import { firstOf, makeState } from './helpers';
+import { poolFor } from '@content/muster';
 
 describe('Drona can be killed, which he could not be', () => {
   // He carries immuneUntilPlayed{ ashwatthama_elephant }. That card was in no
@@ -59,8 +60,21 @@ describe('no card is stranded where nobody can reach it', () => {
           kw.kind === 'immuneUntilPlayed' ? kw.card :
           kw.kind === 'icchamrityu' ? kw.unlessCardOnBoard : null;
         if (!named) continue;
-        const reachable = Object.values(DECKS).some((d) => d.cards.includes(named));
-        expect(reachable, `${c.id} needs '${named}' played, but no deck holds it`).toBe(true);
+        // REACHABLE MEANS A PLAYER CAN GET IT, not that a starter deck ships
+        // with it. Those were the same thing when every card was either dealt
+        // or nonexistent; they stopped being the same once the muster screen
+        // let you build your own host from the whole pool. Krishna leaving the
+        // Pandava starter deck is the case that exposed it: he is one tap away
+        // on the muster screen and a shrine reward besides, so nothing that
+        // names him is stranded.
+        const inDeck = Object.values(DECKS).some((d) => d.cards.includes(named));
+        const musterable = (['pandava', 'kaurava', 'asura'] as const).some((h) =>
+          poolFor(h).some((card) => card.id === named),
+        );
+        expect(
+          inDeck || musterable,
+          `${c.id} needs '${named}' played, and it is in no deck and no muster pool`,
+        ).toBe(true);
       }
     }
   });
